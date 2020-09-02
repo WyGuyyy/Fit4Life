@@ -1,0 +1,70 @@
+
+.Exercise-Tile-Wrapper{
+    width: 300px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000000;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px black;
+    margin: 20px;
+}
+
+.Exercise-Tile-Image{
+    object-fit: contain;
+}
+
+.Exercise-Tile-Title{
+    font-size: 40px;
+    color: white;
+}
+
+@media(max-width: 700px){
+    .Exercise-Tile-Wrapper{
+        width: 200px;
+        height: 250px;
+    }
+
+    .Exercise-Tile-Image{
+        width: 200px;
+        height: 200px;
+    }
+
+    .Exercise-Tile-Title{
+        font-size: 30px;
+    }
+}
+
+@media(max-width: 490px){
+    .Exercise-Tile-Wrapper{
+        width: 150px;
+        height: 200px;
+    }
+
+    .Exercise-Tile-Image{
+        width: 150px;
+        height: 150px;
+    }
+
+    .Exercise-Tile-Title{
+        font-size: 25px;
+    }
+}
+
+@media(max-width: 375px){
+    .Exercise-Tile-Wrapper{
+        width: 100px;
+        height: 150px;
+    }
+
+    .Exercise-Tile-Image{
+        width: 100px;
+        height: 100px;
+    }
+
+    .Exercise-Tile-Title{
+        font-size: 20px;
+    }
+}
