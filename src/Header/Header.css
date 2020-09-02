@@ -21,6 +21,10 @@
 }
 
 .hamburgerContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     height: 100%;
     padding-left: 5%;
 }
@@ -53,15 +57,16 @@
 }
 
 @media(max-width: 425px){
-    .headerContainer{
-        grid-template-columns: 1fr 2fr 1fr;
-    }
-
     .MMS-Title-Container{
-        padding: 1%;
+        padding: 5%;
     }
 
     .Page-Title-Container{
         align-items: flex-end;
+    }
+
+    .hamburgerContainer{
+        align-items: flex-start;
+        padding-top: 10%;
     }
 }
