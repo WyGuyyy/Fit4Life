@@ -3,9 +3,6 @@
     grid-template-areas: 
     'header'
     'buttons';
-    width: 100vw;
-    height: 100vh;
-    background: #6b4e00;
 }
 
 /*.homeWrapper{
@@ -104,4 +101,11 @@
     height: 100px;
     width: 100%;
     background: #6b4e00;
+}
+
+@media(max-width: 425px){
+    .homeButton{
+        height: 150px;
+        font-size: 30px;
+    }
 }
