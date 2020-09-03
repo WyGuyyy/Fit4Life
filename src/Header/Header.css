@@ -69,4 +69,8 @@
         align-items: flex-start;
         padding-top: 10%;
     }
+
+    .lhsLogo{
+        height: 40px;
+    }
 }

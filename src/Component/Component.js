@@ -42,7 +42,7 @@ class Component extends React.Component{
         var tempNumOfTiles = 40;
         var numRows;
 
-        var tempArr = ["hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi", "hi"]
+        var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
 
         var componentWrapper = document.getElementById("componentWrapper");
         componentWrapper.innerHTML = '';
@@ -74,12 +74,20 @@ class Component extends React.Component{
 
     }
 
+    goToExercise(event, selExercise){
+
+        this.props.history.push({
+            pathname: "/exercise",
+            state: {exercise: selExercise}
+        });
+    }
+
     renderTileRow(tempArr){
-        return tempArr.map(this.renderTile);
+        return tempArr.map(this.renderTile.bind(this));
     }
 
     renderTile(tempExercise){
-        return <ExerciseTile exercise={tempExercise} />
+        return <ExerciseTile exercise={tempExercise} tileClickEvent={e=>this.goToExercise(e, tempExercise)}/>
     }
 
 

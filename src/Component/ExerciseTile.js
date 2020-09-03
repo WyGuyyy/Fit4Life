@@ -23,14 +23,24 @@ class ExerciseTile extends React.Component{
         
     }
 
+    /*goToExercise(){
+
+        console.log(this);
+
+        this.props.history.push({
+            pathname: "/exercise",
+            state: {exercise: this.state.exercise}
+        });
+    }*/
+
     //Render the Header component to the DOM/Screen
     render(){
 
         return(
-            <div className="Exercise-Tile-Container">
+            <div className="Exercise-Tile-Container" onClick={this.props.tileClickEvent}>
                 <div className="Exercise-Tile-Wrapper">
                     <img className="Exercise-Tile-Image" src={lhs_logo} width="300" height="300"/>
-                    <h2 className="Exercise-Tile-Title">Exercise!</h2>
+                    <h2 className="Exercise-Tile-Title">{this.state.exercise}</h2>
                 </div>
             </div>
         );
