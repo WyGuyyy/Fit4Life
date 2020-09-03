@@ -10,8 +10,6 @@ class Header extends React.Component{
     constructor(props){
         super(props);
 
-        console.log(props);
-
         this.state = {
             logoSelected: false,  
             title: props.title
@@ -39,6 +37,7 @@ class Header extends React.Component{
             });
 
             logo.style.transform = "rotate(360deg)";
+            this.closeMenu();
 
         }else{
             this.setState({
@@ -46,8 +45,32 @@ class Header extends React.Component{
             });
 
             logo.style.transform = "rotate(-360deg)";
+            this.openMenu();
 
         }
+    }
+
+    openMenu(){
+
+        var popout = document.getElementsByClassName("popoutContainer")[0];
+        console.log(popout);
+        
+        popout.style.visibility = "visbile";
+        /*popout.style.transform = "scale(1)";
+        popout.style.transitionDuration = "0.75s";
+        popout.style.opacity = "1";
+        popout.style.transition = "opacity 0.4s ease";*/
+
+    }
+
+    closeMenu(){
+        var popout = document.getElementsByClassName("popoutContainer")[0];
+        popout.style.visibility = "hidden";
+    }
+
+    goToHome(){
+        console.log(this);
+        this.props.history.push('/');
     }
 
     //Render the Header component to the DOM/Screen
@@ -62,7 +85,9 @@ class Header extends React.Component{
                     <h1 className="pageTitle">{this.state.title}</h1>
                 </div>
                 <div className="MMS-Title-Container">
-                    <MMS_Title />
+                    <Link to="/a" className="titleLink">
+                        <MMS_Title />
+                    </Link>
                 </div>
             </div>
         );

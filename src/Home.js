@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import './Home.css';
 import Header from './Header/Header';
+import Popout from './Popout/Popout'
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component{
@@ -36,6 +37,7 @@ class Home extends React.Component{
             <Fragment>
                 <Header title="Home" />
                 <div className="homeContainer">
+                    <Popout />
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
                             <div className="homeFiller"></div>

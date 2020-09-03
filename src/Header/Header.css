@@ -46,6 +46,10 @@
     object-fit: contain;
 }
 
+.titleLink{
+    text-decoration: none;
+}
+
 @media(max-width: 600px){
     .pageTitle{
         font-size: 25px;
