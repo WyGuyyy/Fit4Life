@@ -52,10 +52,10 @@ class Header extends React.Component{
 
     openMenu(){
 
-        var popout = document.getElementsByClassName("popoutContainer")[0];
-        console.log(popout);
-        
-        popout.style.visibility = "visbile";
+        var popout = document.getElementsByClassName("popoutWrapper")[0];
+        popout.classList.add(".popoutWrapper-scaleDown");
+        console.log(popout.classList);
+        //popout.style.visibility = "visbile";
         /*popout.style.transform = "scale(1)";
         popout.style.transitionDuration = "0.75s";
         popout.style.opacity = "1";
@@ -64,8 +64,10 @@ class Header extends React.Component{
     }
 
     closeMenu(){
-        var popout = document.getElementsByClassName("popoutContainer")[0];
-        popout.style.visibility = "hidden";
+        var popout = document.getElementsByClassName("popoutWrapper")[0];
+        popout.classList.remove(".popoutWrapper-scaleDown");
+        popout.className = popout.className;
+        //popout.style.visibility = "hidden";
     }
 
     goToHome(){
@@ -85,7 +87,7 @@ class Header extends React.Component{
                     <h1 className="pageTitle">{this.state.title}</h1>
                 </div>
                 <div className="MMS-Title-Container">
-                    <Link to="/a" className="titleLink">
+                    <Link to="/" className="titleLink">
                         <MMS_Title />
                     </Link>
                 </div>
