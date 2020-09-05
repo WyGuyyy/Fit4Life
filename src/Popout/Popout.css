@@ -1,9 +1,9 @@
 .popoutContainer{
     position: absolute;
     top: 100px;
-    width: 250px;
-    height: 450px;
     z-index: 2;
+    transform: scaleY(0);
+    transform-origin: top center;
 }
 
 .popoutWrapper{
@@ -11,30 +11,83 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background: rgba(0, 0, 0, 0.9);
-    width: 100%;
-    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    width: 250px;
+    height: 450px;
 }
 
 .popoutButton{
-    width: 200px;
-    height: 40px;
-    border-radius: 20px;
+    width: 100%;
+    height: 100%;
     border: none;
     font-size: 20px;
     background: rgba(0, 0, 0, 0);
     font-size: 30px;
     color: white;
+    transition-duration: .5s;
 }
 
-.popoutWrapper-scaleDown{
-    -moz-animation-play-state: paused;
-    animation: growDown 2s ease-in-out forwards;
-    animation-play-state: running;
+.popoutButton:hover{
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
 }
 
-.popoutWrapper-startScale{
-    -moz-animation-play-state: running;
+.popoutWrapper-goDown{
+    animation: growDown 1s ease-in-out forwards;
+}
+
+.popoutWrapper-goUp{
+    animation: collapseUp 1s ease-in-out forwards;
+}
+
+@media(max-width: 425px){
+    .popoutContainer{
+        width: 50%;
+    }
+    
+    .popoutWrapper{
+        width: 100%;
+    }
+
+    .popoutButton{
+        font-size: 20px;
+    }
+}
+
+@media(max-width: 320px){
+    .popoutContainer{
+        width: 100%;
+    }
+    
+    .popoutWrapper{
+        width: 100%;
+    }
+
+    .popoutButton{
+        font-size: 30px;
+    }
+}
+
+@media(max-height: 550px){
+    
+    .popoutWrapper{
+        height: 300px
+    }
+
+    .popoutButton{
+        font-size: 25px;
+    }
+}
+
+@media(max-height: 550px){
+    
+    .popoutWrapper{
+        height: 200px
+    }
+
+    .popoutButton{
+        font-size: 20px;
+    }
 }
 
 @keyframes growDown {
@@ -46,5 +99,17 @@
     }
     100% {
         transform: scaleY(1);
+    }
+}
+
+@keyframes collapseUp {
+    0% {
+        transform: scaleY(1);
+    }
+    20% {
+        transform: scaleY(1.1);
+    }
+    100% {
+        transform: scaleY(0);
     }
 }

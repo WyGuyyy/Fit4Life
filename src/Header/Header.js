@@ -12,7 +12,8 @@ class Header extends React.Component{
 
         this.state = {
             logoSelected: false,  
-            title: props.title
+            title: props.title,
+            menuPop: false
         };
     }
     
@@ -31,7 +32,8 @@ class Header extends React.Component{
 
         console.log(logo);
 
-        if(this.state.logoSelected){
+        if(this.state.logoSelected){        
+            
             this.setState({
                 logoSelected: false
             });
@@ -40,6 +42,7 @@ class Header extends React.Component{
             this.closeMenu();
 
         }else{
+            
             this.setState({
                 logoSelected: true
             });
@@ -52,9 +55,10 @@ class Header extends React.Component{
 
     openMenu(){
 
-        var popout = document.getElementsByClassName("popoutWrapper")[0];
-        popout.classList.add(".popoutWrapper-scaleDown");
-        console.log(popout.classList);
+        var popout = document.getElementsByClassName("popoutContainer")[0];
+        popout.classList.remove("popoutWrapper-goUp");
+        popout.classList.add("popoutWrapper-goDown");
+        //
         //popout.style.visibility = "visbile";
         /*popout.style.transform = "scale(1)";
         popout.style.transitionDuration = "0.75s";
@@ -64,9 +68,10 @@ class Header extends React.Component{
     }
 
     closeMenu(){
-        var popout = document.getElementsByClassName("popoutWrapper")[0];
-        popout.classList.remove(".popoutWrapper-scaleDown");
-        popout.className = popout.className;
+        var popout = document.getElementsByClassName("popoutContainer")[0];
+        popout.classList.remove("popoutWrapper-goDown");
+        popout.classList.add("popoutWrapper-goUp");
+        //popout.className = popout.className;
         //popout.style.visibility = "hidden";
     }
 

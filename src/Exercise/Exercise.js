@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './Exercise.css';
 import Header from '../Header/Header';
+import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 
 class Exercise extends React.Component{
@@ -35,6 +36,7 @@ class Exercise extends React.Component{
             <Fragment>
                 <Header title={this.state.exercise} />
                 <div className="exerciseContainer">
+                    <Popout />
                     <div className="exerciseWrapper">
                         <form className="exerciseForm">
                             <div className="Exercise-Title-Row">

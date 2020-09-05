@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import './Component.css';
 import Header from '../Header/Header';
 import ExerciseTile from './ExerciseTile'
+import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 
 class Component extends React.Component{
@@ -110,6 +111,7 @@ class Component extends React.Component{
             <Fragment>
                 <Header title={this.state.component}/>
                 <div className="componentContainer">
+                    <Popout />
                     <div className="componentWrapper" id="componentWrapper">
                     </div>
                 </div>

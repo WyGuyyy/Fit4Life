@@ -48,7 +48,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: black;
 }
 
 .Home-Header-Wrapper{
@@ -74,10 +73,11 @@
     border-bottom: 5px solid #241a00;
     border-right: 5px solid #241a00;
     box-shadow: 2px 2px 10px black;
+    transition-duration: 1s;
 }
 
 .homeButton:hover{
-    background: #8a6300;
+    background: #cc9200;
 }
 
 

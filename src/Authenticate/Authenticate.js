@@ -49,7 +49,9 @@ class Authenticate extends React.Component{
                                 <label className="authenticateLabel">Password: </label> <input className="authenticateInput"/>
                             </div>
                             <div className="Authneticate-Login-Row">
-                                <button className="authenticateLogin">Login</button>
+                                <Link to="/">
+                                    <button className="authenticateLogin">Login</button>
+                                </Link>
                             </div>
                         </div>
                     </form>
