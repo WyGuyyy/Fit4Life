@@ -1,50 +1,40 @@
 import React, { Fragment } from 'react';
-import './Home.css';
-import Header from './Header/Header';
-import Popout from './Popout/Popout'
+import ReactDom from 'react-dom';
+import './Classrooms.css';
+import AdminHeader from '../AdminHeader/AdminHeader';
 import { Link } from 'react-router-dom';
 
-class Home extends React.Component{
+class Classrooms extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            canGoBack: false
-        }
+            
+        };
 
     }
     
+    //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-    
+        
     }
 
+    componentDidUpdate(){
+
+    }
+
+    //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
     }
 
-    goToComponent(event){
-
-        var btn = document.getElementById(event.target.id);
-
-        this.props.history.push({
-            pathname: "/component",
-            state: {component: btn.innerHTML}
-        });
-    }
-
-    goBack(){ //This isnt working, start here next time
-        console.log(this.props);
-        if(this.state.canGoBack){
-            this.props.history.goBack();
-        }
-    }
-    
+    //Render the Header component to the DOM/Screen
     render(){
 
         return(
 
             <Fragment>
-                <Header title="Home" goBack={false} customClick={this.goBack.bind(this)}/>
+                <Header title="Home" goBack={false}/>
                 <div className="homeContainer">
                     <Popout />
                     <div className="homeWrapper" id="homeWrapper">
@@ -79,7 +69,8 @@ class Home extends React.Component{
     }
 }
 
-export default Home;
+export default Classrooms;
 
-
+//<Hamburger />
+//
 //"react-router-dom": "^6.0.0-alpha.1",

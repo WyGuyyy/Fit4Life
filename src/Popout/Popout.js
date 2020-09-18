@@ -38,6 +38,7 @@ class Popout extends React.Component{
                     <button className="popoutButton">Goals</button>
                     <button className="popoutButton">Schedule</button>
                     <button className="popoutButton">Personal Info</button>
+                    <button className="popoutButton">Invites</button>
                 </div>
             </div>
         );

@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
-import './Component.css';
+import './Goal.css';
 import Header from '../Header/Header';
-import ExerciseTile from './ExerciseTile'
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 
-class Component extends React.Component{
+class Goal extends React.Component{
     constructor(props){
         super(props);
 
@@ -129,7 +128,7 @@ class Component extends React.Component{
     }
 }
 
-export default Component;
+export default Goal;
 
 //<Hamburger />
 //

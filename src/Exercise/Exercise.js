@@ -10,7 +10,8 @@ class Exercise extends React.Component{
         super(props);
 
         this.state = {
-            exercise: props.location.state.exercise
+            exercise: props.location.state.exercise,
+            canGoBack: true
         };
 
     }
@@ -29,12 +30,19 @@ class Exercise extends React.Component{
         
     }
 
+    goBack(){ //This isnt working, start here next time
+        console.log(this.props);
+        if(this.state.canGoBack){
+            this.props.history.goBack();
+        }
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
         return(
             <Fragment>
-                <Header title={this.state.exercise} />
+                <Header title={this.state.exercise} goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="exerciseContainer">
                     <Popout />
                     <div className="exerciseWrapper">

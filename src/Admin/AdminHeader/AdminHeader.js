@@ -17,7 +17,7 @@ class Header extends React.Component{
             canGoBack: (props.goBack == undefined ? false : true)
         };
 
-        //this.goBack = this.goBack.bind(this);
+        this.goBack = this.goBack.bind(this);
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
@@ -82,12 +82,12 @@ class Header extends React.Component{
         this.props.history.push('/');
     }
 
-    /*goBack(){ //This isnt working, start here next time
+    goBack(){ //This isnt working, start here next time
         console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }
-    }*/
+    }
 
     //Render the Header component to the DOM/Screen
     render(){
@@ -100,7 +100,7 @@ class Header extends React.Component{
                         </div>
                         <div className="Page-Title-Container">
                             <p className="backArrowBackground">
-                                <i className="arrow up" onClick={this.props.customClick}/>
+                                <i className="arrow up" onClick={() => this.goBack()}/>
                             </p>
                             <h1 className="pageTitle">{this.state.title}</h1>
                         </div>
