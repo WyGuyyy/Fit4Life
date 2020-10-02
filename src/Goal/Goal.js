@@ -60,7 +60,7 @@ class Goal extends React.Component{
             cell4.classList.add("Goal-Grid-Cell");
 
             listItemTitle.classList.add("Goal-List-Item-Title");
-            listItemTitle.textContent = "Test1"
+            listItemTitle.textContent = "Test" + count
             listItemTitle.id = "goalListItemTitle-" + count;
 
             listItemProgress.classList.add("Goal-List-Item-Progress");
@@ -87,7 +87,7 @@ class Goal extends React.Component{
             listItem.appendChild(cell3);
             listItem.appendChild(cell4);
 
-            listItem.style.background = (count % 2 === 0 ? "#c08d00" : "#997000");
+            listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
 
             list.appendChild(listItem);
 
@@ -100,10 +100,13 @@ class Goal extends React.Component{
     }
 
     returnListItemBackground(id){
-        var num = id.split("-")[1];
+        var goalList = document.getElementById("goalList");
+        this.recolorRows(goalList);
+
+        /*var num = id.split("-")[1];
         var backgroundColor = (parseInt(num) % 2 === 0 ? "#c08d00" : "#997000");
 
-        document.getElementById(id).style.background = backgroundColor;
+        document.getElementById(id).style.background = backgroundColor;*/
     }
 
     goToGoalDetails(eventObj){
@@ -132,7 +135,30 @@ class Goal extends React.Component{
     }
 
     deleteGoal(eventObj){
-        
+        var idNum = eventObj.event.target.id.split("-")[1];
+
+        var count = 0;
+
+        var goalList = document.getElementById("goalList");
+        var listChildren = goalList.childNodes;
+
+        for(count = 0; count < listChildren.length; count++){
+            if(listChildren[count].id.localeCompare("goalListItem-" + idNum) === 0){
+                goalList.removeChild(listChildren[count]); 
+                break;
+            }
+        }
+
+        this.recolorRows(goalList);
+    }
+
+    recolorRows(goalList){
+        var rowCount = 0;
+
+        for(rowCount = 0; rowCount < goalList.childNodes.length; rowCount++){
+            goalList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
+            console.log(goalList.childNodes[rowCount].style.background);
+        }
     }
 
     goBack(){ //This isnt working, start here next time
