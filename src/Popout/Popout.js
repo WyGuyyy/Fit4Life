@@ -35,10 +35,18 @@ class Popout extends React.Component{
 
             <div className="popoutContainer">
                 <div className="popoutWrapper">
-                    <button className="popoutButton">Goals</button>
-                    <button className="popoutButton">Schedule</button>
-                    <button className="popoutButton">Personal Info</button>
-                    <button className="popoutButton">Invites</button>
+                    <Link to={{pathname: "/goal", state: {goBack: true}}} className="goalLink" >
+                        <button className="popoutButton">Goals</button>
+                    </Link>
+                    <Link to={{pathname: "/schedule", state: {goBack: true}}} className="scheduleLink">
+                        <button className="popoutButton">Schedule</button>
+                    </Link>
+                    <Link to={{pathname: "/personal", state: {goBack: true}}} className="personalLink">
+                        <button className="popoutButton">Personal Info</button>
+                    </Link>
+                    <Link to={{pathname: "/invite", state: {goBack: true}}} className="inviteLink">
+                        <button className="popoutButton">Invites</button>
+                    </Link>
                 </div>
             </div>
         );

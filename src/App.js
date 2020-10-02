@@ -4,7 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Home'
 import Component from './Component/Component'
 import Exercise from './Exercise/Exercise'
+import Goal from './Goal/Goal'
 import Authenticate from './Authenticate/Authenticate'
+import GoalDetail from './Goal/GoalDetail';
+import GoalEdit from './Goal/GoalEdit';
+import GoalCreate from './Goal/GoalCreate';
 
 function App() {
   return (
@@ -13,6 +17,13 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/component" component={Component} />
         <Route exact path="/exercise" component={Exercise} />
+        <Route exact path="/goal" component={Goal} />
+        <Route exact path="/goalDetail" component={GoalDetail} />
+        <Route exact path="/goalEdit" component={GoalEdit} />
+        <Route exact path="/goalCreate" component={GoalCreate} />
+        <Route exact path="/schedule" component={Goal} />
+        <Route exact path="/personal" component={Goal} />
+        <Route exact path="/invite" component={Goal} />
         <Route exact path="/authenticate" component={Authenticate} />
       </Switch>
     </Router>

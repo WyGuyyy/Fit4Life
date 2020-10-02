@@ -40,6 +40,26 @@
     animation: collapseUp 1s ease-in-out forwards;
 }
 
+.goalLink{
+    width: 100%;
+    height: 100%;
+}
+
+.scheduleLink{
+    width: 100%;
+    height: 100%;
+}
+
+.personalLink{
+    width: 100%;
+    height: 100%;
+}
+
+.inviteLink{
+    width: 100%;
+    height: 100%;
+}
+
 @media(max-width: 425px){
     .popoutContainer{
         width: 50%;
