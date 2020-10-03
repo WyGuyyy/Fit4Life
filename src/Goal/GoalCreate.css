@@ -19,6 +19,7 @@
 .Goal-Create-Form-Wrapper{
     width: 70%;
     height: 60%;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -178,4 +179,87 @@
         margin-left: 0px;
     }
 
+    .Goal-Create-Title-Input{
+        width: 80%;
+    }
+}
+
+@media(max-width: 425px){
+
+    .Goal-Create-Title-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Create-Progress-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Create-Description-Label{
+        font-size: 20px;
+    }
+
+    .Goal-Create-Not-Started-Label{
+        color: #ff0000;
+        font-size: 20px;
+    }
+    
+    .Goal-Create-In-Progress-Label{
+        color: #fbff00;
+        font-size: 20px;
+    }
+    
+    .Goal-Create-Complete-Label{
+        color: #2bff00;
+        font-size: 20px;
+    }
+
+}
+
+@media(max-height: 750px){
+    .Goal-Create-Title-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Create-Progress-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Create-Description-Label{
+        font-size: 20px;
+    }
+
+    .Goal-Create-Not-Started-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Create-In-Progress-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Create-Complete-Radio{
+        height: 15px;
+        width: 15px;
+     }
+
+    .Goal-Create-Not-Started-Label{
+        color: #ff0000;
+        font-size: 18px;
+    }
+    
+    .Goal-Create-In-Progress-Label{
+        color: #fbff00;
+        font-size: 18px;
+    }
+    
+    .Goal-Create-Complete-Label{
+        color: #2bff00;
+        font-size: 18px;
+    }
+
+    .Goal-Create-Form-Wrapper{
+        width: 70%;
+        height: 80%;
+    }
 }

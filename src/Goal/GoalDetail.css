@@ -19,6 +19,7 @@
 .Goal-Detail-Form-Wrapper{
     width: 70%;
     height: 60%;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

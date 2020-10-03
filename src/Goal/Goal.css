@@ -1,9 +1,12 @@
 .goalContainer{
+    width: 100%;
+    height: 100%;
+    background: #000000;
 }
 
 .goalWrapper{
     position: absolute;
-    top: 0px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -86,6 +89,7 @@
 
 .Goal-List-Item-Progress{
     font-size: 30px;
+    text-align: center;
 }
 
 .Goal-List-Item-Edit-Button{
@@ -124,4 +128,87 @@
     border-radius: 20px;
     font-size: 25px;
     box-shadow: 2px 2px 10px black;
+}
+
+@media(max-width: 1024px){
+    .Goal-List-Item-Title{
+        font-size: 20px;
+        margin-left: 10px;
+    }
+    
+    .Goal-List-Item-Progress{
+        font-size: 20px;
+    }
+    
+    .Goal-List-Item-Edit-Button{
+        background: #ffffff;
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+    
+    .Goal-List-Item-Delete-Button{
+        background: #ffffff;
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+
+    .Goal-Create-Button{
+        height: 35px;
+        width: 60px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+}
+
+@media(max-width: 630px){
+    .Goal-List-Item-Title{
+        font-size: 13px;
+        margin-left: 10px;
+    }
+    
+    .Goal-List-Item-Progress{
+        font-size: 13px;
+    }
+    
+    .Goal-List-Item-Edit-Button{
+        background: #ffffff;
+        font-size: 13px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+    
+    .Goal-List-Item-Delete-Button{
+        background: #ffffff;
+        font-size: 13px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+
+    .Goal-Create-Button{
+        height: 35px;
+        width: 60px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+}
+
+@media(max-width: 319px){
+    .Goal-List-Item{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .Goal-Grid-Cell-Progress{
+        display: none;
+    }
+
 }

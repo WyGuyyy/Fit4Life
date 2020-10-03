@@ -56,17 +56,17 @@ class GoalEdit extends React.Component{
                                     <div className="Goal-Edit-Not-Started-Radio-Wrapper">
                                         <input className="Goal-Edit-Not-Started-Radio" type="radio" id="notStarted" name="progress" value="not-started"
                                                  />
-                                        <label className="Goal-Edit-Not-Started-Label" for="notStarted">NOT STARTED</label>
+                                        <label className="Goal-Edit-Not-Started-Label" for="notStarted">Not Started</label>
                                     </div>
 
                                     <div className="Goal-Edit-In-Progress-Radio-Wrapper">
                                         <input className="Goal-Edit-In-Progress-Radio" type="radio" id="inProgress" name="progress" value="in-progress" />
-                                        <label className="Goal-Edit-In-Progress-Label" for="inProgress">IN PROGRESS</label>
+                                        <label className="Goal-Edit-In-Progress-Label" for="inProgress">In Progress</label>
                                     </div>
 
                                     <div className="Goal-Edit-Complete-Radio-Wrapper">
                                         <input className="Goal-Edit-Complete-Radio" type="radio" id="complete" name="progress" value="complete" />
-                                        <label className="Goal-Edit-Complete-Label" for="complete">COMPLETE</label>
+                                        <label className="Goal-Edit-Complete-Label" for="complete">Complete</label>
                                     </div>
                                 </div>
                             </div>

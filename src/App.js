@@ -9,6 +9,7 @@ import Authenticate from './Authenticate/Authenticate'
 import GoalDetail from './Goal/GoalDetail';
 import GoalEdit from './Goal/GoalEdit';
 import GoalCreate from './Goal/GoalCreate';
+import PersonalInfo from './PersonalInfo/PersonalInfo';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route exact path="/goalEdit" component={GoalEdit} />
         <Route exact path="/goalCreate" component={GoalCreate} />
         <Route exact path="/schedule" component={Goal} />
-        <Route exact path="/personal" component={Goal} />
+        <Route exact path="/personal" component={PersonalInfo} />
         <Route exact path="/invite" component={Goal} />
         <Route exact path="/authenticate" component={Authenticate} />
       </Switch>

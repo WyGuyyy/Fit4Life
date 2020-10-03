@@ -19,6 +19,7 @@
 .Goal-Edit-Form-Wrapper{
     width: 70%;
     height: 60%;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -150,32 +151,116 @@
 }
 
 @media(max-width: 770px){
-    
-    .Goal-Detail-Title-Wrapper{
+
+    .Goal-Edit-Title-Wrapper{
         justify-content: center;
         padding: 5px;
     }
     
-    .Goal-Detail-Progress-Wrapper{
+    .Goal-Edit-Progress-Wrapper{
         justify-content: center;
         padding: 5px;
     }
 
-    .Goal-Detail-Description-Wrapper{
+    .Goal-Edit-Description-Wrapper{
         align-items: center;
         padding: 5px;
     }
 
-    .Goal-Detail-Title{
+    .Goal-Edit-Title{
         margin-left: 0px;
     }
     
-    .Goal-Detail-Progress{
+    .Goal-Edit-Progress{
         margin-left: 0px;
     }
     
-    .Goal-Detail-Description{
+    .Goal-Edit-Description{
         margin-left: 0px;
     }
 
+    .Goal-Edit-Title-Input{
+        width: 80%;
+    }
+
+}
+
+@media(max-width: 425px){
+
+    .Goal-Edit-Title-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-Progress-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-Description-Label{
+        font-size: 20px;
+    }
+
+    .Goal-Edit-Not-Started-Label{
+        color: #ff0000;
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-In-Progress-Label{
+        color: #fbff00;
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-Complete-Label{
+        color: #2bff00;
+        font-size: 20px;
+    }
+
+}
+
+@media(max-height: 750px){
+    .Goal-Edit-Title-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-Progress-Label{
+        font-size: 20px;
+    }
+    
+    .Goal-Edit-Description-Label{
+        font-size: 20px;
+    }
+
+    .Goal-Edit-Not-Started-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Edit-In-Progress-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Edit-Complete-Radio{
+        height: 15px;
+        width: 15px;
+     }
+
+    .Goal-Edit-Not-Started-Label{
+        color: #ff0000;
+        font-size: 18px;
+    }
+    
+    .Goal-Edit-In-Progress-Label{
+        color: #fbff00;
+        font-size: 18px;
+    }
+    
+    .Goal-Edit-Complete-Label{
+        color: #2bff00;
+        font-size: 18px;
+    }
+
+    .Goal-Edit-Form-Wrapper{
+        width: 70%;
+        height: 80%;
+    }
 }

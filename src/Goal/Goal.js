@@ -56,6 +56,7 @@ class Goal extends React.Component{
 
             cell1.classList.add("Goal-Grid-Cell");
             cell2.classList.add("Goal-Grid-Cell");
+            cell2.classList.add("Goal-Grid-Cell-Progress");
             cell3.classList.add("Goal-Grid-Cell");
             cell4.classList.add("Goal-Grid-Cell");
 
@@ -64,8 +65,16 @@ class Goal extends React.Component{
             listItemTitle.id = "goalListItemTitle-" + count;
 
             listItemProgress.classList.add("Goal-List-Item-Progress");
-            listItemProgress.textContent = "IN PROGRESS";
+            listItemProgress.textContent = "In Progress";
             listItemProgress.id = "goalListItemProgress-" + count;
+            
+            if(listItemProgress.textContent.localeCompare("Not Started") === 0){
+                listItemProgress.style.color = "#ff0000";
+            }else if(listItemProgress.textContent.localeCompare("In Progress") === 0){
+                listItemProgress.style.color = "#fbff00";
+            }else{
+                listItemProgress.style.color = "#2bff00";
+            }
 
             listEditButton.classList.add("Goal-List-Item-Edit-Button");
             listEditButton.textContent = "Edit";
