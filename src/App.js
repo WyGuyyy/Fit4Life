@@ -11,6 +11,8 @@ import GoalEdit from './Goal/GoalEdit';
 import GoalCreate from './Goal/GoalCreate';
 import PersonalInfoEdit from './PersonalInfo/PersonalInfoEdit';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
+import Invite from './Invite/Invite';
+import Schedule from './Schedule/Schedule';
 
 function App() {
   return (
@@ -23,10 +25,10 @@ function App() {
         <Route exact path="/goalDetail" component={GoalDetail} />
         <Route exact path="/goalEdit" component={GoalEdit} />
         <Route exact path="/goalCreate" component={GoalCreate} />
-        <Route exact path="/schedule" component={Goal} />
+        <Route exact path="/schedule" component={Schedule} />
         <Route exact path="/personal" component={PersonalInfo} />
         <Route exact path="/personalEdit" component={PersonalInfoEdit} />
-        <Route exact path="/invite" component={Goal} />
+        <Route exact path="/invite" component={Invite} />
         <Route exact path="/authenticate" component={Authenticate} />
       </Switch>
     </Router>
