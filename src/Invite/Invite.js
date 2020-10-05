@@ -54,34 +54,31 @@ class Invite extends React.Component{
             listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
 
             cell1.classList.add("Invite-Grid-Cell");
+            cell1.classList.add("Invite-Grid-Cell-Title");
             cell2.classList.add("Invite-Grid-Cell");
-            cell2.classList.add("Invite-Grid-Cell-Progress");
+            cell2.classList.add("Invite-Grid-Cell-Teacher");
             cell3.classList.add("Invite-Grid-Cell");
+            cell3.classList.add("Invite-Grid-Cell-Accept");
             cell4.classList.add("Invite-Grid-Cell");
+            cell4.classList.add("Invite-Grid-Cell-Decline");
 
             listItemTitle.classList.add("Invite-List-Item-Title");
-            listItemTitle.textContent = "Test" + count
+            listItemTitle.textContent = "Classroom" + count
             listItemTitle.id = "inviteListItemTitle-" + count;
+            listItemTitle.title = "Classroom" + count
 
-            listItemProgress.classList.add("Invite-List-Item-Progress");
-            listItemProgress.textContent = "In Progress";
-            listItemProgress.id = "inviteListItemProgress-" + count;
-            
-            if(listItemProgress.textContent.localeCompare("Not Started") === 0){
-                listItemProgress.style.color = "#ff0000";
-            }else if(listItemProgress.textContent.localeCompare("In Progress") === 0){
-                listItemProgress.style.color = "#fbff00";
-            }else{
-                listItemProgress.style.color = "#2bff00";
-            }
+            listItemProgress.classList.add("Invite-List-Item-Teacher");
+            listItemProgress.textContent = "Professor Towne";
+            listItemProgress.id = "inviteListItemTeacher-" + count;
+            listItemProgress.title = "Professor Towne";
 
-            listEditButton.classList.add("Invite-List-Item-Edit-Button");
-            listEditButton.textContent = "Edit";
+            listEditButton.classList.add("Invite-List-Item-Accept-Button");
+            listEditButton.textContent = "Accept";
             listEditButton.id = "inviteListItemEdit-" + count;
 
-            listDeleteButton.classList.add("Invite-List-Item-Delete-Button");
-            listDeleteButton.textContent = "Delete";
-            listDeleteButton.id = "inviteListItemDelete-" + count;
+            listDeleteButton.classList.add("Invite-List-Item-Decline-Button");
+            listDeleteButton.textContent = "Decline";
+            listDeleteButton.id = "inviteListItemDecline-" + count;
             listDeleteButton.onclick = (e) => this.declineInvite({event: e, id: listDeleteButton.id});
 
             cell1.appendChild(listItemTitle);

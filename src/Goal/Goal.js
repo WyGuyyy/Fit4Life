@@ -55,18 +55,23 @@ class Goal extends React.Component{
             listItem.onclick = (e) => this.goToGoalDetails({event: e, id: listItem.id});
 
             cell1.classList.add("Goal-Grid-Cell");
+            cell1.classList.add("Goal-Grid-Cell-Title");
             cell2.classList.add("Goal-Grid-Cell");
             cell2.classList.add("Goal-Grid-Cell-Progress");
             cell3.classList.add("Goal-Grid-Cell");
+            cell3.classList.add("Goal-Grid-Cell-Edit");
             cell4.classList.add("Goal-Grid-Cell");
+            cell4.classList.add("Goal-Grid-Cell-Delete");
 
             listItemTitle.classList.add("Goal-List-Item-Title");
             listItemTitle.textContent = "Test" + count
             listItemTitle.id = "goalListItemTitle-" + count;
+            listItemTitle.title = "Test" + count
 
             listItemProgress.classList.add("Goal-List-Item-Progress");
             listItemProgress.textContent = "In Progress";
             listItemProgress.id = "goalListItemProgress-" + count;
+            listItemProgress.title = "In Progress";
             
             if(listItemProgress.textContent.localeCompare("Not Started") === 0){
                 listItemProgress.style.color = "#ff0000";
