@@ -9,6 +9,7 @@ import Authenticate from './Authenticate/Authenticate'
 import GoalDetail from './Goal/GoalDetail';
 import GoalEdit from './Goal/GoalEdit';
 import GoalCreate from './Goal/GoalCreate';
+import PersonalInfoEdit from './PersonalInfo/PersonalInfoEdit';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/goalCreate" component={GoalCreate} />
         <Route exact path="/schedule" component={Goal} />
         <Route exact path="/personal" component={PersonalInfo} />
+        <Route exact path="/personalEdit" component={PersonalInfoEdit} />
         <Route exact path="/invite" component={Goal} />
         <Route exact path="/authenticate" component={Authenticate} />
       </Switch>

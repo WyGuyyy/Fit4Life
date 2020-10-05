@@ -1,7 +1,7 @@
-.Personal-Info-Container{
+.Personal-Info-Edit-Container{
 }
 
-.Personal-Info-Wrapper{
+.Personal-Info-Edit-Wrapper{
     position: absolute;
     top: 0px;
     bottom: 0;
@@ -16,7 +16,7 @@
     overflow-y: scroll;
 }
 
-.Personal-Info-Form-Wrapper{
+.Personal-Info-Edit-Form-Wrapper{
     width: 70%;
     height: 60%;
     margin-top: 100px;
@@ -26,80 +26,99 @@
     align-content: center;
     background: #503b00;
     box-shadow: 2px 2px 10px black;
+    padding: 5px;
 }
 
-.Personal-Info-First-Name-Wrapper{
+.Personal-Info-Edit-First-Name-Wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr;
     justify-content: flex-start;
     align-items: center;
     justify-items: flex-end;
     width: 100%;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Last-Name-Wrapper{
+.Personal-Info-Edit-Last-Name-Wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr;
     justify-content: flex-start;
     align-items: center;
     justify-items: flex-end;
     width: 100%;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Email-Wrapper{
+.Personal-Info-Edit-Email-Wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr;
     justify-content: flex-start;
     align-items: center;
     justify-items: flex-end;
     width: 100%;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Weight-Wrapper{
+.Personal-Info-Edit-Weight-Wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr;
     justify-content: flex-start;
     align-items: center;
     justify-items: flex-end;
     width: 100%;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Height-Wrapper{
+.Personal-Info-Edit-Height-Wrapper{
     display: grid;
     grid-template-columns: 1fr 2fr;
     justify-content: flex-start;
     align-items: center;
     justify-items: flex-end;
     width: 100%;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Height-Input-Wrapper{
+.Personal-Info-Edit-Height-Input-Wrapper{
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Title-Wrapper{
+.Personal-Info-Edit-Title-Wrapper{
     width: 100%;
     height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
 }
 
-.Personal-Info-Edit-Button-Wrapper{
+.Personal-Info-Edit-Submit-Wrapper{
     width: 100%;
     height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 5px;
 }
 
-.Personal-Info-Edit-Button{
+.Personal-Info-Edit-Cancel-Button{
+    margin-right: 40px;
+    width: 150px;
+    height: 50px;
+    border: none;
+    background: #808080;
+    font-size: 20px;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Personal-Info-Edit-Save-Button{
     width: 150px;
     height: 50px;
     border: none;
@@ -108,79 +127,70 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Personal-Info-Form-Title{
+.Personal-Info-Edit-Form-Title{
     font-size: 40px;
     text-align: center;
 }
 
-.Personal-Info-First-Name-Label{
+.Personal-Info-Edit-First-Name-Label{
     margin-left: 20px;
-    font-size: 25px;
 }
 
-.Personal-Info-Last-Name-Label{
+.Personal-Info-Edit-Last-Name-Label{
     margin-left: 20px;
-    font-size: 25px;
 }
 
-.Personal-Info-Email-Label{
+.Personal-Info-Edit-Email-Label{
     margin-left: 20px;
-    font-size: 25px;
 }
 
-.Personal-Info-Weight-Label{
+.Personal-Info-Edit-Weight-Label{
     margin-left: 20px;
-    font-size: 25px;
 }
 
-.Personal-Info-Height-Label{
+.Personal-Info-Edit-Height-Label{
     margin-left: 20px;
-    font-size: 25px;
 }
 
-.Personal-Info-First-Name{
-    margin: 0;
+.Personal-Info-Edit-First-Name-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
-    font-size: 20px;
 }
 
-.Personal-Info-Last-Name{
-    margin: 0;
+.Personal-Info-Edit-Last-Name-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
-    font-size: 20px;
 }
 
-.Personal-Info-Email{
-    margin: 0;
+.Personal-Info-Edit-Email-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
-    font-size: 20px;
 }
 
-.Personal-Info-Weight{
-    margin: 0;
+.Personal-Info-Edit-Weight-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
-    font-size: 20px;
 }
 
-.Personal-Info-Height{
-    margin: 0;
+.Personal-Info-Edit-Height-Feet-Input{
     margin-left: 20px;
     width: 20%;
     justify-self: flex-start;
-    font-size: 20px;
+}
+
+.Personal-Info-Edit-Height-Inches-Input{
+    margin-left: 20px;
+    width: 20%;
+    justify-self: flex-start;
 }
 
 @media(max-width: 770px){
 
-    .Personal-Info-First-Name-Wrapper{
+    .Personal-Info-Edit-First-Name-Wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -188,7 +198,7 @@
         width: 100%;
     }
     
-    .Personal-Info-Last-Name-Wrapper{
+    .Personal-Info-Edit-Last-Name-Wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -196,7 +206,7 @@
         width: 100%;
     }
     
-    .Personal-Info-Email-Wrapper{
+    .Personal-Info-Edit-Email-Wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -204,7 +214,7 @@
         width: 100%;
     }
     
-    .Personal-Info-Weight-Wrapper{
+    .Personal-Info-Edit-Weight-Wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -212,7 +222,7 @@
         width: 100%;
     }
     
-    .Personal-Info-Height-Wrapper{
+    .Personal-Info-Edit-Height-Wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -220,77 +230,103 @@
         width: 100%;
     }
     
-    .Personal-Info-Height-Input-Wrapper{
+    .Personal-Info-Edit-Height-Input-Wrapper{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         width: 100%;
     }
 
-    .Personal-Info-Form-Title{
+    .Personal-Info-Edit-Form-Title{
         font-size: 30px;
     }
     
-    .Personal-Info-First-Name-Label{
+    .Personal-Info-Edit-First-Name-Label{
         font-size: 20px;
         margin-left: 0;
     }
     
-    .Personal-Info-Last-Name-Label{
+    .Personal-Info-Edit-Last-Name-Label{
         font-size: 20px;
         margin-left: 0;
     }
     
-    .Personal-Info-Email-Label{
+    .Personal-Info-Edit-Email-Label{
         font-size: 20px;
         margin-left: 0;
     }
     
-    .Personal-Info-Weight-Label{
+    .Personal-Info-Edit-Weight-Label{
         font-size: 20px;
         margin-left: 0;
     }
     
-    .Personal-Info-Height-Label{
+    .Personal-Info-Edit-Height-Label{
         font-size: 20px;
         margin-left: 0;
     }
     
-    .Personal-Info-First-Name{
+    .Personal-Info-Edit-First-Name-Input{
         font-size: 15px;
         text-align: center;
         margin-left: 0;
+        width: 70%;
     }
     
-    .Personal-Info-Last-Name{
+    .Personal-Info-Edit-Last-Name-Input{
         font-size: 15px;
         text-align: center;
         margin-left: 0;
+        width: 70%;
     }
     
-    .Personal-Info-Email{
+    .Personal-Info-Edit-Email-Input{
         font-size: 15px;
         text-align: center;
         margin-left: 0;
+        width: 70%;
     }
     
-    .Personal-Info-Weight{
+    .Personal-Info-Edit-Weight-Input{
         font-size: 15px;
         text-align: center;
         margin-left: 0;
+        width: 70%;
     }
     
-    .Personal-Info-Height{
+    .Personal-Info-Edit-Height-Feet-Input{
         font-size: 15px;
         text-align: center;
         margin-left: 0;
+        width: 30%;
+    }
+
+    .Personal-Info-Edit-Height-Inches-Input{
+        font-size: 15px;
+        text-align: center;
+        margin-left: 10px;
+        width: 30%;
     }
 }
 
 @media(max-height: 750px){
-    .Personal-Info-Form-Wrapper{
+    .Personal-Info-Edit-Form-Wrapper{
         height: 80%;
+    }
+}
+
+@media(max-height: 530px){
+    .Personal-Info-Edit-Wrapper{
+        margin-top: 100px;
+    }
+
+    .Personal-Info-Edit-Form-Wrapper{
+        height: auto;
+    }
+
+    .Personal-Info-Edit-Submit-Wrapper{
+        margin-top: 10px;
     }
 }
 
