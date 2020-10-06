@@ -14,6 +14,7 @@ import PersonalInfoEdit from './PersonalInfo/PersonalInfoEdit';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import Invite from './Invite/Invite';
 import Schedule from './Schedule/Schedule';
+import AdminHome from './Admin/AdminHome/AdminHome';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/personalEdit" component={PersonalInfoEdit} />
         <Route exact path="/invite" component={Invite} />
         <Route exact path="/authenticate" component={Authenticate} />
+        <Route exact path="/admin" component={AdminHome} />
       </Switch>
     </Router>
   );

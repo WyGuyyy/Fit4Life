@@ -23,8 +23,9 @@ class MMS_Title extends React.Component{
     render(){
 
         return(
-            <div className="MMS-Title-Wrapper" onClick={this.props.titleClickEvent}>
-                <h1 className="MMS-Title">Fit<span style={{color: "#6b4e00"}}>4</span>Life</h1>
+            <div className="MMS-Title-Wrapper-Admin" onClick={this.props.titleClickEvent}>
+                <h1 className="MMS-Title-Admin">Fit<span style={{color: "#6b4e00"}}>4</span>Life</h1>
+                <p className="MMS-Title-Admin-Symbol">ADMIN</p>
             </div>
         );
             

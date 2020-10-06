@@ -1,10 +1,10 @@
 import React from 'react';
-import './Header.css';
+import './AdminHeader.css';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MMS_Title from './MMS_Title';
 import Hamburger from './Hamburger';
-import lhs_logo from '../Assets/lhs_logo.png';
+import lhs_logo from '../../Assets/lhs_logo.png';
 
 class Header extends React.Component{
     constructor(props){
@@ -93,19 +93,19 @@ class Header extends React.Component{
     render(){
 
         return(
-                <div className="headerContainer" >
-                    <div className="headerWrapper">
-                        <div className="hamburgerContainer">
-                            <img src={lhs_logo} className="lhsLogo" height="75px" onClick={this.transformLogo.bind(this)}/>
+                <div className="headerContainer-Admin" >
+                    <div className="headerWrapper-Admin">
+                        <div className="hamburgerContainer-Admin">
+                            <img src={lhs_logo} className="lhsLogo-Admin" height="75px" onClick={this.transformLogo.bind(this)}/>
                         </div>
-                        <div className="Page-Title-Container">
-                            <p className="backArrowBackground">
-                                <i className="arrow up" onClick={() => this.goBack()}/>
+                        <div className="Page-Title-Container-Admin">
+                            <p className="backArrowBackground-Admin">
+                                <i className="arrow-Admin up-Admin" onClick={() => this.goBack()}/>
                             </p>
-                            <h1 className="pageTitle">{this.state.title}</h1>
+                            <h1 className="pageTitle-Admin">{this.state.title}</h1>
                         </div>
-                        <div className="MMS-Title-Container">
-                            <Link to="/" className="titleLink">
+                        <div className="MMS-Title-Container-Admin">
+                            <Link to="/" className="titleLink-Admin">
                                 <MMS_Title />
                             </Link>
                         </div>
