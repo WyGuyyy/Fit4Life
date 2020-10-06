@@ -4,11 +4,11 @@
 
 .scheduleWrapper{
     position: absolute;
-    top: 100px;
+    top: 140px;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 90vh;
+    height: 80vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
 
 .scheduleGrid{
     width: 90%;
-    height: 85%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,6 +32,8 @@
     justify-content: center;
     align-items: center;
     background: #7e7e7e;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Title-Text{
@@ -40,37 +42,49 @@
 
 .Schedule-Grid-Categories{
     width: 100%;
-    height: 10%;
+    height: 15%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: flex-start;
     background: #d3d3d3;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Days{
-    width: 10%;
-    height: 10%;
+    width: 15%;
+    height: 100%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Type{
     width: 20%;
-    height: 10%;
+    height: 100%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Intensity{
-    width: 20%;
-    height: 10%;
+    width: 25%;
+    height: 100%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Time{
     width: 20%;
-    height: 10%;
+    height: 100%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Frequency{
     width: 20%;
-    height: 10%;
+    height: 100%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart{
@@ -78,7 +92,7 @@
     height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -89,64 +103,84 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #d4d4d4;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart-Monday{
-    height: 15%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart-Tuesday{
-    height: 15%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart-Wednesday{
-    height: 15%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart-Thursday{
-    height: 15%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Chart-Friday{
-    height: 15%;
+    height: 20%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: #ffffff;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Schedule-Grid-Categories-Title{
     margin: 0;
     text-align: center;
+    font-size: 20px;
 }
 
 .Schedule-Grid-Categories-Text{
     margin: 0;
     text-align: center;
+    font-size: 12px;
 }
 
-.Schedule-Grid-WeekSelection-Wrapper{
+.Schedule-Week-Selection-Wrapper{
     width: 100%;
     display: flex;
     flex-direction: row;

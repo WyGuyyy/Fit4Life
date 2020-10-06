@@ -77,22 +77,22 @@ class Schedule extends React.Component{
 
                             <div className="Schedule-Grid-Chart">
                                 <div className="Schedule-Grid-Chart-Titles">
-                                    <ScheduleWeek height="10%" dayOfWeek="Title"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Title"/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Monday">
-                                    <ScheduleWeek height="30%" dayOfWeek="Monday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday"/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Tuesday">
-                                    <ScheduleWeek height="30%" dayOfWeek="Tuesday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday"/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Wednesday">
-                                    <ScheduleWeek height="30%" dayOfWeek="Wednesday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday"/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Thursday">
-                                    <ScheduleWeek height="30%" dayOfWeek="Thursday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday"/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Friday">
-                                    <ScheduleWeek height="30%" dayOfWeek="Friday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday"/>
                                 </div>
                             </div>
                         </div>

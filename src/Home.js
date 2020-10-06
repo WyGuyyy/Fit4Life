@@ -27,8 +27,8 @@ class Home extends React.Component{
         var btn = document.getElementById(event.target.id);
 
         this.props.history.push({
-            pathname: "/component",
-            state: {component: btn.innerHTML}
+            pathname: "/classroom",
+            state: {classroom: btn.innerHTML}
         });
     }
 
@@ -50,26 +50,22 @@ class Home extends React.Component{
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
                             <div className="homeFiller"></div>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
+                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
+                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
+                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
+                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
+                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
+                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
+                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
+                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
+                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
+                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
+                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
+                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
+                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
+                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
+                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
+                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
                         </div>
                     </div>
                 </div>

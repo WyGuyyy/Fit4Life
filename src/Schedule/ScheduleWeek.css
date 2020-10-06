@@ -1,19 +1,21 @@
 .ScheduleWeek-Row-Wrapper{
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    align-content: center;
-    background: #000000;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .ScheduleWeek-Day{
     height: 100%;
-    width: 10%;
-    background: #ffffff;
+    width: 15%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Type{
@@ -23,15 +25,19 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-THR{
     height: 100%;
-    width: 10%;
+    width: 5%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Max{
@@ -41,6 +47,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Sets{
@@ -50,6 +58,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Reps{
@@ -59,6 +69,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Weight{
@@ -68,6 +80,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-TimeOn{
@@ -77,6 +91,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-TimeOff{
@@ -86,6 +102,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Frequency{
@@ -95,6 +113,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px black;
+    border-style: solid;
 }
 
 .ScheduleWeek-Day-Content{

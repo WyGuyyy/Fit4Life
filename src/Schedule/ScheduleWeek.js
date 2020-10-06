@@ -20,7 +20,7 @@ class ScheduleWeek extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-
+        this.fillSchedule();
     }
 
     componentDidUpdate(){
@@ -29,6 +29,10 @@ class ScheduleWeek extends React.Component{
 
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
+        
+    }
+
+    fillSchedule(){
         
     }
 
@@ -44,31 +48,31 @@ class ScheduleWeek extends React.Component{
                     <p className="ScheduleWeek-Day-Content">{dayOfWeek}</p>
                 </div>
                 <div className="ScheduleWeek-Type">
-                    <p className="ScheduleWeek-Type-Content">Running</p>
+                    <p className="ScheduleWeek-Type-Content"></p>
                 </div>
                 <div className="ScheduleWeek-THR">
-                    <p className="ScheduleWeek-THR-Content">90</p>
+                    <p className="ScheduleWeek-THR-Content"></p>
                 </div>
                 <div className="ScheduleWeek-Max">
-                    <p className="ScheduleWeek-Max-Content">12</p>
+                    <p className="ScheduleWeek-Max-Content"></p>
                 </div>
                 <div className="ScheduleWeek-Sets">
-                    <p className="ScheduleWeek-Sets-Content">5</p>
+                    <p className="ScheduleWeek-Sets-Content"></p>
                 </div>
                 <div className="ScheduleWeek-Reps">
-                    <p className="ScheduleWeek-Reps-Content">10</p>
+                    <p className="ScheduleWeek-Reps-Content"></p>
                 </div>
                 <div className="ScheduleWeek-Weight">
-                    <p className="ScheduleWeek-Weight-Content">100</p>
+                    <p className="ScheduleWeek-Weight-Content"></p>
                 </div>
                 <div className="ScheduleWeek-TimeOn">
-                    <p className="ScheduleWeek-TimeOn-Content">60</p>
+                    <p className="ScheduleWeek-TimeOn-Content"></p>
                 </div>
                 <div className="ScheduleWeek-TimeOff">
-                    <p className="ScheduleWeek-TimeOff-Content">60</p>
+                    <p className="ScheduleWeek-TimeOff-Content"></p>
                 </div>
                 <div className="ScheduleWeek-Frequency">
-                    <p className="ScheduleWeek-Frequency-Content">Cardio</p>
+                    <p className="ScheduleWeek-Frequency-Content"></p>
                 </div>
             </div>                    
                                 

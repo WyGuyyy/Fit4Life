@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Home'
+import Classroom from './Classroom/Classroom';
 import Component from './Component/Component'
 import Exercise from './Exercise/Exercise'
 import Goal from './Goal/Goal'
@@ -19,6 +20,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/classroom" component={Classroom} />
         <Route exact path="/component" component={Component} />
         <Route exact path="/exercise" component={Exercise} />
         <Route exact path="/goal" component={Goal} />
