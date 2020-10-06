@@ -1,0 +1,138 @@
+.ScheduleWeek-Row-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    background: #000000;
+}
+
+.ScheduleWeek-Day{
+    height: 100%;
+    width: 10%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Type{
+    height: 100%;
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-THR{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Max{
+    height: 100%;
+    width: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Sets{
+    height: 100%;
+    width: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Reps{
+    height: 100%;
+    width: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Weight{
+    height: 100%;
+    width: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-TimeOn{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-TimeOff{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Frequency{
+    height: 100%;
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ScheduleWeek-Day-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Type-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-THR-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Max-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Sets-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Reps-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Weight-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-TimeOn-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-TimeOff-Content{
+    font-size: 20px;
+}
+
+.ScheduleWeek-Frequency-Content{
+    font-size: 20px;
+}   

@@ -1,0 +1,160 @@
+.scheduleContainer{
+
+}
+
+.scheduleWrapper{
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scheduleGrid{
+    width: 90%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Schedule-Grid-Title{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #7e7e7e;
+}
+
+.Schedule-Grid-Title-Text{
+    text-align: center;
+}
+
+.Schedule-Grid-Categories{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    background: #d3d3d3;
+}
+
+.Schedule-Grid-Categories-Days{
+    width: 10%;
+    height: 10%;
+}
+
+.Schedule-Grid-Categories-Type{
+    width: 20%;
+    height: 10%;
+}
+
+.Schedule-Grid-Categories-Intensity{
+    width: 20%;
+    height: 10%;
+}
+
+.Schedule-Grid-Categories-Time{
+    width: 20%;
+    height: 10%;
+}
+
+.Schedule-Grid-Categories-Frequency{
+    width: 20%;
+    height: 10%;
+}
+
+.Schedule-Grid-Chart{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Titles{
+    height: 5%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Monday{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Tuesday{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Wednesday{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Thursday{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Chart-Friday{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Grid-Categories-Title{
+    margin: 0;
+    text-align: center;
+}
+
+.Schedule-Grid-Categories-Text{
+    margin: 0;
+    text-align: center;
+}
+
+.Schedule-Grid-WeekSelection-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Schedule-Week-Selection{
+    width: 200px;
+}
+
