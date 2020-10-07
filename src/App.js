@@ -20,6 +20,11 @@ import ClassroomEditAdmin from './Admin/AdminHome/ClassroomEditAdmin';
 import AdminClassroom from './Admin/AdminClassroom/AdminClassroom';
 import ComponentCreateAdmin from './Admin/AdminClassroom/ComponentCreateAdmin';
 import ComponentEditAdmin from './Admin/AdminClassroom/ComponentEditAdmin';
+import AdminComponent from './Admin/AdminComponent/AdminComponent';
+import ExerciseCreateAdmin from './Admin/AdminComponent/ExerciseCreateAdmin';
+import ExerciseEditAdmin from './Admin/AdminComponent/ExerciseEditAdmin';
+import AdminStudent from './Admin/AdminStudent/AdminStudent';
+import StudentInviteAdmin from './Admin/AdminStudent/StudentInviteAdmin';
 
 function App() {
   return (
@@ -42,8 +47,13 @@ function App() {
         <Route exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
         <Route exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />
         <Route exact path="/classroomAdmin" component={AdminClassroom} />
-        <Route exact path="/componentCreateComponent" component={ClassroomCreateAdmin} />
-        <Route exact path="/componentEditAdmin" component={ClassroomEditAdmin} />
+        <Route exact path="/componentCreateAdmin" component={ComponentCreateAdmin} />
+        <Route exact path="/componentEditAdmin" component={ComponentEditAdmin} />
+        <Route exact path="/componentAdmin" component={AdminComponent} />
+        <Route exact path="/exerciseCreateAdmin" component={ExerciseCreateAdmin} />
+        <Route exact path="/exerciseEditAdmin" component={ExerciseEditAdmin} />
+        <Route exact path="/studentAdmin" component={AdminStudent} />
+        <Route exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
       </Switch>
     </Router>
   );

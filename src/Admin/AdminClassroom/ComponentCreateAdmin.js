@@ -39,7 +39,7 @@ class ComponentCreateAdmin extends React.Component{
                     <div className="Component-Create-Wrapper-Admin">
                         <div className="Component-Create-Form-Wrapper-Admin">
                             <div className="Component-Create-Title-Wrapper-Admin">
-                                <label className="Component-Create-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Create-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Classroom-Create-Title-Input-Admin" placeholder="Title..."/>
                             </div>
                             <div className="Component-Create-Button-Area-Admin"> 
                                 <button className="Component-Create-Save-Button-Admin">Create</button>

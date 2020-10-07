@@ -1,10 +1,10 @@
-.componentContainer-Admin{
+.exerciseContainer-Admin{
     width: 100%;
     height: 100%;
     background: #000000;
 }
 
-.componentWrapper-Admin{
+.exerciseWrapper-Admin{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -19,22 +19,22 @@
     overflow-y: scroll;
 }
 
-#componentWrapper-Admin::-webkit-scrollbar {
+#exerciseWrapper-Admin::-webkit-scrollbar {
     width: 15px;
     background-color: #F5F5F5;
     visibility: hidden;
   } 
 
-#componentWrapper-Admin::-webkit-scrollbar-thumb{
+#exerciseWrapper-Admin::-webkit-scrollbar-thumb{
     background-color: black;
 }
   
-#componentWrapper-Admin::-webkit-scrollbar-track {
+#exerciseWrapper-Admin::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     background-color: #F5F5F5;
 }
 
-.componentList-Admin{
+.exerciseList-Admin{
     width: 100%;
     height: 100%;
     background: black;
@@ -44,13 +44,13 @@
     align-items: center;
 }
 
-.componentFiller-Admin{
+.exerciseFiller-Admin{
     width: 100%;
     min-height: 100px;
     background: black;
 }
 
-.Component-List-Item-Admin{
+.Exercise-List-Item-Admin{
     width:100%;
     min-height: 100px;
     background: #c08d00;
@@ -62,7 +62,7 @@
     align-items: center;
 }
 
-.Component-List-Item-Admin{
+.Exercise-List-Item-Admin{
     width:100%;
     min-height: 100px;
     background: #bb911f;
@@ -74,7 +74,7 @@
     align-items: center;
 }
 
-.Component-Grid-Cell-Admin{
+.Exercise-Grid-Cell-Admin{
     width: 24vw;
     height: 100%;
     display: flex;
@@ -83,7 +83,7 @@
     align-items: center;
 }
 
-.Component-List-Item-Title-Admin{
+.Exercise-List-Item-Title-Admin{
     font-size: 30px;
     width: 100%;
     text-align: center;
@@ -93,7 +93,7 @@
     margin: 0;
 }
 
-.Component-List-Item-Student-Admin{
+.Exercise-List-Item-Student-Admin{
     font-size: 30px;
     width: 100%;
     text-align: center;
@@ -102,7 +102,7 @@
     text-overflow: ellipsis;
 }
 
-.Component-List-Item-Student-Button-Admin{
+.Exercise-List-Item-Student-Button-Admin{
     background: #ffffff;
     font-size: 30px;
     transition-duration: .5s;
@@ -111,11 +111,11 @@
     width: 125px;
 }
 
-.Component-List-Item-Student-Button-Admin:hover{
+.Exercise-List-Item-Student-Button-Admin:hover{
     background: #b1b0b0;
 }
 
-.Component-List-Item-Edit-Button-Admin{
+.Exercise-List-Item-Edit-Button-Admin{
     background: #ffffff;
     font-size: 30px;
     transition-duration: .5s;
@@ -124,11 +124,11 @@
     width: 125px;
 }
 
-.Component-List-Item-Edit-Button-Admin:hover{
+.Exercise-List-Item-Edit-Button-Admin:hover{
     background: #b1b0b0;
 }
 
-.Component-List-Item-Delete-Button-Admin{
+.Exercise-List-Item-Delete-Button-Admin{
     background: #ffffff;
     font-size: 30px;
     transition-duration: .5s;
@@ -137,11 +137,11 @@
     width: 125px;
 }
 
-.Component-List-Item-Delete-Button-Admin:hover{
+.Exercise-List-Item-Delete-Button-Admin:hover{
     background: #b1b0b0;
 }
 
-.Component-Create-Button-Admin{
+.Exercise-Create-Button-Admin{
     height: 50px;
     width: 75px;
     border: none;
@@ -157,7 +157,7 @@
 
 @media(max-width: 1024px){
 
-    .Component-List-Item-Admin{
+    .Exercise-List-Item-Admin{
         width:100%;
         min-height: 100px;
         background: #c08d00;
@@ -172,15 +172,15 @@
         align-items: center;
     }
 
-    .Component-Grid-Cell-Admin{
+    .Exercise-Grid-Cell-Admin{
         width: 47vw;
     }
 
-    .Component-List-Item-Title-Admin{
+    .Exercise-List-Item-Title-Admin{
         font-size: 20px;
     }
 
-    .Component-List-Item-Student-Button-Admin{
+    .Exercise-List-Item-Student-Button-Admin{
         grid-area: student;
         background: #ffffff;
         font-size: 20px;
@@ -189,7 +189,7 @@
         box-shadow: 2px 2px 10px black;
     }
     
-    .Component-List-Item-Edit-Button-Admin{
+    .Exercise-List-Item-Edit-Button-Admin{
         background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
@@ -197,7 +197,7 @@
         box-shadow: 2px 2px 10px black;
     }
     
-    .Component-List-Item-Delete-Button-Admin{
+    .Exercise-List-Item-Delete-Button-Admin{
         background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
@@ -205,7 +205,7 @@
         box-shadow: 2px 2px 10px black;
     }
 
-    .Component-Create-Button-Admin{
+    .Exercise-Create-Button-Admin{
         height: 35px;
         width: 60px;
         bottom: 10px;
@@ -213,22 +213,22 @@
         font-size: 20px;
     }
 
-    .Component-Grid-Cell-Title-Admin{
+    .Exercise-Grid-Cell-Title-Admin{
         grid-area: title;
         height: 50px;
     }
 
-    .Component-Grid-Cell-Student-Admin{
+    .Exercise-Grid-Cell-Student-Admin{
         grid-area: student;
         height: 50px;
     }
 
-    .Component-Grid-Cell-Edit-Admin{
+    .Exercise-Grid-Cell-Edit-Admin{
         grid-area: edit;
         height: 50px;
     }
 
-    .Component-Grid-Cell-Delete-Admin{
+    .Exercise-Grid-Cell-Delete-Admin{
         grid-area: delete;
         height: 50px;
     }
@@ -237,11 +237,11 @@
 }
 
 @media(max-width: 630px){
-    .Component-List-Item-Title-Admin{
+    .Exercise-List-Item-Title-Admin{
         font-size: 13px;
     }
 
-    .Component-List-Item-Student-Button-Admin{
+    .Exercise-List-Item-Student-Button-Admin{
         background: #ffffff;
         font-size: 13px;
         transition-duration: .5s;
@@ -249,7 +249,7 @@
         box-shadow: 2px 2px 10px black;
     }
     
-    .Component-List-Item-Edit-Button-Admin{
+    .Exercise-List-Item-Edit-Button-Admin{
         background: #ffffff;
         font-size: 13px;
         transition-duration: .5s;
@@ -257,7 +257,7 @@
         box-shadow: 2px 2px 10px black;
     }
     
-    .Component-List-Item-Delete-Button-Admin{
+    .Exercise-List-Item-Delete-Button-Admin{
         background: #ffffff;
         font-size: 13px;
         transition-duration: .5s;
@@ -265,7 +265,7 @@
         box-shadow: 2px 2px 10px black;
     }
 
-    .Component-Create-Button-Admin{
+    .Exercise-Create-Button-Admin{
         height: 35px;
         width: 60px;
         bottom: 10px;

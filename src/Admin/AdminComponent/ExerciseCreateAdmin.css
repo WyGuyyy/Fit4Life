@@ -1,7 +1,7 @@
-.Component-Create-Container-Admin{
+.Exercise-Create-Container-Admin{
 }
 
-.Component-Create-Wrapper-Admin{
+.Exercise-Create-Wrapper-Admin{
     position: absolute;
     top: 0px;
     bottom: 0;
@@ -16,7 +16,7 @@
     overflow-y: scroll;
 }
 
-.Component-Create-Form-Wrapper-Admin{
+.Exercise-Create-Form-Wrapper-Admin{
     width: 50%;
     height: 30%;
     margin-top: 100px;
@@ -28,7 +28,7 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Create-Title-Wrapper-Admin{
+.Exercise-Create-Title-Wrapper-Admin{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,12 +36,12 @@
     height: 70%;
 }
 
-.Component-Create-Title-Label-Admin{
+.Exercise-Create-Title-Label-Admin{
     font-size: 40px;
     text-align: center;
 }
 
-.Component-Create-Title-Input-Admin{
+.Exercise-Create-Title-Input-Admin{
     height: 30px;
     width: 350px;
     border: none;
@@ -49,14 +49,14 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Create-Button-Area-Admin{
+.Exercise-Create-Button-Area-Admin{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.Component-Create-Save-Button-Admin{
+.Exercise-Create-Save-Button-Admin{
     width: 100px;
     height: 30px;
     background: #ac8e3b;
@@ -67,11 +67,11 @@
     margin-right: 20px;
 }
 
-.Component-Create-Save-Button-Admin:hover{
+.Exercise-Create-Save-Button-Admin:hover{
     background:#f5ca55;
 }
 
-.Component-Create-Cancel-Button-Admin{
+.Exercise-Create-Cancel-Button-Admin{
     width: 100px;
     height: 30px;
     background:#524626;
@@ -81,49 +81,49 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Create-Cancel-Button-Admin:hover{
+.Exercise-Create-Cancel-Button-Admin:hover{
     background: #f5ca55;
 }
 
 
 @media(max-width: 860px){
     
-    .Component-Create-Form-Wrapper-Admin{
+    .Exercise-Create-Form-Wrapper-Admin{
         width: 80%;
     }
 
-    .Component-Create-Title-Wrapper-Admin{
+    .Exercise-Create-Title-Wrapper-Admin{
         justify-content: center;
         padding: 5px;
     }
 
-    .Component-Create-Title-Admin{
+    .Exercise-Create-Title-Admin{
         margin-left: 0px;
     }
 
-    .Component-Create-Title-Label-Admin{
+    .Exercise-Create-Title-Label-Admin{
         font-size: 40px;
     }
      
-    .Component-Create-Title-Input-Admin{
+    .Exercise-Create-Title-Input-Admin{
         width: 80%;
     }
 }
 
 @media(max-width: 530px){
 
-    .Component-Create-Form-Wrapper-Admin{
+    .Exercise-Create-Form-Wrapper-Admin{
         width: 90%;
     }
 
-    .Component-Create-Title-Label-Admin{
+    .Exercise-Create-Title-Label-Admin{
         font-size: 35px;
     }
 
 }
 
 @media(max-height: 750px){
-    .Component-Create-Title-Label-Admin{
+    .Exercise-Create-Title-Label-Admin{
         font-size: 30px;
     }
 

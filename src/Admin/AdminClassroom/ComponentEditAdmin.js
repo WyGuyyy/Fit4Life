@@ -39,7 +39,7 @@ class ComponentEditAdmin extends React.Component{
                     <div className="Component-Edit-Wrapper-Admin">
                         <div className="Component-Edit-Form-Wrapper-Admin">
                             <div className="Component-Edit-Title-Wrapper-Admin">
-                                <label className="Component-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Classroom-Edit-Title-Input-Admin" placeholder="Title..."/>
                             </div>
                             <div className="Component-Edit-Button-Area-Admin"> 
                                 <button className="Component-Edit-Save-Button-Admin">Save</button>

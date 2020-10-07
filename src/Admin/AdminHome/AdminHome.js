@@ -140,6 +140,13 @@ class AdminHome extends React.Component{
         }
     }
 
+    goToClassroomStudents(){
+        this.props.history.push({
+            pathname: "/studentAdmin",
+            state: {goBack: true}
+        });
+    }
+
     deleteClassroom(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];

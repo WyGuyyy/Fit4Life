@@ -1,7 +1,7 @@
-.Component-Edit-Container-Admin{
+.Exercise-Edit-Container-Admin{
 }
 
-.Component-Edit-Wrapper-Admin{
+.Exercise-Edit-Wrapper-Admin{
     position: absolute;
     top: 0px;
     bottom: 0;
@@ -16,7 +16,7 @@
     overflow-y: scroll;
 }
 
-.Component-Edit-Form-Wrapper-Admin{
+.Exercise-Edit-Form-Wrapper-Admin{
     width: 50%;
     height: 30%;
     margin-top: 100px;
@@ -28,7 +28,7 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Edit-Title-Wrapper-Admin{
+.Exercise-Edit-Title-Wrapper-Admin{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,12 +36,12 @@
     height: 70%;
 }
 
-.Component-Edit-Title-Label-Admin{
+.Exercise-Edit-Title-Label-Admin{
     font-size: 40px;
     text-align: center;
 }
 
-.Component-Edit-Title-Input-Admin{
+.Exercise-Edit-Title-Input-Admin{
     height: 30px;
     width: 350px;
     border: none;
@@ -49,14 +49,14 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Edit-Button-Area-Admin{
+.Exercise-Edit-Button-Area-Admin{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.Component-Edit-Save-Button-Admin{
+.Exercise-Edit-Save-Button-Admin{
     width: 100px;
     height: 30px;
     background: #ac8e3b;
@@ -67,11 +67,11 @@
     margin-right: 20px;
 }
 
-.Component-Edit-Save-Button-Admin:hover{
+.Exercise-Edit-Save-Button-Admin:hover{
     background:#f5ca55;
 }
 
-.Component-Edit-Cancel-Button-Admin{
+.Exercise-Edit-Cancel-Button-Admin{
     width: 100px;
     height: 30px;
     background:#524626;
@@ -81,49 +81,49 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Component-Edit-Cancel-Button-Admin:hover{
+.Exercise-Edit-Cancel-Button-Admin:hover{
     background: #f5ca55;
 }
 
 
 @media(max-width: 860px){
     
-    .Component-Edit-Form-Wrapper-Admin{
+    .Exercise-Edit-Form-Wrapper-Admin{
         width: 80%;
     }
 
-    .Component-Edit-Title-Wrapper-Admin{
+    .Exercise-Edit-Title-Wrapper-Admin{
         justify-content: center;
         padding: 5px;
     }
 
-    .Component-Edit-Title-Admin{
+    .Exercise-Edit-Title-Admin{
         margin-left: 0px;
     }
 
-    .Component-Edit-Title-Label-Admin{
+    .Exercise-Edit-Title-Label-Admin{
         font-size: 40px;
     }
      
-    .Component-Edit-Title-Input-Admin{
+    .Exercise-Edit-Title-Input-Admin{
         width: 80%;
     }
 }
 
 @media(max-width: 530px){
 
-    .Component-Edit-Form-Wrapper-Admin{
+    .Exercise-Edit-Form-Wrapper-Admin{
         width: 90%;
     }
 
-    .Component-Edit-Title-Label-Admin{
+    .Exercise-Edit-Title-Label-Admin{
         font-size: 35px;
     }
 
 }
 
 @media(max-height: 750px){
-    .Component-Edit-Title-Label-Admin{
+    .Exercise-Edit-Title-Label-Admin{
         font-size: 30px;
     }
 
