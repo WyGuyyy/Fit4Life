@@ -11,12 +11,13 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     overflow-y: scroll;
+    background: #6b4e00;
 }
 
 #studentInviteWrapper-Admin::-webkit-scrollbar {
@@ -37,7 +38,7 @@
 .studentInviteList-Admin{
     width: 100%;
     height: 100%;
-    background: black;
+    background: #6b4e00;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -55,7 +56,7 @@
     min-height: 100px;
     background: #c08d00;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
     justify-items: center;
     align-content: center;
@@ -67,7 +68,7 @@
     min-height: 100px;
     background: #bb911f;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
     justify-items: center;
     align-content: center;
@@ -102,7 +103,7 @@
     text-overflow: ellipsis;
 }
 
-.Student-Invite-List-Item-Student-Button-Admin{
+/*.Student-Invite-List-Item-Student-Button-Admin{
     background: #ffffff;
     font-size: 30px;
     transition-duration: .5s;
@@ -126,9 +127,9 @@
 
 .Student-Invite-List-Item-Edit-Button-Admin:hover{
     background: #b1b0b0;
-}
+}*/
 
-.Student-Invite-List-Item-Delete-Button-Admin{
+.Student-Invite-List-Item-Invite-Button-Admin{
     background: #ffffff;
     font-size: 30px;
     transition-duration: .5s;
@@ -137,7 +138,7 @@
     width: 125px;
 }
 
-.Student-Invite-List-Item-Delete-Button-Admin:hover{
+.Student-Invite-List-Item-Invite-Button-Admin:hover{
     background: #b1b0b0;
 }
 
@@ -155,6 +156,41 @@
     box-shadow: 2px 2px 10px black;
 }*/
 
+.Student-Invite-Search-Area{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    background: #000000;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.Student-Invite-Search-Box{
+    width: 300px;
+    height: 25px;
+    margin-right: 20px;   
+    border: none;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.Student-Invite-Search-Button{
+    width: 150px;
+    height: 35px;
+    border: none;
+    background: #a5811f;
+    font-size: 20px;
+    transition-duration: .5s;
+}
+
+.Student-Invite-Search-Button:hover{
+    background:#eeba2d;
+}
+
 @media(max-width: 1024px){
 
     .Student-Invite-List-Item-Admin{
@@ -164,8 +200,7 @@
         display: grid;
         grid-template-areas: 1fr 1fr;
         grid-template-areas: 
-        'title edit'
-        'title delete';
+        'title invite';
         justify-content: center;
         justify-items: center;
         align-content: center;
@@ -180,7 +215,7 @@
         font-size: 20px;
     }
 
-    .Student-Invite-List-Item-Student-Button-Admin{
+    /*.Student-Invite-List-Item-Student-Button-Admin{
         grid-area: student;
         background: #ffffff;
         font-size: 20px;
@@ -195,9 +230,9 @@
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
-    }
+    }*/
     
-    .Student-Invite-List-Item-Delete-Button-Admin{
+    .Student-Invite-List-Item-Invite-Button-Admin{
         background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
@@ -218,7 +253,7 @@
         height: 50px;
     }
 
-    .Student-Invite-Grid-Cell-Student-Admin{
+    /*.Student-Invite-Grid-Cell-Student-Admin{
         grid-area: student;
         height: 50px;
     }
@@ -226,10 +261,10 @@
     .Student-Invite-Grid-Cell-Edit-Admin{
         grid-area: edit;
         height: 50px;
-    }
+    }*/
 
-    .Student-Invite-Grid-Cell-Delete-Admin{
-        grid-area: delete;
+    .Student-Invite-Grid-Cell-Invite-Admin{
+        grid-area: invite;
         height: 50px;
     }
     
@@ -273,6 +308,29 @@
         font-size: 20px;
     }*/
 
+}
+
+@media(max-width: 550px){
+
+    .studentInviteWrapper-Admin{
+        height: 75%;
+    }
+
+    .Student-Invite-Search-Area{
+        display: flex;
+        flex-direction: column;
+        height: 25%;
+    }
+
+    .Student-Invite-Search-Box{
+        width: 90%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .Student-Invite-Search-Button{
+        width: 70%;
+    }
 }
 
 @media(max-width: 319px){

@@ -15,7 +15,7 @@ class StudentInviteAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        this.fillStudents();
+        
     }
 
     componentWillUnmount(){
@@ -27,16 +27,16 @@ class StudentInviteAdmin extends React.Component{
         var list = document.getElementById("studentInviteList-Admin");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        for(count = 0; count < 2; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
-            var listEditButton = document.createElement("button");
-            var listDeleteButton = document.createElement("button");
+            //var listEditButton = document.createElement("button");
+            var listInviteButton = document.createElement("button");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
-            var cell3 = document.createElement("div");
+            //var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
             listItem.classList.add("Student-Invite-List-Item-Admin");
@@ -49,10 +49,10 @@ class StudentInviteAdmin extends React.Component{
             cell1.classList.add("Student-Invite-Grid-Cell-Title-Admin");
             /*cell2.classList.add("Exercise-Grid-Cell-Admin");
             cell2.classList.add("Exercise-Grid-Cell-Student-Admin");*/
-            cell3.classList.add("Student-Invite-Grid-Cell-Admin");
-            cell3.classList.add("Student-Invite-Grid-Cell-Edit-Admin");
+            /*cell3.classList.add("Student-Invite-Grid-Cell-Admin");
+            cell3.classList.add("Student-Invite-Grid-Cell-Edit-Admin");*/
             cell4.classList.add("Student-Invite-Grid-Cell-Admin");
-            cell4.classList.add("Student-Invite-Grid-Cell-Delete-Admin");
+            cell4.classList.add("Student-Invite-Grid-Cell-Invite-Admin");
 
             listItemTitle.classList.add("Student-Invite-List-Item-Title-Admin");
             listItemTitle.textContent = "Student" + count;
@@ -65,24 +65,24 @@ class StudentInviteAdmin extends React.Component{
             listStudentButton.title = "Exercise";*/
             //listStudentButton.onclick = (e) => this.goToClassroomStudents({event: e, id: listEditButton.id});
 
-            listEditButton.classList.add("Student-Invite-List-Item-Edit-Button-Admin");
+            /*listEditButton.classList.add("Student-Invite-List-Item-Edit-Button-Admin");
             listEditButton.textContent = "Edit";
             listEditButton.id = "studentInviteListItemEdit-" + count + "-Admin";
-            listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});
+            listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});*/
 
-            listDeleteButton.classList.add("Student-Invite-List-Item-Delete-Button-Admin");
-            listDeleteButton.textContent = "Delete";
-            listDeleteButton.id = "studentInviteListItemDelete-" + count + "-Admin";
-            listDeleteButton.onclick = (e) => this.deleteExercise({event: e, id: listDeleteButton.id});
+            listInviteButton.classList.add("Student-Invite-List-Item-Invite-Button-Admin");
+            listInviteButton.textContent = "Invite";
+            listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
+            listInviteButton.onclick = (e) => this.inviteStudent({event: e, id: listInviteButton.id});
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
-            cell3.appendChild(listEditButton);
-            cell4.appendChild(listDeleteButton);
+            //cell3.appendChild(listEditButton);
+            cell4.appendChild(listInviteButton);
 
             listItem.appendChild(cell1);
             //listItem.appendChild(cell2);
-            listItem.appendChild(cell3);
+            //listItem.appendChild(cell3);
             listItem.appendChild(cell4);
 
             listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
@@ -114,6 +114,14 @@ class StudentInviteAdmin extends React.Component{
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
             console.log(classroomList.childNodes[rowCount].style.background);
         }
+    }
+
+    searchStudent(eventObj){
+        this.fillStudents();
+    }
+
+    inviteStudent(eventObj){
+
     }
 
     /*goToExerciseCreate(eventObj){
@@ -173,7 +181,7 @@ class StudentInviteAdmin extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Student Invite" goBack={false} customClick={this.goBack.bind(this)}/>
-                <div className="homeStudentInvite-Admin">
+                <div className="studentInviteContainer-Admin">
                     <AdminPopout />
                     <div className="studentInviteWrapper-Admin" id="studentInviteWrapper-Admin">
                         <div className="studentInviteList-Admin" id="studentInviteList-Admin">
@@ -181,6 +189,10 @@ class StudentInviteAdmin extends React.Component{
                             
                         </div>
                     </div>
+                </div>
+                <div className="Student-Invite-Search-Area">
+                        <input className="Student-Invite-Search-Box" type="text" placeholder="Student Name..."/>
+                        <button className="Student-Invite-Search-Button" onClick={(e) => this.searchStudent(e)}>Search</button>
                 </div>
             </Fragment>
         );
