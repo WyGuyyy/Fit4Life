@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import './AdminHome.css';
+import './AdminClassroom.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
 import { Link } from 'react-router-dom';
 
-class AdminHome extends React.Component{
+class AdminClassroom extends React.Component{
     constructor(props){
         super(props);
 
@@ -15,16 +15,16 @@ class AdminHome extends React.Component{
     }
     
     componentDidMount(){ 
-        this.fillClassrooms();
+        this.fillComponents();
     }
 
     componentWillUnmount(){
         
     }
 
-    fillClassrooms(){
+    fillComponents(){
 
-        var list = document.getElementById("classroomList-Admin");
+        var list = document.getElementById("componentList-Admin");
         var count = 0;
 
         for(count = 0; count < 10; count++){
@@ -39,40 +39,40 @@ class AdminHome extends React.Component{
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
-            listItem.classList.add("Classroom-List-Item-Admin");
-            listItem.id = "classroomListItem-" + count + "-Admin";
+            listItem.classList.add("Component-List-Item-Admin");
+            listItem.id = "componentListItem-" + count + "-Admin";
             listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
             listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
             listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
-            cell1.classList.add("Classroom-Grid-Cell-Admin");
-            cell1.classList.add("Classroom-Grid-Cell-Title-Admin");
-            cell2.classList.add("Classroom-Grid-Cell-Admin");
-            cell2.classList.add("Classroom-Grid-Cell-Student-Admin");
-            cell3.classList.add("Classroom-Grid-Cell-Admin");
-            cell3.classList.add("Classroom-Grid-Cell-Edit-Admin");
-            cell4.classList.add("Classroom-Grid-Cell-Admin");
-            cell4.classList.add("Classroom-Grid-Cell-Delete-Admin");
+            cell1.classList.add("Component-Grid-Cell-Admin");
+            cell1.classList.add("Component-Grid-Cell-Title-Admin");
+            cell2.classList.add("Component-Grid-Cell-Admin");
+            cell2.classList.add("Component-Grid-Cell-Student-Admin");
+            cell3.classList.add("Component-Grid-Cell-Admin");
+            cell3.classList.add("Component-Grid-Cell-Edit-Admin");
+            cell4.classList.add("Component-Grid-Cell-Admin");
+            cell4.classList.add("Component-Grid-Cell-Delete-Admin");
 
-            listItemTitle.classList.add("Classroom-List-Item-Title-Admin");
-            listItemTitle.textContent = "Classroom" + count;
-            listItemTitle.id = "classroomListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Classroom-" + count
+            listItemTitle.classList.add("Component-List-Item-Title-Admin");
+            listItemTitle.textContent = "Component" + count;
+            listItemTitle.id = "componentListItemTitle-" + count + "-Admin";
+            listItemTitle.title = "Component-" + count
 
-            listStudentButton.classList.add("Classroom-List-Item-Student-Button-Admin");
+            listStudentButton.classList.add("Component-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
-            listStudentButton.id = "classroomListItemStudents-" + count + "-Admin";
+            listStudentButton.id = "componentListItemStudents-" + count + "-Admin";
             listStudentButton.title = "Students";
             listStudentButton.onclick = (e) => this.goToClassroomStudents({event: e, id: listEditButton.id});
 
-            listEditButton.classList.add("Classroom-List-Item-Edit-Button-Admin");
+            listEditButton.classList.add("Component-List-Item-Edit-Button-Admin");
             listEditButton.textContent = "Edit";
-            listEditButton.id = "classroomListItemEdit-" + count + "-Admin";
+            listEditButton.id = "componentListItemEdit-" + count + "-Admin";
             listEditButton.onclick = (e) => this.goToClassroomEdit({event: e, id: listEditButton.id});
 
-            listDeleteButton.classList.add("Classroom-List-Item-Delete-Button-Admin");
+            listDeleteButton.classList.add("Component-List-Item-Delete-Button-Admin");
             listDeleteButton.textContent = "Delete";
-            listDeleteButton.id = "classroomListItemDelete-" + count + "-Admin";
+            listDeleteButton.id = "componentListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.deleteClassroom({event: e, id: listDeleteButton.id});
 
             cell1.appendChild(listItemTitle);
@@ -98,7 +98,7 @@ class AdminHome extends React.Component{
     }
 
     returnListItemBackground(id){
-        var classroomList = document.getElementById("classroomList-Admin");
+        var classroomList = document.getElementById("componentList-Admin");
         this.recolorRows(classroomList);
 
         /*var num = id.split("-")[1];
@@ -118,23 +118,23 @@ class AdminHome extends React.Component{
 
     goToClassroomCreate(eventObj){
         this.props.history.push({
-            pathname: "/classroomCreateAdmin",
+            pathname: "/componentCreateAdmin",
             state: {goBack: true}
         });
     }
 
     goToClassroomEdit(eventObj){
         this.props.history.push({
-            pathname: "/classroomEditAdmin",
+            pathname: "/componentEditAdmin",
             state: {goBack: true}
         });
     }
 
     goToClassroomComponents(eventObj){
 
-        if(!(eventObj.event.target.classList[0].includes("Classroom-List-Item-Student-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Classroom-List-Item-Edit-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Classroom-List-Item-Delete-Button-Admin"))){
+        if(!(eventObj.event.target.classList[0].includes("Component-List-Item-Student-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Edit-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Delete-Button-Admin"))){
             this.props.history.push({
-                pathname: "/classroomAdmin",
+                pathname: "/componentAdmin",
                 state: {goalID: eventObj.id, goBack: true}
             });
         }
@@ -146,11 +146,11 @@ class AdminHome extends React.Component{
 
         var count = 0;
 
-        var goalList = document.getElementById("classroomList-Admin");
+        var goalList = document.getElementById("componentList-Admin");
         var listChildren = goalList.childNodes;
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("classroomListItem-" + idNum + "-Admin") === 0){
+            if(listChildren[count].id.localeCompare("componentListItem-" + idNum + "-Admin") === 0){
                 goalList.removeChild(listChildren[count]); 
                 break;
             }
@@ -171,13 +171,13 @@ class AdminHome extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Admin Home" goBack={false} customClick={this.goBack.bind(this)}/>
-                <div className="homeContainer">
+                <AdminHeader title="Admin Component" goBack={false} customClick={this.goBack.bind(this)}/>
+                <div className="homeComponent">
                     <AdminPopout />
-                    <button className="Classroom-Create-Button-Admin" title="Create Classroom" onClick={(e)=>this.goToClassroomCreate({event: e})}>+</button>
-                    <div className="classroomWrapper-Admin" id="classroomWrapper-Admin">
-                        <div className="classroomList-Admin" id="classroomList-Admin">
-                            <div className="classroomFiller-Admin"></div>
+                    <button className="Component-Create-Button-Admin" title="Create Component" onClick={(e)=>this.goToClassroomCreate({event: e})}>+</button>
+                    <div className="componentWrapper-Admin" id="componentWrapper-Admin">
+                        <div className="componentList-Admin" id="componentList-Admin">
+                            <div className="componentFiller-Admin"></div>
                             
                         </div>
                     </div>
@@ -188,7 +188,7 @@ class AdminHome extends React.Component{
     }
 }
 
-export default AdminHome;
+export default AdminClassroom;
 
 
 //"react-router-dom": "^6.0.0-alpha.1",

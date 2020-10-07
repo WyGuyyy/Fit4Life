@@ -31,7 +31,7 @@ class Header extends React.Component{
     }
 
     transformLogo(){
-        var logo = document.getElementsByClassName("lhsLogo")[0];
+        var logo = document.getElementsByClassName("lhsLogo-Admin")[0];
 
         console.log(logo);
 
@@ -58,9 +58,9 @@ class Header extends React.Component{
 
     openMenu(){
 
-        var popout = document.getElementsByClassName("popoutContainer")[0];
-        popout.classList.remove("popoutWrapper-goUp");
-        popout.classList.add("popoutWrapper-goDown");
+        var popout = document.getElementsByClassName("popoutContainer-Admin")[0];
+        popout.classList.remove("popoutWrapper-goUp-Admin");
+        popout.classList.add("popoutWrapper-goDown-Admin");
         //
         //popout.style.visibility = "visbile";
         /*popout.style.transform = "scale(1)";
@@ -71,15 +71,15 @@ class Header extends React.Component{
     }
 
     closeMenu(){
-        var popout = document.getElementsByClassName("popoutContainer")[0];
-        popout.classList.remove("popoutWrapper-goDown");
-        popout.classList.add("popoutWrapper-goUp");
+        var popout = document.getElementsByClassName("popoutContainer-Admin")[0];
+        popout.classList.remove("popoutWrapper-goDown-Admin");
+        popout.classList.add("popoutWrapper-goUp-Admin");
         //popout.className = popout.className;
         //popout.style.visibility = "hidden";
     }
 
     goToHome(){
-        this.props.history.push('/');
+        this.props.history.push('/admin');
     }
 
     goBack(){ //This isnt working, start here next time
@@ -100,12 +100,12 @@ class Header extends React.Component{
                         </div>
                         <div className="Page-Title-Container-Admin">
                             <p className="backArrowBackground-Admin">
-                                <i className="arrow-Admin up-Admin" onClick={() => this.goBack()}/>
+                                <i className="arrow-Admin up-Admin" onClick={this.props.customClick}/>
                             </p>
                             <h1 className="pageTitle-Admin">{this.state.title}</h1>
                         </div>
                         <div className="MMS-Title-Container-Admin">
-                            <Link to="/" className="titleLink-Admin">
+                            <Link to="/admin" className="titleLink-Admin">
                                 <MMS_Title />
                             </Link>
                         </div>

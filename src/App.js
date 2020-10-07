@@ -15,6 +15,11 @@ import PersonalInfo from './PersonalInfo/PersonalInfo';
 import Invite from './Invite/Invite';
 import Schedule from './Schedule/Schedule';
 import AdminHome from './Admin/AdminHome/AdminHome';
+import ClassroomCreateAdmin from './Admin/AdminHome/ClassroomCreateAdmin';
+import ClassroomEditAdmin from './Admin/AdminHome/ClassroomEditAdmin';
+import AdminClassroom from './Admin/AdminClassroom/AdminClassroom';
+import ComponentCreateAdmin from './Admin/AdminClassroom/ComponentCreateAdmin';
+import ComponentEditAdmin from './Admin/AdminClassroom/ComponentEditAdmin';
 
 function App() {
   return (
@@ -34,6 +39,11 @@ function App() {
         <Route exact path="/invite" component={Invite} />
         <Route exact path="/authenticate" component={Authenticate} />
         <Route exact path="/admin" component={AdminHome} />
+        <Route exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
+        <Route exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />
+        <Route exact path="/classroomAdmin" component={AdminClassroom} />
+        <Route exact path="/componentCreateComponent" component={ClassroomCreateAdmin} />
+        <Route exact path="/componentEditAdmin" component={ClassroomEditAdmin} />
       </Switch>
     </Router>
   );
