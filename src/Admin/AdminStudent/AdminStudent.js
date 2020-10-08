@@ -3,6 +3,7 @@ import './AdminStudent.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
 import { Link } from 'react-router-dom';
+import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 class AdminStudent extends React.Component{
     constructor(props){
@@ -33,16 +34,21 @@ class AdminStudent extends React.Component{
             //var listStudentButton = document.createElement("button");
             //var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var iconDrop = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
             //var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
+            iconDrop.classList.add("fa");
+            iconDrop.classList.add("fa-remove");
+            iconDrop.id = "dropIcon-" + count;
+
             listItem.classList.add("Student-List-Item-Admin");
             listItem.id = "studentListItem-" + count + "-Admin";
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
            // listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             cell1.classList.add("Student-Grid-Cell-Admin");
@@ -71,9 +77,9 @@ class AdminStudent extends React.Component{
             listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});*/
 
             listDeleteButton.classList.add("Student-List-Item-Delete-Button-Admin");
-            listDeleteButton.textContent = "Drop";
             listDeleteButton.id = "studentListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.dropStudent({event: e, id: listDeleteButton.id});
+            listDeleteButton.appendChild(iconDrop);
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);

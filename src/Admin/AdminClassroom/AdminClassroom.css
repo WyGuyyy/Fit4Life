@@ -91,6 +91,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    transition-duration: .5s;
+}
+
+.Component-List-Item-Title-Admin:hover{
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .Component-List-Item-Student-Admin{
@@ -116,29 +122,31 @@
 }
 
 .Component-List-Item-Edit-Button-Admin{
-    background: #ffffff;
+    background:#ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Component-List-Item-Edit-Button-Admin:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Component-List-Item-Delete-Button-Admin{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Component-List-Item-Delete-Button-Admin:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Component-Create-Button-Admin{
@@ -190,19 +198,21 @@
     }
     
     .Component-List-Item-Edit-Button-Admin{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
     
     .Component-List-Item-Delete-Button-Admin{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
 
     .Component-Create-Button-Admin{
@@ -250,16 +260,12 @@
     }
     
     .Component-List-Item-Edit-Button-Admin{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
     }
     
     .Component-List-Item-Delete-Button-Admin{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;

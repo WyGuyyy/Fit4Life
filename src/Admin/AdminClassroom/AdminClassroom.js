@@ -33,17 +33,27 @@ class AdminClassroom extends React.Component{
             //var listStudentButton = document.createElement("button");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var iconEdit = document.createElement("i");
+            var iconDelete = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
+            iconEdit.classList.add("fa");
+            iconEdit.classList.add("fa-pencil");
+            iconEdit.id = "iconEdit-" + count;
+
+            iconDelete.classList.add("fa");
+            iconDelete.classList.add("fa-trash");
+            iconDelete.id = "iconDelete-" + count;
+
             listItem.classList.add("Component-List-Item-Admin");
             listItem.id = "componentListItem-" + count + "-Admin";
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
-            listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             cell1.classList.add("Component-Grid-Cell-Admin");
             cell1.classList.add("Component-Grid-Cell-Title-Admin");
@@ -58,6 +68,7 @@ class AdminClassroom extends React.Component{
             listItemTitle.textContent = "Component" + count;
             listItemTitle.id = "componentListItemTitle-" + count + "-Admin";
             listItemTitle.title = "Component-" + count
+            listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             /*listStudentButton.classList.add("Component-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -66,14 +77,16 @@ class AdminClassroom extends React.Component{
             listStudentButton.onclick = (e) => this.goToClassroomStudents({event: e, id: listEditButton.id});*/
 
             listEditButton.classList.add("Component-List-Item-Edit-Button-Admin");
-            listEditButton.textContent = "Edit";
             listEditButton.id = "componentListItemEdit-" + count + "-Admin";
             listEditButton.onclick = (e) => this.goToClassroomEdit({event: e, id: listEditButton.id});
-
+            listEditButton.appendChild(iconEdit);
+            listEditButton.title = "Edit " + listItemTitle.textContent;
+            
             listDeleteButton.classList.add("Component-List-Item-Delete-Button-Admin");
-            listDeleteButton.textContent = "Delete";
             listDeleteButton.id = "componentListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.deleteClassroom({event: e, id: listDeleteButton.id});
+            listDeleteButton.appendChild(iconDelete);
+            listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);

@@ -91,6 +91,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    transition-duration: .5s;
+}
+
+.Exercise-List-Item-Title-Admin:hover{
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .Exercise-List-Item-Student-Admin{

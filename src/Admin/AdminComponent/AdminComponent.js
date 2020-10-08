@@ -44,14 +44,16 @@ class AdminComponent extends React.Component{
 
             iconEdit.classList.add("fa");
             iconEdit.classList.add("fa-pencil");
+            iconEdit.id = "iconEdit-" + count;
 
             iconDelete.classList.add("fa");
             iconDelete.classList.add("fa-trash");
+            iconDelete.id = "iconDelete-" + count;
 
             listItem.classList.add("Exercise-List-Item-Admin");
             listItem.id = "exerciseListItem-" + count + "-Admin";
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
            // listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             cell1.classList.add("Exercise-Grid-Cell-Admin");
@@ -67,6 +69,7 @@ class AdminComponent extends React.Component{
             listItemTitle.textContent = "Exercise" + count;
             listItemTitle.id = "exerciseListItemTitle-" + count + "-Admin";
             listItemTitle.title = "Exercise-" + count
+            //listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -78,11 +81,13 @@ class AdminComponent extends React.Component{
             listEditButton.id = "exerciseListItemEdit-" + count + "-Admin";
             listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});
             listEditButton.appendChild(iconEdit);
+            listEditButton.title = "Edit " + listItemTitle.textContent;
 
             listDeleteButton.classList.add("Exercise-List-Item-Delete-Button-Admin");
             listDeleteButton.id = "exerciseListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.deleteExercise({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
+            listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
