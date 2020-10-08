@@ -67,7 +67,7 @@ class ExerciseEditAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Exercise Edit" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Admin Exercise Edit" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Exercise-Edit-Container-Admin">
                     <AdminPopout />
                     <div className="Exercise-Edit-Wrapper-Admin">

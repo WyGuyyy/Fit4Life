@@ -33,7 +33,7 @@ class ClassroomCreateAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Classroom Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Admin Classroom Create" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Classroom-Create-Container-Admin">
                     <AdminPopout />
                     <div className="Classroom-Create-Wrapper-Admin">

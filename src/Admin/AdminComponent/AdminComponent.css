@@ -94,10 +94,10 @@
     transition-duration: .5s;
 }
 
-.Exercise-List-Item-Title-Admin:hover{
+/*.Exercise-List-Item-Title-Admin:hover{
     color: #ffffff;
     cursor: pointer;
-}
+}*/
 
 .Exercise-List-Item-Student-Admin{
     font-size: 30px;

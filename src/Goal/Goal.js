@@ -96,11 +96,13 @@ class Goal extends React.Component{
             listEditButton.id = "goalListItemEdit-" + count;
             listEditButton.onclick = (e) => this.goToGoalEdit({event: e, id: listEditButton.id});
             listEditButton.appendChild(iconEdit);
+            listEditButton.title = "Edit " + listItemTitle.textContent;
 
             listDeleteButton.classList.add("Goal-List-Item-Delete-Button");
             listDeleteButton.id = "goalListItemDelete-" + count;
             listDeleteButton.onclick = (e) => this.deleteGoal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
+            listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
             cell1.appendChild(listItemTitle);
             cell2.appendChild(listItemProgress);

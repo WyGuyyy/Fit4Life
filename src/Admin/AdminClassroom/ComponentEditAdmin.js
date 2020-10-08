@@ -33,7 +33,7 @@ class ComponentEditAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Component Edit" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Admin Component Edit" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Component-Edit-Container-Admin">
                     <AdminPopout />
                     <div className="Component-Edit-Wrapper-Admin">

@@ -180,7 +180,7 @@ class StudentInviteAdmin extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Student Invite" goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Admin Student Invite" goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />
                     <div className="studentInviteWrapper-Admin" id="studentInviteWrapper-Admin">
