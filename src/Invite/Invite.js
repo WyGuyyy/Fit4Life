@@ -39,19 +39,29 @@ class Invite extends React.Component{
         for(count = 0; count < 10; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
-            var listItemProgress = document.createElement("h2");
-            var listEditButton = document.createElement("button");
-            var listDeleteButton = document.createElement("button");
+            var listItemProfessor = document.createElement("h2");
+            var listAcceptButton = document.createElement("button");
+            var listDeclineButton = document.createElement("button");
+            var iconAccept = document.createElement("i");
+            var iconDecline = document.createElement("i");
 
             var cell1 = document.createElement("div");
             var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
+            iconAccept.classList.add("fa");
+            iconAccept.classList.add("fa-check");
+            iconAccept.id = "iconAccept-" + count;
+
+            iconDecline.classList.add("fa");
+            iconDecline.classList.add("fa-remove");
+            iconDecline.id = "iconDecline-" + count;
+
             listItem.classList.add("Invite-List-Item");
             listItem.id = "inviteListItem-" + count;
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
 
             cell1.classList.add("Invite-Grid-Cell");
             cell1.classList.add("Invite-Grid-Cell-Title");
@@ -67,24 +77,26 @@ class Invite extends React.Component{
             listItemTitle.id = "inviteListItemTitle-" + count;
             listItemTitle.title = "Classroom" + count
 
-            listItemProgress.classList.add("Invite-List-Item-Teacher");
-            listItemProgress.textContent = "Professor Towne";
-            listItemProgress.id = "inviteListItemTeacher-" + count;
-            listItemProgress.title = "Professor Towne";
+            listItemProfessor.classList.add("Invite-List-Item-Teacher");
+            listItemProfessor.textContent = "Professor Towne";
+            listItemProfessor.id = "inviteListItemTeacher-" + count;
+            listItemProfessor.title = "Professor Towne";
 
-            listEditButton.classList.add("Invite-List-Item-Accept-Button");
-            listEditButton.textContent = "Accept";
-            listEditButton.id = "inviteListItemEdit-" + count;
+            listAcceptButton.classList.add("Invite-List-Item-Accept-Button");
+            listAcceptButton.id = "inviteListItemEdit-" + count;
+            listAcceptButton.appendChild(iconAccept);
+            listAcceptButton.title = "Accept Invitation";
 
-            listDeleteButton.classList.add("Invite-List-Item-Decline-Button");
-            listDeleteButton.textContent = "Decline";
-            listDeleteButton.id = "inviteListItemDecline-" + count;
-            listDeleteButton.onclick = (e) => this.declineInvite({event: e, id: listDeleteButton.id});
+            listDeclineButton.classList.add("Invite-List-Item-Decline-Button");
+            listDeclineButton.id = "inviteListItemDecline-" + count;
+            listDeclineButton.onclick = (e) => this.declineInvite({event: e, id: listDeclineButton.id});
+            listDeclineButton.appendChild(iconDecline);
+            listDeclineButton.title = "Decline Invitation";
 
             cell1.appendChild(listItemTitle);
-            cell2.appendChild(listItemProgress);
-            cell3.appendChild(listEditButton);
-            cell4.appendChild(listDeleteButton);
+            cell2.appendChild(listItemProfessor);
+            cell3.appendChild(listAcceptButton);
+            cell4.appendChild(listDeclineButton);
 
             listItem.appendChild(cell1);
             listItem.appendChild(cell2);

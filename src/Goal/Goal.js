@@ -42,17 +42,27 @@ class Goal extends React.Component{
             var listItemProgress = document.createElement("h2");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var iconEdit = document.createElement("i");
+            var iconDelete = document.createElement("i");
 
             var cell1 = document.createElement("div");
             var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
 
+            iconEdit.classList.add("fa");
+            iconEdit.classList.add("fa-pencil");
+            iconEdit.id = "iconEdit-" + count;
+
+            iconDelete.classList.add("fa");
+            iconDelete.classList.add("fa-trash");
+            iconDelete.id = "iconDelete-" + count;
+
             listItem.classList.add("Goal-List-Item");
             listItem.id = "goalListItem-" + count;
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
-            listItem.onclick = (e) => this.goToGoalDetails({event: e, id: listItem.id});
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onclick = (e) => this.goToGoalDetails({event: e, id: listItem.id});
 
             cell1.classList.add("Goal-Grid-Cell");
             cell1.classList.add("Goal-Grid-Cell-Title");
@@ -67,6 +77,7 @@ class Goal extends React.Component{
             listItemTitle.textContent = "Test" + count
             listItemTitle.id = "goalListItemTitle-" + count;
             listItemTitle.title = "Test" + count
+            listItemTitle.onclick = (e) => this.goToGoalDetails({event: e, id: listItem.id});
 
             listItemProgress.classList.add("Goal-List-Item-Progress");
             listItemProgress.textContent = "In Progress";
@@ -82,14 +93,14 @@ class Goal extends React.Component{
             }
 
             listEditButton.classList.add("Goal-List-Item-Edit-Button");
-            listEditButton.textContent = "Edit";
             listEditButton.id = "goalListItemEdit-" + count;
             listEditButton.onclick = (e) => this.goToGoalEdit({event: e, id: listEditButton.id});
+            listEditButton.appendChild(iconEdit);
 
             listDeleteButton.classList.add("Goal-List-Item-Delete-Button");
-            listDeleteButton.textContent = "Delete";
             listDeleteButton.id = "goalListItemDelete-" + count;
             listDeleteButton.onclick = (e) => this.deleteGoal({event: e, id: listDeleteButton.id});
+            listDeleteButton.appendChild(iconDelete);
 
             cell1.appendChild(listItemTitle);
             cell2.appendChild(listItemProgress);

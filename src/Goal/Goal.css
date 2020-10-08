@@ -90,6 +90,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition-duration: .5s;
+    margin: 0;
+}
+
+.Goal-List-Item-Title:hover{
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .Goal-List-Item-Progress{
@@ -99,32 +106,35 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
 }
 
 .Goal-List-Item-Edit-Button{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Goal-List-Item-Edit-Button:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Goal-List-Item-Delete-Button{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Goal-List-Item-Delete-Button:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Goal-Create-Button{
@@ -145,7 +155,7 @@
 
     .Goal-List-Item{
         width:100%;
-        min-height: auto;
+        min-height: 100px;
         background: #c08d00;
         display: grid;
         grid-template-areas: 1fr 1fr;
@@ -171,19 +181,21 @@
     }
     
     .Goal-List-Item-Edit-Button{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
     
     .Goal-List-Item-Delete-Button{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
 
     .Goal-Create-Button{
@@ -204,10 +216,12 @@
 
     .Goal-Grid-Cell-Edit{
         grid-area: edit;
+        height: 50px;
     }
 
     .Goal-Grid-Cell-Delete{
         grid-area: delete;
+        height: 50px;
     }
     
 
@@ -223,16 +237,12 @@
     }
     
     .Goal-List-Item-Edit-Button{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
     }
     
     .Goal-List-Item-Delete-Button{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
