@@ -116,29 +116,31 @@
 }
 
 .Exercise-List-Item-Edit-Button-Admin{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Exercise-List-Item-Edit-Button-Admin:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Exercise-List-Item-Delete-Button-Admin{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Exercise-List-Item-Delete-Button-Admin:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
 }
 
 .Exercise-Create-Button-Admin{
@@ -182,7 +184,6 @@
 
     .Exercise-List-Item-Student-Button-Admin{
         grid-area: student;
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
@@ -190,19 +191,21 @@
     }
     
     .Exercise-List-Item-Edit-Button-Admin{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
     
     .Exercise-List-Item-Delete-Button-Admin{
-        background: #ffffff;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
     }
 
     .Exercise-Create-Button-Admin{
@@ -243,23 +246,18 @@
 
     .Exercise-List-Item-Student-Button-Admin{
         background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
     }
     
     .Exercise-List-Item-Edit-Button-Admin{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
     }
     
     .Exercise-List-Item-Delete-Button-Admin{
-        background: #ffffff;
-        font-size: 13px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;

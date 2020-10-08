@@ -3,6 +3,7 @@ import './AdminComponent.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
 import { Link } from 'react-router-dom';
+import {FaPen} from 'react-icons/fa';
 
 class AdminComponent extends React.Component{
     constructor(props){
@@ -33,11 +34,19 @@ class AdminComponent extends React.Component{
             //var listStudentButton = document.createElement("button");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var iconEdit = document.createElement("i");
+            var iconDelete = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
+
+            iconEdit.classList.add("fa");
+            iconEdit.classList.add("fa-pencil");
+
+            iconDelete.classList.add("fa");
+            iconDelete.classList.add("fa-trash");
 
             listItem.classList.add("Exercise-List-Item-Admin");
             listItem.id = "exerciseListItem-" + count + "-Admin";
@@ -66,14 +75,14 @@ class AdminComponent extends React.Component{
             //listStudentButton.onclick = (e) => this.goToClassroomStudents({event: e, id: listEditButton.id});
 
             listEditButton.classList.add("Exercise-List-Item-Edit-Button-Admin");
-            listEditButton.textContent = "Edit";
             listEditButton.id = "exerciseListItemEdit-" + count + "-Admin";
             listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});
+            listEditButton.appendChild(iconEdit);
 
             listDeleteButton.classList.add("Exercise-List-Item-Delete-Button-Admin");
-            listDeleteButton.textContent = "Delete";
             listDeleteButton.id = "exerciseListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.deleteExercise({event: e, id: listDeleteButton.id});
+            listDeleteButton.appendChild(iconDelete);
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
@@ -175,6 +184,7 @@ class AdminComponent extends React.Component{
                 <AdminHeader title="Admin Exercise" goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="homeExercise">
                     <AdminPopout />
+                    <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">
                         <div className="exerciseList-Admin" id="exerciseList-Admin">

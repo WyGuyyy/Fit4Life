@@ -9,7 +9,8 @@ class ExerciseCreateAdmin extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: true
+            canGoBack: true,
+            selectedFile: ""
         }
 
     }
@@ -20,6 +21,39 @@ class ExerciseCreateAdmin extends React.Component{
 
     componentWillUnmount(){
         
+    }
+
+    handleFileUpload(event){
+        var _URL = window.URL || window.webkitURL;
+
+        var idNum = event.target.id.split("-")[2];
+
+        var file = event.target.files[0];
+
+        var img = new Image();
+        var imgwidth = 0;
+        var imgheight = 0;
+
+        if(!(file == undefined)){
+
+            img.src = _URL.createObjectURL(file);
+
+            img.onload = function(){
+                imgwidth = this.width;
+                imgheight = this.height;
+
+                if(true){ //if there are image dimension contraints place those here
+                    document.getElementById("Exercise-Create-Image-Label").innerHTML = file.name;
+                }else{
+                    alert("Image dimensions are invalid. The image must be 950(width)x750(height).");
+                }
+            }
+
+            this.setState({
+                selectedFile: file
+            });
+    
+        }
     }
     
     goBack(){ //This isnt working, start here next time
@@ -40,6 +74,9 @@ class ExerciseCreateAdmin extends React.Component{
                         <div className="Exercise-Create-Form-Wrapper-Admin">
                             <div className="Exercise-Create-Title-Wrapper-Admin">
                                 <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" placeholder="Title..."/>
+                            </div>
+                            <div className="Exercise-Create-Image-Area">
+                                <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)}/>
                             </div>
                             <div className="Exercise-Create-Button-Area-Admin"> 
                                 <button className="Exercise-Create-Save-Button-Admin">Create</button>
