@@ -31,6 +31,27 @@ class GoalEdit extends React.Component{
         
     }
 
+    async editGoal(){
+
+        var aTitle = document.getElementById("Goal-Create-Title-Input").value;
+        var aProgress = (document.getElementById("notStarted").checked ? "NOT STARTED" : 
+        (document.getElementById("inProgress").checked ? "IN PROGRESS" : "COMPLETE"));
+        var aDescription = document.getElementById("Goal-Create-Title-Description").value;
+
+        await fetch("http://localhost:8080/api/goal", {  
+            method: "PUT",                          
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({user: {user_id: 1}, content: aDescription}) //Need to add in other fields here, back end and front end
+        }).catch(console.log);
+
+        document.getElementById("Goal-Create-Title-Input").value = "";
+        document.getElementById("notStarted").checked = false;
+        document.getElementById("inProgress").checked = false;
+        document.getElementById("complete").checked = false;
+        document.getElementById("Goal-Create-Title-Description").value = "";
+
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();

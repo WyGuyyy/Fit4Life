@@ -15,11 +15,43 @@ class Home extends React.Component{
     }
     
     componentDidMount(){ 
-    
+        this.fillClassrooms();
     }
 
     componentWillUnmount(){
         
+    }
+
+    async fillClassrooms(){
+
+        var classrooms;
+        var count = 0;
+        var classroomWrapper = document.getElementById("homeWrapper");
+
+        //await fetch("http://192.168.1.5:8080/api/classroom", {
+            await fetch("http://localhost:8080/api/classroom", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    classrooms = result;
+                }
+            ).catch(console.log);
+
+            for(count = 0; count < classrooms.length; count++){
+                var classButton = document.createElement("button");
+                var title = classrooms[count].title;
+
+                classButton.classList.add("homeButton");
+                classButton.id = "Home-Button-" + count;
+                classButton.onclick = e => this.goToComponent(e);
+                classButton.textContent = title;
+
+                classroomWrapper.appendChild(classButton);
+            }
     }
 
     goToComponent(event){
@@ -50,22 +82,6 @@ class Home extends React.Component{
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
                             <div className="homeFiller"></div>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
-                            <button className="homeButton" id="Home-Button-1" onClick={e => this.goToComponent(e)}>PE 101</button>
-                            <button className="homeButton" id="Home-Button-2" onClick={e => this.goToComponent(e)}>PE 112</button>
-                            <button className="homeButton" id="Home-Button-3" onClick={e => this.goToComponent(e)}>PE 211</button>
-                            <button className="homeButton" id="Home-Button-4" onClick={e => this.goToComponent(e)}>Senior Strength 415</button>
                         </div>
                     </div>
                 </div>

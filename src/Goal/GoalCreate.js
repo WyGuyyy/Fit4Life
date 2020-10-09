@@ -31,6 +31,27 @@ class GoalCreate extends React.Component{
         
     }
 
+    async createGoal(){
+
+        var aTitle = document.getElementById("Goal-Create-Title-Input").value;
+        var aProgress = (document.getElementById("notStarted").checked ? "NOT STARTED" : 
+        (document.getElementById("inProgress").checked ? "IN PROGRESS" : "COMPLETE"));
+        var aDescription = document.getElementById("Goal-Create-Title-Description").value;
+
+        await fetch("http://localhost:8080/api/goal", {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({user: {user_id: 1}, content: aDescription}) //Need to add in other fields here, back end and front end
+        }).catch(console.log);
+
+        document.getElementById("Goal-Create-Title-Input").value = "";
+        document.getElementById("notStarted").checked = false;
+        document.getElementById("inProgress").checked = false;
+        document.getElementById("complete").checked = false;
+        document.getElementById("Goal-Create-Title-Description").value = "";
+
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -48,7 +69,7 @@ class GoalCreate extends React.Component{
                     <div className="Goal-Create-Wrapper">
                         <div className="Goal-Create-Form-Wrapper">
                             <div className="Goal-Create-Title-Wrapper">
-                                <label className="Goal-Create-Title-Label">Title: </label> <input className="Goal-Create-Title-Input" placeholder="Title..."/>
+                                <label className="Goal-Create-Title-Label">Title: </label> <input className="Goal-Create-Title-Input" id="Goal-Create-Title-Input" placeholder="Title..."/>
                             </div>
                             <div className="Goal-Create-Progress-Wrapper">
                                 <label className="Goal-Create-Progress-Label">Progress: </label> 
@@ -71,7 +92,7 @@ class GoalCreate extends React.Component{
                                 </div>
                             </div>
                             <div className="Goal-Create-Description-Wrapper">
-                                <label className="Goal-Create-Description-Label">Description: </label> <textarea className="Goal-Create-Description-TextArea" placeholder="Description..."/>
+                                <label className="Goal-Create-Description-Label">Description: </label> <textarea className="Goal-Create-Description-TextArea" id="Goal-Create-Description-TextArea" placeholder="Description..."/>
                             </div>
                         </div>
                     </div>

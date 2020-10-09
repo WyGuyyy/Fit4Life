@@ -16,11 +16,42 @@ class Classroom extends React.Component{
     }
     
     componentDidMount(){ 
-    
+        this.fillComponents()
     }
 
     componentWillUnmount(){
         
+    }
+
+    async fillComponents(){
+        var components;
+        var count = 0;
+        var classroomWrapper = document.getElementById("classroomWrapper");
+
+        //await fetch("http://192.168.1.5:8080/api/classroom", {
+            await fetch("http://localhost:8080/api/component", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    components = result;
+                }
+            ).catch(console.log);
+
+            for(count = 0; count < components.length; count++){
+                var componentButton = document.createElement("button");
+                var title = components[count].title;
+
+                componentButton.classList.add("homeButton");
+                componentButton.id = "Home-Button-" + count;
+                componentButton.onclick = e => this.goToComponent(e);
+                componentButton.textContent = title;
+
+                classroomWrapper.appendChild(componentButton);
+            }
     }
 
     goToComponent(event){
@@ -51,26 +82,7 @@ class Classroom extends React.Component{
                     <div className="classroomWrapper" id="classroomWrapper">
                         <div className="Classroom-Button-Wrapper">
                             <div className="classroomFiller"></div>
-                            <button className="classroomButton" id="Classroom-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="classroomButton" id="Classroom-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="classroomButton" id="Classroom-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="classroomButton" id="Classroom-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="classroomButton" id="Classroom-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="classroomButton" id="Classroom-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="classroomButton" id="Classroom-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="classroomButton" id="Classroom-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="classroomButton" id="Classroom-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="classroomButton" id="Classroom-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="classroomButton" id="Classroom-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="classroomButton" id="Classroom-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="classroomButton" id="Classroom-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="classroomButton" id="Classroom-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="classroomButton" id="Classroom-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="classroomButton" id="Classroom-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
-                            <button className="classroomButton" id="Classroom-Button-1" onClick={e => this.goToComponent(e)}>Cardio</button>
-                            <button className="classroomButton" id="Classroom-Button-2" onClick={e => this.goToComponent(e)}>Muscular Strength</button>
-                            <button className="classroomButton" id="Classroom-Button-3" onClick={e => this.goToComponent(e)}>Muscular Endurance</button>
-                            <button className="classroomButton" id="Classroom-Button-4" onClick={e => this.goToComponent(e)}>Flexibility</button>
+                            
                         </div>
                     </div>
                 </div>

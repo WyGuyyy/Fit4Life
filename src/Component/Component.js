@@ -33,20 +33,69 @@ class Component extends React.Component{
         
     }
 
+    /*async renderTiles(){
+
+        var exercises;
+        var count = 0;
+        var exerciseWrapper = document.getElementById("classroomWrapper");
+
+        //await fetch("http://192.168.1.5:8080/api/classroom", {
+            await fetch("http://localhost:8080/api/exercise", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+
+            for(count = 0; count < components.length; count++){
+                var exerciseTile = document.createElement("button");
+                var title = components[count].title;
+
+                componentButton.classList.add("homeButton");
+                componentButton.id = "Home-Button-" + count;
+                componentButton.onclick = e => this.goToComponent(e);
+                componentButton.textContent = title;
+
+                exerciseWrapper.appendChild(componentButton);
+            }
+    }*/
+
     triggerRerender(){
         this.setState({
             triggerRerender: true
         });
     }
 
-    renderTiles(){
+    async renderTiles(){
+
+        var exercises;
+        var count = 0;
+        var componentWrapper = document.getElementById("componentWrapper");
+
+        //await fetch("http://192.168.1.5:8080/api/classroom", {
+        await fetch("http://localhost:8080/api/exercise", {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+            }
+        ).catch(console.log);
 
         var tempNumOfTiles = 40;
         var numRows;
 
-        var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
+        //var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
 
-        var componentWrapper = document.getElementById("componentWrapper");
+        /*var componentWrapper = document.getElementById("componentWrapper");*/
         componentWrapper.innerHTML = '';
 
         var aTile;
@@ -55,7 +104,7 @@ class Component extends React.Component{
         var countInner;
 
         var tilesPerRow = this.calculateRowCount();
-        numRows = Math.ceil(tempArr.length/tilesPerRow);
+        numRows = Math.ceil(exercises.length/tilesPerRow);
 
         console.log(tilesPerRow);
 
@@ -66,7 +115,7 @@ class Component extends React.Component{
 
             for(countInner = 0; countInner < tilesPerRow; countInner++){
 
-                aTile = ReactDom.render(this.renderTileRow(tempArr.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow)), aFlexRow);
+                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow)), aFlexRow);
                 //ReactDOM.render(aTile, aFlexRow);
             }
 
@@ -84,12 +133,12 @@ class Component extends React.Component{
         });
     }
 
-    renderTileRow(tempArr){
-        return tempArr.map(this.renderTile.bind(this));
+    renderTileRow(exercises){
+        return exercises.map(this.renderTile.bind(this));
     }
 
-    renderTile(tempExercise){
-        return <ExerciseTile exercise={tempExercise} tileClickEvent={e=>this.goToExercise(e, tempExercise)}/>
+    renderTile(currExercise){
+        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)}/>
     }
 
 
