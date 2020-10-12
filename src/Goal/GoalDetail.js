@@ -12,7 +12,8 @@ class GoalDetail extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           goal: props.location.state.goal
         };
 
     }
@@ -40,6 +41,11 @@ class GoalDetail extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        var title = this.props.location.state.goal.title;
+        var progress = this.props.location.state.goal.progress;
+        var content = this.props.location.state.goal.content;
+        var progressColor = (progress.localeCompare("Not Started") === 0 ? "#ff0000" : (progress.localeCompare("In Progress") === 0 ? "#fbff00" : "#2bff00"));
+
         return(
             <Fragment>
                 <Header title="Goal Detail" goBack={true} customClick={this.goBack.bind(this)}/>
@@ -48,13 +54,13 @@ class GoalDetail extends React.Component{
                     <div className="Goal-Detail-Wrapper">
                         <div className="Goal-Detail-Form-Wrapper">
                             <div className="Goal-Detail-Title-Wrapper">
-                                <h1 className="Goal-Detail-Title">Be Fit</h1>
+                                <h1 className="Goal-Detail-Title">{title}</h1>
                             </div>
                             <div className="Goal-Detail-Progress-Wrapper">
-                                <h2 className="Goal-Detail-Progress">IN PROGRESS</h2>
+                                <h2 className="Goal-Detail-Progress" style={{color: progressColor}}>{progress}</h2>
                             </div>
                             <div className="Goal-Detail-Description-Wrapper">
-                                <p className="Goal-Detail-Description">I want to be fit and have like a 6 pack and stuff.</p>
+                                <p className="Goal-Detail-Description">{content}</p>
                             </div>
                         </div>
                     </div>

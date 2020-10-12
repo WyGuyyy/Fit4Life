@@ -12,7 +12,8 @@ class Goal extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           userGoals: ""
         };
 
     }
@@ -31,12 +32,27 @@ class Goal extends React.Component{
         
     }
 
-    fillGoals(){
+    async fillGoals(){
 
         var list = document.getElementById("goalList");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var goals;
+
+        await fetch("http://localhost:8080/api/goal", {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                goals = result;
+                console.log(result);
+            }
+        ).catch(console.log);
+
+        for(count = 0; count < goals.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             var listItemProgress = document.createElement("h2");
@@ -74,17 +90,17 @@ class Goal extends React.Component{
             cell4.classList.add("Goal-Grid-Cell-Delete");
 
             listItemTitle.classList.add("Goal-List-Item-Title");
-            listItemTitle.textContent = "Test" + count
+            listItemTitle.textContent = goals[count].title;
             listItemTitle.id = "goalListItemTitle-" + count;
-            listItemTitle.title = "Test" + count
+            listItemTitle.title = goals[count].title;
             listItemTitle.onclick = (e) => this.goToGoalDetails({event: e, id: listItem.id});
 
             listItemProgress.classList.add("Goal-List-Item-Progress");
-            listItemProgress.textContent = "In Progress";
+            listItemProgress.textContent = goals[count].progress;
             listItemProgress.id = "goalListItemProgress-" + count;
-            listItemProgress.title = "In Progress";
+            listItemProgress.title = goals[count].progress;
             
-            if(listItemProgress.textContent.localeCompare("Not Started") === 0){
+            if(listItemProgress.textContent.localeCompare("") === 0){
                 listItemProgress.style.color = "#ff0000";
             }else if(listItemProgress.textContent.localeCompare("In Progress") === 0){
                 listItemProgress.style.color = "#fbff00";
@@ -120,6 +136,10 @@ class Goal extends React.Component{
 
         }
 
+        this.setState({
+            userGoals: goals
+        });
+
     }
 
     changeListItemBackground(id){
@@ -138,19 +158,26 @@ class Goal extends React.Component{
 
     goToGoalDetails(eventObj){
 
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var selectedGoal = this.state.userGoals[idNum];
+
         if(!(eventObj.event.target.classList[0].includes("Goal-List-Item-Edit-Button")) && !(eventObj.event.target.classList[0].includes("Goal-List-Item-Delete-Button"))){
             this.props.history.push({
                 pathname: "/goalDetail",
-                state: {goalID: eventObj.id, goBack: true}
+                state: {goal: selectedGoal, goBack: true}
             });
         }
      
     }
 
     goToGoalEdit(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var selectedGoal = this.state.userGoals[idNum];
+
         this.props.history.push({
             pathname: "/goalEdit",
-            state: {goalID: eventObj.id, goBack: true}
+            state: {goal: selectedGoal, goBack: true}
         });
     }
 
@@ -161,13 +188,19 @@ class Goal extends React.Component{
         });
     }
 
-    deleteGoal(eventObj){
+    async deleteGoal(eventObj){
+        //var idNum = eventObj.event.target.id.split("-")[1];
         var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
         var goalList = document.getElementById("goalList");
         var listChildren = goalList.childNodes;
+
+        await fetch("http://localhost:8080/api/goal/" + this.state.userGoals[idNum].goal_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("goalListItem-" + idNum) === 0){

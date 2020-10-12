@@ -12,8 +12,11 @@ class GoalEdit extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           goal: props.location.state.goal
         };
+
+        console.log(props.location.state.goal);
 
     }
     
@@ -31,24 +34,27 @@ class GoalEdit extends React.Component{
         
     }
 
-    async editGoal(){
+    async editGoal(event){
 
-        var aTitle = document.getElementById("Goal-Create-Title-Input").value;
-        var aProgress = (document.getElementById("notStarted").checked ? "NOT STARTED" : 
-        (document.getElementById("inProgress").checked ? "IN PROGRESS" : "COMPLETE"));
-        var aDescription = document.getElementById("Goal-Create-Title-Description").value;
+        var goalID = this.state.goal.goal_id;
+        var aTitle = document.getElementById("Goal-Edit-Title-Input").value;
+        var aProgress = (document.getElementById("notStarted").checked ? "Not Started" : 
+        (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
+        var aDescription = document.getElementById("Goal-Edit-Description-TextArea").value;
+
+        console.log(aProgress);
 
         await fetch("http://localhost:8080/api/goal", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({user: {user_id: 1}, content: aDescription}) //Need to add in other fields here, back end and front end
+            body: JSON.stringify({goal_id: goalID, user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 
-        document.getElementById("Goal-Create-Title-Input").value = "";
+        /*document.getElementById("Goal-Edit-Title-Input").value = "";
         document.getElementById("notStarted").checked = false;
         document.getElementById("inProgress").checked = false;
         document.getElementById("complete").checked = false;
-        document.getElementById("Goal-Create-Title-Description").value = "";
+        document.getElementById("Goal-Edit-Description-TextArea").value = "";*/
 
     }
 
@@ -61,6 +67,11 @@ class GoalEdit extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        var title = this.props.location.state.goal.title;
+        var progress = this.props.location.state.goal.progress;
+        var content = this.props.location.state.goal.content;
+        //var progressColor = (progress.localeCompare("NOT STARTED") === 0 ? "#ff0000" : (progress.localeCompare("IN PROGRESS") === 0 ? "#fbff00" : "#2bff00"));
+
         return(
             <Fragment>
                 <Header title="Goal Edit" goBack={true} customClick={this.goBack.bind(this)}/>
@@ -69,30 +80,32 @@ class GoalEdit extends React.Component{
                     <div className="Goal-Edit-Wrapper">
                         <div className="Goal-Edit-Form-Wrapper">
                             <div className="Goal-Edit-Title-Wrapper">
-                                <label className="Goal-Edit-Title-Label">Title: </label> <input className="Goal-Edit-Title-Input" placeholder="Title..."/>
+                                <label className="Goal-Edit-Title-Label">Title: </label> <input className="Goal-Edit-Title-Input" id="Goal-Edit-Title-Input" placeholder="Title..." defaultValue={title}/>
                             </div>
                             <div className="Goal-Edit-Progress-Wrapper">
                                 <label className="Goal-Edit-Progress-Label">Progress: </label> 
                                 <div className="Goal-Edit-Radio-Wrapper">
                                     <div className="Goal-Edit-Not-Started-Radio-Wrapper">
-                                        <input className="Goal-Edit-Not-Started-Radio" type="radio" id="notStarted" name="progress" value="not-started"
-                                                 />
+                                        <input className="Goal-Edit-Not-Started-Radio" type="radio" id="notStarted" name="progress" value="not-started" defaultChecked={(progress.localeCompare("Not Started") === 0 ? true : false)}/>
                                         <label className="Goal-Edit-Not-Started-Label" for="notStarted">Not Started</label>
                                     </div>
 
                                     <div className="Goal-Edit-In-Progress-Radio-Wrapper">
-                                        <input className="Goal-Edit-In-Progress-Radio" type="radio" id="inProgress" name="progress" value="in-progress" />
+                                        <input className="Goal-Edit-In-Progress-Radio" type="radio" id="inProgress" name="progress" value="in-progress" defaultChecked={(progress.localeCompare("In Progress") === 0 ? true : false)}/>
                                         <label className="Goal-Edit-In-Progress-Label" for="inProgress">In Progress</label>
                                     </div>
 
                                     <div className="Goal-Edit-Complete-Radio-Wrapper">
-                                        <input className="Goal-Edit-Complete-Radio" type="radio" id="complete" name="progress" value="complete" />
+                                        <input className="Goal-Edit-Complete-Radio" type="radio" id="complete" name="progress" value="complete" defaultChecked={(progress.localeCompare("Complete") === 0 ? true : false)}/>
                                         <label className="Goal-Edit-Complete-Label" for="complete">Complete</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="Goal-Edit-Description-Wrapper">
-                                <label className="Goal-Edit-Description-Label">Description: </label> <textarea className="Goal-Edit-Description-TextArea" placeholder="Description..."/>
+                                <label className="Goal-Edit-Description-Label">Description: </label> <textarea className="Goal-Edit-Description-TextArea" id="Goal-Edit-Description-TextArea" placeholder="Description..." defaultValue={content}/>
+                            </div>
+                            <div className="Goal-Edit-Submit-Wrapper">
+                                <button className="Goal-Edit-Submit-Button" onClick={(e) => this.editGoal(e)}>Save</button>
                             </div>
                         </div>
                     </div>

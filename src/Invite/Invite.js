@@ -12,7 +12,8 @@ class Invite extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           userInvites: ""
         };
 
     }
@@ -31,12 +32,28 @@ class Invite extends React.Component{
         
     }
 
-    fillInvites(){
+    async fillInvites(){
 
         var list = document.getElementById("inviteList");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var invites;
+        var classroomTitle;
+        var teacherLastName;
+
+        await fetch("http://localhost:8080/api/invite", {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                invites = result;
+            }
+        ).catch(console.log);
+
+        for(count = 0; count < invites.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             var listItemProfessor = document.createElement("h2");
@@ -49,6 +66,9 @@ class Invite extends React.Component{
             var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
+
+            classroomTitle = await this.getInviteClassroom(invites[count].classroom.classroom_id);
+            teacherLastName = await this.getInviteTeacher(invites[count].teacher.user_id);
 
             iconAccept.classList.add("fa");
             iconAccept.classList.add("fa-check");
@@ -73,12 +93,12 @@ class Invite extends React.Component{
             cell4.classList.add("Invite-Grid-Cell-Decline");
 
             listItemTitle.classList.add("Invite-List-Item-Title");
-            listItemTitle.textContent = "Classroom" + count
+            listItemTitle.textContent = classroomTitle;
             listItemTitle.id = "inviteListItemTitle-" + count;
             listItemTitle.title = "Classroom" + count
 
             listItemProfessor.classList.add("Invite-List-Item-Teacher");
-            listItemProfessor.textContent = "Professor Towne";
+            listItemProfessor.textContent = "Professor " + teacherLastName;
             listItemProfessor.id = "inviteListItemTeacher-" + count;
             listItemProfessor.title = "Professor Towne";
 
@@ -109,6 +129,46 @@ class Invite extends React.Component{
 
         }
 
+        this.setState({
+            userInvites: invites
+        });
+
+    }
+
+    async getInviteClassroom(cID){
+        var classroomTitle;
+
+        await fetch("http://localhost:8080/api/classroom/" + cID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classroomTitle = result.title;
+            }
+        ).catch(console.log);
+
+        return classroomTitle;
+    }
+
+    async getInviteTeacher(tID){
+        var teacherLastName;
+
+        await fetch("http://localhost:8080/api/user/" + tID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                teacherLastName = result.last_name;
+            }
+        ).catch(console.log);
+
+        return teacherLastName;
     }
 
     changeListItemBackground(id){
@@ -134,22 +194,27 @@ class Invite extends React.Component{
         }
     }
 
-    declineInvite(eventObj){
+    async declineInvite(eventObj){
         var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
-        var goalList = document.getElementById("inviteList");
-        var listChildren = goalList.childNodes;
+        var inviteList = document.getElementById("inviteList");
+        var listChildren = inviteList.childNodes;
+
+        await fetch("http://localhost:8080/api/invite/" + this.state.userInvites[idNum].invite_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("inviteListItem-" + idNum) === 0){
-                goalList.removeChild(listChildren[count]); 
+                inviteList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
-        this.recolorRows(goalList);
+        this.recolorRows(inviteList);
     }
 
     goBack(){ //This isnt working, start here next time

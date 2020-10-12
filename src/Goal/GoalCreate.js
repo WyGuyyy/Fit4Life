@@ -31,24 +31,24 @@ class GoalCreate extends React.Component{
         
     }
 
-    async createGoal(){
+    async createGoal(event){
 
         var aTitle = document.getElementById("Goal-Create-Title-Input").value;
-        var aProgress = (document.getElementById("notStarted").checked ? "NOT STARTED" : 
-        (document.getElementById("inProgress").checked ? "IN PROGRESS" : "COMPLETE"));
-        var aDescription = document.getElementById("Goal-Create-Title-Description").value;
+        var aProgress = (document.getElementById("notStarted").checked ? "Not Started" : 
+        (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
+        var aDescription = document.getElementById("Goal-Create-Description-TextArea").value;
 
         await fetch("http://localhost:8080/api/goal", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({user: {user_id: 1}, content: aDescription}) //Need to add in other fields here, back end and front end
+            body: JSON.stringify({user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 
         document.getElementById("Goal-Create-Title-Input").value = "";
         document.getElementById("notStarted").checked = false;
         document.getElementById("inProgress").checked = false;
         document.getElementById("complete").checked = false;
-        document.getElementById("Goal-Create-Title-Description").value = "";
+        document.getElementById("Goal-Create-Description-TextArea").value = "";
 
     }
 
@@ -93,6 +93,9 @@ class GoalCreate extends React.Component{
                             </div>
                             <div className="Goal-Create-Description-Wrapper">
                                 <label className="Goal-Create-Description-Label">Description: </label> <textarea className="Goal-Create-Description-TextArea" id="Goal-Create-Description-TextArea" placeholder="Description..."/>
+                            </div>
+                            <div className="Goal-Create-Submit-Wrapper">
+                                <button className="Goal-Create-Submit-Button" onClick={(e) => this.createGoal(e)}>Create</button>
                             </div>
                         </div>
                     </div>

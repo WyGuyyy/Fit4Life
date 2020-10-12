@@ -18,7 +18,7 @@
 
 .Goal-Create-Form-Wrapper{
     width: 70%;
-    height: 60%;
+    height: 70%;
     margin-top: 100px;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@
     justify-content: flex-start;
     align-items: center;
     background: #9b7200;
-    height: 20%;
+    height: 15%;
 }
 
 .Goal-Create-Progress-Wrapper{
@@ -52,7 +52,7 @@
     justify-content: flex-start;
     align-items: center;
     background: #6e5100;
-    height: 50%;
+    height: 45%;
 }
 
 .Goal-Create-Title-Label{
@@ -150,6 +150,28 @@
     font-size: 20px;
 }
 
+.Goal-Create-Submit-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    background: #574000;
+}
+
+.Goal-Create-Submit-Button{
+    width: 125px;
+    height: 40px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    background: #ad7f00;
+    transition-duration: .5s;
+}
+
+.Goal-Create-Submit-Button:hover{
+    background: #ffbb00;
+}
+
 @media(max-width: 770px){
     
     .Goal-Create-Title-Wrapper{
@@ -217,15 +239,15 @@
 
 @media(max-height: 750px){
     .Goal-Create-Title-Label{
-        font-size: 20px;
+        font-size: 15px;
     }
     
     .Goal-Create-Progress-Label{
-        font-size: 20px;
+        font-size: 15px;
     }
     
     .Goal-Create-Description-Label{
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .Goal-Create-Not-Started-Radio{
@@ -261,5 +283,78 @@
     .Goal-Create-Form-Wrapper{
         width: 70%;
         height: 80%;
+    }
+}
+
+@media(max-height: 550px){
+    .Goal-Create-Title-Label{
+        font-size: 15px;
+        margin-bottom: 0px;
+    }
+    
+    .Goal-Create-Progress-Label{
+        font-size: 15px;
+        margin-bottom: 0px;
+    }
+    
+    .Goal-Create-Description-Label{
+        font-size: 15px;
+        margin-bottom: 0px;
+    }
+
+    .Goal-Create-Not-Started-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Create-In-Progress-Radio{
+        height: 15px;
+        width: 15px;
+     }
+     
+     .Goal-Create-Complete-Radio{
+        height: 15px;
+        width: 15px;
+     }
+
+    .Goal-Create-Not-Started-Label{
+        color: #ff0000;
+        font-size: 15px;
+    }
+    
+    .Goal-Create-In-Progress-Label{
+        color: #fbff00;
+        font-size: 15px;
+    }
+    
+    .Goal-Create-Complete-Label{
+        color: #2bff00;
+        font-size: 15px;
+    }
+
+    .Goal-Create-Form-Wrapper{
+        width: 70%;
+        height: 90%;
+    }
+
+    .Goal-Create-Radio-Wrapper{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .Goal-Create-Progress-Wrapper{
+        height: 15%;
+    }
+
+    .Goal-Create-Title-Wrapper{
+        height: 20%;
+    }
+
+    .Goal-Create-Description-Wrapper{
+        height: 50%;
+    }
+
+    .Goal-Create-Submit-Wrapper{
+        height: 15%;
     }
 }

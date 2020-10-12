@@ -18,7 +18,7 @@
 
 .Goal-Edit-Form-Wrapper{
     width: 70%;
-    height: 60%;
+    height: 70%;
     margin-top: 100px;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,7 @@
     justify-content: flex-start;
     align-items: center;
     background: #9b7200;
-    height: 20%;
+    height: 15%;
 }
 
 .Goal-Edit-Progress-Wrapper{
@@ -52,7 +52,7 @@
     justify-content: flex-start;
     align-items: center;
     background: #6e5100;
-    height: 50%;
+    height: 45%;
 }
 
 .Goal-Edit-Title-Label{
@@ -148,6 +148,28 @@
 .Goal-Edit-Complete-Label{
     color: #2bff00;
     font-size: 20px;
+}
+
+.Goal-Edit-Submit-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    background: #574000;
+}
+
+.Goal-Edit-Submit-Button{
+    width: 125px;
+    height: 40px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    background: #ad7f00;
+    transition-duration: .5s;
+}
+
+.Goal-Edit-Submit-Button:hover{
+    background: #ffbb00;
 }
 
 @media(max-width: 770px){
@@ -262,5 +284,54 @@
     .Goal-Edit-Form-Wrapper{
         width: 70%;
         height: 80%;
+    }
+}
+
+@media(max-height: 550px){
+    .Goal-Edit-Title-Label{
+        font-size: 15px;
+    }
+    
+    .Goal-Edit-Progress-Label{
+        font-size: 15px;
+    }
+    
+    .Goal-Edit-Description-Label{
+        font-size: 15px;
+    }
+
+    .Goal-Edit-Not-Started-Radio{
+        height: 10px;
+        width: 10px;
+     }
+     
+     .Goal-Edit-In-Progress-Radio{
+        height: 10px;
+        width: 10px;
+     }
+     
+     .Goal-Edit-Complete-Radio{
+        height: 10px;
+        width: 10px;
+     }
+
+    .Goal-Edit-Not-Started-Label{
+        color: #ff0000;
+        font-size: 15px;
+    }
+    
+    .Goal-Edit-In-Progress-Label{
+        color: #fbff00;
+        font-size: 15px;
+    }
+    
+    .Goal-Edit-Complete-Label{
+        color: #2bff00;
+        font-size: 15px;
+    }
+
+    .Goal-Edit-Form-Wrapper{
+        width: 70%;
+        height: 90%;
     }
 }
