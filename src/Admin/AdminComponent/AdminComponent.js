@@ -23,12 +23,26 @@ class AdminComponent extends React.Component{
         
     }
 
-    fillExercises(){
+    async fillExercises(){
 
         var list = document.getElementById("exerciseList-Admin");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var exercises;
+
+        await fetch("http://localhost:8080/api/exercise", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+
+        for(count = 0; count < exercises.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
@@ -66,9 +80,9 @@ class AdminComponent extends React.Component{
             cell4.classList.add("Exercise-Grid-Cell-Delete-Admin");
 
             listItemTitle.classList.add("Exercise-List-Item-Title-Admin");
-            listItemTitle.textContent = "Exercise" + count;
+            listItemTitle.textContent = exercises[count].title;
             listItemTitle.id = "exerciseListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Exercise-" + count
+            listItemTitle.title = exercises[count].title;
             //listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");

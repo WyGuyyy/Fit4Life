@@ -11,7 +11,8 @@ class PersonalInfoEdit extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           personalInfoObject: props.location.state.personalInfo
         };
 
     }
@@ -30,7 +31,22 @@ class PersonalInfoEdit extends React.Component{
         
     }
 
-    
+    async savePersonalInfo(eventObj){
+
+        var newFirstName = document.getElementById("Personal-Info-Edit-First-Name-Input").value;
+        var newLastName = document.getElementById("Personal-Info-Edit-Last-Name-Input").value;
+        var newEmail = document.getElementById("Personal-Info-Edit-Email-Input").value;
+        var newWeight = document.getElementById("Personal-Info-Edit-Weight-Input").value;
+        var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
+        var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
+
+        await fetch("http://localhost:8080/api/user", {  
+            method: "PUT",                          
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
+        }).catch(console.log);
+
+    }
 
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
@@ -54,27 +70,27 @@ class PersonalInfoEdit extends React.Component{
                             </div>
 
                             <div className="Personal-Info-Edit-First-Name-Wrapper">
-                                <label className="Personal-Info-Edit-First-Name-Label">First Name: </label> <input className="Personal-Info-Edit-First-Name-Input" type="text"/>
+                                <label className="Personal-Info-Edit-First-Name-Label">First Name: </label> <input className="Personal-Info-Edit-First-Name-Input" id="Personal-Info-Edit-First-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.first_name}/>
                             </div>
 
                             <div className="Personal-Info-Edit-Last-Name-Wrapper">
-                                <label className="Personal-Info-Edit-Last-Name-Label">Last Name: </label> <input className="Personal-Info-Edit-Last-Name-Input" type="text"/>
+                                <label className="Personal-Info-Edit-Last-Name-Label">Last Name: </label> <input className="Personal-Info-Edit-Last-Name-Input" id="Personal-Info-Edit-Last-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.last_name}/>
                             </div>
 
                             <div className="Personal-Info-Edit-Email-Wrapper">
-                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <input className="Personal-Info-Edit-Email-Input" type="text"/>
+                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <input className="Personal-Info-Edit-Email-Input" id="Personal-Info-Edit-Email-Input" type="text" defaultValue={this.props.location.state.personalInfo.email}/>
                             </div>
 
                             <div className="Personal-Info-Edit-Weight-Wrapper">
-                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" type="text"/>
+                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" id="Personal-Info-Edit-Weight-Input" type="text" defaultValue={this.props.location.state.personalInfo.weight}/>
                             </div>
 
                             <div className="Personal-Info-Edit-Height-Wrapper">
-                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" type="text"/> <input className="Personal-Info-Edit-Height-Inches-Input" type="text"/> </div>
+                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_feet}/> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_inches}/> </div>
                             </div>
 
                             <div className="Personal-Info-Edit-Submit-Wrapper">
-                                 <button className="Personal-Info-Edit-Cancel-Button">Cancel</button> <button className="Personal-Info-Edit-Save-Button">Save</button>
+                                 <button className="Personal-Info-Edit-Cancel-Button">Cancel</button> <button className="Personal-Info-Edit-Save-Button" onClick={(e) => this.savePersonalInfo(e)}>Save</button>
                             </div>
 
                         </div>

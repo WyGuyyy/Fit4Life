@@ -11,8 +11,11 @@ class PersonalInfo extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           personalInfoObject: ""
         };
+
+        this.getPersonalInfo();
 
     }
     
@@ -30,10 +33,32 @@ class PersonalInfo extends React.Component{
         
     }
 
+    async getPersonalInfo(){
+
+        var personalInfo;
+
+        await fetch("http://localhost:8080/api/user/1", {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                personalInfo = result;
+            }
+        ).catch(console.log);
+
+            this.setState({
+                personalInfoObject: personalInfo
+            });
+
+    }
+
     goToPersonalInfoEdit(e){
         this.props.history.push({
             pathname: "/personalEdit",
-            state: {goBack: true}
+            state: {goBack: true, personalInfo: this.state.personalInfoObject}
         });
     }
 
@@ -59,23 +84,23 @@ class PersonalInfo extends React.Component{
                             </div>
 
                             <div className="Personal-Info-First-Name-Wrapper">
-                                <label className="Personal-Info-First-Name-Label">First Name: </label> <h2 className="Personal-Info-First-Name">Nothing</h2>
+                                <label className="Personal-Info-First-Name-Label">First Name: </label> <h2 className="Personal-Info-First-Name">{this.state.personalInfoObject.first_name}</h2>
                             </div>
 
                             <div className="Personal-Info-Last-Name-Wrapper">
-                                <label className="Personal-Info-Last-Name-Label">Last Name: </label> <h2 className="Personal-Info-Last-Name">Nothing</h2>
+                                <label className="Personal-Info-Last-Name-Label">Last Name: </label> <h2 className="Personal-Info-Last-Name">{this.state.personalInfoObject.last_name}</h2>
                             </div>
 
                             <div className="Personal-Info-Email-Wrapper">
-                                <label className="Personal-Info-Email-Label">Email: </label> <h2 className="Personal-Info-Email">Nothing</h2>
+                                <label className="Personal-Info-Email-Label">Email: </label> <h2 className="Personal-Info-Email">{this.state.personalInfoObject.email}</h2>
                             </div>
 
                             <div className="Personal-Info-Weight-Wrapper">
-                                <label className="Personal-Info-Weight-Label">Weight: </label> <h2 className="Personal-Info-Weight">Nothing</h2>
+                                <label className="Personal-Info-Weight-Label">Weight: </label> <h2 className="Personal-Info-Weight">{this.state.personalInfoObject.weight}</h2>
                             </div>
 
                             <div className="Personal-Info-Height-Wrapper">
-                                <label className="Personal-Info-Height-Label">Height: </label> <h2 className="Personal-Info-Height">Nothing</h2>
+                                <label className="Personal-Info-Height-Label">Height: </label> <h2 className="Personal-Info-Height">{this.state.personalInfoObject.height_feet} {this.state.personalInfoObject.height_inches}</h2>
                             </div>
 
                             <div className="Personal-Info-Edit-Button-Wrapper">

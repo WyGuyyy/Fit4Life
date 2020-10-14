@@ -9,7 +9,8 @@ class AdminClassroom extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: props.location.state.goBack
+            canGoBack: props.location.state.goBack,
+            classroomComponents: ""
         }
 
     }
@@ -22,12 +23,26 @@ class AdminClassroom extends React.Component{
         
     }
 
-    fillComponents(){
+    async fillComponents(){
 
         var list = document.getElementById("componentList-Admin");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var components;
+
+        await fetch("http://localhost:8080/api/component", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    components = result;
+                }
+            ).catch(console.log);
+
+        for(count = 0; count < components.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
@@ -65,9 +80,9 @@ class AdminClassroom extends React.Component{
             cell4.classList.add("Component-Grid-Cell-Delete-Admin");
 
             listItemTitle.classList.add("Component-List-Item-Title-Admin");
-            listItemTitle.textContent = "Component" + count;
+            listItemTitle.textContent = components[count].title;
             listItemTitle.id = "componentListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Component-" + count
+            listItemTitle.title = components[count].title;
             listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             /*listStudentButton.classList.add("Component-List-Item-Student-Button-Admin");
@@ -103,6 +118,10 @@ class AdminClassroom extends React.Component{
             list.appendChild(listItem);
 
         }
+
+        this.setState({
+            classroomComponents: components
+        });
 
     }
 

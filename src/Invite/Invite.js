@@ -104,6 +104,7 @@ class Invite extends React.Component{
 
             listAcceptButton.classList.add("Invite-List-Item-Accept-Button");
             listAcceptButton.id = "inviteListItemEdit-" + count;
+            listAcceptButton.onclick = (e) => this.acceptInvite({event: e, id: listAcceptButton.id});
             listAcceptButton.appendChild(iconAccept);
             listAcceptButton.title = "Accept Invitation";
 
@@ -201,6 +202,34 @@ class Invite extends React.Component{
 
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
+
+        await fetch("http://localhost:8080/api/invite/" + this.state.userInvites[idNum].invite_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
+
+        for(count = 0; count < listChildren.length; count++){
+            if(listChildren[count].id.localeCompare("inviteListItem-" + idNum) === 0){
+                inviteList.removeChild(listChildren[count]); 
+                break;
+            }
+        }
+
+        this.recolorRows(inviteList);
+    }
+
+    async acceptInvite(eventObj){
+        var idNum = eventObj.event.target.id.split("-")[1];
+
+        var count = 0;
+
+        var inviteList = document.getElementById("inviteList");
+        var listChildren = inviteList.childNodes;
+
+        await fetch("http://localhost:8080/api/invite/accept/" + 2 + "/" + this.state.userInvites[idNum].classroom.classroom_id, {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         await fetch("http://localhost:8080/api/invite/" + this.state.userInvites[idNum].invite_id, {  
             method: "DELETE",                          

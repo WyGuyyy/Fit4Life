@@ -9,7 +9,8 @@ class ClassroomEditAdmin extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: true
+            canGoBack: true,
+            classroomTitle: props.location.state.title
         }
 
     }
@@ -39,7 +40,7 @@ class ClassroomEditAdmin extends React.Component{
                     <div className="Classroom-Edit-Wrapper-Admin">
                         <div className="Classroom-Edit-Form-Wrapper-Admin">
                             <div className="Classroom-Edit-Title-Wrapper-Admin">
-                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" defaultValue={this.props.location.state.title}/>
                             </div>
                             <div className="Classroom-Edit-Button-Area-Admin"> 
                                 <button className="Classroom-Edit-Save-Button-Admin">Save</button>

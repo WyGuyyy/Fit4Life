@@ -9,7 +9,8 @@ class AdminHome extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: false
+            canGoBack: false,
+            teacherClassrooms: ""
         }
 
     }
@@ -22,12 +23,26 @@ class AdminHome extends React.Component{
         
     }
 
-    fillClassrooms(){
+    async fillClassrooms(){
 
         var list = document.getElementById("classroomList-Admin");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var classrooms;
+
+        await fetch("http://localhost:8080/api/classroom", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    classrooms = result;
+                }
+            ).catch(console.log);
+
+        for(count = 0; count < classrooms.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             var listStudentButton = document.createElement("button");
@@ -70,9 +85,9 @@ class AdminHome extends React.Component{
             cell4.classList.add("Classroom-Grid-Cell-Delete-Admin");
 
             listItemTitle.classList.add("Classroom-List-Item-Title-Admin");
-            listItemTitle.textContent = "Classroom" + count;
+            listItemTitle.textContent = classrooms[count].title;
             listItemTitle.id = "classroomListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Classroom-" + count
+            listItemTitle.title = classrooms[count].title;
             listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
 
             listStudentButton.classList.add("Classroom-List-Item-Student-Button-Admin");
@@ -110,6 +125,10 @@ class AdminHome extends React.Component{
 
         }
 
+        this.setState({
+            teacherClassrooms: classrooms
+        });
+
     }
 
     changeListItemBackground(id){
@@ -136,6 +155,9 @@ class AdminHome extends React.Component{
     }
 
     goToClassroomCreate(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         this.props.history.push({
             pathname: "/classroomCreateAdmin",
             state: {goBack: true}
@@ -143,9 +165,12 @@ class AdminHome extends React.Component{
     }
 
     goToClassroomEdit(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         this.props.history.push({
             pathname: "/classroomEditAdmin",
-            state: {goBack: true}
+            state: {goBack: true, title: this.state.teacherClassrooms[idNum].title}
         });
     }
 
@@ -156,14 +181,17 @@ class AdminHome extends React.Component{
             });
     }
 
-    goToClassroomStudents(){
+    goToClassroomStudents(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         this.props.history.push({
             pathname: "/studentAdmin",
-            state: {goBack: true}
+            state: {goBack: true, classID: this.state.teacherClassrooms[idNum].classroom_id}
         });
     }
 
-    deleteClassroom(eventObj){
+    async deleteClassroom(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
 
@@ -171,6 +199,11 @@ class AdminHome extends React.Component{
 
         var goalList = document.getElementById("classroomList-Admin");
         var listChildren = goalList.childNodes;
+
+        await fetch("http://localhost:8080/api/classroom/" + this.state.teacherClassrooms[idNum].classroom_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("classroomListItem-" + idNum + "-Admin") === 0){
