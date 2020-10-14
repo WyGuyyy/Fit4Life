@@ -156,9 +156,12 @@ class AdminClassroom extends React.Component{
     }
 
     goToClassroomEdit(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         this.props.history.push({
             pathname: "/componentEditAdmin",
-            state: {goBack: true}
+            state: {goBack: true, title: this.state.classroomComponents[idNum].title}
         });
     }
 
@@ -172,7 +175,7 @@ class AdminClassroom extends React.Component{
         }
     }
 
-    deleteClassroom(eventObj){
+    async deleteClassroom(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
 
@@ -180,6 +183,11 @@ class AdminClassroom extends React.Component{
 
         var goalList = document.getElementById("componentList-Admin");
         var listChildren = goalList.childNodes;
+
+        await fetch("http://localhost:8080/api/component/" + this.state.classroomComponents[idNum].component_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("componentListItem-" + idNum + "-Admin") === 0){

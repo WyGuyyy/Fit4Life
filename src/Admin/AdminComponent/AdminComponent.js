@@ -10,7 +10,8 @@ class AdminComponent extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: props.location.state.goBack
+            canGoBack: props.location.state.goBack,
+            componentExercises: ""
         }
 
     }
@@ -119,6 +120,10 @@ class AdminComponent extends React.Component{
 
         }
 
+        this.setState({
+            componentExercises: exercises
+        });
+
     }
 
     changeListItemBackground(id){
@@ -153,9 +158,12 @@ class AdminComponent extends React.Component{
     }
 
     goToExerciseEdit(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         this.props.history.push({
             pathname: "/exerciseEditAdmin",
-            state: {goBack: true}
+            state: {goBack: true, title: this.state.componentExercises[idNum].title}
         });
     }
 
@@ -169,7 +177,7 @@ class AdminComponent extends React.Component{
         }
     }*/
 
-    deleteExercise(eventObj){
+    async deleteExercise(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
 
@@ -177,6 +185,11 @@ class AdminComponent extends React.Component{
 
         var goalList = document.getElementById("exerciseList-Admin");
         var listChildren = goalList.childNodes;
+
+        await fetch("http://localhost:8080/api/exercise/" + this.state.componentExercises[idNum].exercise_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("exerciseListItem-" + idNum + "-Admin") === 0){

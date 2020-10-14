@@ -10,7 +10,8 @@ class ExerciseEditAdmin extends React.Component{
 
         this.state = {
             canGoBack: true,
-            selectedFile: ""
+            selectedFile: "",
+            title: props.location.state.title
         }
 
     }
@@ -73,7 +74,7 @@ class ExerciseEditAdmin extends React.Component{
                     <div className="Exercise-Edit-Wrapper-Admin">
                         <div className="Exercise-Edit-Form-Wrapper-Admin">
                             <div className="Exercise-Edit-Title-Wrapper-Admin">
-                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" defaultValue={this.props.location.state.title}/>
                             </div>
                             <div className="Exercise-Edit-Image-Area">
                                 <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)}/>
