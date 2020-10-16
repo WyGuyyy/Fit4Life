@@ -133,12 +133,36 @@ class Component extends React.Component{
         });
     }
 
+    async getExerciseImage(exerciseID){
+
+        var exerciseBlob;
+        var buffer;
+
+        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID  , { 
+            method: "GET"                         
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+
+                    var result = text.length ? JSON.parse(text) : {};
+                    exerciseBlob = result;
+          
+                }
+            )
+        .catch(console.log);
+
+        buffer = "data:" + exerciseBlob.contentType + ";base64," + exerciseBlob.data;
+        return buffer;
+    }
+
     renderTileRow(exercises){
         return exercises.map(this.renderTile.bind(this));
     }
 
     renderTile(currExercise){
-        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)}/>
+        var img = this.getExerciseImage(currExercise.exercise_id);
+        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)} image={img}/>
     }
 
 

@@ -163,7 +163,7 @@ class AdminComponent extends React.Component{
 
         this.props.history.push({
             pathname: "/exerciseEditAdmin",
-            state: {goBack: true, title: this.state.componentExercises[idNum].title}
+            state: {goBack: true, title: this.state.componentExercises[idNum].title, exercise: this.state.componentExercises[idNum]}
         });
     }
 

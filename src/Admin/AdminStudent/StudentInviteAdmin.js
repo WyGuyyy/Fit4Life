@@ -9,7 +9,9 @@ class StudentInviteAdmin extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: props.location.state.goBack
+            canGoBack: props.location.state.goBack,
+            classroomID: props.location.state.classID,
+            filteredStudents: ""
         }
 
     }
@@ -22,12 +24,46 @@ class StudentInviteAdmin extends React.Component{
         
     }
 
-    fillStudents(){
+    async fillStudents(queryString){
 
         var list = document.getElementById("studentInviteList-Admin");
         var count = 0;
 
-        for(count = 0; count < 2; count++){
+        var matchStudents;
+
+        for(count = 1; count < list.childNodes.length;){
+            list.removeChild(list.childNodes[count]);
+        }
+
+        if(queryString.localeCompare("ALL") === 0){
+            await fetch("http://localhost:8080/api/user/student", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    matchStudents = result;
+                }
+            ).catch(console.log);
+        }else{
+
+            await fetch("http://localhost:8080/api/user/search/" + queryString, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json"}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : {};
+                        matchStudents = result;
+                    }
+                ).catch(console.log);
+
+        }      
+
+        for(count = 0; count < matchStudents.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
@@ -55,9 +91,9 @@ class StudentInviteAdmin extends React.Component{
             cell4.classList.add("Student-Invite-Grid-Cell-Invite-Admin");
 
             listItemTitle.classList.add("Student-Invite-List-Item-Title-Admin");
-            listItemTitle.textContent = "Student" + count;
+            listItemTitle.textContent = matchStudents[count].first_name + " " + matchStudents[count].last_name;
             listItemTitle.id = "studentInviteListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Student-" + count
+            listItemTitle.title = matchStudents[count].first_name + " " + matchStudents[count].last_name;
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -91,6 +127,10 @@ class StudentInviteAdmin extends React.Component{
 
         }
 
+        this.setState({
+            filteredStudents: matchStudents
+        });
+
     }
 
     changeListItemBackground(id){
@@ -117,10 +157,24 @@ class StudentInviteAdmin extends React.Component{
     }
 
     searchStudent(eventObj){
-        this.fillStudents();
+
+        var queryString = document.getElementById("Student-Invite-Search-Box").value;
+        queryString = (queryString.localeCompare("") === 0 ? "ALL" : queryString);
+
+        this.fillStudents(queryString);
     }
 
-    inviteStudent(eventObj){
+    async inviteStudent(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+
+        var classroomID = this.state.classroomID;
+        var studentID = this.state.filteredStudents[idNum].user_id;
+
+        await fetch("http://localhost:8080/api/invite/send/" + studentID + "/" + 2 + "/" + classroomID, {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);
 
     }
 
@@ -191,8 +245,8 @@ class StudentInviteAdmin extends React.Component{
                     </div>
                 </div>
                 <div className="Student-Invite-Search-Area">
-                        <input className="Student-Invite-Search-Box" type="text" placeholder="Student Name..."/>
-                        <button className="Student-Invite-Search-Button" onClick={(e) => this.searchStudent(e)}>Search</button>
+                        <input className="Student-Invite-Search-Box" id="Student-Invite-Search-Box" type="text" placeholder="Student Name..."/>
+                        <button className="Student-Invite-Search-Button" id="Student-Invite-Search-Button" onClick={(e) => this.searchStudent(e)}>Search</button>
                 </div>
             </Fragment>
         );

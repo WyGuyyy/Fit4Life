@@ -8,7 +8,8 @@ class ExerciseTile extends React.Component{
         super(props);
 
         this.state = {
-            exercise: props.exercise
+            exercise: props.exercise,
+            image: props.image
         };
 
     }
@@ -36,10 +37,12 @@ class ExerciseTile extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        console.log(this.props.image);
+
         return(
             <div className="Exercise-Tile-Container" onClick={this.props.tileClickEvent}>
                 <div className="Exercise-Tile-Wrapper">
-                    <img className="Exercise-Tile-Image" src={lhs_logo} width="300" height="300"/>
+                    <img className="Exercise-Tile-Image" src={this.props.image} width="300" height="300"/>
                     <h2 className="Exercise-Tile-Title">{this.state.exercise}</h2>
                 </div>
             </div>

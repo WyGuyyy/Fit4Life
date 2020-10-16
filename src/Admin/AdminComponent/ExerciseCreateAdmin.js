@@ -23,6 +23,36 @@ class ExerciseCreateAdmin extends React.Component{
         
     }
 
+    async createExercise(event){
+
+        var aTitle = document.getElementById("Exercise-Create-Title-Input-Admin").value;
+        const fileData = new FormData();
+
+        var exerciseID;
+
+        await fetch("http://localhost:8080/api/exercise", {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({title: aTitle}) //Need to add in other fields here, back end and front end
+        }).then(res => res.json())
+        .then(
+            (text) => {
+                exerciseID = text;
+            }
+        ).catch(console.log);
+
+        fileData.append("files", this.state.selectedFile);
+
+        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID , { 
+            method: "POST",                          
+            body: fileData
+        }).catch(console.log);
+
+        document.getElementById("Exercise-Create-Title-Input-Admin").value = "";
+        document.getElementById("Exercise-Create-Image-Label").innerHTML = "Select an Image";
+
+    }
+
     handleFileUpload(event){
         var _URL = window.URL || window.webkitURL;
 
@@ -73,13 +103,13 @@ class ExerciseCreateAdmin extends React.Component{
                     <div className="Exercise-Create-Wrapper-Admin">
                         <div className="Exercise-Create-Form-Wrapper-Admin">
                             <div className="Exercise-Create-Title-Wrapper-Admin">
-                                <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" id="Exercise-Create-Title-Input-Admin" placeholder="Title..."/>
                             </div>
                             <div className="Exercise-Create-Image-Area">
                                 <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)}/>
                             </div>
                             <div className="Exercise-Create-Button-Area-Admin"> 
-                                <button className="Exercise-Create-Save-Button-Admin">Create</button>
+                                <button className="Exercise-Create-Save-Button-Admin" onClick={(e) => this.createExercise(e)}>Create</button>
                                 <button className="Exercise-Create-Cancel-Button-Admin">Cancel</button>
                             </div>
                         </div>

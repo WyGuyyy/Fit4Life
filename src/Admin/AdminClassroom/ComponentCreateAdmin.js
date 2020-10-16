@@ -21,6 +21,20 @@ class ComponentCreateAdmin extends React.Component{
     componentWillUnmount(){
         
     }
+
+    async createComponent(event){
+
+        var aTitle = document.getElementById("Component-Create-Title-Input-Admin").value;
+
+        await fetch("http://localhost:8080/api/component", {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({title: aTitle}) //Need to add in other fields here, back end and front end
+        }).catch(console.log);
+
+        document.getElementById("Component-Create-Title-Input-Admin").value = "";
+
+    }
     
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
@@ -39,10 +53,10 @@ class ComponentCreateAdmin extends React.Component{
                     <div className="Component-Create-Wrapper-Admin">
                         <div className="Component-Create-Form-Wrapper-Admin">
                             <div className="Component-Create-Title-Wrapper-Admin">
-                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Classroom-Create-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Component-Create-Title-Input-Admin" id="Component-Create-Title-Input-Admin" placeholder="Title..."/>
                             </div>
                             <div className="Component-Create-Button-Area-Admin"> 
-                                <button className="Component-Create-Save-Button-Admin">Create</button>
+                                <button className="Component-Create-Save-Button-Admin" onClick={(e) => this.createComponent(e)}>Create</button>
                                 <button className="Component-Create-Cancel-Button-Admin">Cancel</button>
                             </div>
                         </div>

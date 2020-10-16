@@ -10,7 +10,9 @@ class AdminStudent extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: props.location.state.goBack
+            canGoBack: props.location.state.goBack,
+            classroomStudents: "",
+            classroomID: props.location.state.classID
         }
 
     }
@@ -23,12 +25,26 @@ class AdminStudent extends React.Component{
         
     }
 
-    fillStudents(){
+    async fillStudents(){
 
         var list = document.getElementById("studentList-Admin");
         var count = 0;
 
-        for(count = 0; count < 10; count++){
+        var students;
+
+        await fetch("http://localhost:8080/api/user", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    students = result;
+                }
+            ).catch(console.log);
+
+        for(count = 0; count < students.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
@@ -61,9 +77,9 @@ class AdminStudent extends React.Component{
             cell4.classList.add("Student-Grid-Cell-Delete-Admin");
 
             listItemTitle.classList.add("Student-List-Item-Title-Admin");
-            listItemTitle.textContent = "Student" + count;
+            listItemTitle.textContent = students[count].first_name + " " + students[count].last_name;
             listItemTitle.id = "studentListItemTitle-" + count + "-Admin";
-            listItemTitle.title = "Student-" + count
+            listItemTitle.title = students[count].first_name + " " + students[count].last_name;
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -97,6 +113,10 @@ class AdminStudent extends React.Component{
 
         }
 
+        this.setState({
+            classroomStudents: students
+        });
+
     }
 
     changeListItemBackground(id){
@@ -122,11 +142,41 @@ class AdminStudent extends React.Component{
         }
     }
 
+    /*async removeStudentFromClass(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var studentID = this.state.students[idNum].user_id;
+        var classroomID = this.state.classroomID;
+
+        var count = 0;
+
+        var studentList = document.getElementById("studentList-Admin");
+        var listChildren = studentList.childNodes;
+
+        console.log(classroomID);
+
+        await fetch("http://localhost:8080/api/classroom/remove/" + studentID + "/" + classroomID, {  
+                method: "DELETE",                          
+                headers: {"Content-Type": "application/json"}
+            }).catch(console.log);
+
+        
+        for(count = 0; count < listChildren.length; count++){
+            if(listChildren[count].id.localeCompare("exerciseListItem-" + idNum + "-Admin") === 0){
+                studentList.removeChild(listChildren[count]); 
+                break;
+            }
+        }
+    
+        this.recolorRows(studentList);
+
+    }*/
+
     goToStudentInvite(eventObj){
 
         this.props.history.push({
             pathname: "/studentInviteAdmin",
-            state: {goBack: true}
+            state: {goBack: true, classID: this.state.classroomID}
         });
     }
 
@@ -147,14 +197,21 @@ class AdminStudent extends React.Component{
         }
     }*/
 
-    dropStudent(eventObj){
+    async dropStudent(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
+        var studentID = this.state.classroomStudents[idNum].user_id;
+        var classroomID = this.state.classroomID;
 
         var count = 0;
 
         var goalList = document.getElementById("studentList-Admin");
         var listChildren = goalList.childNodes;
+
+        await fetch("http://localhost:8080/api/classroom/remove/" + studentID + "/" + classroomID, {  
+                method: "DELETE",                          
+                headers: {"Content-Type": "application/json"}
+            }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("studentListItem-" + idNum + "-Admin") === 0){
