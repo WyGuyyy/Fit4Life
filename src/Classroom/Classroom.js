@@ -10,7 +10,8 @@ class Classroom extends React.Component{
 
         this.state = {
             canGoBack: true,
-            classroomName: props.location.state.classroom
+            classroom: props.location.state.selectedClassroom,
+            classroomComponents: ""
         }
 
     }
@@ -27,9 +28,10 @@ class Classroom extends React.Component{
         var components;
         var count = 0;
         var classroomWrapper = document.getElementById("classroomWrapper");
+        var classroomID = this.state.classroom.classroom_id;
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/component", {  
+            await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json"}
             })
@@ -51,16 +53,27 @@ class Classroom extends React.Component{
                 componentButton.textContent = title;
 
                 classroomWrapper.appendChild(componentButton);
+
             }
+
+            this.setState({
+                classroomComponents: components
+            });
+
     }
 
     goToComponent(event){
 
-        var btn = document.getElementById(event.target.id);
+        //var btn = document.getElementById(event.target.id);
+        var idNum = event.target.id.split("-")[2];
+        var aComponent = this.state.classroomComponents[idNum];
+        var aClassroom = this.state.classroom;
+
+        console.log(aClassroom);
 
         this.props.history.push({
             pathname: "/component",
-            state: {component: btn.innerHTML}
+            state: {selectedClassroom: aClassroom, selectedComponent: aComponent}
         });
     }
 

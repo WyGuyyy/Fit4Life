@@ -175,9 +175,13 @@ class AdminHome extends React.Component{
     }
 
     goToClassroomComponents(eventObj){
+
+            var idNum = eventObj.event.target.id.split("-")[1];
+            var aClassroom = this.state.teacherClassrooms[idNum];
+
             this.props.history.push({
                 pathname: "/classroomAdmin",
-                state: {goalID: eventObj.id, goBack: true}
+                state: {goalID: eventObj.id, goBack: true, classroom: aClassroom}
             });
     }
 

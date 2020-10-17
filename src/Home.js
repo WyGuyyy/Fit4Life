@@ -9,7 +9,8 @@ class Home extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: false
+            canGoBack: false,
+            studentClassrooms: ""
         }
 
     }
@@ -52,15 +53,21 @@ class Home extends React.Component{
 
                 classroomWrapper.appendChild(classButton);
             }
+
+            this.setState({
+                studentClassrooms: classrooms
+            });
     }
 
     goToComponent(event){
 
-        var btn = document.getElementById(event.target.id);
+        //var btn = document.getElementById(event.target.id);
+        var idNum = event.target.id.split("-")[2];
+        var aClassroom = this.state.studentClassrooms[idNum];
 
         this.props.history.push({
             pathname: "/classroom",
-            state: {classroom: btn.innerHTML}
+            state: {selectedClassroom: aClassroom}
         });
     }
 

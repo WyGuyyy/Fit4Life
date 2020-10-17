@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './Invite.css';
 import Header from '../Header/Header';
-import Popout from '../Popout/Popout'
+import Popout from '../Popout/Popout';
+import ConfirmModal from '../Confirm/ConfirmModal';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -258,7 +260,10 @@ class Invite extends React.Component{
         return(
             <Fragment>
                 <Header title="Invites" goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="" yesText="Yes" noText="No" id="modalContainerAccept" onYes={this.acceptInvite}/>
+                <ConfirmModal text="" yesText="Yes" noText="No" id="modalContainerDecline" onYes={this.declineInvite}/>
                 <div className="inviteContainer">
+                    <ConfirmToast text=""/>
                     <Popout />
                     <div className="inviteWrapper" id="inviteWrapper">
                         <div className="inviteList" id="inviteList">

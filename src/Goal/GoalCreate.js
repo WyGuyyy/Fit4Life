@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 import './GoalCreate.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
+import ConfirmModal from '../Confirm/ConfirmModal';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -52,6 +54,21 @@ class GoalCreate extends React.Component{
 
     }
 
+    showModal(event){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -64,8 +81,10 @@ class GoalCreate extends React.Component{
         return(
             <Fragment>
                 <Header title="Goal Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Create goal?" yesText="Yex" noText="No" onYes={(e) => {this.createGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Goal-Create-Container">
                     <Popout />
+                    <ConfirmToast text="Goal created!" />
                     <div className="Goal-Create-Wrapper">
                         <div className="Goal-Create-Form-Wrapper">
                             <div className="Goal-Create-Title-Wrapper">
@@ -95,7 +114,7 @@ class GoalCreate extends React.Component{
                                 <label className="Goal-Create-Description-Label">Description: </label> <textarea className="Goal-Create-Description-TextArea" id="Goal-Create-Description-TextArea" placeholder="Description..."/>
                             </div>
                             <div className="Goal-Create-Submit-Wrapper">
-                                <button className="Goal-Create-Submit-Button" onClick={(e) => this.createGoal(e)}>Create</button>
+                                <button className="Goal-Create-Submit-Button" onClick={(e) => {this.showModal(e)}}>Create</button>
                             </div>
                         </div>
                     </div>

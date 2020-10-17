@@ -11,8 +11,11 @@ class Component extends React.Component{
         super(props);
 
         this.state = {
-            component: props.location.state.component,
-            canGoBack: true
+            component: props.location.state.selectedComponent,
+            classroom: props.location.state.selectedClassroom,
+            canGoBack: true,
+            componentExercises: "",
+            exImageMap: ""
         };
 
         window.addEventListener("resize", this.triggerRerender.bind(this));
@@ -25,7 +28,7 @@ class Component extends React.Component{
     }
 
     componentDidUpdate(){
-        this.renderTiles();
+
     }
 
     //Lifecycle event preparing Header component to unmount from DOM
@@ -74,8 +77,12 @@ class Component extends React.Component{
     async renderTiles(){
 
         var exercises;
+        var exerciseBlobs;
         var count = 0;
         var componentWrapper = document.getElementById("componentWrapper");
+
+        var classroomID = this.state.classroom.classroom_id;
+        var componentID = this.state.component.component_id;
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
         await fetch("http://localhost:8080/api/exercise", {  
@@ -89,6 +96,21 @@ class Component extends React.Component{
                 exercises = result;
             }
         ).catch(console.log);
+
+        await fetch("/api/exercise_blob/foracomp/" + classroomID + "/" + componentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.json())
+        .then(
+            (text) => {
+                console.log(text);
+                var result = text.length ? JSON.parse(text) : {};
+                exerciseBlobs = result;
+            }
+        ).catch(console.log);
+
+        console.log(exerciseBlobs);
 
         var tempNumOfTiles = 40;
         var numRows;
@@ -122,6 +144,9 @@ class Component extends React.Component{
             componentWrapper.appendChild(aFlexRow);
         }
 
+        this.setState({
+            componentExercises: exercises
+        });
 
     }
 
@@ -161,8 +186,9 @@ class Component extends React.Component{
     }
 
     renderTile(currExercise){
-        var img = this.getExerciseImage(currExercise.exercise_id);
-        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)} image={img}/>
+        //var img = this.getExerciseImage(currExercise.exercise_id);
+        //image={img}
+        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)} />
     }
 
 
@@ -190,7 +216,7 @@ class Component extends React.Component{
 
         return(
             <Fragment>
-                <Header title={this.state.component} goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title={this.state.component.title} goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="componentContainer">
                     <Popout />
                     <div className="componentWrapper" id="componentWrapper">
