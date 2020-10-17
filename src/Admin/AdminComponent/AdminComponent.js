@@ -13,7 +13,9 @@ class AdminComponent extends React.Component{
 
         this.state = {
             canGoBack: props.location.state.goBack,
-            componentExercises: ""
+            componentExercises: "",
+            focusedExercise: "",
+            focusedExerciseItemID: ""
         }
 
     }
@@ -102,7 +104,7 @@ class AdminComponent extends React.Component{
 
             listDeleteButton.classList.add("Exercise-List-Item-Delete-Button-Admin");
             listDeleteButton.id = "exerciseListItemDelete-" + count + "-Admin";
-            listDeleteButton.onclick = (e) => this.deleteExercise({event: e, id: listDeleteButton.id});
+            listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
@@ -181,36 +183,36 @@ class AdminComponent extends React.Component{
 
     async deleteExercise(eventObj){
 
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
-        var goalList = document.getElementById("exerciseList-Admin");
-        var listChildren = goalList.childNodes;
+        var exerciseList = document.getElementById("exerciseList-Admin");
+        var listChildren = exerciseList.childNodes;
 
-        await fetch("http://localhost:8080/api/exercise/" + this.state.componentExercises[idNum].exercise_id, {  
+        await fetch("http://localhost:8080/api/exercise/" + this.state.focusedExercise.exercise_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("exerciseListItem-" + idNum + "-Admin") === 0){
-                goalList.removeChild(listChildren[count]); 
+            if(listChildren[count].id.localeCompare("exerciseListItem-" + this.state.focusedExerciseItemID + "-Admin") === 0){
+                exerciseList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
-        this.recolorRows(goalList);
+        this.recolorRows(exerciseList);
     }
 
     showModal(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
-        var aComponent = this.state.classroomComponents[idNum];
+        var aExercise = this.state.componentExercises[idNum];
 
         this.setState({
-            focusedComponent: aComponent,
-            focusedComponentItemID: idNum
+            focusedExercise: aExercise,
+            focusedExerciseItemID: idNum
         });
 
         document.getElementById("modalContainer").style.display = "flex";
