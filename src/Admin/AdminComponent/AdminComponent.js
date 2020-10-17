@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import './AdminComponent.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {FaPen} from 'react-icons/fa';
 
@@ -201,6 +203,30 @@ class AdminComponent extends React.Component{
         this.recolorRows(goalList);
     }
 
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aComponent = this.state.classroomComponents[idNum];
+
+        this.setState({
+            focusedComponent: aComponent,
+            focusedComponentItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
         if(this.state.canGoBack){
@@ -214,11 +240,13 @@ class AdminComponent extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Admin Exercise" goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeExercise">
                     <AdminPopout />
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">
+                        <ConfirmToast text="Exercise deleted!"/>
                         <div className="exerciseList-Admin" id="exerciseList-Admin">
                             <div className="exerciseFiller-Admin"></div>
                             

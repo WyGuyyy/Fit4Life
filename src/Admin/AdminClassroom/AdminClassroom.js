@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import './AdminClassroom.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
-import AdminPopout from '../AdminPopout/AdminPopout'
+import AdminPopout from '../AdminPopout/AdminPopout';
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class AdminClassroom extends React.Component{
@@ -10,7 +12,9 @@ class AdminClassroom extends React.Component{
 
         this.state = {
             canGoBack: props.location.state.goBack,
-            classroomComponents: ""
+            classroomComponents: "",
+            focusedComponent: "",
+            focusedComponentItemID: ""
         }
 
     }
@@ -99,7 +103,7 @@ class AdminClassroom extends React.Component{
             
             listDeleteButton.classList.add("Component-List-Item-Delete-Button-Admin");
             listDeleteButton.id = "componentListItemDelete-" + count + "-Admin";
-            listDeleteButton.onclick = (e) => this.deleteClassroom({event: e, id: listDeleteButton.id});
+            listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
@@ -161,7 +165,7 @@ class AdminClassroom extends React.Component{
 
         this.props.history.push({
             pathname: "/componentEditAdmin",
-            state: {goBack: true, title: this.state.classroomComponents[idNum].title}
+            state: {goBack: true, component: this.state.classroomComponents[idNum]}
         });
     }
 
@@ -175,28 +179,52 @@ class AdminClassroom extends React.Component{
         }
     }
 
-    async deleteClassroom(eventObj){
+    async deleteComponent(eventObj){
 
-        var idNum = eventObj.event.target.id.split("-")[1];
+       // var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
-        var goalList = document.getElementById("componentList-Admin");
-        var listChildren = goalList.childNodes;
+        var componentList = document.getElementById("componentList-Admin");
+        var listChildren = componentList.childNodes;
 
-        await fetch("http://localhost:8080/api/component/" + this.state.classroomComponents[idNum].component_id, {  
+        await fetch("http://localhost:8080/api/component/" + this.state.focusedComponent.component_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("componentListItem-" + idNum + "-Admin") === 0){
-                goalList.removeChild(listChildren[count]); 
+            if(listChildren[count].id.localeCompare("componentListItem-" + this.state.focusedComponentItemID + "-Admin") === 0){
+                componentList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
-        this.recolorRows(goalList);
+        this.recolorRows(componentList);
+    }
+
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aComponent = this.state.classroomComponents[idNum];
+
+        this.setState({
+            focusedComponent: aComponent,
+            focusedComponentItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     goBack(){ //This isnt working, start here next time
@@ -212,10 +240,12 @@ class AdminClassroom extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Admin Component" goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Delete component?" yesText="Yes" noText="No" onYes={e => {this.deleteComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeComponent">
                     <AdminPopout />
                     <button className="Component-Create-Button-Admin" title="Create Component" onClick={(e)=>this.goToClassroomCreate({event: e})}>+</button>
                     <div className="componentWrapper-Admin" id="componentWrapper-Admin">
+                        <ConfirmToast text="Component deleted!"/>
                         <div className="componentList-Admin" id="componentList-Admin">
                             <div className="componentFiller-Admin"></div>
                             

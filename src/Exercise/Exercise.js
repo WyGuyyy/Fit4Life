@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './Exercise.css';
 import Header from '../Header/Header';
-import Popout from '../Popout/Popout'
+import Popout from '../Popout/Popout';
+import ConfirmModal from '../Confirm/ConfirmModal';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class Exercise extends React.Component{
@@ -58,6 +60,21 @@ class Exercise extends React.Component{
 
     }
 
+    showModal(event){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
         if(this.state.canGoBack){
@@ -71,9 +88,11 @@ class Exercise extends React.Component{
         return(
             <Fragment>
                 <Header title={this.state.exercise} goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="exerciseContainer">
                     <Popout />
                     <div className="exerciseWrapper">
+                        <ConfirmToast text="Workout saved!"/>
                         <div className="exerciseForm">
                             <div className="Exercise-Title-Row">
                                 <h2 className="Exercise-Form-Title">Exercise Data</h2>
@@ -101,7 +120,7 @@ class Exercise extends React.Component{
                                     <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" />
                                 </div>
                                 <div className="Exercise-Submit-Row">
-                                    <button className="exerciseSubmit" onClick={(e) => this.submitWorkout(e)}>Submit</button>
+                                    <button className="exerciseSubmit" onClick={(e) => this.showModal(e)}>Submit</button>
                                 </div>
                             </div>
                         </div>

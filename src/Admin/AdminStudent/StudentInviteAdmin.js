@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import './StudentInviteAdmin.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class StudentInviteAdmin extends React.Component{
@@ -11,7 +13,9 @@ class StudentInviteAdmin extends React.Component{
         this.state = {
             canGoBack: props.location.state.goBack,
             classroomID: props.location.state.classID,
-            filteredStudents: ""
+            filteredStudents: "",
+            focusedStudent: "",
+            focusedStudentItemID: ""
         }
 
     }
@@ -109,7 +113,7 @@ class StudentInviteAdmin extends React.Component{
             listInviteButton.classList.add("Student-Invite-List-Item-Invite-Button-Admin");
             listInviteButton.textContent = "Invite";
             listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
-            listInviteButton.onclick = (e) => this.inviteStudent({event: e, id: listInviteButton.id});
+            listInviteButton.onclick = (e) => this.showModal({event: e, id: listInviteButton.id});
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
@@ -166,10 +170,10 @@ class StudentInviteAdmin extends React.Component{
 
     async inviteStudent(eventObj){
 
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var classroomID = this.state.classroomID;
-        var studentID = this.state.filteredStudents[idNum].user_id;
+        var studentID = this.state.focusedStudent.user_id;
 
         await fetch("http://localhost:8080/api/invite/send/" + studentID + "/" + 2 + "/" + classroomID, {  
             method: "POST",                          
@@ -222,6 +226,30 @@ class StudentInviteAdmin extends React.Component{
         this.recolorRows(goalList);
     }*/
 
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aStudent = this.state.filteredStudents[idNum];
+
+        this.setState({
+            focusedStudent: aStudent,
+            focusedStudentItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
         if(this.state.canGoBack){
@@ -235,9 +263,11 @@ class StudentInviteAdmin extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Admin Student Invite" goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />
                     <div className="studentInviteWrapper-Admin" id="studentInviteWrapper-Admin">
+                        <ConfirmToast text="Invite sent!"/>
                         <div className="studentInviteList-Admin" id="studentInviteList-Admin">
                             <div className="studentInviteFiller-Admin"></div>
                             

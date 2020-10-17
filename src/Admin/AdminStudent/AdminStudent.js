@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import './AdminStudent.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
@@ -12,7 +14,9 @@ class AdminStudent extends React.Component{
         this.state = {
             canGoBack: props.location.state.goBack,
             classroomStudents: "",
-            classroomID: props.location.state.classID
+            classroomID: props.location.state.classID,
+            focusedStudent: "",
+            focusedStudentItemID: ""
         }
 
     }
@@ -94,7 +98,7 @@ class AdminStudent extends React.Component{
 
             listDeleteButton.classList.add("Student-List-Item-Delete-Button-Admin");
             listDeleteButton.id = "studentListItemDelete-" + count + "-Admin";
-            listDeleteButton.onclick = (e) => this.dropStudent({event: e, id: listDeleteButton.id});
+            listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDrop);
 
             cell1.appendChild(listItemTitle);
@@ -199,8 +203,8 @@ class AdminStudent extends React.Component{
 
     async dropStudent(eventObj){
 
-        var idNum = eventObj.event.target.id.split("-")[1];
-        var studentID = this.state.classroomStudents[idNum].user_id;
+        //var idNum = eventObj.event.target.id.split("-")[1];
+        var studentID = this.state.focusedStudent.user_id;
         var classroomID = this.state.classroomID;
 
         var count = 0;
@@ -214,13 +218,44 @@ class AdminStudent extends React.Component{
             }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("studentListItem-" + idNum + "-Admin") === 0){
+            if(listChildren[count].id.localeCompare("studentListItem-" + this.state.focusedStudentItemID + "-Admin") === 0){
                 goalList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
         this.recolorRows(goalList);
+
+        this.setState({
+            focusedStudent: "",
+            focusedStudentItemID: ""
+        });
+    }
+
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aStudent = this.state.classroomStudents[idNum];
+
+        this.setState({
+            focusedStudent: aStudent,
+            focusedStudentItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+
+        
     }
 
     goBack(){ //This isnt working, start here next time
@@ -236,10 +271,12 @@ class AdminStudent extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Admin Student" goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Remove student from class?" yesText="Yes" noText="No" onYes={e => {this.dropStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeStudent">
                     <AdminPopout />
                     <button className="Student-InviteButton-Button-Admin" title="Student Invite" onClick={(e)=>this.goToStudentInvite({event: e})}>+</button>
                     <div className="studentWrapper-Admin" id="studentWrapper-Admin">
+                        <ConfirmToast text="Student removed!"/>
                         <div className="studentList-Admin" id="studentList-Admin">
                             <div className="studentFiller-Admin"></div>
                             

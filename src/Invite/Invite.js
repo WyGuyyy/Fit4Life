@@ -15,7 +15,9 @@ class Invite extends React.Component{
 
         this.state = {
            canGoBack: props.location.state.goBack,
-           userInvites: ""
+           userInvites: "",
+           focusedInvite: "",
+           focusedInviteItemID: ""
         };
 
     }
@@ -106,13 +108,13 @@ class Invite extends React.Component{
 
             listAcceptButton.classList.add("Invite-List-Item-Accept-Button");
             listAcceptButton.id = "inviteListItemEdit-" + count;
-            listAcceptButton.onclick = (e) => this.acceptInvite({event: e, id: listAcceptButton.id});
+            listAcceptButton.onclick = (e) => this.showAcceptModal({event: e, id: listAcceptButton.id});
             listAcceptButton.appendChild(iconAccept);
             listAcceptButton.title = "Accept Invitation";
 
             listDeclineButton.classList.add("Invite-List-Item-Decline-Button");
             listDeclineButton.id = "inviteListItemDecline-" + count;
-            listDeclineButton.onclick = (e) => this.declineInvite({event: e, id: listDeclineButton.id});
+            listDeclineButton.onclick = (e) => this.showDeclineModal({event: e, id: listDeclineButton.id});
             listDeclineButton.appendChild(iconDecline);
             listDeclineButton.title = "Decline Invitation";
 
@@ -198,54 +200,112 @@ class Invite extends React.Component{
     }
 
     async declineInvite(eventObj){
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("http://localhost:8080/api/invite/" + this.state.userInvites[idNum].invite_id, {  
+        await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("inviteListItem-" + idNum) === 0){
+            if(listChildren[count].id.localeCompare("inviteListItem-" + this.state.focusedInviteItemID) === 0){
                 inviteList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
         this.recolorRows(inviteList);
+
+        this.confirmBackendTransaction("Invite declined!");
+
+        this.setState({
+            focusedInvite: "",
+            focusedInviteItemID: ""
+        });
     }
 
     async acceptInvite(eventObj){
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("http://localhost:8080/api/invite/accept/" + 2 + "/" + this.state.userInvites[idNum].classroom.classroom_id, {  
+        console.log(eventObj);
+
+        await fetch("http://localhost:8080/api/invite/accept/" + 2 + "/" + this.state.focusedInvite.invite_id, {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
-        await fetch("http://localhost:8080/api/invite/" + this.state.userInvites[idNum].invite_id, {  
+        await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("inviteListItem-" + idNum) === 0){
+            if(listChildren[count].id.localeCompare("inviteListItem-" + this.state.focusedInviteItemID) === 0){
                 inviteList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
         this.recolorRows(inviteList);
+
+        this.confirmBackendTransaction("Invite accepted!");
+
+        this.setState({
+            focusedInvite: "",
+            focusedInviteItemID: ""
+        });
+    }
+
+    showAcceptModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var anInvite = this.state.userInvites[idNum];
+
+        this.setState({
+            focusedInvite: anInvite,
+            focusedInviteItemID: idNum
+        });
+
+        document.getElementById("modalContainerAccept").style.display = "flex";
+    }
+
+    closeAcceptModal(){
+        document.getElementById("modalContainerAccept").style.display = "none";
+    }
+
+    showDeclineModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var anInvite = this.state.userInvites[idNum];
+
+        this.setState({
+            focusedInvite: anInvite,
+            focusedInviteItemID: idNum
+        });
+
+        document.getElementById("modalContainerDecline").style.display = "flex";
+    }
+
+    closeDeclineModal(){
+        document.getElementById("modalContainerDecline").style.display = "none";
+    }
+
+    confirmBackendTransaction(strValue){
+        document.getElementById("snackbar").innerHTML = strValue;
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     goBack(){ //This isnt working, start here next time
@@ -260,8 +320,8 @@ class Invite extends React.Component{
         return(
             <Fragment>
                 <Header title="Invites" goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="" yesText="Yes" noText="No" id="modalContainerAccept" onYes={this.acceptInvite}/>
-                <ConfirmModal text="" yesText="Yes" noText="No" id="modalContainerDecline" onYes={this.declineInvite}/>
+                <ConfirmModal text="Accept invite?" yesText="Yes" noText="No" id="modalContainerAccept" onYes={e => {this.acceptInvite({event: e}); this.closeAcceptModal(); this.confirmBackendTransaction("Invite accepted!");}}/>
+                <ConfirmModal text="Decline invite?" yesText="Yes" noText="No" id="modalContainerDecline" onYes={e => {this.declineInvite({event: e}); this.closeDeclineModal(); this.confirmBackendTransaction("Invite declined!");}}/>
                 <div className="inviteContainer">
                     <ConfirmToast text=""/>
                     <Popout />

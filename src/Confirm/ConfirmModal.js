@@ -27,7 +27,7 @@ class ConfirmModal extends React.Component{
     }
 
     hideModal(event){
-        document.getElementById("modalContainer").style.display = "none";
+        document.getElementById((this.state.id === undefined ? "modalContainer" : this.state.id)).style.display = "none";
     }
 
     /*goToExercise(){
@@ -43,10 +43,8 @@ class ConfirmModal extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
-        console.log(this.props.image);
-
         return(
-            <div className="modalContainer" id={this.props.id} onClick={this.props.tileClickEvent}>
+            <div className="modalContainer" id={(this.props.id === undefined ? "modalContainer" : this.props.id)} onClick={this.props.tileClickEvent}>
                 <div className="modalContent">
                     <p className="modalText" id="modalText">{this.props.text}</p>
                     <div className="Modal-Button-Wrapper">

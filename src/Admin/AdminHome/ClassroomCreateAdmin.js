@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import './ClassroomCreateAdmin.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
-import AdminPopout from '../AdminPopout/AdminPopout'
+import AdminPopout from '../AdminPopout/AdminPopout';
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class ClassroomCreateAdmin extends React.Component{
@@ -35,6 +37,25 @@ class ClassroomCreateAdmin extends React.Component{
         document.getElementById("Classroom-Create-Title-Input-Admin").value = "";
 
     }
+
+    showModal(event){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
+    cancelCreate(){
+        this.props.history.push({pathname: "admin", state: {goBack: false}});
+    }
     
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
@@ -48,16 +69,18 @@ class ClassroomCreateAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title="Admin Classroom Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Create classroom?" yesText="Yes" noText="No" onYes={e => {this.createClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Classroom-Create-Container-Admin">
                     <AdminPopout />
                     <div className="Classroom-Create-Wrapper-Admin">
+                        <ConfirmToast text="Classroom created!"/>
                         <div className="Classroom-Create-Form-Wrapper-Admin">
                             <div className="Classroom-Create-Title-Wrapper-Admin">
                                 <label className="Classroom-Create-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Create-Title-Input-Admin" id="Classroom-Create-Title-Input-Admin" placeholder="Title..."/>
                             </div>
                             <div className="Classroom-Create-Button-Area-Admin"> 
-                                <button className="Classroom-Create-Save-Button-Admin" onClick={(e) => this.createClassroom(e)}>Create</button>
-                                <button className="Classroom-Create-Cancel-Button-Admin">Cancel</button>
+                                <button className="Classroom-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>
+                                <button className="Classroom-Create-Cancel-Button-Admin" onClick={e => this.cancelCreate()}>Cancel</button>
                             </div>
                         </div>
                     </div>

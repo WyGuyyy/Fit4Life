@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import './AdminHome.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
-import AdminPopout from '../AdminPopout/AdminPopout'
+import AdminPopout from '../AdminPopout/AdminPopout';
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class AdminHome extends React.Component{
@@ -10,7 +12,9 @@ class AdminHome extends React.Component{
 
         this.state = {
             canGoBack: false,
-            teacherClassrooms: ""
+            teacherClassrooms: "",
+            focusedClassroom: "",
+            focusedClassroomItemID: ""
         }
 
     }
@@ -105,7 +109,7 @@ class AdminHome extends React.Component{
 
             listDeleteButton.classList.add("Classroom-List-Item-Delete-Button-Admin");
             listDeleteButton.id = "classroomListItemDelete-" + count + "-Admin";
-            listDeleteButton.onclick = (e) => this.deleteClassroom({event: e, id: listDeleteButton.id});
+            listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
@@ -170,7 +174,7 @@ class AdminHome extends React.Component{
 
         this.props.history.push({
             pathname: "/classroomEditAdmin",
-            state: {goBack: true, title: this.state.teacherClassrooms[idNum].title}
+            state: {goBack: true, classroom: this.state.teacherClassrooms[idNum]}
         });
     }
 
@@ -195,28 +199,52 @@ class AdminHome extends React.Component{
         });
     }
 
-    async deleteClassroom(eventObj){
+    async deleteClassroom(event){
 
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
         var goalList = document.getElementById("classroomList-Admin");
         var listChildren = goalList.childNodes;
 
-        await fetch("http://localhost:8080/api/classroom/" + this.state.teacherClassrooms[idNum].classroom_id, {  
+        await fetch("http://localhost:8080/api/classroom/" + this.state.focusedClassroom.classroom_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("classroomListItem-" + idNum + "-Admin") === 0){
+            if(listChildren[count].id.localeCompare("classroomListItem-" + this.state.focusedClassroomItemID + "-Admin") === 0){
                 goalList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
         this.recolorRows(goalList);
+    }
+
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aClassroom = this.state.teacherClassrooms[idNum];
+
+        this.setState({
+            focusedClassroom: aClassroom,
+            focusedClassroomItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     goBack(){ //This isnt working, start here next time
@@ -232,10 +260,12 @@ class AdminHome extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Admin Home" goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Delete classroom?" yesText="Yes" noText="No" onYes={e => {this.deleteClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeContainer">
                     <AdminPopout />
                     <button className="Classroom-Create-Button-Admin" title="Create Classroom" onClick={(e)=>this.goToClassroomCreate({event: e})}>+</button>
                     <div className="classroomWrapper-Admin" id="classroomWrapper-Admin">
+                        <ConfirmToast text="Classroom deleted!"/>
                         <div className="classroomList-Admin" id="classroomList-Admin">
                             <div className="classroomFiller-Admin"></div>
                             

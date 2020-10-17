@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import './ExerciseCreateAdmin.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
-import AdminPopout from '../AdminPopout/AdminPopout'
+import AdminPopout from '../AdminPopout/AdminPopout';
+import ConfirmModal from '../../Confirm/ConfirmModal';
+import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 
 class ExerciseCreateAdmin extends React.Component{
@@ -85,6 +87,25 @@ class ExerciseCreateAdmin extends React.Component{
     
         }
     }
+
+    showModal(event){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
+    cancelCreate(){
+        this.props.history.push({pathname: "componentAdmin", state: {goBack: true}});
+    }
     
     goBack(){ //This isnt working, start here next time
         console.log(this.props);
@@ -98,9 +119,11 @@ class ExerciseCreateAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title="Admin Exercise Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Create-Container-Admin">
                     <AdminPopout />
                     <div className="Exercise-Create-Wrapper-Admin">
+                        <ConfirmToast text="Exercise created!"/>
                         <div className="Exercise-Create-Form-Wrapper-Admin">
                             <div className="Exercise-Create-Title-Wrapper-Admin">
                                 <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" id="Exercise-Create-Title-Input-Admin" placeholder="Title..."/>
@@ -109,8 +132,8 @@ class ExerciseCreateAdmin extends React.Component{
                                 <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)}/>
                             </div>
                             <div className="Exercise-Create-Button-Area-Admin"> 
-                                <button className="Exercise-Create-Save-Button-Admin" onClick={(e) => this.createExercise(e)}>Create</button>
-                                <button className="Exercise-Create-Cancel-Button-Admin">Cancel</button>
+                                <button className="Exercise-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>
+                                <button className="Exercise-Create-Cancel-Button-Admin" onClick={e => {this.cancelCreate()}}>Cancel</button>
                             </div>
                         </div>
                     </div>
