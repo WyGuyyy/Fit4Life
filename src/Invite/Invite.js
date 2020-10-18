@@ -7,7 +7,6 @@ import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
-import { MdDelete } from 'react-icons/md';
 
 class Invite extends React.Component{
     constructor(props){

@@ -16,7 +16,8 @@ class AdminStudent extends React.Component{
             classroomStudents: "",
             classroomID: props.location.state.classID,
             focusedStudent: "",
-            focusedStudentItemID: ""
+            focusedStudentItemID: "",
+            classroom: props.location.state.classroom
         }
 
     }
@@ -180,7 +181,7 @@ class AdminStudent extends React.Component{
 
         this.props.history.push({
             pathname: "/studentInviteAdmin",
-            state: {goBack: true, classID: this.state.classroomID}
+            state: {goBack: true, classID: this.state.classroomID, classroom: this.state.classroom}
         });
     }
 
@@ -270,7 +271,7 @@ class AdminStudent extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Admin Student" goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.classroom.title + " Students"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Remove student from class?" yesText="Yes" noText="No" onYes={e => {this.dropStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeStudent">
                     <AdminPopout />

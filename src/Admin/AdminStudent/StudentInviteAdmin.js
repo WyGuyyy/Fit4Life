@@ -15,7 +15,8 @@ class StudentInviteAdmin extends React.Component{
             classroomID: props.location.state.classID,
             filteredStudents: "",
             focusedStudent: "",
-            focusedStudentItemID: ""
+            focusedStudentItemID: "",
+            classroom: props.location.state.classroom
         }
 
     }
@@ -73,6 +74,7 @@ class StudentInviteAdmin extends React.Component{
             //var listStudentButton = document.createElement("button");
             //var listEditButton = document.createElement("button");
             var listInviteButton = document.createElement("button");
+            var inviteIcon = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
@@ -81,9 +83,13 @@ class StudentInviteAdmin extends React.Component{
 
             listItem.classList.add("Student-Invite-List-Item-Admin");
             listItem.id = "studentInviteListItem-" + count + "-Admin";
-            listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
+            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
            // listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
+
+            inviteIcon.classList.add("fa");
+            inviteIcon.classList.add("fa-envelope");
+            inviteIcon.id = "iconInvite-" + count;
 
             cell1.classList.add("Student-Invite-Grid-Cell-Admin");
             cell1.classList.add("Student-Invite-Grid-Cell-Title-Admin");
@@ -110,10 +116,22 @@ class StudentInviteAdmin extends React.Component{
             listEditButton.id = "studentInviteListItemEdit-" + count + "-Admin";
             listEditButton.onclick = (e) => this.goToExerciseEdit({event: e, id: listEditButton.id});*/
 
-            listInviteButton.classList.add("Student-Invite-List-Item-Invite-Button-Admin");
-            listInviteButton.textContent = "Invite";
-            listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
-            listInviteButton.onclick = (e) => this.showModal({event: e, id: listInviteButton.id});
+            if(await this.isClassMember(matchStudents[count])){
+                listInviteButton.classList.add("Disabled");
+                listInviteButton.textContent = "Member";
+                listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
+                listInviteButton.disabled = true;
+            }else if(await this.studentInviteExists(matchStudents[count])){
+                listInviteButton.classList.add("Disabled");
+                listInviteButton.textContent = "Invited";
+                listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
+                listInviteButton.disabled = true;
+            }else{
+                listInviteButton.appendChild(inviteIcon);
+                listInviteButton.classList.add("Student-Invite-List-Item-Invite-Button-Admin");
+                listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
+                listInviteButton.onclick = (e) => this.showModal({event: e, id: listInviteButton.id});
+            }
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
@@ -135,6 +153,56 @@ class StudentInviteAdmin extends React.Component{
             filteredStudents: matchStudents
         });
 
+    }
+
+    async isClassMember(student){
+
+        var check;
+
+        console.log("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id);
+
+        var c = await fetch("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json"}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : null;
+                        check = result;
+                    }
+            ).catch(console.log);
+
+        if(check === null){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    async studentInviteExists(student){
+        var check;
+
+        await fetch("http://localhost:8080/api/invite/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json"}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : null;
+                        check = result;
+                    }
+            ).catch(console.log);
+
+            console.log(check);
+
+        if(check === null){
+            return false;
+        }else{
+            return true
+        }
     }
 
     changeListItemBackground(id){
@@ -262,7 +330,7 @@ class StudentInviteAdmin extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Admin Student Invite" goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.classroom.title + " Invite"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />

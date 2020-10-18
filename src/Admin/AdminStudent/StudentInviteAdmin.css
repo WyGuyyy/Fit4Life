@@ -130,16 +130,30 @@
 }*/
 
 .Student-Invite-List-Item-Invite-Button-Admin{
-    background: #ffffff;
+    background: #ac7e00;
     font-size: 30px;
     transition-duration: .5s;
     border: none;
     box-shadow: 2px 2px 10px black;
-    width: 125px;
+    width: 50px;
+    height: 50px;
 }
 
 .Student-Invite-List-Item-Invite-Button-Admin:hover{
-    background: #b1b0b0;
+    background: #ffbb00;
+}
+
+.Disabled{
+    background: #ac7e00;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 200px;
+}
+
+.Disabled:hover{
+    background:#ac7e00;
 }
 
 /*.Student-Create-Button-Admin{
@@ -233,11 +247,22 @@
     }*/
     
     .Student-Invite-List-Item-Invite-Button-Admin{
-        background: #ffffff;
+        background:#ac7e00;
         font-size: 20px;
         transition-duration: .5s;
         border: none;
         box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
+    }
+
+    .Disabled{
+        background: #ac7e00;
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+        width: 100px;
     }
 
     /*.Student-Create-Button-Admin{

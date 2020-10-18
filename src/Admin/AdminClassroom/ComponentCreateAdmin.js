@@ -68,7 +68,7 @@ class ComponentCreateAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Admin Component Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.classroom.title + " Component Create"} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create component?" yesText="Yes" noText="No" onYes={e => {this.createComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Component-Create-Container-Admin">
                     <AdminPopout />

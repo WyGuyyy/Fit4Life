@@ -69,7 +69,7 @@ class ComponentEditAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Admin Component Edit" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.component.title + " Edit"} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Component-Edit-Container-Admin">
                     <AdminPopout />

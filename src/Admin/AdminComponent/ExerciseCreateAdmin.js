@@ -12,7 +12,9 @@ class ExerciseCreateAdmin extends React.Component{
 
         this.state = {
             canGoBack: true,
-            selectedFile: ""
+            selectedFile: "",
+            classroom: props.location.state.classroom,
+            component: props.location.state.component
         }
 
     }
@@ -118,7 +120,7 @@ class ExerciseCreateAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Admin Exercise Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.classroom.title + " " + this.props.location.state.component.title + " Exercise Create"} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Create-Container-Admin">
                     <AdminPopout />

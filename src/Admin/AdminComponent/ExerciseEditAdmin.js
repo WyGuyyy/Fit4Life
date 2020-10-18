@@ -120,7 +120,7 @@ class ExerciseEditAdmin extends React.Component{
 
         return(
             <Fragment>
-                <AdminHeader title="Admin Exercise Edit" goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.exercise.title + " Edit"} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Edit-Container-Admin">
                     <AdminPopout />

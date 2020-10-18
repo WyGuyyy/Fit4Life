@@ -195,7 +195,7 @@ class AdminHome extends React.Component{
 
         this.props.history.push({
             pathname: "/studentAdmin",
-            state: {goBack: true, classID: this.state.teacherClassrooms[idNum].classroom_id}
+            state: {goBack: true, classID: this.state.teacherClassrooms[idNum].classroom_id, classroom: this.state.teacherClassrooms[idNum]}
         });
     }
 

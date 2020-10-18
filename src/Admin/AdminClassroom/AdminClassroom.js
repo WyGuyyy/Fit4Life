@@ -14,7 +14,8 @@ class AdminClassroom extends React.Component{
             canGoBack: props.location.state.goBack,
             classroomComponents: "",
             focusedComponent: "",
-            focusedComponentItemID: ""
+            focusedComponentItemID: "",
+            classroom: props.location.state.classroom
         }
 
     }
@@ -153,9 +154,10 @@ class AdminClassroom extends React.Component{
     }
 
     goToClassroomCreate(eventObj){
+
         this.props.history.push({
             pathname: "/componentCreateAdmin",
-            state: {goBack: true}
+            state: {goBack: true, classroom: this.state.classroom}
         });
     }
 
@@ -171,10 +173,12 @@ class AdminClassroom extends React.Component{
 
     goToClassroomComponents(eventObj){
 
+        var idNum = eventObj.event.target.id.split("-")[1];
+
         if(!(eventObj.event.target.classList[0].includes("Component-List-Item-Student-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Edit-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Delete-Button-Admin"))){
             this.props.history.push({
                 pathname: "/componentAdmin",
-                state: {goalID: eventObj.id, goBack: true}
+                state: {componentID: eventObj.id, goBack: true, component: this.state.classroomComponents[idNum], classroom: this.state.classroom}
             });
         }
     }
@@ -239,7 +243,7 @@ class AdminClassroom extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Admin Component" goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={this.props.location.state.classroom.title} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete component?" yesText="Yes" noText="No" onYes={e => {this.deleteComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeComponent">
                     <AdminPopout />
