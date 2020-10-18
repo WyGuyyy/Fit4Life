@@ -154,7 +154,7 @@ class Component extends React.Component{
 
         this.props.history.push({
             pathname: "/exercise",
-            state: {exercise: selExercise}
+            state: {exercise: selExercise, component: this.state.component, classroom: this.state.classroom}
         });
     }
 
@@ -188,7 +188,7 @@ class Component extends React.Component{
     renderTile(currExercise){
         //var img = this.getExerciseImage(currExercise.exercise_id);
         //image={img}
-        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise.title)} />
+        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise)} />
     }
 
 
@@ -214,9 +214,12 @@ class Component extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        var classroom = this.props.location.state.selectedClassroom.title;
+        var component = this.props.location.state.selectedComponent.title;
+
         return(
             <Fragment>
-                <Header title={this.state.component.title} goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="componentContainer">
                     <Popout />
                     <div className="componentWrapper" id="componentWrapper">

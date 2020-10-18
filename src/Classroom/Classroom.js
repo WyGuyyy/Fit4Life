@@ -86,10 +86,12 @@ class Classroom extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.selectedClassroom.title;
+
         return(
 
             <Fragment>
-                <Header title={this.props.location.state.classroom} goBack={false} customClick={this.goBack.bind(this)}/>
+                <Header title={"Components"} breadCrumbs={"Components for " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="classroomContainer">
                     <Popout />
                     <div className="classroomWrapper" id="classroomWrapper">

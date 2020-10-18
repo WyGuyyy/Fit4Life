@@ -118,9 +118,12 @@ class ExerciseCreateAdmin extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+        var component = this.props.location.state.component.title;
+
         return(
             <Fragment>
-                <AdminHeader title={this.props.location.state.classroom.title + " " + this.props.location.state.component.title + " Exercise Create"} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Exercise Create"} breadCrumbs={"Create Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Create-Container-Admin">
                     <AdminPopout />

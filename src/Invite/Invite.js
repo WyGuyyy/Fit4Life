@@ -318,7 +318,7 @@ class Invite extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Invites" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Invites" breadCrumbs="Invites" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Accept invite?" yesText="Yes" noText="No" id="modalContainerAccept" onYes={e => {this.acceptInvite({event: e}); this.closeAcceptModal(); this.confirmBackendTransaction("Invite accepted!");}}/>
                 <ConfirmModal text="Decline invite?" yesText="Yes" noText="No" id="modalContainerDecline" onYes={e => {this.declineInvite({event: e}); this.closeDeclineModal(); this.confirmBackendTransaction("Invite declined!");}}/>
                 <div className="inviteContainer">

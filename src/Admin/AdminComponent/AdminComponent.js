@@ -169,7 +169,8 @@ class AdminComponent extends React.Component{
 
         this.props.history.push({
             pathname: "/exerciseEditAdmin",
-            state: {goBack: true, title: this.state.componentExercises[idNum].title, exercise: this.state.componentExercises[idNum]}
+            state: {goBack: true, title: this.state.componentExercises[idNum].title, exercise: this.state.componentExercises[idNum], 
+            classroom: this.state.classroom, component: this.state.component}
         });
     }
 
@@ -240,10 +241,13 @@ class AdminComponent extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+        var component = this.props.location.state.component.title;
+
         return(
 
             <Fragment>
-                <AdminHeader title={this.props.location.state.classroom.title + " " + this.props.location.state.component.title} goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Exercises"} breadCrumbs={classroom + ">" + component + " Exercises"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeExercise">
                     <AdminPopout />

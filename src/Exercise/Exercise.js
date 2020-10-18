@@ -12,7 +12,9 @@ class Exercise extends React.Component{
         super(props);
 
         this.state = {
-            exercise: props.exercise,
+            exercise: props.location.state.exercise,
+            classroom: props.location.state.classroom,
+            component: props.location.state.component,
             canGoBack: true
         };
 
@@ -85,9 +87,13 @@ class Exercise extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+        var component = this.props.location.state.component.title;
+        var exercise = this.props.location.state.exercise.title;
+
         return(
             <Fragment>
-                <Header title={this.state.exercise} goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + component + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="exerciseContainer">
                     <Popout />

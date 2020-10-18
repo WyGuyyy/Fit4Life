@@ -248,6 +248,12 @@ class StudentInviteAdmin extends React.Component{
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
+        var tempButton = document.getElementById("studentInviteListItemInvite-" + this.state.focusedStudentItemID + "-Admin");
+        tempButton.classList.remove("Student-Invite-List-Item-Invite-Button-Admin");
+        tempButton.classList.add("Disabled");
+        tempButton.disabled = true;
+        tempButton.textContent = "Invited";
+
     }
 
     /*goToExerciseCreate(eventObj){
@@ -327,10 +333,12 @@ class StudentInviteAdmin extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+
         return(
 
             <Fragment>
-                <AdminHeader title={this.props.location.state.classroom.title + " Invite"} goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Invite Students"} breadCrumbs={"Invite Students to " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />

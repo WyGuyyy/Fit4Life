@@ -98,7 +98,7 @@ class GoalEdit extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Goal Edit" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Goal Edit" breadCrumbs="Goal Edit" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save goal?" yesText="Yes" noText="No" onYes={e => {this.editGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Goal-Edit-Container">
                     <Popout />

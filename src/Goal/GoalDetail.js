@@ -48,7 +48,7 @@ class GoalDetail extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Goal Detail" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Goal Detail" breadCrumbs="Goal Detail" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Goal-Detail-Container">
                     <Popout />
                     <div className="Goal-Detail-Wrapper">

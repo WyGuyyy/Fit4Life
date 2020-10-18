@@ -167,7 +167,7 @@ class AdminClassroom extends React.Component{
 
         this.props.history.push({
             pathname: "/componentEditAdmin",
-            state: {goBack: true, component: this.state.classroomComponents[idNum]}
+            state: {goBack: true, component: this.state.classroomComponents[idNum], classroom: this.state.classroom}
         });
     }
 
@@ -240,10 +240,12 @@ class AdminClassroom extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+
         return(
 
             <Fragment>
-                <AdminHeader title={this.props.location.state.classroom.title} goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Components"} breadCrumbs={classroom + " Components"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete component?" yesText="Yes" noText="No" onYes={e => {this.deleteComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeComponent">
                     <AdminPopout />

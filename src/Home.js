@@ -83,7 +83,7 @@ class Home extends React.Component{
         return(
 
             <Fragment>
-                <Header title="Home" goBack={false} customClick={this.goBack.bind(this)}/>
+                <Header title="Home" breadCrumbs="Home" goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="homeContainer">
                     <Popout />
                     <div className="homeWrapper" id="homeWrapper">

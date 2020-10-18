@@ -80,7 +80,7 @@ class PersonalInfoEdit extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Edit Personal Info" breadCrumbs="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save information?" yesText="Yes" noText="No" onYes={e => {this.savePersonalInfo(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Personal-Info-Edit-Container">
                     <Popout />

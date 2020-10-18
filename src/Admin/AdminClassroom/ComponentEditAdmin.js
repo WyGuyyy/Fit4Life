@@ -13,7 +13,8 @@ class ComponentEditAdmin extends React.Component{
         this.state = {
             canGoBack: true,
             title: props.location.state.title,
-            component: props.location.state.component
+            component: props.location.state.component,
+            classroom: props.location.state.classroom
         }
 
     }
@@ -67,9 +68,11 @@ class ComponentEditAdmin extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+
         return(
             <Fragment>
-                <AdminHeader title={this.props.location.state.component.title + " Edit"} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Component Edit"} breadCrumbs={"Edit Component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Component-Edit-Container-Admin">
                     <AdminPopout />

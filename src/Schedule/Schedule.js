@@ -43,7 +43,7 @@ class Schedule extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Schedule" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="scheduleContainer">
                     <Popout />
                     <div className="scheduleWrapper" id="scheduleWrapper">

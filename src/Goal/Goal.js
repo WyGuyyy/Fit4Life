@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 import './Goal.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
+import ConfirmModal from '../Confirm/ConfirmModal';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -116,7 +118,7 @@ class Goal extends React.Component{
 
             listDeleteButton.classList.add("Goal-List-Item-Delete-Button");
             listDeleteButton.id = "goalListItemDelete-" + count;
-            listDeleteButton.onclick = (e) => this.deleteGoal({event: e, id: listDeleteButton.id});
+            listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
@@ -190,20 +192,20 @@ class Goal extends React.Component{
 
     async deleteGoal(eventObj){
         //var idNum = eventObj.event.target.id.split("-")[1];
-        var idNum = eventObj.event.target.id.split("-")[1];
+        //var idNum = eventObj.event.target.id.split("-")[1];
 
         var count = 0;
 
         var goalList = document.getElementById("goalList");
         var listChildren = goalList.childNodes;
 
-        await fetch("http://localhost:8080/api/goal/" + this.state.userGoals[idNum].goal_id, {  
+        await fetch("http://localhost:8080/api/goal/" + this.state.focusedGoal.goal_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("goalListItem-" + idNum) === 0){
+            if(listChildren[count].id.localeCompare("goalListItem-" + this.state.focusedGoalItemID) === 0){
                 goalList.removeChild(listChildren[count]); 
                 break;
             }
@@ -221,6 +223,30 @@ class Goal extends React.Component{
         }
     }
 
+    showModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aGoal = this.state.userGoals[idNum];
+
+        this.setState({
+            focusedGoal: aGoal,
+            focusedGoalItemID: idNum
+        });
+
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -232,11 +258,13 @@ class Goal extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Goals" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Goals" breadCrumbs="Goals" goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Delete goal?" yesText="Yes" noText="No" onYes={e => {this.deleteGoal(); this.closeModal(); this.confirmBackendTransaction();}} />
                 <div className="goalContainer">
                     <Popout />
                     <button className="Goal-Create-Button" title="Create Goal" onClick={(e)=>this.goToGoalCreate({event: e})}>+</button>
                     <div className="goalWrapper" id="goalWrapper">
+                        <ConfirmToast text="Goal deleted!"/>
                         <div className="goalList" id="goalList">
                             <div className="goalFiller"></div>
                             

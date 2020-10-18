@@ -268,10 +268,12 @@ class AdminStudent extends React.Component{
     
     render(){
 
+        var classroom = this.props.location.state.classroom.title;
+
         return(
 
             <Fragment>
-                <AdminHeader title={this.props.location.state.classroom.title + " Students"} goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Students"} breadCrumbs={classroom + " Students"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Remove student from class?" yesText="Yes" noText="No" onYes={e => {this.dropStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeStudent">
                     <AdminPopout />

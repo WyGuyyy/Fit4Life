@@ -80,7 +80,7 @@ class GoalCreate extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Goal Create" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Goal Create" breadCrumbs="Goal Create" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create goal?" yesText="Yex" noText="No" onYes={(e) => {this.createGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Goal-Create-Container">
                     <Popout />

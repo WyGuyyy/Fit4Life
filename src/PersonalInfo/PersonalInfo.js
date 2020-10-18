@@ -73,7 +73,7 @@ class PersonalInfo extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title="Personal Info" breadCrumbs="Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Personal-Info-Container">
                     <Popout />
                     <div className="Personal-Info-Wrapper" id="Personal-Info-Wrapper">

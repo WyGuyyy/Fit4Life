@@ -259,7 +259,7 @@ class AdminHome extends React.Component{
         return(
 
             <Fragment>
-                <AdminHeader title="Admin Home" goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Admin Home" breadCrumbs="Admin Home" goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete classroom?" yesText="Yes" noText="No" onYes={e => {this.deleteClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeContainer">
                     <AdminPopout />
