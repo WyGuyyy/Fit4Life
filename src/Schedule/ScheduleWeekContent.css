@@ -1,0 +1,118 @@
+.ScheduleWeek-Row-Content-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    /*border: 1px black;
+    border-style: solid;*/
+}
+
+.ScheduleWeek-Type{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+.ScheduleWeek-THR{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.ScheduleWeek-Max{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.ScheduleWeek-Sets{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.ScheduleWeek-Reps{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.ScheduleWeek-Weight{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.ScheduleWeek-TimeOn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.ScheduleWeek-TimeOff{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.ScheduleWeek-Frequency{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+.ScheduleWeek-Type-Content{
+    
+}
+
+.ScheduleWeek-THR-Content{
+    
+}
+
+.ScheduleWeek-Max-Content{
+    
+}
+
+.ScheduleWeek-Sets-Content{
+    
+}
+
+.ScheduleWeek-Reps-Content{
+    
+}
+
+.ScheduleWeek-Weight-Content{
+    
+}
+
+.ScheduleWeek-TimeOn-Content{
+    
+}
+
+.ScheduleWeek-TimeOff-Content{
+    
+}
+
+.ScheduleWeek-Frequency-Content{
+    
+}
