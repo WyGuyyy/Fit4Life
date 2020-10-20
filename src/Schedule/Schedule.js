@@ -16,6 +16,8 @@ class Schedule extends React.Component{
            canGoBack: props.location.state.goBack
         };
 
+        window.addEventListener("resize", this.checkGridTitles.bind(this));
+
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
@@ -30,6 +32,42 @@ class Schedule extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    checkGridTitles(){
+        if(window.innerWidth < 1024){
+            //document.getElementById("dayTitle").textContent= "Day";
+            document.getElementById("exerciseTitle").textContent = "Ex";
+            document.getElementById("maxTitle").textContent = "Mx %";
+            document.getElementById("thrTitle").textContent = "THR";
+            document.getElementById("setsTitle").textContent = "St";
+            document.getElementById("repsTitle").textContent = "Rp";
+            document.getElementById("weightTitle").textContent = "Wt";
+            document.getElementById("timeOnTitle").textContent = "On";
+            document.getElementById("timeOffTitle").textContent = "Off";
+            document.getElementById("componentTitle").textContent = "Cmp";
+        }else{
+            document.getElementById("exerciseTitle").textContent = "Exercise";
+            document.getElementById("maxTitle").textContent = "Max %";
+            document.getElementById("thrTitle").textContent = "Target Heart Rate";
+            document.getElementById("setsTitle").textContent = "Sets";
+            document.getElementById("repsTitle").textContent = "Reps";
+            document.getElementById("weightTitle").textContent = "Weight";
+            document.getElementById("timeOnTitle").textContent = "Time On";
+            document.getElementById("timeOffTitle").textContent = "Time Off";
+            document.getElementById("componentTitle").textContent = "Component";
+        }
+
+        if(window.innerWidth < 375){
+            document.getElementById("Days-Categories-Title").textContent = "Days";
+            document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
+            //document.getElementById("Frequency-Categories-Title").textContent = "Freq";
+        }else{
+            document.getElementById("Days-Categories-Title").textContent = "Days of the Week";
+            document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
+            //document.getElementById("Frequency-Categories-Title").textContent = "Frequency";
+        }
+
     }
 
     goBack(){ //This isnt working, start here next time
@@ -55,22 +93,22 @@ class Schedule extends React.Component{
 
                             <div className="Schedule-Grid-Categories">
                                 <div className="Schedule-Grid-Categories-Days">
-                                    <h2 className="Schedule-Grid-Categories-Title">Days of the Week</h2>
+                                    <h2 className="Schedule-Grid-Categories-Title" id="Days-Categories-Title">Days of the Week</h2>
                                 </div>
                                 <div className="Schedule-Grid-Categories-Type">
-                                    <h2 className="Schedule-Grid-Categories-Title">Type</h2>
+                                    <h2 className="Schedule-Grid-Categories-Title" id="Type-Categories-Title">Type</h2>
                                     <p className="Schedule-Grid-Categories-Text">(What exercises or types of activity did you do?)</p>
                                 </div>
                                 <div className="Schedule-Grid-Categories-Intensity">
-                                    <h2 className="Schedule-Grid-Categories-Title">Intensity</h2>
+                                    <h2 className="Schedule-Grid-Categories-Title" id="Intensity-Categories-Title">Intensity</h2>
                                     <p className="Schedule-Grid-Categories-Text">(How hard was your workout? Did you do a certain number of reps or sets?)</p>
                                 </div>
                                 <div className="Schedule-Grid-Categories-Time">
-                                    <h2 className="Schedule-Grid-Categories-Title">Time</h2>
+                                    <h2 className="Schedule-Grid-Categories-Title" id="Time-Categories-Title">Time</h2>
                                     <p className="Schedule-Grid-Categories-Text">(How long did you work out for? Did you incorporate periods of rest?)</p>
                                 </div>
                                 <div className="Schedule-Grid-Categories-Frequency">
-                                    <h2 className="Schedule-Grid-Categories-Title">Frequency</h2>
+                                    <h2 className="Schedule-Grid-Categories-Title" id="Frequency-Categories-Title">Frequency</h2>
                                     <p className="Schedule-Grid-Categories-Text">(Which of the five fitness components did you do?)</p>
                                 </div>
                             </div>

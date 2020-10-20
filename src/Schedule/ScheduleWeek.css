@@ -4,16 +4,9 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-}
-
-/*.ScheduleWeek-Row-Content-Wrapper{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-}*/
+    background: #b98800;
+}
 
 .ScheduleWeek-Content-Wrapper{
     width: 85%;
@@ -26,6 +19,15 @@
     overflow-x: hidden;
 }
 
+.ScheduleWeek-Row-Content-Wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .ScheduleWeek-Day{
     height: 100%;
     width: 15%;
@@ -35,6 +37,7 @@
     align-items: center;
     border: 1px black;
     border-style: solid;
+    background: #b98800;
     /*border: 1px black;
     border-style: solid;*/
 }
@@ -139,10 +142,10 @@
 }
 
 .ScheduleWeek-Day-Content{
-    font-size: 20px;
+    font-size: 13px;
 }
 
-.ScheduleWeek-Type-Content{
+/*.ScheduleWeek-Type-Content{
     font-size: 20px;
 }
 
@@ -176,4 +179,4 @@
 
 .ScheduleWeek-Frequency-Content{
     font-size: 20px;
-}   
+}   */
