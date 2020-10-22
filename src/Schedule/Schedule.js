@@ -49,7 +49,7 @@ class Schedule extends React.Component{
         }else{
             document.getElementById("exerciseTitle").textContent = "Exercise";
             document.getElementById("maxTitle").textContent = "Max %";
-            document.getElementById("thrTitle").textContent = "Target Heart Rate";
+            document.getElementById("thrTitle").textContent = "THR";
             document.getElementById("setsTitle").textContent = "Sets";
             document.getElementById("repsTitle").textContent = "Reps";
             document.getElementById("weightTitle").textContent = "Weight";
@@ -85,6 +85,11 @@ class Schedule extends React.Component{
                 <div className="scheduleContainer">
                     <Popout />
                     <div className="scheduleWrapper" id="scheduleWrapper">
+
+                        <div className="Schedule-Week-Selection-Wrapper">
+                            <select className="Schedule-Week-Selection"></select>
+                        </div>
+
                         <div className="scheduleGrid" id="scheduleGrid">
 
                             <div className="Schedule-Grid-Title">
@@ -115,28 +120,24 @@ class Schedule extends React.Component{
 
                             <div className="Schedule-Grid-Chart">
                                 <div className="Schedule-Grid-Chart-Titles">
-                                    <ScheduleWeek height="100%" dayOfWeek="Title"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Monday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Monday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Tuesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Wednesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Thursday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Thursday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Friday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Friday"/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history}/>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="Schedule-Week-Selection-Wrapper">
-                            <select className="Schedule-Week-Selection"></select>
                         </div>
 
                     </div>

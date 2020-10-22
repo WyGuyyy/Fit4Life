@@ -16,7 +16,9 @@ class ScheduleWeek extends React.Component{
             cellHeight: props.height,
             dayOfWeek: props.dayOfWeek,
             userID: props.userID,
-            currWorkoutCount: -1
+            currWorkoutCount: -1,
+            onWorkoutClick: props.onWorkoutClick,
+            history: props.history
         };
 
        //window.addEventListener("resize", this.checkGrid.bind(this));
@@ -133,7 +135,7 @@ class ScheduleWeek extends React.Component{
             currWorkoutCount: newWC
         });
 
-        return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} count={newWC}/>
+        return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={newWC} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history}/>
     }
 
     getWeekWrapper(dayOfWeek){
