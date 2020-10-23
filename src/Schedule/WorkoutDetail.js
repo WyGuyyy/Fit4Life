@@ -34,6 +34,7 @@ class WorkoutDetail extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
+
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

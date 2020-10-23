@@ -13,7 +13,8 @@ class Schedule extends React.Component{
         super(props);
 
         this.state = {
-           canGoBack: props.location.state.goBack
+           canGoBack: props.location.state.goBack,
+           resizeTrigger: ""
         };
 
         window.addEventListener("resize", this.checkGridTitles.bind(this));
@@ -35,38 +36,47 @@ class Schedule extends React.Component{
     }
 
     checkGridTitles(){
-        if(window.innerWidth < 1024){
-            //document.getElementById("dayTitle").textContent= "Day";
-            document.getElementById("exerciseTitle").textContent = "Ex";
-            document.getElementById("maxTitle").textContent = "Mx %";
-            document.getElementById("thrTitle").textContent = "THR";
-            document.getElementById("setsTitle").textContent = "St";
-            document.getElementById("repsTitle").textContent = "Rp";
-            document.getElementById("weightTitle").textContent = "Wt";
-            document.getElementById("timeOnTitle").textContent = "On";
-            document.getElementById("timeOffTitle").textContent = "Off";
-            document.getElementById("componentTitle").textContent = "Cmp";
-        }else{
-            document.getElementById("exerciseTitle").textContent = "Exercise";
-            document.getElementById("maxTitle").textContent = "Max %";
-            document.getElementById("thrTitle").textContent = "THR";
-            document.getElementById("setsTitle").textContent = "Sets";
-            document.getElementById("repsTitle").textContent = "Reps";
-            document.getElementById("weightTitle").textContent = "Weight";
-            document.getElementById("timeOnTitle").textContent = "Time On";
-            document.getElementById("timeOffTitle").textContent = "Time Off";
-            document.getElementById("componentTitle").textContent = "Component";
-        }
 
-        if(window.innerWidth < 375){
-            document.getElementById("Days-Categories-Title").textContent = "Days";
-            document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
-            //document.getElementById("Frequency-Categories-Title").textContent = "Freq";
-        }else{
-            document.getElementById("Days-Categories-Title").textContent = "Days of the Week";
-            document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
-            //document.getElementById("Frequency-Categories-Title").textContent = "Frequency";
-        }
+        if(document.getElementById("exerciseTitle")){
+
+            if(window.innerWidth < 1024){
+                //document.getElementById("dayTitle").textContent= "Day";
+                document.getElementById("exerciseTitle").textContent = "Ex";
+                document.getElementById("maxTitle").textContent = "Mx %";
+                document.getElementById("thrTitle").textContent = "THR";
+                document.getElementById("setsTitle").textContent = "St";
+                document.getElementById("repsTitle").textContent = "Rp";
+                document.getElementById("weightTitle").textContent = "Wt";
+                document.getElementById("timeOnTitle").textContent = "On";
+                document.getElementById("timeOffTitle").textContent = "Off";
+                document.getElementById("componentTitle").textContent = "Cmp";
+            }else{
+                document.getElementById("exerciseTitle").textContent = "Exercise";
+                document.getElementById("maxTitle").textContent = "Max %";
+                document.getElementById("thrTitle").textContent = "THR";
+                document.getElementById("setsTitle").textContent = "Sets";
+                document.getElementById("repsTitle").textContent = "Reps";
+                document.getElementById("weightTitle").textContent = "Weight";
+                document.getElementById("timeOnTitle").textContent = "Time On";
+                document.getElementById("timeOffTitle").textContent = "Time Off";
+                document.getElementById("componentTitle").textContent = "Component";
+            }
+
+            if(window.innerWidth < 375){
+                document.getElementById("Days-Categories-Title").textContent = "Days";
+                document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
+                //document.getElementById("Frequency-Categories-Title").textContent = "Freq";
+            }else{
+                document.getElementById("Days-Categories-Title").textContent = "Days of the Week";
+                document.getElementById("Intensity-Categories-Title").textContent = "Intensity";
+                //document.getElementById("Frequency-Categories-Title").textContent = "Frequency";
+            }
+
+    }
+
+    this.setState({
+        resizeTrigger: "go"
+    });
 
     }
 
@@ -123,19 +133,19 @@ class Schedule extends React.Component{
                                     <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Monday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Tuesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Wednesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Thursday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Friday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
                                 </div>
                             </div>
                         </div>

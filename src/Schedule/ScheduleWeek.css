@@ -19,6 +19,24 @@
     overflow-x: hidden;
 }
 
+.ScheduleWeek-Content-Wrapper::-webkit-scrollbar {
+    width: 10px;
+    background-color: #b48400;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+  .ScheduleWeek-Content-Wrapper::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+#Workout-Detail-TimeOn-Wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#b48400;
+    /*border-radius: 10px;*/
+}
+
 .ScheduleWeek-Row-Content-Wrapper{
     width: 100%;
     height: 100%;

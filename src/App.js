@@ -26,6 +26,7 @@ import ExerciseEditAdmin from './Admin/AdminComponent/ExerciseEditAdmin';
 import AdminStudent from './Admin/AdminStudent/AdminStudent';
 import StudentInviteAdmin from './Admin/AdminStudent/StudentInviteAdmin';
 import WorkoutDetail from './Schedule/WorkoutDetail';
+import StudentDetailAdmin from './Admin/AdminStudent/AdminStudentDetails';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/studentAdmin" component={AdminStudent} />
         <Route exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
         <Route exact path="/workoutDetail" component={WorkoutDetail} />
+        <Route exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
       </Switch>
     </Router>
   );

@@ -25,7 +25,7 @@ class ScheduleWeek extends React.Component{
 
     }
     
-    checkGrid(){
+    /*checkGrid(){
 
         if(window.innerWidth < 580){
             document.getElementById("ScheduleWeek-Day-Content-Monday").textContent = "M";
@@ -41,7 +41,7 @@ class ScheduleWeek extends React.Component{
             document.getElementById("ScheduleWeek-Day-Content-Friday").textContent = "Friday";
         }
 
-    }
+    }*/
 
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
@@ -81,17 +81,18 @@ class ScheduleWeek extends React.Component{
             }
         ).catch(console.log);
 
-        weekWrapper.innerHTML = '';
+        //weekWrapper.innerHTML = '';
 
-        var day = document.createElement("div");
-        day.classList.add("ScheduleWeek-Day");
+        //var day = document.createElement("div");
+        //day.classList.add("ScheduleWeek-Day");
 
-        var dayP = document.createElement("p");
-        dayP.classList.add("ScheduleWeek-Day-Content");
-        dayP.textContent = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
+        //var dayP = document.createElement("p");
+        //dayP.classList.add("ScheduleWeek-Day-Content");
+       // dayP.textContent = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
+        //dayP.textContent = this.fitDayString(this.props.dayOfWeek);
 
-        day.appendChild(dayP);
-        weekWrapper.appendChild(day);
+        //day.appendChild(dayP);
+        //weekWrapper.appendChild(day);
 
         aFlexColumn = document.createElement('div');
         aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
@@ -135,7 +136,7 @@ class ScheduleWeek extends React.Component{
             currWorkoutCount: newWC
         });
 
-        return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={newWC} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history}/>
+        return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={newWC} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>
     }
 
     getWeekWrapper(dayOfWeek){
@@ -170,22 +171,40 @@ class ScheduleWeek extends React.Component{
         }*/
     }
 
+    fitDayString(dayOfWeek){
+        console.log((window.innerWidth < 700 ? "M" : "Monday"));
+        if(dayOfWeek.localeCompare("Monday") === 0){
+            return (window.innerWidth < 700 ? "M" : "Monday");
+        }else if(dayOfWeek.localeCompare("Tuesday") === 0){
+            return (window.innerWidth < 700 ? "T" : "Tuesday");
+        }else if(dayOfWeek.localeCompare("Wednesday") === 0){
+            return (window.innerWidth < 700 ? "W" : "Wednesday");
+        }else if(dayOfWeek.localeCompare("Thursday") === 0){
+            return (window.innerWidth < 700 ? "TR" : "Thursday");
+        }else if(dayOfWeek.localeCompare("Friday") === 0){
+            return (window.innerWidth < 700 ? "F" : "Friday");
+        }else{
+            return "Day";
+        }
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
         var dayOfWeek = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
 
-        console.log(this.props.dayOfWeek.localeCompare("Title") === 0);
-        console.log("ScheduleWeek-Day-Content-" + dayOfWeek);
+        /*console.log(this.props.dayOfWeek.localeCompare("Title") === 0);
+        console.log("ScheduleWeek-Day-Content-" + dayOfWeek);*/
 
         var aID = "ScheduleWeek-Day-Content-" + dayOfWeek;
+        var day = this.fitDayString(dayOfWeek);
 
         return(
 
             <div className="ScheduleWeek-Row-Wrapper" style={{height: this.state.cellHeight}}>
-                    <div className="ScheduleWeek-Day">
-                        <p className="ScheduleWeek-Day-Content" id={aID}>{dayOfWeek}</p>
-                    </div>
+                <div className="ScheduleWeek-Day">
+                    <p className="ScheduleWeek-Day-Content" id={aID}>{this.fitDayString(dayOfWeek)}</p>
+                </div>
             </div>                    
                                 
         );
@@ -198,3 +217,4 @@ export default ScheduleWeek;
 //<Hamburger />
 //
 //"react-router-dom": "^6.0.0-alpha.1",
+//<p className="ScheduleWeek-Day-Content" id={aID}>{this}</p>

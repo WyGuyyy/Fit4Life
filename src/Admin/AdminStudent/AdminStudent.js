@@ -85,7 +85,7 @@ class AdminStudent extends React.Component{
             listItemTitle.textContent = students[count].first_name + " " + students[count].last_name;
             listItemTitle.id = "studentListItemTitle-" + count + "-Admin";
             listItemTitle.title = students[count].first_name + " " + students[count].last_name;
-
+            listItemTitle.onclick = e => this.goToStudentDetails(e);
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
             listStudentButton.id = "exerciseListItemStudents-" + count + "-Admin";
@@ -136,6 +136,18 @@ class AdminStudent extends React.Component{
         var backgroundColor = (parseInt(num) % 2 === 0 ? "#c08d00" : "#997000");
 
         document.getElementById(id).style.background = backgroundColor;*/
+    }
+
+    goToStudentDetails(event){
+
+        var idNum = event.target.id.split("-")[1];
+        var aStudent = this.state.classroomStudents[idNum];
+
+        this.props.history.push({
+            pathname: "/studentDetailAdmin",
+            state: {goBack: true, student: aStudent}
+        });
+
     }
 
     recolorRows(classroomList){

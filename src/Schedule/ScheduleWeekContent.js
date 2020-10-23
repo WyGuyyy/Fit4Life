@@ -21,6 +21,7 @@ class ScheduleWeekContent extends React.Component{
         };
 
         console.log(props.count);
+        
 
     }
     
@@ -40,12 +41,12 @@ class ScheduleWeekContent extends React.Component{
 
     onWorkoutClick(event){
 
-        console.log(this.state.workout);
-
-        this.state.history.push({
-            pathname: "/workoutDetail",
-            state: {canGoBack: true, workout: this.state.workout}
-        });
+        if(!(this.state.index === 0)){
+            this.state.history.push({
+                pathname: "/workoutDetail",
+                state: {goBack: true, workout: this.state.workout}
+            });
+        }
     }
 
     fillWorkoutContent(index){
