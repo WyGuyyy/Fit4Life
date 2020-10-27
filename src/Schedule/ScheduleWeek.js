@@ -18,9 +18,10 @@ class ScheduleWeek extends React.Component{
             userID: props.userID,
             currWorkoutCount: -1,
             onWorkoutClick: props.onWorkoutClick,
-            history: props.history
+            history: props.history,
+            date: props.date,
+            classroom: props.classroom
         };
-
        //window.addEventListener("resize", this.checkGrid.bind(this));
 
     }
@@ -49,7 +50,7 @@ class ScheduleWeek extends React.Component{
     }
 
     componentDidUpdate(){
-
+        
     }
 
     //Lifecycle event preparing Header component to unmount from DOM
@@ -98,12 +99,19 @@ class ScheduleWeek extends React.Component{
         aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
 
         if(wrapArrIndex === 0){
-            ReactDom.render(this.renderDay([{title: "Title Row"}]), aFlexColumn);
+            //ReactDom.render(this.renderDay([{title: "Title Row"}]), aFlexColumn);
+            var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
         }else{
-            ReactDom.render(this.renderDay(workouts), aFlexColumn);
+            //ReactDom.render(this.renderDay(workouts), aFlexColumn);
+            var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
         }
 
-        weekWrapper.appendChild(aFlexColumn);
+        //weekWrapper.appendChild(aFlexColumn);
+
+        var arr = [];
+        arr.push(content);
+
+        return arr;
 
         //return aFlexColumn;
 
@@ -126,6 +134,7 @@ class ScheduleWeek extends React.Component{
     }
 
     renderDay(workouts){
+        console.log(workouts);
         return workouts.map(this.renderDayItem.bind(this));
     }
 
@@ -135,6 +144,8 @@ class ScheduleWeek extends React.Component{
         this.setState({
             currWorkoutCount: newWC
         });
+
+        console.log(this.state.classroom);
 
         return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={newWC} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>
     }
@@ -205,6 +216,7 @@ class ScheduleWeek extends React.Component{
                 <div className="ScheduleWeek-Day">
                     <p className="ScheduleWeek-Day-Content" id={aID}>{this.fitDayString(dayOfWeek)}</p>
                 </div>
+                {this.fillSchedule()}
             </div>                    
                                 
         );

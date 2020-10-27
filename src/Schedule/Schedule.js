@@ -14,7 +14,10 @@ class Schedule extends React.Component{
 
         this.state = {
            canGoBack: props.location.state.goBack,
-           resizeTrigger: ""
+           resizeTrigger: "",
+           studentClassrooms: "",
+           date: "",
+           classroom: ""
         };
 
         window.addEventListener("resize", this.checkGridTitles.bind(this));
@@ -23,7 +26,7 @@ class Schedule extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-
+        this.fillClassroomSelect();
     }
 
     componentDidUpdate(){
@@ -33,6 +36,38 @@ class Schedule extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    async fillClassroomSelect(){
+
+        var classrooms;
+        var classroom;
+
+        await fetch("http://localhost:8080/api/classroom/foruser/" + 1, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classrooms = result;
+            }
+        ).catch(console.log);
+
+        var classSelect = document.getElementById("Workout-Classroom-Select");
+
+        for(classroom in classrooms){
+            console.log(classrooms[classroom]);
+            classSelect.options[classSelect.options.length] = new Option(classrooms[classroom].title, classroom);
+        }
+
+        classSelect.selectedIndex = 0;
+
+        this.setState({
+            studentClassrooms: classrooms
+        });
+
     }
 
     checkGridTitles(){
@@ -80,6 +115,76 @@ class Schedule extends React.Component{
 
     }
 
+    dateChange(event){
+
+        var dateInput = event.target;
+        var date = new Date(dateInput.value);
+
+        switch(date.getDay()){
+            case 0:
+                break;
+            case 1:
+                date.setDate(date.getDate() - 1);
+                break;
+            case 2:
+                date.setDate(date.getDate() - 2);
+                break;
+            case 3:
+                date.setDate(date.getDate() - 3);
+                break;
+            case 4:
+                date.setDate(date.getDate() - 4);
+                break;
+            case 5:
+                date.setDate(date.getDate() - 5);
+                break;
+            case 6:
+                date.setDate(date.getDate() - 6);
+                break;
+            default:
+                break;
+
+        }
+
+        var year = date.getFullYear();
+        var month = this.formatMonth(date.getMonth() + 1);
+        var day = this.formatDay(date.getDate() + 1);
+
+        dateInput.value = year + "-" + month + "-" + day;
+
+        this.setState({
+            date: dateInput.value
+        });
+    }
+
+    classChange(event){
+
+        var classSelect = document.getElementById("Workout-Classroom-Select");
+        var aClassroom = classSelect.options[classSelect.selectedIndex].text;
+        
+        this.setState({
+            classroom: aClassroom
+        });
+
+    }
+
+    formatMonth(month){
+
+        if(parseInt(month) <  10){
+            month = "0" + month;
+        }
+
+        return month;
+    }
+
+    formatDay(day){
+        if(parseInt(day) <  10){
+            day = "0" + day;
+        }
+
+        return day;
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -89,15 +194,23 @@ class Schedule extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        var aDate = this.state.date;
+        var aClassroom = (this.state.classroom.localeCompare("") === 0 ? this.state.studentClassrooms[0] : this.state.classroom);
+
         return(
             <Fragment>
                 <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="scheduleContainer">
                     <Popout />
                     <div className="scheduleWrapper" id="scheduleWrapper">
-
-                        <div className="Schedule-Week-Selection-Wrapper">
-                            <select className="Schedule-Week-Selection"></select>
+                        
+                        <div className="Schedule-Week-Filter-Wrapper">
+                            <div className="Schedule-Week-Selection-Wrapper">
+                                <h2 className="Workout-Input-Label">Week Of: </h2><input className="workoutInput" id="Workout-Input-Date" type="date" min="0" max="999" onChange={e => this.dateChange(e)}/>
+                            </div>
+                            <div className="Schedule-Week-Classroom-Wrapper">
+                                <h2 className="Workout-Select-Classroom-Label">Classroom: </h2><select className="Workout-Classroom-Select" id="Workout-Classroom-Select" onChange={e => this.classChange(e)}></select>
+                            </div>
                         </div>
 
                         <div className="scheduleGrid" id="scheduleGrid">
@@ -130,22 +243,22 @@ class Schedule extends React.Component{
 
                             <div className="Schedule-Grid-Chart">
                                 <div className="Schedule-Grid-Chart-Titles">
-                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Monday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Tuesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Wednesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Thursday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
                                 </div>
                                 <div className="Schedule-Grid-Chart-Friday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)}/>
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
                                 </div>
                             </div>
                         </div>
@@ -163,3 +276,4 @@ export default Schedule;
 //<Hamburger />
 //
 //"react-router-dom": "^6.0.0-alpha.1",
+//<select className="Schedule-Week-Selection"></select>

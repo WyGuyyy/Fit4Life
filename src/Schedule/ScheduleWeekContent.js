@@ -88,7 +88,7 @@ class ScheduleWeekContent extends React.Component{
             var weightDiv = <div className="ScheduleWeek-Weight"><p className="ScheduleWeek-Weight-Content">{workout.weight}</p></div>;
             var timeOnDiv = <div className="ScheduleWeek-TimeOn"><p className="ScheduleWeek-TimeOn-Content">{this.formatTime(workout.time_on_minute, workout.time_on_second)}</p></div>;
             var timeOffDiv = <div className="ScheduleWeek-TimeOff"><p className="ScheduleWeek-TimeOff-Content">{this.formatTime(workout.rest_minute, workout.rest_second)}</p></div>;
-            var frequencyDiv = <div className="ScheduleWeek-Frequency"><p className="ScheduleWeek-Frequency-Content">{"FREQUENCY"}</p></div>;
+            var frequencyDiv = <div className="ScheduleWeek-Frequency"><p className="ScheduleWeek-Frequency-Content">{workout.component.title}</p></div>;
         }
 
         /*var typeP = document.createElement("p");

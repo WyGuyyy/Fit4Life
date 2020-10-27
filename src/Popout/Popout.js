@@ -38,9 +38,11 @@ class Popout extends React.Component{
                     <Link to={{pathname: "/goal", state: {goBack: true}}} className="goalLink" >
                         <button className="popoutButton">Goals</button>
                     </Link>
+                    {
                     <Link to={{pathname: "/schedule", state: {goBack: true}}} className="scheduleLink">
                         <button className="popoutButton">Schedule</button>
                     </Link>
+                    }
                     <Link to={{pathname: "/personal", state: {goBack: true}}} className="personalLink">
                         <button className="popoutButton">Personal Info</button>
                     </Link>
