@@ -20,9 +20,6 @@ class ScheduleWeekContent extends React.Component{
             history: props.history
         };
 
-        console.log(props.count);
-        
-
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
@@ -205,6 +202,8 @@ class ScheduleWeekContent extends React.Component{
 
         //var dayOfWeek = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "" : this.props.dayOfWeek);
         var h = (this.props.index === 0 ? "100%" : "50%");
+
+        console.log(this.props.count);
 
         var backColor = (this.props.index === 0 ? "#b98800" : (this.props.count % 2 === 0 ? "#aa7d00" : " #daa000"));
 

@@ -104,9 +104,10 @@ class Component extends React.Component{
         .then(res => res.json())
         .then(
             (text) => {
-                console.log(text);
-                var result = text.length ? JSON.parse(text) : {};
-                exerciseBlobs = result;
+                //console.log(text);
+                //var result = text.length ? JSON.parse(text) : {};
+                //exerciseBlobs = result;
+                exerciseBlobs = text;
             }
         ).catch(console.log);
 
@@ -137,7 +138,7 @@ class Component extends React.Component{
 
             for(countInner = 0; countInner < tilesPerRow; countInner++){
 
-                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow)), aFlexRow);
+                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow), exerciseBlobs), aFlexRow);
                 //ReactDOM.render(aTile, aFlexRow);
             }
 
@@ -181,14 +182,25 @@ class Component extends React.Component{
         return buffer;
     }
 
-    renderTileRow(exercises){
-        return exercises.map(this.renderTile.bind(this));
+    renderTileRow(exercises, blobs){
+        return exercises.map(this.renderTile.bind(this, blobs));
     }
 
-    renderTile(currExercise){
-        //var img = this.getExerciseImage(currExercise.exercise_id);
-        //image={img}
-        return <ExerciseTile exercise={currExercise.title} tileClickEvent={e=>this.goToExercise(e, currExercise)} />
+    renderTile(blobs, currExercise){
+
+        var aImage = blobs[currExercise.exercise_id];
+        var count = 0;
+
+        console.log(aImage);
+
+        /*for(count = 0; count < blobs.length; count++){
+            if(blobs[count].comp_ex_id === currExercise.exercise_id){
+                aImage = blobs[count];
+                break;
+            }
+        }*/
+
+        return <ExerciseTile exercise={currExercise.title} image={aImage} tileClickEvent={e=>this.goToExercise(e, currExercise)} />
     }
 
 

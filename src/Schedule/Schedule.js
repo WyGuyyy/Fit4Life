@@ -66,9 +66,78 @@ class Schedule extends React.Component{
 
         this.setState({
             studentClassrooms: classrooms
-        });
+        }, this.buildWeeks(this, classrooms));
 
     }
+
+    buildWeeks(aContext, classrooms){
+        var count = 0;
+        var weekWrapperArr = document.getElementsByClassName("Schedule-Grid-Chart");
+        var weekWrapper = weekWrapperArr[0];
+        
+        var aDate = aContext.state.date;
+        var aClassroom = (aContext.state.classroom.localeCompare("") === 0 ? classrooms[0] : aContext.state.classroom);
+        var aWeekRow;
+
+        var week = <Fragment>
+                        <div className="Schedule-Grid-Chart-Titles">
+                            <ScheduleWeek height="100%" dayOfWeek="Title" history={aContext.props.history} date={aDate} classroom={aClassroom}/>
+                        </div>
+                        <div className="Schedule-Grid-Chart-Monday">
+                            <ScheduleWeek height="100%" dayOfWeek="Monday" history={aContext.props.history} eventToRemove={aContext.checkGridTitles.bind(aContext)} date={aDate} classroom={aClassroom}/>
+                        </div>
+                        <div className="Schedule-Grid-Chart-Tuesday">
+                            <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={aContext.props.history} eventToRemove={aContext.checkGridTitles.bind(aContext)} date={aDate} classroom={aClassroom}/>
+                        </div>
+                        <div className="Schedule-Grid-Chart-Wednesday">
+                            <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={aContext.props.history} eventToRemove={aContext.checkGridTitles.bind(aContext)} date={aDate} classroom={aClassroom}/>
+                        </div>
+                        <div className="Schedule-Grid-Chart-Thursday">
+                            <ScheduleWeek height="100%" dayOfWeek="Thursday" history={aContext.props.history} eventToRemove={aContext.checkGridTitles.bind(aContext)} date={aDate} classroom={aClassroom}/>
+                        </div>
+                        <div className="Schedule-Grid-Chart-Friday">
+                            <ScheduleWeek height="100%" dayOfWeek="Friday" history={aContext.props.history} eventToRemove={aContext.checkGridTitles.bind(aContext)} date={aDate} classroom={aClassroom}/>
+                        </div>
+                    </Fragment>;
+
+       /* aWeekRow = document.createElement('div');
+        aWeekRow.className = "ScheduleWeek-Content-Wrapper";*/
+
+        ReactDom.render(week, weekWrapper);
+
+              
+    
+        //weekWrapper.innerHTML = '';
+
+        //var day = document.createElement("div");
+        //day.classList.add("ScheduleWeek-Day");
+
+        //var dayP = document.createElement("p");
+        //dayP.classList.add("ScheduleWeek-Day-Content");
+       // dayP.textContent = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
+        //dayP.textContent = this.fitDayString(this.props.dayOfWeek);
+
+        //day.appendChild(dayP);
+        //weekWrapper.appendChild(day);
+
+        /*aFlexColumn = document.createElement('div');
+        aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
+
+        if(wrapArrIndex === 0){
+            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
+            ReactDom.render(this.renderDay([{title: "Title Row"}], aContext), aFlexColumn);
+            //var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
+        }else{
+            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
+            ReactDom.render(this.renderDay(workouts, aContext), aFlexColumn);
+            //console.log(this.state.userWorkouts);
+            //var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(this.state.userWorkouts)}</div>
+        }*/
+
+        //weekWrapper.appendChild(week);
+
+    }
+
 
     checkGridTitles(){
 
@@ -161,7 +230,7 @@ class Schedule extends React.Component{
 
         var classSelect = document.getElementById("Workout-Classroom-Select");
         var aClassroom = classSelect.options[classSelect.selectedIndex].text;
-        
+
         this.setState({
             classroom: aClassroom
         });
@@ -194,8 +263,8 @@ class Schedule extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
-        var aDate = this.state.date;
-        var aClassroom = (this.state.classroom.localeCompare("") === 0 ? this.state.studentClassrooms[0] : this.state.classroom);
+        /*var aDate = this.state.date;
+        var aClassroom = (this.state.classroom.localeCompare("") === 0 ? this.state.studentClassrooms[0] : this.state.classroom);*/
 
         return(
             <Fragment>
@@ -242,24 +311,7 @@ class Schedule extends React.Component{
                             </div>
 
                             <div className="Schedule-Grid-Chart">
-                                <div className="Schedule-Grid-Chart-Titles">
-                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom}/>
-                                </div>
-                                <div className="Schedule-Grid-Chart-Monday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
-                                </div>
-                                <div className="Schedule-Grid-Chart-Tuesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
-                                </div>
-                                <div className="Schedule-Grid-Chart-Wednesday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
-                                </div>
-                                <div className="Schedule-Grid-Chart-Thursday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
-                                </div>
-                                <div className="Schedule-Grid-Chart-Friday">
-                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
-                                </div>
+                                
                             </div>
                         </div>
 
@@ -277,3 +329,22 @@ export default Schedule;
 //
 //"react-router-dom": "^6.0.0-alpha.1",
 //<select className="Schedule-Week-Selection"></select>
+/*
+<div className="Schedule-Grid-Chart-Titles">
+                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Monday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Tuesday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Wednesday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Thursday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Friday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>*/
