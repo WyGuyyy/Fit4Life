@@ -37,7 +37,9 @@ class AdminStudent extends React.Component{
 
         var students;
 
-        await fetch("http://localhost:8080/api/user", {  
+        var classroomID = this.state.classroom.classroom_id;
+
+        await fetch("http://localhost:8080/api/user/forclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json"}
             })

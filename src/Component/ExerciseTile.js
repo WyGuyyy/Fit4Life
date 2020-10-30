@@ -42,17 +42,23 @@ class ExerciseTile extends React.Component{
         var aSrc;
 
         //console.log(this.props.image);
-        if(this.props.image === undefined){
-            aSrc = "";
+        if(this.props.image === undefined || this.props.image === null){
+            aSrc = lhs_logo;
         }else{
-            aSrc = this.props.image.blob_data;
+            aSrc = "data:" + this.props.image.content_type + ";base64," + this.props.image.blob_data;
         }
+
+        console.log(this.props.image);
 
         return(
             <div className="Exercise-Tile-Container" onClick={this.props.tileClickEvent}>
                 <div className="Exercise-Tile-Wrapper">
-                    <img className="Exercise-Tile-Image" src={(aSrc.localeCompare("") === 0 ? null : this.props.image.blob_data)} width="300" height="300"/>
-                    <h2 className="Exercise-Tile-Title">{this.state.exercise}</h2>
+                    <div className="Exercise-Tile-Image-Wrapper">
+                        <img className="Exercise-Tile-Image" src={aSrc} />
+                    </div>
+                    <div className="Exercise-Tile-Title-Wrapper">
+                        <h2 className="Exercise-Tile-Title">{this.state.exercise}</h2>
+                    </div>
                 </div>
             </div>
         );

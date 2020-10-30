@@ -11,7 +11,8 @@ class ComponentCreateAdmin extends React.Component{
         super(props);
 
         this.state = {
-            canGoBack: true
+            canGoBack: true,
+            classroom: props.location.state.classroom
         }
 
     }
@@ -28,11 +29,26 @@ class ComponentCreateAdmin extends React.Component{
 
         var aTitle = document.getElementById("Component-Create-Title-Input-Admin").value;
 
+        var classroomID = this.state.classroom.classroom_id;
+        var componentID;
+
         await fetch("http://localhost:8080/api/component", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({title: aTitle}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+            body: JSON.stringify({title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                componentID = result;
+            }
+        ).catch(console.log);
+
+
+        /*await fetch("http://localhost:8080/api/component/toclass/" + componentID + "/" + classroomID, {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);*/
 
         document.getElementById("Component-Create-Title-Input-Admin").value = "";
 

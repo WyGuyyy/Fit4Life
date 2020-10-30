@@ -84,8 +84,22 @@ class Component extends React.Component{
         var classroomID = this.state.classroom.classroom_id;
         var componentID = this.state.component.component_id;
 
-        //await fetch("http://192.168.1.5:8080/api/classroom", {
-        await fetch("http://localhost:8080/api/exercise", {  
+        var classCompID;
+
+        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classCompID = result;
+            }
+        ).catch(console.log);*/
+
+
+        await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json"}
         })
@@ -101,13 +115,13 @@ class Component extends React.Component{
             method: "GET",                          
             headers: {"Content-Type": "application/json"}
         })
-        .then(res => res.json())
+        .then(res => res.text())
         .then(
             (text) => {
                 //console.log(text);
-                //var result = text.length ? JSON.parse(text) : {};
+                var result = text.length ? JSON.parse(text) : {};
                 //exerciseBlobs = result;
-                exerciseBlobs = text;
+                exerciseBlobs = result;
             }
         ).catch(console.log);
 

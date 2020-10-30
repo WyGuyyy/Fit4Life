@@ -63,10 +63,16 @@ class Schedule extends React.Component{
         }
 
         classSelect.selectedIndex = 0;
+        var aClassroom = (this.state.classroom.localeCompare("") === 0 ? classrooms[0] : this.state.classroom);
 
         this.setState({
+            studentClassrooms: classrooms,
+            classroom: aClassroom
+        });
+
+        /*this.setState({
             studentClassrooms: classrooms
-        }, this.buildWeeks(this, classrooms));
+        }, this.buildWeeks(this, classrooms));*/
 
     }
 
@@ -229,7 +235,16 @@ class Schedule extends React.Component{
     classChange(event){
 
         var classSelect = document.getElementById("Workout-Classroom-Select");
-        var aClassroom = classSelect.options[classSelect.selectedIndex].text;
+        var classText = classSelect.options[classSelect.selectedIndex].text;
+        var aClassroom;
+        var count = 0;
+
+        for(count = 0; count < this.state.studentClassrooms.length; count++){
+            if(this.state.studentClassrooms[count].title.localeCompare(classText) === 0){
+                aClassroom = this.state.studentClassrooms[count];
+                break;
+            }
+        }
 
         this.setState({
             classroom: aClassroom
@@ -265,6 +280,12 @@ class Schedule extends React.Component{
 
         /*var aDate = this.state.date;
         var aClassroom = (this.state.classroom.localeCompare("") === 0 ? this.state.studentClassrooms[0] : this.state.classroom);*/
+
+        var aDate = this.state.date;
+        var aClassroom = this.state.classroom;
+
+        console.log(aDate);
+        console.log(aClassroom);
 
         return(
             <Fragment>
@@ -311,7 +332,24 @@ class Schedule extends React.Component{
                             </div>
 
                             <div className="Schedule-Grid-Chart">
-                                
+                                <div className="Schedule-Grid-Chart-Titles">
+                                    <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Monday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Tuesday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Wednesday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Thursday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
+                                <div className="Schedule-Grid-Chart-Friday">
+                                    <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom}/>
+                                </div>
                             </div>
                         </div>
 

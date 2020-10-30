@@ -44,10 +44,16 @@ class Exercise extends React.Component{
         var aReps = document.getElementById("Exercise-Input-Reps").value;
         var aDate = document.getElementById("Exercise-Input-Date").value;
 
+        var userID = 1;
+        var exerciseID = this.state.exercise.exercise_id;
+        var componentID = this.state.component.component_id;
+        var classroomID = this.state.classroom.classroom_id;
+
         await fetch("http://localhost:8080/api/workout", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({user: {user_id: 1}, exercise: {exercise_id: 1},
+            body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
+                component: {component_id: componentID}, classroom: {classroom_id: classroomID},
                 target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
                 rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
         }).catch(console.log);

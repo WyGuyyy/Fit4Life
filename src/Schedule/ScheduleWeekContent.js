@@ -66,6 +66,8 @@ class ScheduleWeekContent extends React.Component{
         var timeOffDiv = document.createElement("div");
         var frequencyDiv = document.createElement("div");*/
 
+        console.log(index);
+
         if(index === 0){
             var typeDiv = <div className="ScheduleWeek-Type" ><p className="ScheduleWeek-Type-Content" id="exerciseTitle">{"Exercise"}</p></div>;
             var thrDiv = <div className="ScheduleWeek-THR" ><p className="ScheduleWeek-THR-Content" id="thrTitle">{"THR"}</p></div>;
@@ -77,6 +79,7 @@ class ScheduleWeekContent extends React.Component{
             var timeOffDiv = <div className="ScheduleWeek-TimeOff" ><p className="ScheduleWeek-TimeOff-Content" id="timeOffTitle">{"Time Off"}</p></div>;
             var frequencyDiv = <div className="ScheduleWeek-Frequency" ><p className="ScheduleWeek-Frequency-Content" id="componentTitle">{"Component"}</p></div>;
         }else{
+            console.log(workout);
             var typeDiv = <div className="ScheduleWeek-Type"><p className="ScheduleWeek-Type-Content">{workout.exercise.title}</p></div>;
             var thrDiv = <div className="ScheduleWeek-THR"><p className="ScheduleWeek-THR-Content">{workout.target_heart_rate}</p></div>;
             var maxDiv = <div className="ScheduleWeek-Max"><p className="ScheduleWeek-Max-Content">{"MAX%"}</p></div>;

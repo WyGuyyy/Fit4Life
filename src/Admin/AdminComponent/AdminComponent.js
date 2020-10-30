@@ -37,7 +37,23 @@ class AdminComponent extends React.Component{
 
         var exercises;
 
-        await fetch("http://localhost:8080/api/exercise", {  
+        var classroomID = this.state.classroom.classroom_id;
+        var componentID = this.state.component.component_id;
+        var classCompID;
+
+        await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classCompID = result;
+            }
+        ).catch(console.log);
+
+        await fetch("http://localhost:8080/api/exercise/bycomponent/" + classCompID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json"}
             })

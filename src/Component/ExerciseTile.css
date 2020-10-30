@@ -4,7 +4,7 @@
     height: 350px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: #000000;
     border-radius: 20px;
@@ -17,13 +17,35 @@
     background: #2e2e2e;
 }
 
+.Exercise-Tile-Image-Wrapper{
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .Exercise-Tile-Image{
-    object-fit: contain;
+    object-fit: fill;
+    border-radius: 20px;
+    height: 92%;
+    width: 92%;
+}
+
+.Exercise-Tile-Title-Wrapper{
+    height: 30%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .Exercise-Tile-Title{
     font-size: 40px;
     color: white;
+    margin: 0;
 }
 
 @media(max-width: 700px){

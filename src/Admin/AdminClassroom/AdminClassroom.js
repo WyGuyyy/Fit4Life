@@ -34,8 +34,9 @@ class AdminClassroom extends React.Component{
         var count = 0;
 
         var components;
+        var classroomID = this.state.classroom.classroom_id;
 
-        await fetch("http://localhost:8080/api/component", {  
+        await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json"}
             })
@@ -46,6 +47,18 @@ class AdminClassroom extends React.Component{
                     components = result;
                 }
             ).catch(console.log);
+
+        /*await fetch("http://localhost:8080/api/component", {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    components = result;
+                }
+            ).catch(console.log);*/
 
         for(count = 0; count < components.length; count++){
             var listItem = document.createElement("div");

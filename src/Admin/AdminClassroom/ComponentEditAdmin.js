@@ -30,12 +30,13 @@ class ComponentEditAdmin extends React.Component{
     async editComponent(event){
 
         var componentID = this.state.component.component_id;
+        var classroomID = this.state.classroom.classroom_id;
         var aTitle = document.getElementById("Component-Edit-Title-Input-Admin").value;
 
         await fetch("http://localhost:8080/api/component", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({component_id: componentID, title: aTitle}) //Need to add in other fields here, back end and front end
+            body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 
     }

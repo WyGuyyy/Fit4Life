@@ -34,12 +34,13 @@ class ExerciseEditAdmin extends React.Component{
         var aTitle = document.getElementById("Exercise-Edit-Title-Input-Admin").value;
         const fileData = new FormData();
 
-        var exerciseID;
+        var componentID = this.state.component.component_id;
+        var exerciseID = this.state.exercise.exercise_id;
 
         await fetch("http://localhost:8080/api/exercise", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({exercise_id: this.state.exercise.exercise_id, title: aTitle}) //Need to add in other fields here, back end and front end
+            body: JSON.stringify({exercise_id: exerciseID, title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
         }).then(res => res.json())
         .then(
             (text) => {

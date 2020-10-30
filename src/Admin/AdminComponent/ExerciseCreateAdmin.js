@@ -32,18 +32,39 @@ class ExerciseCreateAdmin extends React.Component{
         var aTitle = document.getElementById("Exercise-Create-Title-Input-Admin").value;
         const fileData = new FormData();
 
+        var componentID = this.state.component.component_id;
+        var classroomID = this.state.classroom.classroom_id;
+        var classCompID;
         var exerciseID;
 
         await fetch("http://localhost:8080/api/exercise", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({title: aTitle}) //Need to add in other fields here, back end and front end
+            body: JSON.stringify({title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
         }).then(res => res.json())
         .then(
             (text) => {
                 exerciseID = text;
             }
         ).catch(console.log);
+
+        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classCompID = result;
+            }
+        ).catch(console.log);*/
+
+            //start here next time ... need to add exercise to comp
+        /*await fetch("http://localhost:8080/api/exercise/tocomponent/" + exerciseID + "/" + classCompID, {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json"}
+        }).catch(console.log);*/
 
         fileData.append("files", this.state.selectedFile);
 
