@@ -12,6 +12,10 @@ class Authenticate extends React.Component{
         };
 
     }
+
+    authenticate(event){
+        
+    }
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
@@ -50,7 +54,7 @@ class Authenticate extends React.Component{
                             </div>
                             <div className="Authneticate-Login-Row">
                                 <Link to="/">
-                                    <button className="authenticateLogin">Login</button>
+                                    <button className="authenticateLogin" onClick={e => this.authenticate(e)}>Login</button>
                                 </Link>
                             </div>
                         </div>

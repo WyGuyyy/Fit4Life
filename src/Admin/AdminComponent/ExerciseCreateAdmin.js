@@ -68,7 +68,7 @@ class ExerciseCreateAdmin extends React.Component{
 
         fileData.append("files", this.state.selectedFile);
 
-        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID , { 
+        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
             method: "POST",                          
             body: fileData
         }).catch(console.log);

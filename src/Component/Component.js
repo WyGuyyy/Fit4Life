@@ -111,7 +111,7 @@ class Component extends React.Component{
             }
         ).catch(console.log);
 
-        await fetch("http://localhost:8080/api/exercise_blob/foracomp/" + classroomID + "/" + componentID, {  
+        await fetch("http://localhost:8080/api/exercise_blob/foracomp/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json"}
         })

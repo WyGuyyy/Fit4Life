@@ -32,6 +32,7 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/login" component={Authenticate}/>
         <Route exact path="/" component={Home} />
         <Route exact path="/classroom" component={Classroom} />
         <Route exact path="/component" component={Component} />
