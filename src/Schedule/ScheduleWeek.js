@@ -6,7 +6,7 @@ import Popout from '../Popout/Popout'
 import ScheduleWeekContent from './ScheduleWeekContent';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdStayCurrentPortrait } from 'react-icons/md';
 
 class ScheduleWeek extends React.Component{
     
@@ -200,13 +200,45 @@ class ScheduleWeek extends React.Component{
 
     matchesFilters(workout){
         var strDate = workout.date.split("T")[0];
+        var strDateForDay = this.formatDateForDay();
+
+        console.log(strDateForDay + " " + strDate);
  
         if(workout.classroom.classroom_id === this.props.classroom.classroom_id && 
-            strDate.localeCompare(this.props.date) === 0){
+            strDate.localeCompare(strDateForDay) === 0){
                 return true;
             }else{
                 return false;
             }
+    }
+
+    formatDateForDay(){
+        var dayOfWeek = this.props.dayOfWeek;
+        var dateArr = this.props.date.split("-");
+        var dateFormatted = dateArr[1] + "/" + dateArr[2] + "/" + dateArr[0];
+        var startOfWeek = new Date(dateFormatted);
+        var currentDate;
+
+        if(dayOfWeek.localeCompare("Monday") === 0){
+            startOfWeek = startOfWeek;
+        }else if(dayOfWeek.localeCompare("Tuesday") === 0){
+            startOfWeek.setDate(startOfWeek.getDate() + 1);
+        }else if(dayOfWeek.localeCompare("Wednesday") === 0){
+            startOfWeek.setDate(startOfWeek.getDate() + 2);
+        }else if(dayOfWeek.localeCompare("Thursday") === 0){
+            startOfWeek.setDate(startOfWeek.getDate() + 3);
+        }else if(dayOfWeek.localeCompare("Friday") === 0){
+            startOfWeek.setDate(startOfWeek.getDate() + 4);
+        }
+
+        var strYear = startOfWeek.getFullYear();
+        var strMonth = (startOfWeek.getMonth() < 9 ? "0" + (startOfWeek.getMonth() + 1) : startOfWeek.getMonth() + 1);
+        var strDate = (startOfWeek.getDate() < 9 ? "0" + startOfWeek.getDate() : startOfWeek.getDate());
+
+        currentDate = strYear + "-" + strMonth + "-" + strDate;
+
+        return currentDate;
+
     }
 
    /* renderDay(workouts){

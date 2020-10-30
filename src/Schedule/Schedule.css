@@ -257,7 +257,7 @@
 
 }
 
-@media(max-width: 660px){
+@media(max-width: 700px){
     .Schedule-Grid-Categories-Title{
         font-size: 15px;
     }
@@ -269,7 +269,7 @@
     }
 }
 
-@media(max-width: 550px){
+@media(max-width: 600px){
     .Schedule-Grid-Categories-Days{
         width: 15%;
     }
