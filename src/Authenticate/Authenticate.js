@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
+import {authService} from '../_services/AuthenticationService';
 import './Authenticate.css';
 import { Link } from 'react-router-dom';
 
@@ -8,13 +9,31 @@ class Authenticate extends React.Component{
         super(props);
 
         this.state = {
-            
+            login: props.login
         };
 
     }
 
-    authenticate(event){
-        
+    authenticate(event, context){
+
+        var userRole;
+
+        var username = document.getElementById("authenticateInputUser").value;
+        var password = document.getElementById("authenticateInputPass").value;
+
+        authService.authenticate(username, password);
+        var isLoggedIn = localStorage.getItem('logged_in');
+
+        if(isLoggedIn){
+            userRole = localStorage.getItem('userRole');
+
+            if(userRole.localeCompare("STUDENT") === 0){
+                this.props.history.push("/");
+            }else{
+                this.props.history.push("/admin");
+            }
+        }
+
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
@@ -47,10 +66,10 @@ class Authenticate extends React.Component{
                                 <h2 className="authenticateTitle">LOGIN</h2>
                             </div>
                             <div className="Authneticate-Username-Row">
-                                <label className="authenticateLabel">Username: </label> <input className="authenticateInput"/>
+                                <label className="authenticateLabel">Username: </label> <input className="authenticateInput" id="authenticateInputUser"/>
                             </div>
                             <div className="Authneticate-Password-Row">
-                                <label className="authenticateLabel">Password: </label> <input className="authenticateInput"/>
+                                <label className="authenticateLabel">Password: </label> <input className="authenticateInput" id="authenticateInputPass"/>
                             </div>
                             <div className="Authneticate-Login-Row">
                                 <Link to="/">
