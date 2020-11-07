@@ -33,7 +33,8 @@ class Classroom extends React.Component{
         //await fetch("http://192.168.1.5:8080/api/classroom", {
             await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
             })
             .then(res => res.text())
             .then(
@@ -93,7 +94,7 @@ class Classroom extends React.Component{
             <Fragment>
                 <Header title={"Components"} breadCrumbs={"Components for " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="classroomContainer">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="classroomWrapper" id="classroomWrapper">
                         <div className="Classroom-Button-Wrapper">
                             <div className="classroomFiller"></div>

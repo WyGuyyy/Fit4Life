@@ -40,13 +40,14 @@ class Invite extends React.Component{
         var list = document.getElementById("inviteList");
         var count = 0;
 
-        var invites;
+        var invites = [];
         var classroomTitle;
         var teacherLastName;
 
-        await fetch("http://localhost:8080/api/invite", {  
+        await fetch("http://localhost:8080/api/invite/foruser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -144,7 +145,8 @@ class Invite extends React.Component{
 
         await fetch("http://localhost:8080/api/classroom/" + cID, {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -162,7 +164,8 @@ class Invite extends React.Component{
 
         await fetch("http://localhost:8080/api/user/" + tID, {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -208,7 +211,8 @@ class Invite extends React.Component{
 
         await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
@@ -236,16 +240,16 @@ class Invite extends React.Component{
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        console.log(eventObj);
-
-        await fetch("http://localhost:8080/api/invite/accept/" + 2 + "/" + this.state.focusedInvite.invite_id, {  
+        await fetch("http://localhost:8080/api/invite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.classroom.classroom_id, {  
             method: "POST",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
@@ -323,7 +327,7 @@ class Invite extends React.Component{
                 <ConfirmModal text="Decline invite?" yesText="Yes" noText="No" id="modalContainerDecline" onYes={e => {this.declineInvite({event: e}); this.closeDeclineModal(); this.confirmBackendTransaction("Invite declined!");}}/>
                 <div className="inviteContainer">
                     <ConfirmToast text=""/>
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="inviteWrapper" id="inviteWrapper">
                         <div className="inviteList" id="inviteList">
                             <div className="inviteFiller"></div>

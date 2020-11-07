@@ -39,20 +39,22 @@ class Goal extends React.Component{
         var list = document.getElementById("goalList");
         var count = 0;
 
-        var goals;
+        var goals = [];
 
-        await fetch("http://localhost:8080/api/goal", {  
+        await fetch("http://localhost:8080/api/goal/byUser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 goals = result;
-                console.log(result);
             }
         ).catch(console.log);
+
+        console.log(goals);
 
         for(count = 0; count < goals.length; count++){
             var listItem = document.createElement("div");
@@ -201,7 +203,8 @@ class Goal extends React.Component{
 
         await fetch("http://localhost:8080/api/goal/" + this.state.focusedGoal.goal_id, {  
             method: "DELETE",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){
@@ -261,7 +264,7 @@ class Goal extends React.Component{
                 <Header title="Goals" breadCrumbs="Goals" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete goal?" yesText="Yes" noText="No" onYes={e => {this.deleteGoal(); this.closeModal(); this.confirmBackendTransaction();}} />
                 <div className="goalContainer">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <button className="Goal-Create-Button" title="Create Goal" onClick={(e)=>this.goToGoalCreate({event: e})}>+</button>
                     <div className="goalWrapper" id="goalWrapper">
                         <ConfirmToast text="Goal deleted!"/>

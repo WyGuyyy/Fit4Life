@@ -266,7 +266,7 @@ class AdminComponent extends React.Component{
                 <AdminHeader title={"Exercises"} breadCrumbs={classroom + ">" + component + " Exercises"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeExercise">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">

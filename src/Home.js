@@ -30,9 +30,10 @@ class Home extends React.Component{
         var classroomWrapper = document.getElementById("homeWrapper");
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/classroom", {  
+            await fetch("http://localhost:8080/api/classroom/foruser/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
             })
             .then(res => res.text())
             .then(
@@ -85,7 +86,7 @@ class Home extends React.Component{
             <Fragment>
                 <Header title="Home" breadCrumbs="Home" goBack={false} customClick={this.goBack.bind(this)}/>
                 <div className="homeContainer">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
                             <div className="homeFiller"></div>

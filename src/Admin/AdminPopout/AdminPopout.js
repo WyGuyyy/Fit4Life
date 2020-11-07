@@ -3,13 +3,14 @@ import ReactDom from 'react-dom';
 import './AdminPopout.css';
 /*import Header from '../Header/Header';*/
 import { Link } from 'react-router-dom';
+import { authService } from '../../_services/AuthenticationService';
 
 class AdminPopout extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            
+            history: props.hist
         };
 
     }
@@ -26,6 +27,11 @@ class AdminPopout extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    logout(event){
+        authService.logout();
+        this.state.history.push("login");
     }
 
     //Render the Header component to the DOM/Screen
@@ -53,6 +59,7 @@ class AdminPopout extends React.Component{
                     <Link to={{pathname: "/Admin", state: {goBack: false}}} className="inviteLink-Admin">
                         <button className="popoutButton-Admin">Test</button>
                     </Link>
+                    <button className="popoutButton-Admin" onClick={e => this.logout(e)}>Logout</button>
                 </div>
             </div>
         );

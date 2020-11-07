@@ -37,9 +37,10 @@ class PersonalInfo extends React.Component{
 
         var personalInfo;
 
-        await fetch("http://localhost:8080/api/user/1", {  
+        await fetch("http://localhost:8080/api/user/" + localStorage.getItem("userID"), {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -75,7 +76,7 @@ class PersonalInfo extends React.Component{
             <Fragment>
                 <Header title="Personal Info" breadCrumbs="Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Personal-Info-Container">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="Personal-Info-Wrapper" id="Personal-Info-Wrapper">
                         <div className="Personal-Info-Form-Wrapper">
 

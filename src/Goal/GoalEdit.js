@@ -48,7 +48,8 @@ class GoalEdit extends React.Component{
 
         await fetch("http://localhost:8080/api/goal", {  
             method: "PUT",                          
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({goal_id: goalID, user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 

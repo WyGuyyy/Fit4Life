@@ -291,7 +291,7 @@ class Schedule extends React.Component{
             <Fragment>
                 <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="scheduleContainer">
-                    <Popout />
+                    <Popout logout={this.props.logout} hist={this.props.history}/>
                     <div className="scheduleWrapper" id="scheduleWrapper">
                         
                         <div className="Schedule-Week-Filter-Wrapper">

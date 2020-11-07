@@ -101,7 +101,8 @@ class Component extends React.Component{
 
         await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -113,7 +114,8 @@ class Component extends React.Component{
 
         await fetch("http://localhost:8080/api/exercise_blob/foracomp/" + componentID, {  
             method: "GET",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         })
         .then(res => res.text())
         .then(
@@ -247,7 +249,7 @@ class Component extends React.Component{
             <Fragment>
                 <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="componentContainer">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="componentWrapper" id="componentWrapper">
                     </div>
                 </div>

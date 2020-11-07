@@ -23,9 +23,8 @@ async function authenticate(aUsername, aPassword){
             }
         ).catch(console.log);
 
-    if(!(response.userID === undefined || response.userID === null)){
+    if(!(response.userID === undefined && response.userID === null)){
     
-        console.log(response.userRole);
         localStorage.setItem('userID', response.userID);
         localStorage.setItem('userRole', response.userRole);
         localStorage.setItem('userDisplayName', response.displayName);

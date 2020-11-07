@@ -261,7 +261,7 @@ class AdminClassroom extends React.Component{
                 <AdminHeader title={"Components"} breadCrumbs={classroom + " Components"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete component?" yesText="Yes" noText="No" onYes={e => {this.deleteComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeComponent">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <button className="Component-Create-Button-Admin" title="Create Component" onClick={(e)=>this.goToClassroomCreate({event: e})}>+</button>
                     <div className="componentWrapper-Admin" id="componentWrapper-Admin">
                         <ConfirmToast text="Component deleted!"/>

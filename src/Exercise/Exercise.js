@@ -102,7 +102,7 @@ class Exercise extends React.Component{
                 <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + component + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="exerciseContainer">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="exerciseWrapper">
                         <ConfirmToast text="Workout saved!"/>
                         <div className="exerciseForm">

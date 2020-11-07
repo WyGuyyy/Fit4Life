@@ -290,7 +290,7 @@ class AdminStudent extends React.Component{
                 <AdminHeader title={"Students"} breadCrumbs={classroom + " Students"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Remove student from class?" yesText="Yes" noText="No" onYes={e => {this.dropStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeStudent">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <button className="Student-InviteButton-Button-Admin" title="Student Invite" onClick={(e)=>this.goToStudentInvite({event: e})}>+</button>
                     <div className="studentWrapper-Admin" id="studentWrapper-Admin">
                         <ConfirmToast text="Student removed!"/>
