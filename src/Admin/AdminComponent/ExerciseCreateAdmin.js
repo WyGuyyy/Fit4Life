@@ -39,7 +39,8 @@ class ExerciseCreateAdmin extends React.Component{
 
         await fetch("http://localhost:8080/api/exercise", {  
             method: "POST",                          
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
         }).then(res => res.json())
         .then(

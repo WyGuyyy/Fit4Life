@@ -44,7 +44,8 @@ class PersonalInfoEdit extends React.Component{
 
         await fetch("http://localhost:8080/api/user", {  
             method: "PUT",                          
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 

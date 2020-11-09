@@ -104,7 +104,7 @@ class Goal extends React.Component{
             listItemProgress.id = "goalListItemProgress-" + count;
             listItemProgress.title = goals[count].progress;
             
-            if(listItemProgress.textContent.localeCompare("") === 0){
+            if(listItemProgress.textContent.localeCompare("Not Started") === 0){
                 listItemProgress.style.color = "#ff0000";
             }else if(listItemProgress.textContent.localeCompare("In Progress") === 0){
                 listItemProgress.style.color = "#fbff00";

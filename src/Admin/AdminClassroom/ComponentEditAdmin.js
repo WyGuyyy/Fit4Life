@@ -35,7 +35,8 @@ class ComponentEditAdmin extends React.Component{
 
         await fetch("http://localhost:8080/api/component", {  
             method: "PUT",                          
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
         }).catch(console.log);
 

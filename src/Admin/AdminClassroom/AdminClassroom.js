@@ -38,7 +38,8 @@ class AdminClassroom extends React.Component{
 
         await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
             })
             .then(res => res.text())
             .then(
@@ -207,7 +208,8 @@ class AdminClassroom extends React.Component{
 
         await fetch("http://localhost:8080/api/component/" + this.state.focusedComponent.component_id, {  
             method: "DELETE",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         for(count = 0; count < listChildren.length; count++){

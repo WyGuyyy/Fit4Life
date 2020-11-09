@@ -43,7 +43,8 @@ class StudentInviteAdmin extends React.Component{
         if(queryString.localeCompare("ALL") === 0){
             await fetch("http://localhost:8080/api/user/student", {  
                 method: "GET",                          
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
             })
             .then(res => res.text())
             .then(
@@ -56,7 +57,8 @@ class StudentInviteAdmin extends React.Component{
 
             await fetch("http://localhost:8080/api/user/search/" + queryString, {  
                     method: "GET",                          
-                    headers: {"Content-Type": "application/json"}
+                    headers: {"Content-Type": "application/json",
+                              "Authorization": "Bearer " + localStorage.getItem("auth_token")}
                 })
                 .then(res => res.text())
                 .then(
@@ -163,7 +165,8 @@ class StudentInviteAdmin extends React.Component{
 
         var c = await fetch("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
                     method: "GET",                          
-                    headers: {"Content-Type": "application/json"}
+                    headers: {"Content-Type": "application/json",
+                              "Authorization": "Bearer " + localStorage.getItem("auth_token")}
                 })
                 .then(res => res.text())
                 .then(
@@ -186,7 +189,8 @@ class StudentInviteAdmin extends React.Component{
 
         await fetch("http://localhost:8080/api/invite/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
                     method: "GET",                          
-                    headers: {"Content-Type": "application/json"}
+                    headers: {"Content-Type": "application/json",
+                              "Authorization": "Bearer " + localStorage.getItem("auth_token")}
                 })
                 .then(res => res.text())
                 .then(
@@ -245,7 +249,8 @@ class StudentInviteAdmin extends React.Component{
 
         await fetch("http://localhost:8080/api/invite/send/" + studentID + "/" + 2 + "/" + classroomID, {  
             method: "POST",                          
-            headers: {"Content-Type": "application/json"}
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
         var tempButton = document.getElementById("studentInviteListItemInvite-" + this.state.focusedStudentItemID + "-Admin");

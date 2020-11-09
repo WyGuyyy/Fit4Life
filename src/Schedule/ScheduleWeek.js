@@ -71,7 +71,8 @@ class ScheduleWeek extends React.Component{
         //await fetch("http://192.168.1.5:8080/api/classroom", {
             await fetch("http://localhost:8080/api/workout/byuser/" + 1, {  
                 method: "GET",                          
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
             })
             .then(res => res.text())
             .then(
