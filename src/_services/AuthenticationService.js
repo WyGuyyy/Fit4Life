@@ -28,17 +28,17 @@ async function authenticate(aUsername, aPassword){
         localStorage.setItem('userID', response.userID);
         localStorage.setItem('userRole', response.userRole);
         localStorage.setItem('userDisplayName', response.displayName);
-        localStorage.setItem('logged_in', true);
+        localStorage.setItem('logged_in', "true");
         localStorage.setItem('auth_token', response.token);
 
     }else{
-        localStorage.setItem("logged_in", false);
+        localStorage.setItem("logged_in", "false");
     }
 
 }
 
 function logout(){
     localStorage.removeItem('user');
-    localStorage.setItem('logged_in', false);
+    localStorage.setItem('logged_in', "false");
     localStorage.removeItem('auth_token');
 }

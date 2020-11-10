@@ -65,11 +65,12 @@ class ScheduleWeek extends React.Component{
 
     async fillWorkouts(){
         
-        var workouts;
-        var userID = this.props.userID;
+        var workouts = [];
+        console.log(this.props);
+        var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/workout/byuser/" + 1, {  
+            await fetch("http://localhost:8080/api/workout/byuser/" + userID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

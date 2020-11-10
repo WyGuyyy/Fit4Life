@@ -33,7 +33,7 @@ class AdminClassroom extends React.Component{
         var list = document.getElementById("componentList-Admin");
         var count = 0;
 
-        var components;
+        var components = [];
         var classroomID = this.state.classroom.classroom_id;
 
         await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  

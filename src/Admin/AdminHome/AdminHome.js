@@ -32,7 +32,7 @@ class AdminHome extends React.Component{
         var list = document.getElementById("classroomList-Admin");
         var count = 0;
 
-        var classrooms;
+        var classrooms = [];
 
         await fetch("http://localhost:8080/api/classroom", {  
                 method: "GET",                          

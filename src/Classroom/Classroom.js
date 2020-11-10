@@ -25,7 +25,7 @@ class Classroom extends React.Component{
     }
 
     async fillComponents(){
-        var components;
+        var components = [];
         var count = 0;
         var classroomWrapper = document.getElementById("classroomWrapper");
         var classroomID = this.state.classroom.classroom_id;

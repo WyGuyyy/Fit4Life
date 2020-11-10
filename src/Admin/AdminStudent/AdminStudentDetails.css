@@ -13,7 +13,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .Student-Detail-Form-Wrapper-Admin{
@@ -70,6 +69,24 @@
     white-space: nowrap;
 }
 
+.Student-Detail-FirstName-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+  .Student-Detail-FirstName-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-FirstName-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
+}
+
 .Student-Detail-LastName-Wrapper-Admin{
     display: flex;
     flex-direction: row;
@@ -80,6 +97,24 @@
     background: #cc9600;
     height: 100%;
     white-space: nowrap;
+}
+
+.Student-Detail-LastName-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+  .Student-Detail-LastName-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-LastName-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
 }
 
 .Student-Detail-Email-Wrapper-Admin{
@@ -94,6 +129,24 @@
     white-space: nowrap;
 }
 
+.Student-Detail-Email-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+  .Student-Detail-Email-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-Email-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
+}
+
 .Student-Detail-Weight-Wrapper-Admin{
     display: flex;
     flex-direction: row;
@@ -104,6 +157,24 @@
     background: #cc9600;
     height: 100%;
     white-space: nowrap;
+}
+
+.Student-Detail-Weight-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+.Student-Detail-Weight-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-Weight-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
 }
 
 .Student-Detail-Height-Wrapper-Admin{
@@ -118,6 +189,24 @@
     white-space: nowrap;
 }
 
+.Student-Detail-Height-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+.Student-Detail-Height-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-Height-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
+}
+
 .Student-Detail-Workout-Wrapper-Admin{
     display: flex;
     flex-direction: row;
@@ -129,6 +218,24 @@
     height: 100%;
     white-space: nowrap;
     transition-duration: 0.5s;
+}
+
+.Student-Detail-Workout-Wrapper-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #ffbb00;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+.Student-Detail-Workout-Wrapper-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Student-Detail-Workout-Wrapper-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#ffbb00;
+    /*border-radius: 10px;*/
 }
 
 .Student-Detail-Workout-Wrapper-Admin:hover{

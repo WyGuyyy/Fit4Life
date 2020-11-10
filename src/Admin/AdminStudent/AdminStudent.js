@@ -35,7 +35,7 @@ class AdminStudent extends React.Component{
         var list = document.getElementById("studentList-Admin");
         var count = 0;
 
-        var students;
+        var students = [];
 
         var classroomID = this.state.classroom.classroom_id;
 

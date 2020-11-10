@@ -76,8 +76,8 @@ class Component extends React.Component{
 
     async renderTiles(){
 
-        var exercises;
-        var exerciseBlobs;
+        var exercises = [];
+        var exerciseBlobs = [];
         var count = 0;
         var componentWrapper = document.getElementById("componentWrapper");
 

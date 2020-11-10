@@ -25,7 +25,7 @@ class Home extends React.Component{
 
     async fillClassrooms(){
 
-        var classrooms;
+        var classrooms = [];
         var count = 0;
         var classroomWrapper = document.getElementById("homeWrapper");
 

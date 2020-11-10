@@ -35,13 +35,13 @@ class AdminComponent extends React.Component{
         var list = document.getElementById("exerciseList-Admin");
         var count = 0;
 
-        var exercises;
+        var exercises = [];
 
         var classroomID = this.state.classroom.classroom_id;
         var componentID = this.state.component.component_id;
         var classCompID;
 
-        await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
+        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -52,9 +52,9 @@ class AdminComponent extends React.Component{
                 var result = text.length ? JSON.parse(text) : {};
                 classCompID = result;
             }
-        ).catch(console.log);
+        ).catch(console.log);*/
 
-        await fetch("http://localhost:8080/api/exercise/bycomponent/" + classCompID, {  
+        await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
