@@ -27,6 +27,7 @@ import AdminStudent from './Admin/AdminStudent/AdminStudent';
 import StudentInviteAdmin from './Admin/AdminStudent/StudentInviteAdmin';
 import WorkoutDetail from './Schedule/WorkoutDetail';
 import StudentDetailAdmin from './Admin/AdminStudent/AdminStudentDetails';
+import CreateAccount from './Authenticate/CreateAccount';
 import {authService} from './_services/AuthenticationService';
 import { AiFillPropertySafety, AiTwotoneQuestionCircle } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa';
@@ -34,7 +35,7 @@ import { FaCheck } from 'react-icons/fa';
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
     //(localStorage.getItem('logged_in') === true)
-      (localStorage.getItem("logged_in").localeCompare("true") === 0)
+      (check().localeCompare("true") === 0)
       ? <Component {...props} />
       : <Redirect to='/login' login={authService}/>
   )}/>
@@ -45,6 +46,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/login" component={Authenticate} />
+        <Route exact path="/createAccount" component={CreateAccount} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/classroom" component={Classroom} />
         <PrivateRoute exact path="/component" component={Component} />
@@ -74,6 +76,10 @@ function App() {
       </Switch>
     </Router>
   );
+}
+
+function check(){
+  return localStorage.getItem("logged_in");
 }
 
 export default App;

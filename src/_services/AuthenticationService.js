@@ -2,12 +2,14 @@ import { AiOutlineLogout } from "react-icons/ai";
 
 export const authService = {
     authenticate,
-    logout
+    logout,
+    isLoggedIn
 };
 
 async function authenticate(aUsername, aPassword){
 
     var response;
+    var data;
     var user = {username: aUsername, password: aPassword};
 
     await fetch("http://localhost:8080/api/authenticate", {  
@@ -23,17 +25,13 @@ async function authenticate(aUsername, aPassword){
             }
         ).catch(console.log);
 
-    if(!(response.userID === undefined && response.userID === null)){
-    
-        localStorage.setItem('userID', response.userID);
-        localStorage.setItem('userRole', response.userRole);
-        localStorage.setItem('userDisplayName', response.displayName);
-        localStorage.setItem('logged_in', "true");
-        localStorage.setItem('auth_token', response.token);
-
+    if(response.status){
+        data = {success: "false", user: ""};
     }else{
-        localStorage.setItem("logged_in", "false");
+        data = {success: "true", user: response};
     }
+
+    return data;
 
 }
 
@@ -41,4 +39,8 @@ function logout(){
     localStorage.removeItem('user');
     localStorage.setItem('logged_in', "false");
     localStorage.removeItem('auth_token');
+}
+
+function isLoggedIn(){
+    return localStorage.getItem("logged_in");
 }

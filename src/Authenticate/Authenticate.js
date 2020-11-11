@@ -14,30 +14,41 @@ class Authenticate extends React.Component{
 
     }
 
-    authenticate(event, context){
+    async authenticate(event, context){
 
         var userRole;
 
         var username = document.getElementById("authenticateInputUser").value;
         var password = document.getElementById("authenticateInputPass").value;
 
-        authService.authenticate(username, password);
-        var isLoggedIn = localStorage.getItem('logged_in');
+        var data = await authService.authenticate(username, password);
+        //var isLoggedIn = localStorage.getItem('logged_in');
+        var isLoggedIn = data.success;
+        
+        console.log(data.user.userRole);
 
-        console.log(isLoggedIn);
-
+        //if(authService.isLoggedIn().localeCompare("true") === 0){
         if(isLoggedIn.localeCompare("true") === 0){
-            userRole = localStorage.getItem('userRole');
 
-            if(userRole.localeCompare("STUDENT") === 0){
+            localStorage.setItem('userRole', data.user.userRole);
+            localStorage.setItem('userDisplayName', data.user.displayName);
+            localStorage.setItem('logged_in', "true");
+            localStorage.setItem('auth_token', data.token);
+
+            if(data.user.userRole.localeCompare("STUDENT") === 0){
                 this.props.history.push("/");
             }else{
                 this.props.history.push("/admin");
             }
         }
 
+
     }
     
+    goToAccountCreate(){
+        this.props.history.push("/createAccount");
+    }
+
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         
@@ -55,11 +66,19 @@ class Authenticate extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        if(localStorage.getItem("logged_in").localeCompare("true") === 0){
+            if(localStorage.getItem("userRole").localeCompare("STUDENT") === 0){
+                this.props.history.push("/");
+            }else{
+                this.props.history.push("/admin");
+            }
+        }
+
         return(
 
             <div className="authenticateContainer">
                 <div className="authenticateWrapper">
-                    <form className="authenticateForm">
+                    <div className="authenticateForm">
                         <div className="Authenticate-Row-Container">
                             <div className="Authneticate-Fit4Life-Row">
                                 <h1 className="topTitle">Fit<span style={{color: "#6b4e00"}}>4</span>Life</h1>
@@ -76,8 +95,11 @@ class Authenticate extends React.Component{
                             <div className="Authneticate-Login-Row">
                                 <button className="authenticateLogin" onClick={e => this.authenticate(e)}>Login</button>
                             </div>
+                            <div className="Authneticate-Create-Row">
+                                <button className="authenticateCreate" onClick={e => this.goToAccountCreate(e)}>Create Account</button>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         );

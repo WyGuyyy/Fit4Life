@@ -1,9 +1,9 @@
-.authenticateContainer{
+.createAccountContainer{
     width: 100vw;
     height: 100vh;
 }
 
-.authenticateWrapper{
+.createAccountWrapper{
     width: 100%;
     height: 100%;
     display: flex;
@@ -12,9 +12,9 @@
     align-items: center;
 }
 
-.authenticateForm{
-    height: 400px;
-    width: 400px;
+.createAccountForm{
+    height: 600px;
+    width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +24,7 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.Authneticate-Username-Row{
+.-Username-Row{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -32,61 +32,77 @@
     margin-bottom: 20px;
 }
 
-.Authneticate-Password-Row{
+.CreateAccount-Title-Row{
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.Authneticate-Login-Row{
-    display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.Authneticate-Create-Row{
+.CreateAccount-FirstName-Row{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.Authneticate-Title-Row{
+.CreateAccount-LastName-Row{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
+}
+
+.CreateAccount-Email-Row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.CreateAccount-Password-Row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
     
 }
 
-.Authneticate-Fit4Life-Row{
+.CreateAccount-ConfirmPassword-Row{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
+}
 
+.CreateAccount-CreateButton-Row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .topTitle{
     color: white;
 }
 
-.authenticateTitle{
+.createAccountTitle{
     color: white;
     font-size: 30px;
 }
 
-.authenticateLabel{
+.createAccountLabel{
     color: white;
     margin-right: 10px;
 }
 
-.authenticateLogin{
+.createAccountLogin{
     width: 200px;
     height: 40px;
     border-radius: 5px;
@@ -94,7 +110,7 @@
     background: radial-gradient(#ffffff, #666666);
 }
 
-.authenticateCreate{
+.createAccountCreate{
     width: 200px;
     height: 40px;
     border-radius: 5px;
@@ -102,7 +118,7 @@
     background: radial-gradient(#ffffff, #666666);
 }
 
-.authenticateInput{
+.createAccountInput{
     height: 20px;
     width: 200px;
     background: radial-gradient(#ffffff, #919191);
@@ -112,31 +128,56 @@
 }
 
 @media(max-width: 500px){
-    .authenticateForm{
+    .createAccountForm{
         height: 450px;
         width: 300px;
     }
 
-    .Authneticate-Username-Row{
+    .CreateAccount-FirstName-Row{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .CreateAccount-LastName-Row{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .CreateAccount-Email-Row{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .CreateAccount-Password-Row{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        
+    }
+    
+    .CreateAccount-ConfirmPassword-Row{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         margin-bottom: 20px;
     }
-    
-    .Authneticate-Password-Row{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 30px;
-    }
 
 }
 
 @media(max-width: 350px){
-    .authenticateForm{
+    .createAccountForm{
         height: 450px;
         width: 250px;
     }
