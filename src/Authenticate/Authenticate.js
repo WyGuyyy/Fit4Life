@@ -30,10 +30,11 @@ class Authenticate extends React.Component{
         //if(authService.isLoggedIn().localeCompare("true") === 0){
         if(isLoggedIn.localeCompare("true") === 0){
 
+            localStorage.setItem('userID', data.user.userID);
             localStorage.setItem('userRole', data.user.userRole);
             localStorage.setItem('userDisplayName', data.user.displayName);
             localStorage.setItem('logged_in', "true");
-            localStorage.setItem('auth_token', data.token);
+            localStorage.setItem('auth_token', data.user.token);
 
             if(data.user.userRole.localeCompare("STUDENT") === 0){
                 this.props.history.push("/");

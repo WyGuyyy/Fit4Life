@@ -34,7 +34,9 @@ class AdminHome extends React.Component{
 
         var classrooms = [];
 
-        await fetch("http://localhost:8080/api/classroom", {  
+        console.log(localStorage.getItem("auth_token"));
+
+        await fetch("http://localhost:8080/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
