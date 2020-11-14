@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import {authService} from '../_services/AuthenticationService';
 import {passHashService} from '../_services/PasswordHasherService';
+import CreateConfirm from '../Confirm/ConfirmCreate';
+import ConfirmToast from '../Confirm/ConfirmToast';
+import ConfirmModal from '../Confirm/ConfirmModal';
 import './CreateAccount.css';
 import { Link } from 'react-router-dom';
 
@@ -13,10 +16,6 @@ class CreateAccount extends React.Component{
             login: props.login
         };
 
-    }
-    
-    goToAccountCreate(){
-        this.props.history.push("/createAccount");
     }
 
     //Lifecycle method for after Header component has mounted to the DOM
@@ -63,10 +62,13 @@ class CreateAccount extends React.Component{
         document.getElementById("createAccountInputPassword").value = "";
         document.getElementById("createAccountInputConfirmPassword").value = "";
 
-        //Here show confirm box to take them back to login screen -> this.props.history.push("/login");
+
+        this.showModal();
+        this.confirmBackendTransaction();
+
         //May need to do email confirmation to avoid other students creating account
-        //Also need to create back to login button on form
-        //then to to make create account form responsive
+        //Also need to create back to login button on form <- DO NEXT
+        //then to to make create account form responsive <- DO NEXT
 
     }
 
@@ -108,6 +110,30 @@ class CreateAccount extends React.Component{
         return true;
     }
 
+    showModal(){
+        document.getElementById("confirmCreateContainer").style.display = "flex";
+    }
+
+    showConfirmModal(){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("confirmCreateContainer").style.display = "none";
+        this.props.history.push("/login");
+    }
+
+    closeConfirmModal(){
+        document.getElementById("modalContainer").style.display = "none";
+    }
+
+    confirmBackendTransaction(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
@@ -122,7 +148,10 @@ class CreateAccount extends React.Component{
         return(
 
             <div className="createAccountContainer">
+                <CreateConfirm confirm={e => {this.closeModal()}}/>
+                <ConfirmModal text="Confirm account creation?" yesText="Yes" noText="No" onYes={e => {this.closeConfirmModal(); this.createAccount(e)}} />
                 <div className="createAccountWrapper">
+                    <ConfirmToast text="Account Created!"/>
                     <div className="createAccountForm">
                         <div className="CreateAccount-Row-Container">
                             <div className="CreateAccount-Title-Row">
@@ -144,7 +173,7 @@ class CreateAccount extends React.Component{
                                 <label className="createAccountLabel">Confirm Password: </label> <input className="createAccountInput" id="createAccountInputConfirmPassword" type="password"/>
                             </div>
                             <div className="CreateAccount-CreateButton-Row">
-                                <button className="createAccountCreate" onClick={e => this.createAccount(e)}>Create</button>
+                                <button className="createAccountCreate" onClick={e => this.showConfirmModal(e)}>Create</button>
                             </div>
                         </div>
                     </div>

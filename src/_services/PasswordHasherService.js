@@ -9,7 +9,6 @@ function hashPassword(rawPassword){
     var hashedPassword;
 
     hashedPassword = sha256(rawPassword);
-    alert(hashedPassword);
 
     return hashedPassword;
 
