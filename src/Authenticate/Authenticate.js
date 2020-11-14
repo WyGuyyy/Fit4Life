@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import {authService} from '../_services/AuthenticationService';
+import {passHashService} from '../_services/PasswordHasherService';
 import './Authenticate.css';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +21,8 @@ class Authenticate extends React.Component{
 
         var username = document.getElementById("authenticateInputUser").value;
         var password = document.getElementById("authenticateInputPass").value;
+
+        password = passHashService.hashPassword(password);
 
         var data = await authService.authenticate(username, password);
         //var isLoggedIn = localStorage.getItem('logged_in');

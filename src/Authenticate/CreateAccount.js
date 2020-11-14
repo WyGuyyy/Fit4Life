@@ -7,6 +7,7 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import './CreateAccount.css';
 import { Link } from 'react-router-dom';
+import { MdTransferWithinAStation } from 'react-icons/md';
 
 class CreateAccount extends React.Component{
     constructor(props){
@@ -67,8 +68,6 @@ class CreateAccount extends React.Component{
         this.confirmBackendTransaction();
 
         //May need to do email confirmation to avoid other students creating account
-        //Also need to create back to login button on form <- DO NEXT
-        //then to to make create account form responsive <- DO NEXT
 
     }
 
@@ -134,6 +133,10 @@ class CreateAccount extends React.Component{
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
+    backToLogin(){
+        this.props.history.push("/login");
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
@@ -148,7 +151,7 @@ class CreateAccount extends React.Component{
         return(
 
             <div className="createAccountContainer">
-                <CreateConfirm confirm={e => {this.closeModal()}}/>
+                <CreateConfirm confirm={e => {this.closeModal()}} btnText={"Lets get fit!"} text={"Account created!"}/>
                 <ConfirmModal text="Confirm account creation?" yesText="Yes" noText="No" onYes={e => {this.closeConfirmModal(); this.createAccount(e)}} />
                 <div className="createAccountWrapper">
                     <ConfirmToast text="Account Created!"/>
@@ -174,6 +177,9 @@ class CreateAccount extends React.Component{
                             </div>
                             <div className="CreateAccount-CreateButton-Row">
                                 <button className="createAccountCreate" onClick={e => this.showConfirmModal(e)}>Create</button>
+                            </div>
+                            <div className="CreateAccount-CancelButton-Row">
+                                <button className="createAccountCancel" onClick={e => this.backToLogin(e)}>Cancel</button>
                             </div>
                         </div>
                     </div>

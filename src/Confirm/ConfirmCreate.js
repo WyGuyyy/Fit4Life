@@ -45,9 +45,9 @@ class ConfirmCreate extends React.Component{
         return(
             <div className="confirmCreateContainer" id="confirmCreateContainer" onClick={this.props.tileClickEvent}>
                 <div className="confirmCreateContent">
-                    <p className="confirmCreateText" id="confirmCreateText">Account created!</p>
+                    <p className="confirmCreateText" id="confirmCreateText">{this.props.text}</p>
                     <div className="ConfirmCreate-Button-Wrapper">
-                        <button className="confirmCreateConfirmText" onClick={this.props.confirm}>Lets get fit!</button>
+        <button className="confirmCreateConfirmText" onClick={this.props.confirm}>{this.props.btnText}</button>
                     </div>
                 </div>
             </div>

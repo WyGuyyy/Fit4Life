@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import './StudentInviteAdmin.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
+import ConfirmCreate from '../../Confirm/ConfirmCreate';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
@@ -103,9 +104,9 @@ class StudentInviteAdmin extends React.Component{
             cell4.classList.add("Student-Invite-Grid-Cell-Invite-Admin");
 
             listItemTitle.classList.add("Student-Invite-List-Item-Title-Admin");
-            listItemTitle.textContent = matchStudents[count].first_name + " " + matchStudents[count].last_name;
+            listItemTitle.textContent = matchStudents[count].email; //+ " (" + matchStudents[count].first_name + " " + matchStudents[count].last_name + ")";
             listItemTitle.id = "studentInviteListItemTitle-" + count + "-Admin";
-            listItemTitle.title = matchStudents[count].first_name + " " + matchStudents[count].last_name;
+            listItemTitle.title = matchStudents[count].email + " (" + matchStudents[count].first_name + " " + matchStudents[count].last_name + ")";
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -344,6 +345,7 @@ class StudentInviteAdmin extends React.Component{
 
             <Fragment>
                 <AdminHeader title={"Invite Students"} breadCrumbs={"Invite Students to " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
+                <ConfirmCreate confirm={} text={"Student Details"} btnText={""}/>
                 <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />

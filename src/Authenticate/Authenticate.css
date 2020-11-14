@@ -135,6 +135,13 @@
 
 }
 
+@media(max-height: 450px){
+    .authenticateWrapper{
+        height: 600px;
+        position: absolute;
+    }
+}
+
 @media(max-width: 350px){
     .authenticateForm{
         height: 450px;

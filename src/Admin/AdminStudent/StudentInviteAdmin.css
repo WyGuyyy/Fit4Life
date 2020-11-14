@@ -92,6 +92,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    cursor: pointer;
+    transition-duration: .5s;
 }
 
 .Student-Invite-List-Item-Student-Admin{
@@ -101,6 +103,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.Student-Invite-List-Item-Title-Admin:hover{
+    color: white;
 }
 
 /*.Student-Invite-List-Item-Student-Button-Admin{
