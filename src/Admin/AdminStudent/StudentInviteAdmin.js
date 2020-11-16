@@ -107,6 +107,7 @@ class StudentInviteAdmin extends React.Component{
             listItemTitle.textContent = matchStudents[count].email; //+ " (" + matchStudents[count].first_name + " " + matchStudents[count].last_name + ")";
             listItemTitle.id = "studentInviteListItemTitle-" + count + "-Admin";
             listItemTitle.title = matchStudents[count].email + " (" + matchStudents[count].first_name + " " + matchStudents[count].last_name + ")";
+            listItemTitle.onclick = e => this.showDetailModal({event: e});
 
             /*listStudentButton.classList.add("Exercise-List-Item-Student-Button-Admin");
             listStudentButton.textContent = "Students";
@@ -319,8 +320,26 @@ class StudentInviteAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "flex";
     }
 
+    showDetailModal(eventObj){
+
+        var idNum = eventObj.event.target.id.split("-")[1];
+        var aStudent = this.state.filteredStudents[idNum];
+
+        this.setState({
+            focusedStudent: aStudent,
+            focusedStudentItemID: idNum
+        });
+
+        document.getElementById("confirmCreateText").innerHTML = "STUDENT DETAILS<br />Name: " + aStudent.first_name + " " + aStudent.last_name + "<br />Email: " + aStudent.email;
+        document.getElementById("confirmCreateContainer").style.display = "flex";
+    }
+
     closeModal(){
         document.getElementById("modalContainer").style.display = "none";
+    }
+
+    closeDetailModal(){
+        document.getElementById("confirmCreateContainer").style.display = "none";
     }
 
     confirmBackendTransaction(){
@@ -345,7 +364,7 @@ class StudentInviteAdmin extends React.Component{
 
             <Fragment>
                 <AdminHeader title={"Invite Students"} breadCrumbs={"Invite Students to " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
-                <ConfirmCreate confirm={} text={"Student Details"} btnText={""}/>
+                <ConfirmCreate confirm={e => {this.closeDetailModal()}} text={""} btnText={"Ok"}/>
                 <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
                     <AdminPopout />

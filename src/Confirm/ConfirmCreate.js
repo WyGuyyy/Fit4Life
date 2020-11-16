@@ -47,7 +47,7 @@ class ConfirmCreate extends React.Component{
                 <div className="confirmCreateContent">
                     <p className="confirmCreateText" id="confirmCreateText">{this.props.text}</p>
                     <div className="ConfirmCreate-Button-Wrapper">
-        <button className="confirmCreateConfirmText" onClick={this.props.confirm}>{this.props.btnText}</button>
+                        <button className="confirmCreateConfirmText" onClick={this.props.confirm}>{this.props.btnText}</button>
                     </div>
                 </div>
             </div>

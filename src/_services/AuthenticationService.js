@@ -12,6 +12,8 @@ async function authenticate(aUsername, aPassword){
     var data;
     var user = {username: aUsername, password: aPassword};
 
+    console.log(aPassword);
+
     await fetch("http://localhost:8080/api/authenticate", {  
             method: "POST",
             body: JSON.stringify(user),                          

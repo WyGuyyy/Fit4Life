@@ -12,6 +12,15 @@ class Schedule extends React.Component{
     constructor(props){
         super(props);
 
+        //Start here next time ... need to find way to redirect if data empty
+        if(props.location.state === undefined){
+            if(localStorage.getItem("userRole").localeCompare("STUDENT") === 0){
+                props.history.push("/");
+            }else{
+                props.history.push("/admin");
+            }
+        }
+
         this.state = {
            canGoBack: props.location.state.goBack,
            resizeTrigger: "",

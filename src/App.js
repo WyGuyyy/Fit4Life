@@ -35,8 +35,20 @@ import { FaCheck } from 'react-icons/fa';
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
     //(localStorage.getItem('logged_in') === true)
-      (check().localeCompare("true") === 0)
-      ? <Component {...props} />
+      (loggedIn().localeCompare("true") === 0)
+      ? (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 || 
+        (props.location.pathname.localeCompare("/workoutDetail") === 0 || 
+         props.location.pathname.localeCompare("/schedule") === 0) ? 
+         <Component {...props} /> : <Redirect to="/admin"/>)
+      : <Redirect to='/login' login={authService}/>
+  )}/>
+)
+
+const PrivateAdminRoute = ({component: Component, ...rest}) => (
+  <Route {...rest} render={(props) => (
+    //(localStorage.getItem('logged_in') === true)
+      (loggedIn().localeCompare("true") === 0)
+      ? (localStorage.getItem("userRole").localeCompare("ADMIN") === 0 ? <Component {...props} /> : <Redirect to="/"/>)
       : <Redirect to='/login' login={authService}/>
   )}/>
 )
@@ -60,25 +72,25 @@ function App() {
         <PrivateRoute exact path="/personalEdit" component={PersonalInfoEdit}/>
         <PrivateRoute exact path="/invite" component={Invite} />
         <PrivateRoute exact path="/authenticate" component={Authenticate}/>
-        <PrivateRoute exact path="/admin" component={AdminHome} />
-        <PrivateRoute exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
-        <PrivateRoute exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />
-        <PrivateRoute exact path="/classroomAdmin" component={AdminClassroom} />
-        <PrivateRoute exact path="/componentCreateAdmin" component={ComponentCreateAdmin} />
-        <PrivateRoute exact path="/componentEditAdmin" component={ComponentEditAdmin} />
-        <PrivateRoute exact path="/componentAdmin" component={AdminComponent} />
-        <PrivateRoute exact path="/exerciseCreateAdmin" component={ExerciseCreateAdmin} />
-        <PrivateRoute exact path="/exerciseEditAdmin" component={ExerciseEditAdmin} />
-        <PrivateRoute exact path="/studentAdmin" component={AdminStudent} />
-        <PrivateRoute exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
-        <PrivateRoute exact path="/workoutDetail" component={WorkoutDetail} />
-        <PrivateRoute exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
+        <PrivateAdminRoute exact path="/admin" component={AdminHome} />
+        <PrivateAdminRoute exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
+        <PrivateAdminRoute exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />
+        <PrivateAdminRoute exact path="/classroomAdmin" component={AdminClassroom} />
+        <PrivateAdminRoute exact path="/componentCreateAdmin" component={ComponentCreateAdmin} />
+        <PrivateAdminRoute exact path="/componentEditAdmin" component={ComponentEditAdmin} />
+        <PrivateAdminRoute exact path="/componentAdmin" component={AdminComponent} />
+        <PrivateAdminRoute exact path="/exerciseCreateAdmin" component={ExerciseCreateAdmin} />
+        <PrivateAdminRoute exact path="/exerciseEditAdmin" component={ExerciseEditAdmin} />
+        <PrivateAdminRoute exact path="/studentAdmin" component={AdminStudent} />
+        <PrivateAdminRoute exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
+        <PrivateAdminRoute exact path="/workoutDetail" component={WorkoutDetail} />
+        <PrivateAdminRoute exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
       </Switch>
     </Router>
   );
 }
 
-function check(){
+function loggedIn(){
   return localStorage.getItem("logged_in");
 }
 

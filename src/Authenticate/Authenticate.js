@@ -28,7 +28,7 @@ class Authenticate extends React.Component{
         //var isLoggedIn = localStorage.getItem('logged_in');
         var isLoggedIn = data.success;
         
-        console.log(data.user.userRole);
+        console.log(data.user.password);
 
         //if(authService.isLoggedIn().localeCompare("true") === 0){
         if(isLoggedIn.localeCompare("true") === 0){
@@ -94,7 +94,7 @@ class Authenticate extends React.Component{
                                 <label className="authenticateLabel">Username: </label> <input className="authenticateInput" id="authenticateInputUser"/>
                             </div>
                             <div className="Authneticate-Password-Row">
-                                <label className="authenticateLabel">Password: </label> <input className="authenticateInput" id="authenticateInputPass"/>
+                                <label className="authenticateLabel">Password: </label> <input className="authenticateInput" id="authenticateInputPass" type="password"/>
                             </div>
                             <div className="Authneticate-Login-Row">
                                 <button className="authenticateLogin" onClick={e => this.authenticate(e)}>Login</button>
