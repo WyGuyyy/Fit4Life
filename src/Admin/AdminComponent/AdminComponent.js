@@ -5,25 +5,30 @@ import AdminPopout from '../AdminPopout/AdminPopout'
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
-import {FaPen} from 'react-icons/fa';
+import {FaPen, FaRegDotCircle} from 'react-icons/fa';
+import {RedirectService} from '../../_services/RedirectService';
 
 class AdminComponent extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: props.location.state.goBack,
-            componentExercises: "",
-            focusedExercise: "",
-            focusedExerciseItemID: "",
-            component: props.location.state.component,
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                componentExercises: "",
+                focusedExercise: "",
+                focusedExerciseItemID: "",
+                component: props.location.state.component,
+                classroom: props.location.state.classroom
+            }
         }
 
     }
     
     componentDidMount(){ 
-        this.fillExercises();
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.fillExercises();
+        }
     }
 
     componentWillUnmount(){
@@ -259,6 +264,10 @@ class AdminComponent extends React.Component{
     }
     
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.classroom.title;
         var component = this.props.location.state.component.title;

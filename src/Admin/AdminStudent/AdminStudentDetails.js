@@ -6,15 +6,18 @@ import AdminHeader from '../AdminHeader/AdminHeader';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../../_services/RedirectService';
 
 class AdminStudentDetails extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           student: props.location.state.student
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                student: props.location.state.student
+            };
+        }
 
     }
     
@@ -50,7 +53,9 @@ class AdminStudentDetails extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
-        console.log(this.props.student);
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var firstName = "FIRST NAME: " + this.props.location.state.student.first_name;
         var lastName = "LAST NAME: " + this.props.location.state.student.last_name;
@@ -62,7 +67,7 @@ class AdminStudentDetails extends React.Component{
             <Fragment>
                 <AdminHeader title="Student Details" breadCrumbs="Student Details" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Student-Detail-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Student-Detail-Wrapper-Admin">
                         <div className="Student-Detail-Form-Wrapper-Admin">
                             <div className="Student-Detail-FirstName-Wrapper-Admin-Parent">

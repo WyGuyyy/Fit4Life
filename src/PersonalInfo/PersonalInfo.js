@@ -5,17 +5,20 @@ import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class PersonalInfo extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           personalInfoObject: ""
-        };
-
-        this.getPersonalInfo();
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                personalInfoObject: ""
+            };
+            
+            this.getPersonalInfo();
+        }
 
     }
     
@@ -71,6 +74,10 @@ class PersonalInfo extends React.Component{
 
     //Render the Header component to the DOM/Screen
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         return(
             <Fragment>

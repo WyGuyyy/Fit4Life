@@ -4,15 +4,18 @@ import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class ComponentCreateAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                classroom: props.location.state.classroom
+            }
         }
 
     }
@@ -83,6 +86,10 @@ class ComponentCreateAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
 
         return(
@@ -90,7 +97,7 @@ class ComponentCreateAdmin extends React.Component{
                 <AdminHeader title={"Component Create"} breadCrumbs={"Create component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create component?" yesText="Yes" noText="No" onYes={e => {this.createComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Component-Create-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Component-Create-Wrapper-Admin">
                         <ConfirmToast text="Component created!"/>
                         <div className="Component-Create-Form-Wrapper-Admin">

@@ -6,17 +6,20 @@ import Popout from '../Popout/Popout';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../_services/RedirectService';
 
 class Exercise extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            exercise: props.location.state.exercise,
-            classroom: props.location.state.classroom,
-            component: props.location.state.component,
-            canGoBack: true
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                exercise: props.location.state.exercise,
+                classroom: props.location.state.classroom,
+                component: props.location.state.component,
+                canGoBack: true
+            };
+        }
 
     }
     
@@ -92,6 +95,10 @@ class Exercise extends React.Component{
 
     //Render the Header component to the DOM/Screen
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.classroom.title;
         var component = this.props.location.state.component.title;

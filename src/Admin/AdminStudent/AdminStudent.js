@@ -6,24 +6,29 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import {RedirectService} from '../../_services/RedirectService';
 
 class AdminStudent extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: props.location.state.goBack,
-            classroomStudents: "",
-            classroomID: props.location.state.classID,
-            focusedStudent: "",
-            focusedStudentItemID: "",
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                classroomStudents: "",
+                classroomID: props.location.state.classID,
+                focusedStudent: "",
+                focusedStudentItemID: "",
+                classroom: props.location.state.classroom
+            }
         }
 
     }
     
     componentDidMount(){ 
-        this.fillStudents();
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.fillStudents();
+        }
     }
 
     componentWillUnmount(){
@@ -283,6 +288,10 @@ class AdminStudent extends React.Component{
     }
     
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.classroom.title;
 

@@ -5,18 +5,21 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class ExerciseEditAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            selectedFile: "",
-            title: props.location.state.title,
-            exercise: props.location.state.exercise,
-            classroom: props.location.state.classroom,
-            component: props.location.state.component
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                selectedFile: "",
+                title: props.location.state.title,
+                exercise: props.location.state.exercise,
+                classroom: props.location.state.classroom,
+                component: props.location.state.component
+            }
         }
 
     }
@@ -122,6 +125,10 @@ class ExerciseEditAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
         var component = this.props.location.state.component.title;
 
@@ -130,7 +137,7 @@ class ExerciseEditAdmin extends React.Component{
                 <AdminHeader title={"Exercise Edit"} breadCrumbs={"Edit Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Edit-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Exercise-Edit-Wrapper-Admin">
                         <ConfirmToast text="Exercise saved!"/>
                         <div className="Exercise-Edit-Form-Wrapper-Admin">

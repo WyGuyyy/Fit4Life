@@ -5,23 +5,28 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class AdminClassroom extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: props.location.state.goBack,
-            classroomComponents: "",
-            focusedComponent: "",
-            focusedComponentItemID: "",
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                classroomComponents: "",
+                focusedComponent: "",
+                focusedComponentItemID: "",
+                classroom: props.location.state.classroom
+            }
         }
 
     }
     
     componentDidMount(){ 
-        this.fillComponents();
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.fillComponents();
+        }
     }
 
     componentWillUnmount(){
@@ -254,6 +259,10 @@ class AdminClassroom extends React.Component{
     }
     
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.classroom.title;
 

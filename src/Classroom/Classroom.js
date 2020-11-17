@@ -3,21 +3,26 @@ import './Classroom.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../_services/RedirectService';
 
 class Classroom extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            classroom: props.location.state.selectedClassroom,
-            classroomComponents: ""
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                classroom: props.location.state.selectedClassroom,
+                classroomComponents: ""
+            }
         }
 
     }
     
     componentDidMount(){ 
-        this.fillComponents()
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.fillComponents()
+        }
     }
 
     componentWillUnmount(){
@@ -29,6 +34,8 @@ class Classroom extends React.Component{
         var count = 0;
         var classroomWrapper = document.getElementById("classroomWrapper");
         var classroomID = this.state.classroom.classroom_id;
+
+        console.log(classroomWrapper);
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
             await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
@@ -86,6 +93,10 @@ class Classroom extends React.Component{
     }
     
     render(){
+        console.log(this.props.location.state);
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.selectedClassroom.title;
 

@@ -6,18 +6,21 @@ import ConfirmCreate from '../../Confirm/ConfirmCreate';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class StudentInviteAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: props.location.state.goBack,
-            classroomID: props.location.state.classID,
-            filteredStudents: "",
-            focusedStudent: "",
-            focusedStudentItemID: "",
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                classroomID: props.location.state.classID,
+                filteredStudents: "",
+                focusedStudent: "",
+                focusedStudentItemID: "",
+                classroom: props.location.state.classroom
+            }
         }
 
     }
@@ -358,6 +361,10 @@ class StudentInviteAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
 
         return(
@@ -367,7 +374,7 @@ class StudentInviteAdmin extends React.Component{
                 <ConfirmCreate confirm={e => {this.closeDetailModal()}} text={""} btnText={"Ok"}/>
                 <ConfirmModal text="Invite student?" yesText="Yes" noText="No" onYes={e => {this.inviteStudent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="studentInviteContainer-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="studentInviteWrapper-Admin" id="studentInviteWrapper-Admin">
                         <ConfirmToast text="Invite sent!"/>
                         <div className="studentInviteList-Admin" id="studentInviteList-Admin">

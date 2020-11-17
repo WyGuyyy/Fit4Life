@@ -5,16 +5,19 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class ComponentEditAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            title: props.location.state.title,
-            component: props.location.state.component,
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                title: props.location.state.title,
+                component: props.location.state.component,
+                classroom: props.location.state.classroom
+            }
         }
 
     }
@@ -70,6 +73,10 @@ class ComponentEditAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
 
         return(
@@ -77,7 +84,7 @@ class ComponentEditAdmin extends React.Component{
                 <AdminHeader title={"Component Edit"} breadCrumbs={"Edit Component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Component-Edit-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Component-Edit-Wrapper-Admin">
                         <ConfirmToast text="Component saved!"/>
                         <div className="Component-Edit-Form-Wrapper-Admin">

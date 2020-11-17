@@ -8,14 +8,17 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class GoalCreate extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack
+            };
+        }
 
     }
     
@@ -79,12 +82,16 @@ class GoalCreate extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         return(
             <Fragment>
                 <Header title="Goal Create" breadCrumbs="Goal Create" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create goal?" yesText="Yex" noText="No" onYes={(e) => {this.createGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Goal-Create-Container">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <ConfirmToast text="Goal created!" />
                     <div className="Goal-Create-Wrapper">
                         <div className="Goal-Create-Form-Wrapper">

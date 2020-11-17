@@ -8,17 +8,18 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class GoalEdit extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           goal: props.location.state.goal
-        };
-
-        console.log(props.location.state.goal);
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                goal: props.location.state.goal
+            };
+        }
 
     }
     
@@ -92,6 +93,10 @@ class GoalEdit extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var title = this.props.location.state.goal.title;
         var progress = this.props.location.state.goal.progress;
         var content = this.props.location.state.goal.content;
@@ -102,7 +107,7 @@ class GoalEdit extends React.Component{
                 <Header title="Goal Edit" breadCrumbs="Goal Edit" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save goal?" yesText="Yes" noText="No" onYes={e => {this.editGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Goal-Edit-Container">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="Goal-Edit-Wrapper">
                         <ConfirmToast text="Goal saved!"/>
                         <div className="Goal-Edit-Form-Wrapper">

@@ -68,6 +68,7 @@ function App() {
         <PrivateRoute exact path="/goalEdit" component={GoalEdit} />
         <PrivateRoute exact path="/goalCreate" component={GoalCreate} />
         <PrivateRoute exact path="/schedule" component={Schedule} />
+        <PrivateRoute exact path="/workoutDetail" component={WorkoutDetail} />
         <PrivateRoute exact path="/personal" component={PersonalInfo} />
         <PrivateRoute exact path="/personalEdit" component={PersonalInfoEdit}/>
         <PrivateRoute exact path="/invite" component={Invite} />
@@ -83,7 +84,6 @@ function App() {
         <PrivateAdminRoute exact path="/exerciseEditAdmin" component={ExerciseEditAdmin} />
         <PrivateAdminRoute exact path="/studentAdmin" component={AdminStudent} />
         <PrivateAdminRoute exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
-        <PrivateAdminRoute exact path="/workoutDetail" component={WorkoutDetail} />
         <PrivateAdminRoute exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
       </Switch>
     </Router>

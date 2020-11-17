@@ -5,14 +5,17 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
 
 class ClassroomEditAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            classroom: props.location.state.classroom
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                classroom: props.location.state.classroom
+            }
         }
 
     }
@@ -82,6 +85,10 @@ class ClassroomEditAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
 
         return(
@@ -89,7 +96,7 @@ class ClassroomEditAdmin extends React.Component{
                 <AdminHeader title="Classroom Edit" breadCrumbs={"Edit " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save classroom?" yesText="Yes" noText="No" onYes={e => {this.editClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Classroom-Edit-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Classroom-Edit-Wrapper-Admin">
                         <ConfirmToast text="Classroom saved!" />
                         <div className="Classroom-Edit-Form-Wrapper-Admin">

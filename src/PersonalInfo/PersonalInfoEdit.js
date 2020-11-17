@@ -7,15 +7,18 @@ import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class PersonalInfoEdit extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           personalInfoObject: props.location.state.personalInfo
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                personalInfoObject: props.location.state.personalInfo
+            };
+        }
 
     }
     
@@ -79,12 +82,16 @@ class PersonalInfoEdit extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         return(
             <Fragment>
                 <Header title="Edit Personal Info" breadCrumbs="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save information?" yesText="Yes" noText="No" onYes={e => {this.savePersonalInfo(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Personal-Info-Edit-Container">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="Personal-Info-Edit-Wrapper" id="Personal-Info-Edit-Wrapper">
                         <ConfirmToast text="Personal information saved!"/>
                         <div className="Personal-Info-Edit-Form-Wrapper">

@@ -8,21 +8,26 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class Goal extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           userGoals: ""
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                userGoals: ""
+            };
+        }
 
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        this.fillGoals();
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.fillGoals();
+        }
     }
 
     componentDidUpdate(){
@@ -258,6 +263,10 @@ class Goal extends React.Component{
 
     //Render the Header component to the DOM/Screen
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         return(
             <Fragment>

@@ -5,18 +5,21 @@ import Header from '../Header/Header';
 import ExerciseTile from './ExerciseTile'
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../_services/RedirectService';
 
 class Component extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            component: props.location.state.selectedComponent,
-            classroom: props.location.state.selectedClassroom,
-            canGoBack: true,
-            componentExercises: "",
-            exImageMap: ""
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                component: props.location.state.selectedComponent,
+                classroom: props.location.state.selectedClassroom,
+                canGoBack: true,
+                componentExercises: "",
+                exImageMap: ""
+            };
+        }
 
         window.addEventListener("resize", this.triggerRerender.bind(this));
 
@@ -24,7 +27,9 @@ class Component extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        this.renderTiles();
+        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+            this.renderTiles();
+        }
     }
 
     componentDidUpdate(){
@@ -241,6 +246,10 @@ class Component extends React.Component{
 
     //Render the Header component to the DOM/Screen
     render(){
+
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
 
         var classroom = this.props.location.state.selectedClassroom.title;
         var component = this.props.location.state.selectedComponent.title;

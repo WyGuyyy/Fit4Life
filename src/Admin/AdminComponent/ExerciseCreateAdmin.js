@@ -5,16 +5,20 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {RedirectService} from '../../_services/RedirectService';
+import Component from '../../Component/Component';
 
 class ExerciseCreateAdmin extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            canGoBack: true,
-            selectedFile: "",
-            classroom: props.location.state.classroom,
-            component: props.location.state.component
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: true,
+                selectedFile: "",
+                classroom: props.location.state.classroom,
+                component: props.location.state.component
+            }
         }
 
     }
@@ -140,6 +144,10 @@ class ExerciseCreateAdmin extends React.Component{
     
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var classroom = this.props.location.state.classroom.title;
         var component = this.props.location.state.component.title;
 
@@ -148,7 +156,7 @@ class ExerciseCreateAdmin extends React.Component{
                 <AdminHeader title={"Exercise Create"} breadCrumbs={"Create Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Exercise-Create-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Exercise-Create-Wrapper-Admin">
                         <ConfirmToast text="Exercise created!"/>
                         <div className="Exercise-Create-Form-Wrapper-Admin">

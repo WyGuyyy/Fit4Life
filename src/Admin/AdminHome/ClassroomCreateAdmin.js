@@ -72,7 +72,7 @@ class ClassroomCreateAdmin extends React.Component{
                 <AdminHeader title="Classroom Create" breadCrumbs="Classroom Create" goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create classroom?" yesText="Yes" noText="No" onYes={e => {this.createClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Classroom-Create-Container-Admin">
-                    <AdminPopout />
+                    <AdminPopout hist={this.props.history}/>
                     <div className="Classroom-Create-Wrapper-Admin">
                         <ConfirmToast text="Classroom created!"/>
                         <div className="Classroom-Create-Form-Wrapper-Admin">

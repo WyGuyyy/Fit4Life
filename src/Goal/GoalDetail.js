@@ -6,15 +6,18 @@ import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {RedirectService} from '../_services/RedirectService';
 
 class GoalDetail extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-           canGoBack: props.location.state.goBack,
-           goal: props.location.state.goal
-        };
+        if(RedirectService.checkItemForUndefined(props.location.state)){
+            this.state = {
+                canGoBack: props.location.state.goBack,
+                goal: props.location.state.goal
+            };
+        }
 
     }
     
@@ -41,6 +44,10 @@ class GoalDetail extends React.Component{
     //Render the Header component to the DOM/Screen
     render(){
 
+        if(!RedirectService.checkItemForUndefined(this.props.location.state)){
+            return RedirectService.decideRedirect();
+        }
+
         var title = this.props.location.state.goal.title;
         var progress = this.props.location.state.goal.progress;
         var content = this.props.location.state.goal.content;
@@ -50,7 +57,7 @@ class GoalDetail extends React.Component{
             <Fragment>
                 <Header title="Goal Detail" breadCrumbs="Goal Detail" goBack={true} customClick={this.goBack.bind(this)}/>
                 <div className="Goal-Detail-Container">
-                    <Popout />
+                    <Popout hist={this.props.history}/>
                     <div className="Goal-Detail-Wrapper">
                         <div className="Goal-Detail-Form-Wrapper">
                             <div className="Goal-Detail-Title-Wrapper">

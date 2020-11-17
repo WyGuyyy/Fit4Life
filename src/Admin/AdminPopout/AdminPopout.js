@@ -41,23 +41,8 @@ class AdminPopout extends React.Component{
 
             <div className="popoutContainer-Admin">
                 <div className="popoutWrapper-Admin">
-                    <Link to={{pathname: "/goal", state: {goBack: true}}} className="goalLink-Admin" >
-                        <button className="popoutButton-Admin">Goals</button>
-                    </Link>
-                    <Link to={{pathname: "/schedule", state: {goBack: true}}} className="scheduleLink-Admin">
-                        <button className="popoutButton-Admin">Schedule</button>
-                    </Link>
-                    <Link to={{pathname: "/personal", state: {goBack: true}}} className="personalLink-Admin">
-                        <button className="popoutButton-Admin">Personal Info</button>
-                    </Link>
-                    <Link to={{pathname: "/invite", state: {goBack: true}}} className="inviteLink-Admin">
-                        <button className="popoutButton-Admin">Invites</button>
-                    </Link>
-                    <Link to={{pathname: "/", state: {goBack: false}}} className="inviteLink-Admin">
-                        <button className="popoutButton-Admin">My Classrooms</button>
-                    </Link>
-                    <Link to={{pathname: "/Admin", state: {goBack: false}}} className="inviteLink-Admin">
-                        <button className="popoutButton-Admin">Test</button>
+                    <Link to={{pathname: "/admin", state: {goBack: false}}} className="inviteLink-Admin">
+                        <button className="popoutButton-Admin">Home</button>
                     </Link>
                     <button className="popoutButton-Admin" onClick={e => this.logout(e)}>Logout</button>
                 </div>
