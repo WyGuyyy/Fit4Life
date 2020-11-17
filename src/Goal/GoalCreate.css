@@ -8,12 +8,11 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: 800px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .Goal-Create-Form-Wrapper{
@@ -238,6 +237,12 @@
 }
 
 @media(max-height: 750px){
+
+    /*.Goal-Create-Wrapper{
+        position: absolute;
+        height: 700px;
+    }
+
     .Goal-Create-Title-Label{
         font-size: 15px;
     }
@@ -283,11 +288,11 @@
     .Goal-Create-Form-Wrapper{
         width: 70%;
         height: 80%;
-    }
+    }*/
 }
 
 @media(max-height: 550px){
-    .Goal-Create-Title-Label{
+    /*.Goal-Create-Title-Label{
         font-size: 15px;
         margin-bottom: 0px;
     }
@@ -356,5 +361,5 @@
 
     .Goal-Create-Submit-Wrapper{
         height: 15%;
-    }
+    }*/
 }

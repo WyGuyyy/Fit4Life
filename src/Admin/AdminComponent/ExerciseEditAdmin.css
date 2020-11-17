@@ -8,12 +8,11 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: 800px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .Exercise-Edit-Form-Wrapper-Admin{
@@ -166,8 +165,8 @@
 }
 
 @media(max-height: 750px){
-    .Exercise-Edit-Title-Label-Admin{
+    /*.Exercise-Edit-Title-Label-Admin{
         font-size: 30px;
-    }
+    }*/
 
 }

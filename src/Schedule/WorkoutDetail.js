@@ -67,7 +67,7 @@ class WorkoutDetail extends React.Component{
                 <Fragment>
                     <Header title="Workout Detail" breadCrumbs="Workout Detail" goBack={true} customClick={this.goBack.bind(this)}/>
                     <div className="Workout-Detail-Container">
-                        <Popout />
+                        <Popout hist={this.props.history}/>
                         <div className="Workout-Detail-Wrapper">
                             <div className="Workout-Detail-Form-Wrapper">
                                 <div className="Workout-Detail-Exercise-Wrapper-Parent">
