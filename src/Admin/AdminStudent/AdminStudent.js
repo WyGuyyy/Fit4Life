@@ -109,6 +109,7 @@ class AdminStudent extends React.Component{
             listDeleteButton.id = "studentListItemDelete-" + count + "-Admin";
             listDeleteButton.onclick = (e) => this.showModal({event: e, id: listDeleteButton.id});
             listDeleteButton.appendChild(iconDrop);
+            listDeleteButton.title = "Drop " + students[count].first_name + " " + students[count].last_name + " from " + this.props.location.state.classroom.title;
 
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);

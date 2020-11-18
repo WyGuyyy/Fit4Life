@@ -128,16 +128,19 @@ class StudentInviteAdmin extends React.Component{
                 listInviteButton.textContent = "Member";
                 listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
                 listInviteButton.disabled = true;
+                listInviteButton.title = matchStudents[count].first_name + " " + matchStudents[count].last_name + " is already a member";
             }else if(await this.studentInviteExists(matchStudents[count])){
                 listInviteButton.classList.add("Disabled");
                 listInviteButton.textContent = "Invited";
                 listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
                 listInviteButton.disabled = true;
+                listInviteButton.title = "Invite already sent";
             }else{
                 listInviteButton.appendChild(inviteIcon);
                 listInviteButton.classList.add("Student-Invite-List-Item-Invite-Button-Admin");
                 listInviteButton.id = "studentInviteListItemInvite-" + count + "-Admin";
                 listInviteButton.onclick = (e) => this.showModal({event: e, id: listInviteButton.id});
+                listInviteButton.title = "Invite " + matchStudents[count].first_name + " " + matchStudents[count].last_name;
             }
 
             cell1.appendChild(listItemTitle);

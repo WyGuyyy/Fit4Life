@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './PersonalInfo.css';
 import Header from '../Header/Header';
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 
@@ -81,9 +83,13 @@ class PersonalInfo extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Personal Info" breadCrumbs="Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
+                {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                <Header title="Personal Info" breadCrumbs="Personal Info" goBack={true} customClick={this.goBack.bind(this)}/> : 
+                <AdminHeader title={"Personal Info"} breadCrumbs="Personal Info" goBack={false} customClick={this.goBack.bind(this)}/>}
                 <div className="Personal-Info-Container">
-                    <Popout hist={this.props.history}/>
+                    {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                     <Popout hist={this.props.history}/> : 
+                     <AdminPopout hist={this.props.history}/>}
                     <div className="Personal-Info-Wrapper" id="Personal-Info-Wrapper">
                         <div className="Personal-Info-Form-Wrapper">
 

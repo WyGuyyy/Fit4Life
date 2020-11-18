@@ -5,6 +5,8 @@ import Header from '../Header/Header';
 import Popout from '../Popout/Popout';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
@@ -88,10 +90,14 @@ class PersonalInfoEdit extends React.Component{
 
         return(
             <Fragment>
-                <Header title="Edit Personal Info" breadCrumbs="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/>
+                {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                <Header title="Edit Personal Info" breadCrumbs="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/> : 
+                <AdminHeader title={"Edit Personal Info"} breadCrumbs="Edit Personal Info" goBack={false} customClick={this.goBack.bind(this)}/>}
                 <ConfirmModal text="Save information?" yesText="Yes" noText="No" onYes={e => {this.savePersonalInfo(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="Personal-Info-Edit-Container">
-                    <Popout hist={this.props.history}/>
+                     {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                     <Popout hist={this.props.history}/> : 
+                     <AdminPopout hist={this.props.history}/>}
                     <div className="Personal-Info-Edit-Wrapper" id="Personal-Info-Edit-Wrapper">
                         <ConfirmToast text="Personal information saved!"/>
                         <div className="Personal-Info-Edit-Form-Wrapper">

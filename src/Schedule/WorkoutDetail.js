@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 import './WorkoutDetail.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -65,9 +67,13 @@ class WorkoutDetail extends React.Component{
             return(
 
                 <Fragment>
-                    <Header title="Workout Detail" breadCrumbs="Workout Detail" goBack={true} customClick={this.goBack.bind(this)}/>
+                    {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                     <Header title="Workout Details" breadCrumbs="Workout Details" goBack={true} customClick={this.goBack.bind(this)}/> : 
+                     <AdminHeader title={"Workout Details"} breadCrumbs="Workout Details" goBack={false} customClick={this.goBack.bind(this)}/>}
                     <div className="Workout-Detail-Container">
-                        <Popout hist={this.props.history}/>
+                        {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                         <Popout hist={this.props.history}/> : 
+                         <AdminPopout hist={this.props.history}/>}
                         <div className="Workout-Detail-Wrapper">
                             <div className="Workout-Detail-Form-Wrapper">
                                 <div className="Workout-Detail-Exercise-Wrapper-Parent">

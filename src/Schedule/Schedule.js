@@ -4,6 +4,8 @@ import './Schedule.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout';
 import ScheduleWeek from './ScheduleWeek';
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -301,9 +303,13 @@ class Schedule extends React.Component{
 
             return(
                 <Fragment>
-                    <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/>
+                    {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                    <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/> : 
+                    <AdminHeader title={"Schedule"} breadCrumbs="Schedule" goBack={false} customClick={this.goBack.bind(this)}/>}
                     <div className="scheduleContainer">
-                        <Popout logout={this.props.logout} hist={this.props.history}/>
+                        {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                         <Popout hist={this.props.history}/> : 
+                         <AdminPopout hist={this.props.history}/>}
                         <div className="scheduleWrapper" id="scheduleWrapper">
                             
                             <div className="Schedule-Week-Filter-Wrapper">

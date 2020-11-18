@@ -13,7 +13,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .Personal-Info-Edit-Form-Wrapper{
@@ -156,36 +155,60 @@
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 .Personal-Info-Edit-Last-Name-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 .Personal-Info-Edit-Email-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 .Personal-Info-Edit-Weight-Input{
     margin-left: 20px;
     width: 50%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 .Personal-Info-Edit-Height-Feet-Input{
     margin-left: 20px;
     width: 20%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 .Personal-Info-Edit-Height-Inches-Input{
     margin-left: 20px;
     width: 20%;
     justify-self: flex-start;
+    height: 30px;
+    border: none;
+    background: #ac8e3b;
+    box-shadow: 2px 2px 10px black;
 }
 
 @media(max-width: 770px){

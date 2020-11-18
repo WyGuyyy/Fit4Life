@@ -104,7 +104,7 @@ class Invite extends React.Component{
             listItemProfessor.classList.add("Invite-List-Item-Teacher");
             listItemProfessor.textContent = "Professor " + teacherLastName;
             listItemProfessor.id = "inviteListItemTeacher-" + count;
-            listItemProfessor.title = "Professor Towne";
+            listItemProfessor.title = "Professor " + teacherLastName;
 
             listAcceptButton.classList.add("Invite-List-Item-Accept-Button");
             listAcceptButton.id = "inviteListItemEdit-" + count;
