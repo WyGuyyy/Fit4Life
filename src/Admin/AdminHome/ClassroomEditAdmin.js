@@ -6,6 +6,7 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
+import {DataCheckService} from '../../_services/DataCheckService';
 
 class ClassroomEditAdmin extends React.Component{
     constructor(props){
@@ -35,12 +36,16 @@ class ClassroomEditAdmin extends React.Component{
         var classroomID = this.state.classroom.classroom_id;
         var aTitle = document.getElementById("Classroom-Edit-Title-Input-Admin").value;
 
-        await fetch("http://localhost:8080/api/classroom", {  
-            method: "PUT",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({classroom_id: classroomID, title: aTitle}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+        if(DataCheckService.validateFields([aTitle])){        
+
+            await fetch("http://localhost:8080/api/classroom", {  
+                method: "PUT",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({classroom_id: classroomID, title: aTitle}) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
+            
+        }
 
         //document.getElementById("modalContainer").style.display = "none";
 
@@ -101,7 +106,7 @@ class ClassroomEditAdmin extends React.Component{
                         <ConfirmToast text="Classroom saved!" />
                         <div className="Classroom-Edit-Form-Wrapper-Admin">
                             <div className="Classroom-Edit-Title-Wrapper-Admin">
-                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" id="Classroom-Edit-Title-Input-Admin" defaultValue={this.props.location.state.classroom.title}/>
+                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" id="Classroom-Edit-Title-Input-Admin" defaultValue={this.props.location.state.classroom.title} maxLength="50"/>
                             </div>
                             <div className="Classroom-Edit-Button-Area-Admin"> 
                                 <button className="Classroom-Edit-Save-Button-Admin" onClick={e => this.showModal(e)}>Save</button>

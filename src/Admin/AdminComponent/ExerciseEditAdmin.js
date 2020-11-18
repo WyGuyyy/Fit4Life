@@ -6,6 +6,7 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
+import {DataCheckService} from '../../_services/DataCheckService';
 
 class ExerciseEditAdmin extends React.Component{
     constructor(props){
@@ -40,27 +41,31 @@ class ExerciseEditAdmin extends React.Component{
         var componentID = this.state.component.component_id;
         var exerciseID = this.state.exercise.exercise_id;
 
-        await fetch("http://localhost:8080/api/exercise", {  
-            method: "PUT",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({exercise_id: exerciseID, title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
-        }).then(res => res.json())
-        .then(
-            (text) => {
-                exerciseID = text;
-            }
-        ).catch(console.log);
+        if(DataCheckService.validateFields([aTitle])){
+            
+            await fetch("http://localhost:8080/api/exercise", {  
+                method: "PUT",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({exercise_id: exerciseID, title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
+            }).then(res => res.json())
+            .then(
+                (text) => {
+                    exerciseID = text;
+                }
+            ).catch(console.log);
 
-        fileData.append("files", this.state.selectedFile);
+            fileData.append("files", this.state.selectedFile);
 
-        //Would instead need to update the picture here instead of creating a new one
-        //Possible that exercise ID is also unique? (Use as primary key for Blob?)
-        //Start with these next time -> and consider how class_comp_ex will be solved/used
-        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
-            method: "POST",                          
-            body: fileData
-        }).catch(console.log);
+            //Would instead need to update the picture here instead of creating a new one
+            //Possible that exercise ID is also unique? (Use as primary key for Blob?)
+            //Start with these next time -> and consider how class_comp_ex will be solved/used
+            await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
+                method: "POST",                          
+                body: fileData
+            }).catch(console.log);
+
+        }
 
     }
 
@@ -113,7 +118,7 @@ class ExerciseEditAdmin extends React.Component{
     }
 
     cancelSave(){
-        this.props.history.push({pathname: "componentAdmin", state: {goBack: true}});
+        this.props.history.push({pathname: "componentAdmin", state: {goBack: true, classroom: this.state.classroom, component: this.state.component}});
     }
     
     goBack(){ //This isnt working, start here next time
@@ -142,10 +147,10 @@ class ExerciseEditAdmin extends React.Component{
                         <ConfirmToast text="Exercise saved!"/>
                         <div className="Exercise-Edit-Form-Wrapper-Admin">
                             <div className="Exercise-Edit-Title-Wrapper-Admin">
-                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" id="Exercise-Edit-Title-Input-Admin" defaultValue={this.props.location.state.title} maxLength="30"/>
+                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" id="Exercise-Edit-Title-Input-Admin" defaultValue={this.props.location.state.title} maxLength="50"/>
                             </div>
                             <div className="Exercise-Edit-Image-Area">
-                                <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)} maxLength="30"/>
+                                <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)} />
                             </div>
                             <div className="Exercise-Edit-Button-Area-Admin"> 
                                 <button className="Exercise-Edit-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Save</button>

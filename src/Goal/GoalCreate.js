@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {DataCheckService} from '../_services/DataCheckService';
 
 class GoalCreate extends React.Component{
     constructor(props){
@@ -43,18 +44,24 @@ class GoalCreate extends React.Component{
         (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
         var aDescription = document.getElementById("Goal-Create-Description-TextArea").value;
 
-        await fetch("http://localhost:8080/api/goal", {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+        if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-        document.getElementById("Goal-Create-Title-Input").value = "";
-        document.getElementById("notStarted").checked = false;
-        document.getElementById("inProgress").checked = false;
-        document.getElementById("complete").checked = false;
-        document.getElementById("Goal-Create-Description-TextArea").value = "";
+            await fetch("http://localhost:8080/api/goal", {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
+
+            document.getElementById("Goal-Create-Title-Input").value = "";
+            document.getElementById("notStarted").checked = false;
+            document.getElementById("inProgress").checked = false;
+            document.getElementById("complete").checked = false;
+            document.getElementById("Goal-Create-Description-TextArea").value = "";
+
+        }else{
+            //error toast here
+        }
 
     }
 

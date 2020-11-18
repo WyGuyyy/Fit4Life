@@ -160,10 +160,6 @@
         align-items: center;
         padding: 5px;
     }
-
-    .Goal-Detail-Title{
-        margin-left: 0px;
-    }
     
     .Goal-Detail-Progress{
         margin-left: 0px;
@@ -172,6 +168,10 @@
     .Goal-Detail-Description{
         margin-left: 0px;
     }*/
+
+    .Goal-Detail-Title{
+        font-size: 30px;
+    }
 
 }
 

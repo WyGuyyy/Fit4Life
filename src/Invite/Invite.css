@@ -1,7 +1,7 @@
 .inviteContainer{
     width: 100%;
     height: 100%;
-    background: #000000;
+    background: #6b4e00;
 }
 
 .inviteWrapper{
@@ -37,7 +37,7 @@
 .inviteList{
     width: 100%;
     height: 100%;
-    background: black;
+    background: #6b4e00;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

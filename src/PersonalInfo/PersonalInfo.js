@@ -116,7 +116,7 @@ class PersonalInfo extends React.Component{
 
                             <div className="Personal-Info-Weight-Wrapper-Parent">
                                 <div className="Personal-Info-Weight-Wrapper">
-                                    <h2 className="Personal-Info-Weight">{"WEIGHT: " + this.state.personalInfoObject.weight}</h2>
+                                    <h2 className="Personal-Info-Weight">{"WEIGHT: " + this.state.personalInfoObject.weight + " lb"}</h2>
                                 </div>
                             </div>
 

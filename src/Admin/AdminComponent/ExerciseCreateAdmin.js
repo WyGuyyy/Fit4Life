@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import Component from '../../Component/Component';
+import {DataCheckService} from '../../_services/DataCheckService';
 
 class ExerciseCreateAdmin extends React.Component{
     constructor(props){
@@ -19,6 +20,8 @@ class ExerciseCreateAdmin extends React.Component{
                 classroom: props.location.state.classroom,
                 component: props.location.state.component
             }
+        }else{
+            //error toast here
         }
 
     }
@@ -41,45 +44,51 @@ class ExerciseCreateAdmin extends React.Component{
         var classCompID;
         var exerciseID;
 
-        await fetch("http://localhost:8080/api/exercise", {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
-        }).then(res => res.json())
-        .then(
-            (text) => {
-                exerciseID = text;
-            }
-        ).catch(console.log);
+        if(DataCheckService.validateFields([aTitle])){
 
-        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json"}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                classCompID = result;
-            }
-        ).catch(console.log);*/
+            await fetch("http://localhost:8080/api/exercise", {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
+            }).then(res => res.json())
+            .then(
+                (text) => {
+                    exerciseID = text;
+                }
+            ).catch(console.log);
 
-            //start here next time ... need to add exercise to comp
-        /*await fetch("http://localhost:8080/api/exercise/tocomponent/" + exerciseID + "/" + classCompID, {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json"}
-        }).catch(console.log);*/
 
-        fileData.append("files", this.state.selectedFile);
+            /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    classCompID = result;
+                }
+            ).catch(console.log);*/
 
-        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
-            method: "POST",                          
-            body: fileData
-        }).catch(console.log);
+                //start here next time ... need to add exercise to comp
+            /*await fetch("http://localhost:8080/api/exercise/tocomponent/" + exerciseID + "/" + classCompID, {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json"}
+            }).catch(console.log);*/
 
-        document.getElementById("Exercise-Create-Title-Input-Admin").value = "";
-        document.getElementById("Exercise-Create-Image-Label").innerHTML = "Select an Image";
+            fileData.append("files", this.state.selectedFile);
+
+            await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
+                method: "POST",                          
+                body: fileData
+            }).catch(console.log);
+
+
+            document.getElementById("Exercise-Create-Title-Input-Admin").value = "";
+            document.getElementById("Exercise-Create-Image-Label").innerHTML = "Select an Image";
+
+        }
 
     }
 
@@ -132,7 +141,7 @@ class ExerciseCreateAdmin extends React.Component{
     }
 
     cancelCreate(){
-        this.props.history.push({pathname: "componentAdmin", state: {goBack: true}});
+        this.props.history.push({pathname: "componentAdmin", state: {goBack: true, classroom: this.state.classroom, component: this.state.component}});
     }
     
     goBack(){ //This isnt working, start here next time
@@ -164,7 +173,7 @@ class ExerciseCreateAdmin extends React.Component{
                                 <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" id="Exercise-Create-Title-Input-Admin" placeholder="Title..." maxLength="30"/>
                             </div>
                             <div className="Exercise-Create-Image-Area">
-                                <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)} maxLength="30"/>
+                                <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)} maxLength="50"/>
                             </div>
                             <div className="Exercise-Create-Button-Area-Admin"> 
                                 <button className="Exercise-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>

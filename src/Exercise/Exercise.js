@@ -7,6 +7,7 @@ import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
+import {DataCheckService} from '../_services/DataCheckService';
 
 class Exercise extends React.Component{
     constructor(props){
@@ -52,22 +53,29 @@ class Exercise extends React.Component{
         var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
 
-        await fetch("http://localhost:8080/api/workout", {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
-                component: {component_id: componentID}, classroom: {classroom_id: classroomID},
-                target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
-                rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
-        }).catch(console.log);
-        
-        document.getElementById("Exercise-Input-THR").value = "";
-        document.getElementById("Exercise-Input-Weight").value = "";
-        document.getElementById("Exercise-Input-TimeOn").value = "";
-        document.getElementById("Exercise-Input-Rest").value = "";
-        document.getElementById("Exercise-Input-Sets").value = "";
-        document.getElementById("Exercise-Input-Reps").value = "";
-        document.getElementById("Exercise-Input-Date").value = "";
+        if(DataCheckService.validateFields([aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
+
+            await fetch("http://localhost:8080/api/workout", {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
+                    component: {component_id: componentID}, classroom: {classroom_id: classroomID},
+                    target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
+                    rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
+            }).catch(console.log);
+            
+            document.getElementById("Exercise-Input-THR").value = "";
+            document.getElementById("Exercise-Input-Weight").value = "";
+            document.getElementById("Exercise-Input-TimeOn").value = "";
+            document.getElementById("Exercise-Input-Rest").value = "";
+            document.getElementById("Exercise-Input-Sets").value = "";
+            document.getElementById("Exercise-Input-Reps").value = "";
+            document.getElementById("Exercise-Input-Date").value = "";
+
+        }else{
+            //error toast here
+        }
 
     }
 

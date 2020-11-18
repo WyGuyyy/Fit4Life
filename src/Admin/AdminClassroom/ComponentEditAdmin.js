@@ -6,6 +6,7 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
+import {DataCheckService} from '../../_services/DataCheckService';
 
 class ComponentEditAdmin extends React.Component{
     constructor(props){
@@ -36,12 +37,18 @@ class ComponentEditAdmin extends React.Component{
         var classroomID = this.state.classroom.classroom_id;
         var aTitle = document.getElementById("Component-Edit-Title-Input-Admin").value;
 
-        await fetch("http://localhost:8080/api/component", {  
-            method: "PUT",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+        if(DataCheckService.validateFields([aTitle])){
+
+            await fetch("http://localhost:8080/api/component", {  
+                method: "PUT",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
+
+        }else{
+            //error toast here
+        }
 
     }
 
@@ -61,7 +68,7 @@ class ComponentEditAdmin extends React.Component{
     }
 
     cancelEdit(){
-        this.props.history.push({pathname: "classroomAdmin", state: {goBack: true}});
+        this.props.history.push({pathname: "classroomAdmin", state: {goBack: true, classroom: this.state.classroom}});
     }
     
     goBack(){ //This isnt working, start here next time
@@ -89,7 +96,7 @@ class ComponentEditAdmin extends React.Component{
                         <ConfirmToast text="Component saved!"/>
                         <div className="Component-Edit-Form-Wrapper-Admin">
                             <div className="Component-Edit-Title-Wrapper-Admin">
-                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={this.props.location.state.component.title}  maxLength="30"/>
+                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={this.props.location.state.component.title}  maxLength="50"/>
                             </div>
                             <div className="Component-Edit-Button-Area-Admin"> 
                                 <button className="Component-Edit-Save-Button-Admin" onClick={e => this.showModal(e)}>Save</button>

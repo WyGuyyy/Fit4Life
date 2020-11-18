@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {DataCheckService} from '../_services/DataCheckService';
 
 class GoalEdit extends React.Component{
     constructor(props){
@@ -47,25 +48,31 @@ class GoalEdit extends React.Component{
         (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
         var aDescription = document.getElementById("Goal-Edit-Description-TextArea").value;
 
-        await fetch("http://localhost:8080/api/goal", {  
-            method: "PUT",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({goal_id: goalID, user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+        if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-        //document.getElementById("modalContainer").style.display = "none";
+            await fetch("http://localhost:8080/api/goal", {  
+                method: "PUT",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({goal_id: goalID, user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
 
-        // Get the snackbar confirmation
-        /*var confirmation = document.getElementById("snackbar");
-        confirmation.className = "show";
-        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);*/
+            //document.getElementById("modalContainer").style.display = "none";
 
-        /*document.getElementById("Goal-Edit-Title-Input").value = "";
-        document.getElementById("notStarted").checked = false;
-        document.getElementById("inProgress").checked = false;
-        document.getElementById("complete").checked = false;
-        document.getElementById("Goal-Edit-Description-TextArea").value = "";*/
+            // Get the snackbar confirmation
+            /*var confirmation = document.getElementById("snackbar");
+            confirmation.className = "show";
+            setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);*/
+
+            /*document.getElementById("Goal-Edit-Title-Input").value = "";
+            document.getElementById("notStarted").checked = false;
+            document.getElementById("inProgress").checked = false;
+            document.getElementById("complete").checked = false;
+            document.getElementById("Goal-Edit-Description-TextArea").value = "";*/
+
+        }else{
+            //error toast here
+        }
 
     }
 

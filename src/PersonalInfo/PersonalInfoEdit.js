@@ -10,6 +10,7 @@ import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {DataCheckService} from '../_services/DataCheckService';
 
 class PersonalInfoEdit extends React.Component{
     constructor(props){
@@ -47,12 +48,18 @@ class PersonalInfoEdit extends React.Component{
         var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
         var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
 
-        await fetch("http://localhost:8080/api/user", {  
-            method: "PUT",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
-        }).catch(console.log);
+        if(DataCheckService.validateFields([newFirstName, newLastName, newEmail, newWeight, newHeightFeet, newHeightInches])){
+
+            await fetch("http://localhost:8080/api/user", {  
+                method: "PUT",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
+
+        }else{
+            //error toast here
+        }
 
     }
 
@@ -119,11 +126,11 @@ class PersonalInfoEdit extends React.Component{
                             </div>
 
                             <div className="Personal-Info-Edit-Weight-Wrapper">
-                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" id="Personal-Info-Edit-Weight-Input" type="text" defaultValue={this.props.location.state.personalInfo.weight} maxLength="4"/>
+                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" id="Personal-Info-Edit-Weight-Input" type="number" defaultValue={this.props.location.state.personalInfo.weight} maxLength="4"/>
                             </div>
 
                             <div className="Personal-Info-Edit-Height-Wrapper">
-                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_feet}  maxLength="4"/> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_inches}  maxLength="2"/> </div>
+                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="number" defaultValue={this.props.location.state.personalInfo.height_feet} /> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="number" defaultValue={this.props.location.state.personalInfo.height_inches} /> </div>
                             </div>
 
                             <div className="Personal-Info-Edit-Submit-Wrapper">

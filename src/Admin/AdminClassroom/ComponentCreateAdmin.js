@@ -6,6 +6,7 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link, Redirect } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
+import {DataCheckService} from '../../_services/DataCheckService';
 
 class ComponentCreateAdmin extends React.Component{
     constructor(props){
@@ -35,26 +36,31 @@ class ComponentCreateAdmin extends React.Component{
         var classroomID = this.state.classroom.classroom_id;
         var componentID;
 
-        await fetch("http://localhost:8080/api/component", {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
-        }).then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                componentID = result;
-            }
-        ).catch(console.log);
+        if(DataCheckService.validateFields([aTitle])){
+            
+            await fetch("http://localhost:8080/api/component", {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify({title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+            }).then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    componentID = result;
+                }
+            ).catch(console.log);
 
-
-        /*await fetch("http://localhost:8080/api/component/toclass/" + componentID + "/" + classroomID, {  
+            /*await fetch("http://localhost:8080/api/component/toclass/" + componentID + "/" + classroomID, {  
             method: "POST",                          
             headers: {"Content-Type": "application/json"}
-        }).catch(console.log);*/
+            }).catch(console.log);*/
 
-        document.getElementById("Component-Create-Title-Input-Admin").value = "";
+            document.getElementById("Component-Create-Title-Input-Admin").value = "";
+
+        }else{
+            //error toast here
+        }
 
     }
 
@@ -74,7 +80,7 @@ class ComponentCreateAdmin extends React.Component{
     }
 
     cancelCreate(){
-        this.props.history.push({pathname: "classroomAdmin", state: {goBack: true}});
+        this.props.history.push({pathname: "classroomAdmin", state: {goBack: true, classroom: this.state.classroom}});
     }
     
     goBack(){ //This isnt working, start here next time
@@ -102,7 +108,7 @@ class ComponentCreateAdmin extends React.Component{
                         <ConfirmToast text="Component created!"/>
                         <div className="Component-Create-Form-Wrapper-Admin">
                             <div className="Component-Create-Title-Wrapper-Admin">
-                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Component-Create-Title-Input-Admin" id="Component-Create-Title-Input-Admin" placeholder="Title..." maxLength="30"/>
+                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Component-Create-Title-Input-Admin" id="Component-Create-Title-Input-Admin" placeholder="Title..." maxLength="50"/>
                             </div>
                             <div className="Component-Create-Button-Area-Admin"> 
                                 <button className="Component-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>
