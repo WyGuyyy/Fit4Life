@@ -102,7 +102,7 @@ class ComponentCreateAdmin extends React.Component{
                         <ConfirmToast text="Component created!"/>
                         <div className="Component-Create-Form-Wrapper-Admin">
                             <div className="Component-Create-Title-Wrapper-Admin">
-                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Component-Create-Title-Input-Admin" id="Component-Create-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Component-Create-Title-Label-Admin">Component Title: </label> <input className="Component-Create-Title-Input-Admin" id="Component-Create-Title-Input-Admin" placeholder="Title..." maxLength="30"/>
                             </div>
                             <div className="Component-Create-Button-Area-Admin"> 
                                 <button className="Component-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>

@@ -60,14 +60,20 @@ class GoalDetail extends React.Component{
                     <Popout hist={this.props.history}/>
                     <div className="Goal-Detail-Wrapper">
                         <div className="Goal-Detail-Form-Wrapper">
-                            <div className="Goal-Detail-Title-Wrapper">
-                                <h1 className="Goal-Detail-Title">{title}</h1>
+                            <div className="Goal-Detail-Title-Wrapper-Parent">
+                                <div className="Goal-Detail-Title-Wrapper">
+                                    <h1 className="Goal-Detail-Title">{title}</h1>
+                                </div>
                             </div>
-                            <div className="Goal-Detail-Progress-Wrapper">
-                                <h2 className="Goal-Detail-Progress" style={{color: progressColor}}>{progress}</h2>
+                            <div className="Goal-Detail-Progress-Wrapper-Parent">
+                                <div className="Goal-Detail-Progress-Wrapper">
+                                    <h2 className="Goal-Detail-Progress" style={{color: progressColor}}>{progress}</h2>
+                                </div>
                             </div>
-                            <div className="Goal-Detail-Description-Wrapper">
-                                <p className="Goal-Detail-Description">{content}</p>
+                            <div className="Goal-Detail-Description-Wrapper-Parent">
+                                <div className="Goal-Detail-Description-Wrapper">
+                                    <p className="Goal-Detail-Description">{content}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

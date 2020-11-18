@@ -107,23 +107,23 @@ class PersonalInfoEdit extends React.Component{
                             </div>
 
                             <div className="Personal-Info-Edit-First-Name-Wrapper">
-                                <label className="Personal-Info-Edit-First-Name-Label">First Name: </label> <input className="Personal-Info-Edit-First-Name-Input" id="Personal-Info-Edit-First-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.first_name}/>
+                                <label className="Personal-Info-Edit-First-Name-Label">First Name: </label> <input className="Personal-Info-Edit-First-Name-Input" id="Personal-Info-Edit-First-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.first_name} maxLength="30"/>
                             </div>
 
                             <div className="Personal-Info-Edit-Last-Name-Wrapper">
-                                <label className="Personal-Info-Edit-Last-Name-Label">Last Name: </label> <input className="Personal-Info-Edit-Last-Name-Input" id="Personal-Info-Edit-Last-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.last_name}/>
+                                <label className="Personal-Info-Edit-Last-Name-Label">Last Name: </label> <input className="Personal-Info-Edit-Last-Name-Input" id="Personal-Info-Edit-Last-Name-Input" type="text" defaultValue={this.props.location.state.personalInfo.last_name} maxLength="30"/>
                             </div>
 
                             <div className="Personal-Info-Edit-Email-Wrapper">
-                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <input className="Personal-Info-Edit-Email-Input" id="Personal-Info-Edit-Email-Input" type="text" defaultValue={this.props.location.state.personalInfo.email}/>
+                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <input className="Personal-Info-Edit-Email-Input" id="Personal-Info-Edit-Email-Input" type="text" defaultValue={this.props.location.state.personalInfo.email} />
                             </div>
 
                             <div className="Personal-Info-Edit-Weight-Wrapper">
-                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" id="Personal-Info-Edit-Weight-Input" type="text" defaultValue={this.props.location.state.personalInfo.weight}/>
+                                <label className="Personal-Info-Edit-Weight-Label">Weight: </label> <input className="Personal-Info-Edit-Weight-Input" id="Personal-Info-Edit-Weight-Input" type="text" defaultValue={this.props.location.state.personalInfo.weight} maxLength="4"/>
                             </div>
 
                             <div className="Personal-Info-Edit-Height-Wrapper">
-                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_feet}/> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_inches}/> </div>
+                                <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_feet}  maxLength="4"/> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="text" defaultValue={this.props.location.state.personalInfo.height_inches}  maxLength="2"/> </div>
                             </div>
 
                             <div className="Personal-Info-Edit-Submit-Wrapper">

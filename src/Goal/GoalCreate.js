@@ -96,14 +96,13 @@ class GoalCreate extends React.Component{
                     <div className="Goal-Create-Wrapper">
                         <div className="Goal-Create-Form-Wrapper">
                             <div className="Goal-Create-Title-Wrapper">
-                                <label className="Goal-Create-Title-Label">Title: </label> <input className="Goal-Create-Title-Input" id="Goal-Create-Title-Input" placeholder="Title..."/>
+                                <label className="Goal-Create-Title-Label">Title: </label> <input className="Goal-Create-Title-Input" id="Goal-Create-Title-Input" placeholder="Title..." maxLength="50"/>
                             </div>
                             <div className="Goal-Create-Progress-Wrapper">
                                 <label className="Goal-Create-Progress-Label">Progress: </label> 
                                 <div className="Goal-Create-Radio-Wrapper">
                                     <div className="Goal-Create-Not-Started-Radio-Wrapper">
-                                        <input className="Goal-Create-Not-Started-Radio" type="radio" id="notStarted" name="progress" value="not-started"
-                                                 />
+                                        <input className="Goal-Create-Not-Started-Radio" type="radio" id="notStarted" name="progress" value="not-started"/>
                                         <label className="Goal-Create-Not-Started-Label" for="notStarted">NOT STARTED</label>
                                     </div>
 

@@ -112,7 +112,7 @@ class GoalEdit extends React.Component{
                         <ConfirmToast text="Goal saved!"/>
                         <div className="Goal-Edit-Form-Wrapper">
                             <div className="Goal-Edit-Title-Wrapper">
-                                <label className="Goal-Edit-Title-Label">Title: </label> <input className="Goal-Edit-Title-Input" id="Goal-Edit-Title-Input" placeholder="Title..." defaultValue={title}/>
+                                <label className="Goal-Edit-Title-Label">Title: </label> <input className="Goal-Edit-Title-Input" id="Goal-Edit-Title-Input" placeholder="Title..." defaultValue={title} maxLength="50"/>
                             </div>
                             <div className="Goal-Edit-Progress-Wrapper">
                                 <label className="Goal-Edit-Progress-Label">Progress: </label> 

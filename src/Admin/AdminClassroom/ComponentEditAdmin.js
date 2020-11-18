@@ -89,7 +89,7 @@ class ComponentEditAdmin extends React.Component{
                         <ConfirmToast text="Component saved!"/>
                         <div className="Component-Edit-Form-Wrapper-Admin">
                             <div className="Component-Edit-Title-Wrapper-Admin">
-                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={this.props.location.state.component.title}/>
+                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={this.props.location.state.component.title}  maxLength="30"/>
                             </div>
                             <div className="Component-Edit-Button-Area-Admin"> 
                                 <button className="Component-Edit-Save-Button-Admin" onClick={e => this.showModal(e)}>Save</button>

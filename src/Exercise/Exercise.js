@@ -118,25 +118,25 @@ class Exercise extends React.Component{
                             </div>
                             <div className="Exercise-Form-Wrapper">
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Target Heart Rate: </label> <input className="exerciseInput" id="Exercise-Input-THR" type="Number" min="0" max="999"/>
+                                    <label className="exerciseLabel">Target Heart Rate: </label> <input className="exerciseInput" id="Exercise-Input-THR" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Weight: </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999"/>
+                                    <label className="exerciseLabel">Weight: </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Time On: </label> <input className="exerciseInput" id="Exercise-Input-TimeOn" type="Number" min="0" max="999" />
+                                    <label className="exerciseLabel">Time On: </label> <input className="exerciseInput" id="Exercise-Input-TimeOn" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Rest: </label> <input className="exerciseInput" id="Exercise-Input-Rest" type="Number" min="0" max="999" />
+                                    <label className="exerciseLabel">Rest: </label> <input className="exerciseInput" id="Exercise-Input-Rest" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Sets: </label> <input className="exerciseInput" id="Exercise-Input-Sets" type="Number" min="0" max="999" />
+                                    <label className="exerciseLabel">Sets: </label> <input className="exerciseInput" id="Exercise-Input-Sets" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" />
+                                    <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" />
+                                    <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999"/>
                                 </div>
                                 <div className="Exercise-Submit-Row">
                                     <button className="exerciseSubmit" onClick={(e) => this.showModal(e)}>Submit</button>

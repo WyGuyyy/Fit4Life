@@ -3,9 +3,9 @@ import ReactDom from 'react-dom';
 import './PersonalInfo.css';
 import Header from '../Header/Header';
 import AdminHeader from '../Admin/AdminHeader/AdminHeader';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
-import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 
@@ -92,29 +92,38 @@ class PersonalInfo extends React.Component{
                      <AdminPopout hist={this.props.history}/>}
                     <div className="Personal-Info-Wrapper" id="Personal-Info-Wrapper">
                         <div className="Personal-Info-Form-Wrapper">
-
                             <div className="Personal-Info-Title-Wrapper">
                                 <h2 className="Personal-Info-Form-Title">My Information</h2>
                             </div>
 
-                            <div className="Personal-Info-First-Name-Wrapper">
-                                <label className="Personal-Info-First-Name-Label">First Name: </label> <h2 className="Personal-Info-First-Name">{this.state.personalInfoObject.first_name}</h2>
+                            <div className="Personal-Info-First-Name-Wrapper-Parent">
+                                <div className="Personal-Info-First-Name-Wrapper">
+                                    <h2 className="Personal-Info-First-Name">{"FIRST NAME: " + this.state.personalInfoObject.first_name}</h2>
+                                </div>
                             </div>
 
-                            <div className="Personal-Info-Last-Name-Wrapper">
-                                <label className="Personal-Info-Last-Name-Label">Last Name: </label> <h2 className="Personal-Info-Last-Name">{this.state.personalInfoObject.last_name}</h2>
+                            <div className="Personal-Info-Last-Name-Wrapper-Parent">
+                                <div className="Personal-Info-Last-Name-Wrapper">
+                                    <h2 className="Personal-Info-Last-Name">{"LAST NAME: " + this.state.personalInfoObject.last_name}</h2>
+                                </div>
                             </div>
 
-                            <div className="Personal-Info-Email-Wrapper">
-                                <label className="Personal-Info-Email-Label">Email: </label> <h2 className="Personal-Info-Email">{this.state.personalInfoObject.email}</h2>
+                            <div className="Personal-Info-Email-Wrapper-Parent">
+                                <div className="Personal-Info-Email-Wrapper">
+                                    <h2 className="Personal-Info-Email">{"EMAIL: " + this.state.personalInfoObject.email}</h2>
+                                </div>
                             </div>
 
-                            <div className="Personal-Info-Weight-Wrapper">
-                                <label className="Personal-Info-Weight-Label">Weight: </label> <h2 className="Personal-Info-Weight">{this.state.personalInfoObject.weight}</h2>
+                            <div className="Personal-Info-Weight-Wrapper-Parent">
+                                <div className="Personal-Info-Weight-Wrapper">
+                                    <h2 className="Personal-Info-Weight">{"WEIGHT: " + this.state.personalInfoObject.weight}</h2>
+                                </div>
                             </div>
 
-                            <div className="Personal-Info-Height-Wrapper">
-                                <label className="Personal-Info-Height-Label">Height: </label> <h2 className="Personal-Info-Height">{this.state.personalInfoObject.height_feet} {this.state.personalInfoObject.height_inches}</h2>
+                            <div className="Personal-Info-Height-Wrapper-Parent">
+                                <div className="Personal-Info-Height-Wrapper">
+                                    <h2 className="Personal-Info-Height">{"HEIGHT: " + this.state.personalInfoObject.height_feet + " " + this.state.personalInfoObject.height_inches}</h2>
+                                </div>
                             </div>
 
                             <div className="Personal-Info-Edit-Button-Wrapper">

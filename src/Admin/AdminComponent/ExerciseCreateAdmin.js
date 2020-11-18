@@ -161,10 +161,10 @@ class ExerciseCreateAdmin extends React.Component{
                         <ConfirmToast text="Exercise created!"/>
                         <div className="Exercise-Create-Form-Wrapper-Admin">
                             <div className="Exercise-Create-Title-Wrapper-Admin">
-                                <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" id="Exercise-Create-Title-Input-Admin" placeholder="Title..."/>
+                                <label className="Exercise-Create-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Create-Title-Input-Admin" id="Exercise-Create-Title-Input-Admin" placeholder="Title..." maxLength="30"/>
                             </div>
                             <div className="Exercise-Create-Image-Area">
-                                <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)}/>
+                                <label className="Exercise-Create-Image-Label" id="Exercise-Create-Image-Label" for="Exercise-Create-Image-Input">Select an Image</label><input className="Exercise-Create-Image-Input" id="Exercise-Create-Image-Input" type="file"  onChange={(e) => this.handleFileUpload(e)} maxLength="30"/>
                             </div>
                             <div className="Exercise-Create-Button-Area-Admin"> 
                                 <button className="Exercise-Create-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Create</button>
