@@ -4,6 +4,7 @@ import {authService} from '../_services/AuthenticationService';
 import {passHashService} from '../_services/PasswordHasherService';
 import './Authenticate.css';
 import { Link } from 'react-router-dom';
+import ConfirmToast from '../Confirm/ConfirmToast';
 
 class Authenticate extends React.Component{
     constructor(props){
@@ -46,6 +47,7 @@ class Authenticate extends React.Component{
             }
         }
 
+        this.showError();
 
     }
     
@@ -67,6 +69,13 @@ class Authenticate extends React.Component{
         
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
@@ -81,6 +90,7 @@ class Authenticate extends React.Component{
         return(
 
             <div className="authenticateContainer">
+                <ConfirmToast text="Incorrect username or password!"/>
                 <div className="authenticateWrapper">
                     <div className="authenticateForm">
                         <div className="Authenticate-Row-Container">

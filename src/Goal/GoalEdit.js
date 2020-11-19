@@ -45,7 +45,8 @@ class GoalEdit extends React.Component{
         var goalID = this.state.goal.goal_id;
         var aTitle = document.getElementById("Goal-Edit-Title-Input").value;
         var aProgress = (document.getElementById("notStarted").checked ? "Not Started" : 
-        (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
+        (document.getElementById("inProgress").checked ? "In Progress" : 
+        (document.getElementById("complete").checked ? "Complete" : "")));
         var aDescription = document.getElementById("Goal-Edit-Description-TextArea").value;
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
@@ -70,8 +71,10 @@ class GoalEdit extends React.Component{
             document.getElementById("complete").checked = false;
             document.getElementById("Goal-Edit-Description-TextArea").value = "";*/
 
+            this.confirmBackendTransaction();
+
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -84,9 +87,18 @@ class GoalEdit extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Goal saved!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -112,7 +124,7 @@ class GoalEdit extends React.Component{
         return(
             <Fragment>
                 <Header title="Goal Edit" breadCrumbs="Goal Edit" goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Save goal?" yesText="Yes" noText="No" onYes={e => {this.editGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save goal?" yesText="Yes" noText="No" onYes={e => {this.editGoal(e); this.closeModal();}}/>
                 <div className="Goal-Edit-Container">
                     <Popout hist={this.props.history}/>
                     <div className="Goal-Edit-Wrapper">

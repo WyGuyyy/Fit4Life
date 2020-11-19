@@ -41,7 +41,8 @@ class GoalCreate extends React.Component{
 
         var aTitle = document.getElementById("Goal-Create-Title-Input").value;
         var aProgress = (document.getElementById("notStarted").checked ? "Not Started" : 
-        (document.getElementById("inProgress").checked ? "In Progress" : "Complete"));
+        (document.getElementById("inProgress").checked ? "In Progress" : 
+        (document.getElementById("complete").checked ? "Complete" : "")));
         var aDescription = document.getElementById("Goal-Create-Description-TextArea").value;
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
@@ -59,8 +60,10 @@ class GoalCreate extends React.Component{
             document.getElementById("complete").checked = false;
             document.getElementById("Goal-Create-Description-TextArea").value = "";
 
+            this.confirmBackendTransaction();
+
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -71,6 +74,14 @@ class GoalCreate extends React.Component{
 
     closeModal(){
         document.getElementById("modalContainer").style.display = "none";
+    }
+
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     confirmBackendTransaction(){
@@ -96,7 +107,7 @@ class GoalCreate extends React.Component{
         return(
             <Fragment>
                 <Header title="Goal Create" breadCrumbs="Goal Create" goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Create goal?" yesText="Yex" noText="No" onYes={(e) => {this.createGoal(e); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Create goal?" yesText="Yex" noText="No" onYes={(e) => {this.createGoal(e); this.closeModal();}}/>
                 <div className="Goal-Create-Container">
                     <Popout hist={this.props.history}/>
                     <ConfirmToast text="Goal created!" />
