@@ -73,8 +73,10 @@ class Exercise extends React.Component{
             document.getElementById("Exercise-Input-Reps").value = "";
             document.getElementById("Exercise-Input-Date").value = "";
 
+            this.confirmBackendTransaction();
+
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -87,9 +89,18 @@ class Exercise extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Workout saved!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -115,7 +126,7 @@ class Exercise extends React.Component{
         return(
             <Fragment>
                 <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + component + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal();}}/>
                 <div className="exerciseContainer">
                     <Popout hist={this.props.history}/>
                     <div className="exerciseWrapper">
