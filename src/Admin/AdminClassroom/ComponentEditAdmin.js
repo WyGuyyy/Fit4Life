@@ -46,8 +46,10 @@ class ComponentEditAdmin extends React.Component{
                 body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
+            this.confirmBackendTransaction();
+
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -60,9 +62,18 @@ class ComponentEditAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Component saved!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -89,7 +100,7 @@ class ComponentEditAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title={"Component Edit"} breadCrumbs={"Edit Component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal();}}/>
                 <div className="Component-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Component-Edit-Wrapper-Admin">

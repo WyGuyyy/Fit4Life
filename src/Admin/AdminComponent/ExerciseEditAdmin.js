@@ -42,7 +42,7 @@ class ExerciseEditAdmin extends React.Component{
         var exerciseID = this.state.exercise.exercise_id;
 
         if(DataCheckService.validateFields([aTitle])){
-            
+
             await fetch("http://localhost:8080/api/exercise", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
@@ -65,6 +65,10 @@ class ExerciseEditAdmin extends React.Component{
                 body: fileData
             }).catch(console.log);
 
+            this.confirmBackendTransaction();
+
+        }else{
+            this.showError();
         }
 
     }
@@ -110,9 +114,18 @@ class ExerciseEditAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Exercise must have a title!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Exercise saved!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -140,7 +153,7 @@ class ExerciseEditAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title={"Exercise Edit"} breadCrumbs={"Edit Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal();}}/>
                 <div className="Exercise-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Exercise-Edit-Wrapper-Admin">

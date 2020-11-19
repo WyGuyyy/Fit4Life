@@ -31,10 +31,9 @@ class ClassroomEditAdmin extends React.Component{
 
     async editClassroom(event){
 
-        console.log("ran");
-
         var classroomID = this.state.classroom.classroom_id;
         var aTitle = document.getElementById("Classroom-Edit-Title-Input-Admin").value;
+        var aTeacherID = localStorage.getItem("userID");
 
         if(DataCheckService.validateFields([aTitle])){        
 
@@ -42,9 +41,13 @@ class ClassroomEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({classroom_id: classroomID, title: aTitle}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({classroom_id: classroomID, title: aTitle, teacher: {user_id: aTeacherID}}) 
             }).catch(console.log);
-            
+
+            this.confirmBackendTransaction();
+
+        }else{
+            this.showError();
         }
 
         //document.getElementById("modalContainer").style.display = "none";
@@ -68,6 +71,14 @@ class ClassroomEditAdmin extends React.Component{
 
     closeModal(){
         document.getElementById("modalContainer").style.display = "none";
+    }
+
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     confirmBackendTransaction(){
@@ -99,7 +110,7 @@ class ClassroomEditAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title="Classroom Edit" breadCrumbs={"Edit " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Save classroom?" yesText="Yes" noText="No" onYes={e => {this.editClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save classroom?" yesText="Yes" noText="No" onYes={e => {this.editClassroom(); this.closeModal();}}/>
                 <div className="Classroom-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Classroom-Edit-Wrapper-Admin">

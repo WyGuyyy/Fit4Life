@@ -57,8 +57,10 @@ class PersonalInfoEdit extends React.Component{
                 body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
+            this.confirmBackendTransaction();
+
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -71,9 +73,18 @@ class PersonalInfoEdit extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Personal information saved!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -100,7 +111,7 @@ class PersonalInfoEdit extends React.Component{
                 {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                 <Header title="Edit Personal Info" breadCrumbs="Edit Personal Info" goBack={true} customClick={this.goBack.bind(this)}/> : 
                 <AdminHeader title={"Edit Personal Info"} breadCrumbs="Edit Personal Info" goBack={false} customClick={this.goBack.bind(this)}/>}
-                <ConfirmModal text="Save information?" yesText="Yes" noText="No" onYes={e => {this.savePersonalInfo(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Save information?" yesText="Yes" noText="No" onYes={e => {this.savePersonalInfo(); this.closeModal();}}/>
                 <div className="Personal-Info-Edit-Container">
                      {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                      <Popout hist={this.props.history}/> : 

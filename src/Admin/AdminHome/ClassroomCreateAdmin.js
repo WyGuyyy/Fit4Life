@@ -28,6 +28,7 @@ class ClassroomCreateAdmin extends React.Component{
     async createClassroom(event){
 
         var aTitle = document.getElementById("Classroom-Create-Title-Input-Admin").value;
+        var aTeacherID = localStorage.getItem("userID");
 
         if(DataCheckService.validateFields([aTitle])){
 
@@ -35,11 +36,13 @@ class ClassroomCreateAdmin extends React.Component{
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({title: aTitle}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({title: aTitle, teacher: {user_id: aTeacherID}}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
+            this.confirmBackendTransaction();
+
         }else{
-            //Error Message toast here
+            this.showError();
         }
 
         document.getElementById("Classroom-Create-Title-Input-Admin").value = "";
@@ -54,9 +57,18 @@ class ClassroomCreateAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Classroom created!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -77,7 +89,7 @@ class ClassroomCreateAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title="Classroom Create" breadCrumbs="Classroom Create" goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Create classroom?" yesText="Yes" noText="No" onYes={e => {this.createClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Create classroom?" yesText="Yes" noText="No" onYes={e => {this.createClassroom(); this.closeModal();}}/>
                 <div className="Classroom-Create-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Classroom-Create-Wrapper-Admin">

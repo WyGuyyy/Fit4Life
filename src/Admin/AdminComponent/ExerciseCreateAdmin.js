@@ -88,6 +88,10 @@ class ExerciseCreateAdmin extends React.Component{
             document.getElementById("Exercise-Create-Title-Input-Admin").value = "";
             document.getElementById("Exercise-Create-Image-Label").innerHTML = "Select an Image";
 
+            this.confirmBackendTransaction();
+
+        }else{
+            this.showError();
         }
 
     }
@@ -133,9 +137,18 @@ class ExerciseCreateAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Exercise must have a title!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Exercise created!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -163,7 +176,7 @@ class ExerciseCreateAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title={"Exercise Create"} breadCrumbs={"Create Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal();}}/>
                 <div className="Exercise-Create-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Exercise-Create-Wrapper-Admin">

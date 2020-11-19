@@ -57,9 +57,10 @@ class ComponentCreateAdmin extends React.Component{
             }).catch(console.log);*/
 
             document.getElementById("Component-Create-Title-Input-Admin").value = "";
+            this.confirmBackendTransaction();
 
         }else{
-            //error toast here
+            this.showError();
         }
 
     }
@@ -72,9 +73,18 @@ class ComponentCreateAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "none";
     }
 
+    showError(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Component created!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -101,7 +111,7 @@ class ComponentCreateAdmin extends React.Component{
         return(
             <Fragment>
                 <AdminHeader title={"Component Create"} breadCrumbs={"Create component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Create component?" yesText="Yes" noText="No" onYes={e => {this.createComponent(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Create component?" yesText="Yes" noText="No" onYes={e => {this.createComponent(); this.closeModal();}}/>
                 <div className="Component-Create-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="Component-Create-Wrapper-Admin">
