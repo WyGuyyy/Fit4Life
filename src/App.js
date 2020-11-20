@@ -28,6 +28,7 @@ import StudentInviteAdmin from './Admin/AdminStudent/StudentInviteAdmin';
 import WorkoutDetail from './Schedule/WorkoutDetail';
 import StudentDetailAdmin from './Admin/AdminStudent/AdminStudentDetails';
 import CreateAccount from './Authenticate/CreateAccount';
+import EditWorkout from './Schedule/EditWorkout';
 import {authService} from './_services/AuthenticationService';
 import { AiFillPropertySafety, AiTwotoneQuestionCircle } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa';
@@ -71,6 +72,7 @@ function App() {
         <PrivateRoute exact path="/goalCreate" component={GoalCreate} />
         <PrivateRoute exact path="/schedule" component={Schedule} />
         <PrivateRoute exact path="/workoutDetail" component={WorkoutDetail} />
+        <PrivateRoute exact path="/workoutEdit" component={EditWorkout} />
         <PrivateRoute exact path="/personal" component={PersonalInfo} />
         <PrivateRoute exact path="/personalEdit" component={PersonalInfoEdit}/>
         <PrivateRoute exact path="/invite" component={Invite} />

@@ -13,11 +13,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
 }
 
 .Workout-Detail-Form-Wrapper{
     width: 60%;
-    height: 660px;
+    height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -414,6 +415,20 @@
     margin-right: 10px;
 }
 
+.Workout-Detail-EditWorkout{
+    width: 200px;
+    height: 70px;
+    font-size: 20px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    background: #ad7f00;
+    transition-duration: .5s;
+    margin-top: 20px;
+}
+
+.Workout-Detail-EditWorkout:hover{
+    background: #ffbb00;
+}
 
 @media(max-width: 770px){
 

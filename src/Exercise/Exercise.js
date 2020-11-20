@@ -48,7 +48,7 @@ class Exercise extends React.Component{
         var aReps = document.getElementById("Exercise-Input-Reps").value;
         var aDate = document.getElementById("Exercise-Input-Date").value;
 
-        var userID = 1;
+        var userID = localStorage.getItem("userID"); 
         var exerciseID = this.state.exercise.exercise_id;
         var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;

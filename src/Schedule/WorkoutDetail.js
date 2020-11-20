@@ -38,6 +38,15 @@ class WorkoutDetail extends React.Component{
         
     }
 
+    goToEditWorkout(event){
+
+        this.props.history.push({
+            pathname: "/workoutEdit",
+            state: {workout: this.state.workout}
+        });
+
+    }
+
     goBack(){ //This isnt working, start here next time
 
         if(this.state.canGoBack){
@@ -122,6 +131,7 @@ class WorkoutDetail extends React.Component{
                                     </div>
                                 </div>
                             </div>
+                            <button className="Workout-Detail-EditWorkout" onClick={e => this.goToEditWorkout(e)}>Edit Workout</button>
                         </div>
                     </div>
                 </Fragment>

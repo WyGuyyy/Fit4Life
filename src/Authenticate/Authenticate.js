@@ -45,9 +45,9 @@ class Authenticate extends React.Component{
             }else{
                 this.props.history.push("/admin");
             }
+        }else{
+            this.showError();
         }
-
-        this.showError();
 
     }
     
