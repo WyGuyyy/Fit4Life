@@ -19,8 +19,11 @@ class ExerciseEditAdmin extends React.Component{
                 title: props.location.state.title,
                 exercise: props.location.state.exercise,
                 classroom: props.location.state.classroom,
-                component: props.location.state.component
+                component: props.location.state.component,
+                exerciseObject: ""
             }
+
+            this.getExercise();
         }
 
     }
@@ -31,6 +34,30 @@ class ExerciseEditAdmin extends React.Component{
 
     componentWillUnmount(){
         
+    }
+
+    async getExercise(){
+
+        var exercise;
+
+        await fetch("http://localhost:8080/api/exercise/" + this.props.location.state.exercise.exercise_id, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercise = result;
+            }
+        ).catch(console.log);
+
+
+        this.setState({
+            exerciseObject: exercise
+        });
+
     }
 
     async saveExercise(event){
@@ -149,6 +176,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var classroom = this.props.location.state.classroom.title;
         var component = this.props.location.state.component.title;
+        var exercise = this.state.exerciseObject;
 
         return(
             <Fragment>
@@ -160,7 +188,7 @@ class ExerciseEditAdmin extends React.Component{
                         <ConfirmToast text="Exercise saved!"/>
                         <div className="Exercise-Edit-Form-Wrapper-Admin">
                             <div className="Exercise-Edit-Title-Wrapper-Admin">
-                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" id="Exercise-Edit-Title-Input-Admin" defaultValue={this.props.location.state.title} maxLength="50"/>
+                                <label className="Exercise-Edit-Title-Label-Admin">Exercise Title: </label> <input className="Exercise-Edit-Title-Input-Admin" id="Exercise-Edit-Title-Input-Admin" defaultValue={exercise.title} maxLength="50"/>
                             </div>
                             <div className="Exercise-Edit-Image-Area">
                                 <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)} />

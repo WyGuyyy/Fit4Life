@@ -15,10 +15,13 @@ class ClassroomEditAdmin extends React.Component{
         if(RedirectService.checkItemForUndefined(props.location.state)){
             this.state = {
                 canGoBack: true,
-                classroom: props.location.state.classroom
+                classroom: props.location.state.classroom,
+                classroomObject: ""
             }
-        }
 
+            this.getClassroom();
+
+        }
     }
     
     componentDidMount(){ 
@@ -27,6 +30,31 @@ class ClassroomEditAdmin extends React.Component{
 
     componentWillUnmount(){
         
+    }
+
+    async getClassroom(){
+
+        var classroom;
+
+        await fetch("http://localhost:8080/api/classroom/" + this.props.location.state.classroom.classroom_id, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                classroom = result;
+            }
+        ).catch(console.log);
+
+        this.setState({
+            classroomObject: classroom
+        });
+
+
+
     }
 
     async editClassroom(event){
@@ -105,11 +133,11 @@ class ClassroomEditAdmin extends React.Component{
             return RedirectService.decideRedirect();
         }
 
-        var classroom = this.props.location.state.classroom.title;
+        var classroom = this.state.classroomObject;
 
         return(
             <Fragment>
-                <AdminHeader title="Classroom Edit" breadCrumbs={"Edit " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title="Classroom Edit" breadCrumbs={"Edit " + classroom.title} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save classroom?" yesText="Yes" noText="No" onYes={e => {this.editClassroom(); this.closeModal();}}/>
                 <div className="Classroom-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
@@ -117,7 +145,7 @@ class ClassroomEditAdmin extends React.Component{
                         <ConfirmToast text="Classroom saved!" />
                         <div className="Classroom-Edit-Form-Wrapper-Admin">
                             <div className="Classroom-Edit-Title-Wrapper-Admin">
-                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" id="Classroom-Edit-Title-Input-Admin" defaultValue={this.props.location.state.classroom.title} maxLength="50"/>
+                                <label className="Classroom-Edit-Title-Label-Admin">Classroom Title: </label> <input className="Classroom-Edit-Title-Input-Admin" id="Classroom-Edit-Title-Input-Admin" defaultValue={classroom.title} maxLength="50"/>
                             </div>
                             <div className="Classroom-Edit-Button-Area-Admin"> 
                                 <button className="Classroom-Edit-Save-Button-Admin" onClick={e => this.showModal(e)}>Save</button>

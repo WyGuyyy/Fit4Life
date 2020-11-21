@@ -17,8 +17,11 @@ class ComponentEditAdmin extends React.Component{
                 canGoBack: true,
                 title: props.location.state.title,
                 component: props.location.state.component,
-                classroom: props.location.state.classroom
+                classroom: props.location.state.classroom,
+                componentObject: ""
             }
+
+            this.getComponent();
         }
 
     }
@@ -29,6 +32,32 @@ class ComponentEditAdmin extends React.Component{
 
     componentWillUnmount(){
         
+    }
+
+    async getComponent(){
+
+        var component;
+
+        await fetch("http://localhost:8080/api/component/" + this.props.location.state.component.component_id, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                component = result;
+            }
+        ).catch(console.log);
+
+
+        this.setState({
+            componentObject: component
+        });
+
+
+
     }
 
     async editComponent(event){
@@ -95,11 +124,11 @@ class ComponentEditAdmin extends React.Component{
             return RedirectService.decideRedirect();
         }
 
-        var classroom = this.props.location.state.classroom.title;
+        var component = this.state.componentObject;
 
         return(
             <Fragment>
-                <AdminHeader title={"Component Edit"} breadCrumbs={"Edit Component for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Component Edit"} breadCrumbs={"Edit Component for " + component.title} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save component?" yesText="Yes" noText="No" onYes={e => {this.editComponent(); this.closeModal();}}/>
                 <div className="Component-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
@@ -107,7 +136,7 @@ class ComponentEditAdmin extends React.Component{
                         <ConfirmToast text="Component saved!"/>
                         <div className="Component-Edit-Form-Wrapper-Admin">
                             <div className="Component-Edit-Title-Wrapper-Admin">
-                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={this.props.location.state.component.title}  maxLength="50"/>
+                                <label className="Component-Edit-Title-Label-Admin">Component Title: </label> <input className="Component-Edit-Title-Input-Admin" id="Component-Edit-Title-Input-Admin" defaultValue={component.title}  maxLength="50"/>
                             </div>
                             <div className="Component-Edit-Button-Area-Admin"> 
                                 <button className="Component-Edit-Save-Button-Admin" onClick={e => this.showModal(e)}>Save</button>

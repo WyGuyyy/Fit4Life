@@ -26,7 +26,7 @@ class WorkoutDetail extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-
+        this.fillFields();
     }
 
     componentDidUpdate(){
@@ -36,6 +36,44 @@ class WorkoutDetail extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    async fillFields(){
+
+        var aWorkout = "";
+
+        var exercise = document.getElementsByClassName("Workout-Detail-Exercise")[0];
+        var thr = document.getElementsByClassName("Workout-Detail-THR")[0];
+        var max = document.getElementsByClassName("Workout-Detail-Max")[0];
+        var sets = document.getElementsByClassName("Workout-Detail-Sets")[0];
+        var reps = document.getElementsByClassName("Workout-Detail-Reps")[0];
+        var weight = document.getElementsByClassName("Workout-Detail-Weight")[0];
+        var timeOn = document.getElementsByClassName("Workout-Detail-TimeOn")[0];
+        var timeOff = document.getElementsByClassName("Workout-Detail-TimeOff")[0];
+        var component = document.getElementsByClassName("Workout-Detail-Component")[0];
+
+        await fetch("http://localhost:8080/api/workout/" + this.props.location.state.workout.workout_id, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            }).then(res => res.text())
+            .then((text) => {
+ 
+                var result = text.length ? JSON.parse(text) : {};
+                aWorkout = result;
+
+            }).catch(console.log);
+
+            exercise.textContent = "EXERCISE: " + aWorkout.exercise.title;
+            thr.textContent = "TARGET HEART RATE: " + aWorkout.target_heart_rate;
+            weight.textContent = "WEIGHT: " + aWorkout.weight;
+            timeOn.textContent = "TIME ON: " + aWorkout.time_on_minute;
+            timeOff.textContent = "TIME OFF: " + aWorkout.rest_minute;
+            sets.textContent = "SETS: " + aWorkout.sets;
+            reps.textContent = "REPS: " + aWorkout.reps;
+            max.textContent = "MAX%: MAX"
+            component.textContent = "COMPONENT: " + this.props.location.state.workout.component.title;
+
     }
 
     goToEditWorkout(event){
@@ -61,18 +99,6 @@ class WorkoutDetail extends React.Component{
                 return RedirectService.decideRedirect();
             }
 
-            var exercise = "EXERCISE: " + this.props.location.state.workout.exercise.title;
-            var thr = "TARGET HEART RATE: " + this.props.location.state.workout.target_heart_rate;
-            var max = "MAX%: " + "MAX";
-            //var max = this.props.location.state.workout.max;
-            var sets = "SETS: " + this.props.location.state.workout.sets;
-            var reps = "REPS: " + this.props.location.state.workout.reps;
-            var weight = "WEIGHT: " + this.props.location.state.workout.weight;
-            var timeOn = "TIME ON: " + this.props.location.state.workout.time_on_minute + "m " + this.props.location.state.workout.time_on_second + "s";
-            var timeOff = "TIME OFF: " + this.props.location.state.workout.rest_minute + "m " + this.props.location.state.workout.rest_second + "s";
-            var component = "COMPONENT: " + "FREQUENCY";
-            //var component = this.props.location.state.workout.component.title;
-
             return(
 
                 <Fragment>
@@ -87,47 +113,47 @@ class WorkoutDetail extends React.Component{
                             <div className="Workout-Detail-Form-Wrapper">
                                 <div className="Workout-Detail-Exercise-Wrapper-Parent">
                                     <div className="Workout-Detail-Exercise-Wrapper" id="Workout-Detail-Exercise-Wrapper">
-                                        <h2 className="Workout-Detail-Exercise">{exercise}</h2>
+                                        <h2 className="Workout-Detail-Exercise"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-THR-Wrapper-Parent">
                                     <div className="Workout-Detail-THR-Wrapper" id="Workout-Detail-THR-Wrapper">
-                                        <h2 className="Workout-Detail-THR">{thr}</h2>
+                                        <h2 className="Workout-Detail-THR"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-Max-Wrapper-Parent">
                                     <div className="Workout-Detail-Max-Wrapper" id="Workout-Detail-Max-Wrapper">
-                                        <h2 className="Workout-Detail-Max">{max}</h2>
+                                        <h2 className="Workout-Detail-Max"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-Sets-Wrapper-Parent" >
                                     <div className="Workout-Detail-Sets-Wrapper" id="Workout-Detail-Sets-Wrapper">
-                                        <h2 className="Workout-Detail-Sets">{sets}</h2>
+                                        <h2 className="Workout-Detail-Sets"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-Reps-Wrapper-Parent">
                                     <div className="Workout-Detail-Reps-Wrapper" id="Workout-Detail-Reps-Wrapper">
-                                        <h2 className="Workout-Detail-Reps">{reps}</h2>
+                                        <h2 className="Workout-Detail-Reps"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-Weight-Wrapper-Parent">
                                     <div className="Workout-Detail-Weight-Wrapper" id="Workout-Detail-Weight-Wrapper">
-                                        <h2 className="Workout-Detail-Weight">{weight}</h2>
+                                        <h2 className="Workout-Detail-Weight"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-TimeOn-Wrapper-Parent">
                                     <div className="Workout-Detail-TimeOn-Wrapper" id="Workout-Detail-TimeOn-Wrapper">
-                                        <h2 className="Workout-Detail-TimeOn">{timeOn}</h2>
+                                        <h2 className="Workout-Detail-TimeOn"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-TimeOff-Wrapper-Parent">
                                     <div className="Workout-Detail-TimeOff-Wrapper" id="Workout-Detail-TimeOff-Wrapper">
-                                        <h2 className="Workout-Detail-TimeOff">{timeOff}</h2>
+                                        <h2 className="Workout-Detail-TimeOff"></h2>
                                     </div>
                                 </div>
                                 <div className="Workout-Detail-Component-Wrapper-Parent">
                                     <div className="Workout-Detail-Component-Wrapper" id="Workout-Detail-Component-Wrapper">
-                                        <h2 className="Workout-Detail-Component">{component}</h2>
+                                        <h2 className="Workout-Detail-Component"></h2>
                                     </div>
                                 </div>
                             </div>

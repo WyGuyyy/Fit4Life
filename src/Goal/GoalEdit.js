@@ -18,8 +18,11 @@ class GoalEdit extends React.Component{
         if(RedirectService.checkItemForUndefined(props.location.state)){
             this.state = {
                 canGoBack: props.location.state.goBack,
-                goal: props.location.state.goal
+                goal: props.location.state.goal,
+                goalObject: -1
             };
+
+            this.getGoal();
         }
 
     }
@@ -36,6 +39,31 @@ class GoalEdit extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    async getGoal(){
+
+        var goal;
+
+        await fetch("http://localhost:8080/api/goal/" + this.props.location.state.goal.goal_id, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                goal = result;
+            }
+        ).catch(console.log);
+
+        this.setState({
+            goalObject: goal
+        });
+
+
+
     }
 
     async editGoal(event){
@@ -116,10 +144,18 @@ class GoalEdit extends React.Component{
             return RedirectService.decideRedirect();
         }
 
-        var title = this.props.location.state.goal.title;
+        /*var title = this.props.location.state.goal.title;
         var progress = this.props.location.state.goal.progress;
-        var content = this.props.location.state.goal.content;
+        var content = this.props.location.state.goal.content;*/
         //var progressColor = (progress.localeCompare("NOT STARTED") === 0 ? "#ff0000" : (progress.localeCompare("IN PROGRESS") === 0 ? "#fbff00" : "#2bff00"));
+
+        var title = this.state.goalObject.title;
+        var progress = this.state.goalObject.progress;
+        var content = this.state.goalObject.content;
+
+        if(this.state.goalObject === -1){
+            return <Fragment></Fragment>
+        }
 
         return(
             <Fragment>
