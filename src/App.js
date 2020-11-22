@@ -14,6 +14,7 @@ import PersonalInfoEdit from './PersonalInfo/PersonalInfoEdit';
 import PersonalInfo from './PersonalInfo/PersonalInfo';
 import Invite from './Invite/Invite';
 import Schedule from './Schedule/Schedule';
+import ChangePassword from './Password/ChangePassword';
 import AdminHome from './Admin/AdminHome/AdminHome';
 import ClassroomCreateAdmin from './Admin/AdminHome/ClassroomCreateAdmin';
 import ClassroomEditAdmin from './Admin/AdminHome/ClassroomEditAdmin';
@@ -37,12 +38,13 @@ const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
     //(localStorage.getItem('logged_in') === true)
       (loggedIn().localeCompare("true") === 0)
-      ? (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 || 
+      ? /*(localStorage.getItem("userRole").localeCompare("STUDENT") === 0 || 
         (props.location.pathname.localeCompare("/workoutDetail") === 0 || 
          props.location.pathname.localeCompare("/schedule") === 0 || 
          props.location.pathname.localeCompare("/personal") === 0 ||
          props.location.pathname.localeCompare("/personalEdit") === 0) ? 
-         <Component {...props} /> : <Redirect to="/admin"/>)
+         <Component {...props} /> : <Redirect to="/admin"/>)*/
+         <Component {...props} />
       : <Redirect to='/login' login={authService}/>
   )}/>
 )
@@ -71,6 +73,7 @@ function App() {
         <PrivateRoute exact path="/goalEdit" component={GoalEdit} />
         <PrivateRoute exact path="/goalCreate" component={GoalCreate} />
         <PrivateRoute exact path="/schedule" component={Schedule} />
+        <PrivateRoute exact path="/changePassword" component={ChangePassword} />
         <PrivateRoute exact path="/workoutDetail" component={WorkoutDetail} />
         <PrivateRoute exact path="/workoutEdit" component={EditWorkout} />
         <PrivateRoute exact path="/personal" component={PersonalInfo} />

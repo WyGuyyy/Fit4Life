@@ -2,8 +2,11 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './Component.css';
 import Header from '../Header/Header';
-import ExerciseTile from './ExerciseTile'
-import Popout from '../Popout/Popout'
+import ExerciseTile from './ExerciseTile';
+import Popout from '../Popout/Popout';
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 
@@ -174,10 +177,22 @@ class Component extends React.Component{
 
     goToExercise(event, selExercise){
 
-        this.props.history.push({
-            pathname: "/exercise",
-            state: {exercise: selExercise, component: this.state.component, classroom: this.state.classroom}
-        });
+        if(localStorage.getItem("userRole").localeCompare("STUDENT") === 0){
+            this.props.history.push({
+                pathname: "/exercise",
+                state: {exercise: selExercise, component: this.state.component, classroom: this.state.classroom}
+            });
+        }else{
+            this.showAdminNotAllowed();
+        }
+    }
+
+    showAdminNotAllowed(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        console.log(document);
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     async getExerciseImage(exerciseID){
@@ -256,10 +271,15 @@ class Component extends React.Component{
 
         return(
             <Fragment>
-                <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
+                {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/> :
+                <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>
+                    <AdminPopout hist={this.props.history}/>
+                    <ConfirmToast text="Cannot access in Admin mode!"/>
                     <div className="componentWrapper" id="componentWrapper">
+                        
                     </div>
                 </div>
             </Fragment>

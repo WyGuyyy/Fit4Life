@@ -59,6 +59,7 @@ class AdminStudentDetails extends React.Component{
 
         var firstName = "FIRST NAME: " + this.props.location.state.student.first_name;
         var lastName = "LAST NAME: " + this.props.location.state.student.last_name;
+        var displayName = "DISPLAY NAME: " + this.props.location.state.student.display_name;
         var email = "EMAIL: " + this.props.location.state.student.email;
         var weight = "WEIGHT: " + this.props.location.state.student.weight;
         var height = "HEIGHT: " + this.props.location.state.student.height_feet + "ft " + this.props.location.state.student.height_inches + "in";
@@ -78,6 +79,11 @@ class AdminStudentDetails extends React.Component{
                             <div className="Student-Detail-LastName-Wrapper-Admin-Parent">
                                 <div className="Student-Detail-LastName-Wrapper-Admin">
                                     <h2 className="Student-Detail-LastName-Admin">{lastName}</h2>
+                                </div>
+                            </div>
+                            <div className="Student-Detail-DisplayName-Wrapper-Admin-Parent">
+                                <div className="Student-Detail-DisplayName-Wrapper-Admin">
+                                    <h2 className="Student-Detail-DisplayName-Admin">{displayName}</h2>
                                 </div>
                             </div>
                             <div className="Student-Detail-Email-Wrapper-Admin-Parent">

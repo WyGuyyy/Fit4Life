@@ -8,7 +8,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    height: 800px;
+    height: 850px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,6 +78,34 @@
 }
   
 .Personal-Info-Last-Name-Wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color:#503b00;
+    /*border-radius: 10px;*/
+}
+
+.Personal-Info-DisplayName-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    justify-items: flex-start;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.Personal-Info-DisplayName-Wrapper::-webkit-scrollbar {
+    width: 15px;
+    background-color: black;
+    height: 10px;
+    /*border-radius: 10px;*/
+  } 
+
+.Personal-Info-DisplayName-Wrapper::-webkit-scrollbar-thumb{
+    background-color: black;
+}
+  
+.Personal-Info-DisplayName-Wrapper::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     background-color:#503b00;
     /*border-radius: 10px;*/
@@ -193,6 +221,10 @@
     overflow-x: auto;
 }
 
+.Personal-Info-DisplayName-Wrapper-Parent{
+    overflow-x: auto;
+}
+
 .Personal-Info-Email-Wrapper-Parent{
     overflow-x: auto;
 }
@@ -264,6 +296,15 @@
 }
 
 .Personal-Info-Last-Name{
+    margin: 0;
+    margin-left: 5px;
+    width: 50%;
+    justify-self: flex-start;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.Personal-Info-DisplayName{
     margin: 0;
     margin-left: 5px;
     width: 50%;

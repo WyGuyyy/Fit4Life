@@ -55,14 +55,17 @@ class AdminHome extends React.Component{
             var listStudentButton = document.createElement("button");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var listPreviewButton = document.createElement("button");
             var iconEdit = document.createElement("i");
             var iconDelete = document.createElement("i");
             var iconStudent = document.createElement("i");
+            var iconPreview = document.createElement("i");
 
             var cell1 = document.createElement("div");
             var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
+            var cell5 = document.createElement("div");
 
             iconEdit.classList.add("fa");
             iconEdit.classList.add("fa-pencil");
@@ -71,10 +74,15 @@ class AdminHome extends React.Component{
             iconDelete.classList.add("fa");
             iconDelete.classList.add("fa-trash");
             iconDelete.id = "iconDelete-" + count;
+            
 
             iconStudent.classList.add("fa");
             iconStudent.classList.add("fa-group");
             iconStudent.id = "iconStudent-" + count;
+
+            iconPreview.classList.add("fa");
+            iconPreview.classList.add("fa-book");
+            iconPreview.id = "iconPreview-" + count;
 
             listItem.classList.add("Classroom-List-Item-Admin");
             listItem.id = "classroomListItem-" + count + "-Admin";
@@ -89,7 +97,9 @@ class AdminHome extends React.Component{
             cell3.classList.add("Classroom-Grid-Cell-Admin");
             cell3.classList.add("Classroom-Grid-Cell-Edit-Admin");
             cell4.classList.add("Classroom-Grid-Cell-Admin");
-            cell4.classList.add("Classroom-Grid-Cell-Delete-Admin");
+            cell4.classList.add("Classroom-Grid-Cell-Preview-Admin");
+            cell5.classList.add("Classroom-Grid-Cell-Admin");
+            cell5.classList.add("Classroom-Grid-Cell-Delete-Admin");
 
             listItemTitle.classList.add("Classroom-List-Item-Title-Admin");
             listItemTitle.textContent = classrooms[count].title;
@@ -116,15 +126,23 @@ class AdminHome extends React.Component{
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
+            listPreviewButton.classList.add("Classroom-List-Item-Preview-Button-Admin");
+            listPreviewButton.id = "classroomListItemPreview-" + count + "-Admin";
+            listPreviewButton.onclick = (e) => this.goToClassView({event: e});
+            listPreviewButton.appendChild(iconPreview);
+            listPreviewButton.title = "Preview " + listItemTitle.textContent;
+
             cell1.appendChild(listItemTitle);
             cell2.appendChild(listStudentButton);
             cell3.appendChild(listEditButton);
-            cell4.appendChild(listDeleteButton);
+            cell4.appendChild(listPreviewButton);
+            cell5.appendChild(listDeleteButton);
 
             listItem.appendChild(cell1);
             listItem.appendChild(cell2);
             listItem.appendChild(cell3);
             listItem.appendChild(cell4);
+            listItem.appendChild(cell5);
 
             listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
 
@@ -199,6 +217,15 @@ class AdminHome extends React.Component{
         this.props.history.push({
             pathname: "/studentAdmin",
             state: {goBack: true, classID: this.state.teacherClassrooms[idNum].classroom_id, classroom: this.state.teacherClassrooms[idNum]}
+        });
+    }
+
+    goToClassView(eventObj){
+        var idNum = eventObj.event.target.id.split("-")[1];
+
+        this.props.history.push({
+            pathname: "/classroom",
+            state: {goBack: true, selectedClassroom: this.state.teacherClassrooms[idNum]}
         });
     }
 

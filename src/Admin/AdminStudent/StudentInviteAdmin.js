@@ -336,7 +336,9 @@ class StudentInviteAdmin extends React.Component{
             focusedStudentItemID: idNum
         });
 
-        document.getElementById("confirmCreateText").innerHTML = "STUDENT DETAILS<br />Name: " + aStudent.first_name + " " + aStudent.last_name + "<br />Email: " + aStudent.email;
+        document.getElementById("confirmCreateText").innerHTML = "STUDENT DETAILS<br />NAME: " + 
+        aStudent.first_name + " " + aStudent.last_name + "<br />EMAIL: " + 
+        aStudent.email + "<br/>DISPLAY NAME: " + aStudent.display_name;
         document.getElementById("confirmCreateContainer").style.display = "flex";
     }
 

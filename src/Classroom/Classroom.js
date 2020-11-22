@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import './Classroom.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 
 class Classroom extends React.Component{
     constructor(props){
@@ -103,9 +105,12 @@ class Classroom extends React.Component{
         return(
 
             <Fragment>
-                <Header title={"Components"} breadCrumbs={"Components for " + classroom} goBack={false} customClick={this.goBack.bind(this)}/>
+                {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                <Header title={"Components"} breadCrumbs={"Components for " + classroom} goBack={false} customClick={this.goBack.bind(this)}/> :
+                <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <div className="classroomContainer">
                     <Popout hist={this.props.history}/>
+                    <AdminPopout hist={this.props.history}/>
                     <div className="classroomWrapper" id="classroomWrapper">
                         <div className="Classroom-Button-Wrapper">
                             <div className="classroomFiller"></div>

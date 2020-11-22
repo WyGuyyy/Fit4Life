@@ -81,7 +81,8 @@ class ExerciseCreateAdmin extends React.Component{
 
             await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
                 method: "POST",                          
-                body: fileData
+                body: fileData,
+                headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
             }).catch(console.log);
 
 

@@ -40,16 +40,17 @@ class CreateAccount extends React.Component{
         var aFirstName = document.getElementById("createAccountInputFirstName").value;
         var aLastName = document.getElementById("createAccountInputLastName").value;
         var anEmail = document.getElementById("createAccountInputEmail").value;
+        var aDisplayName = document.getElementById("createAccountInputDisplayName").value;
         var aPassword = document.getElementById("createAccountInputPassword").value;
         var aConfirmedPassword = document.getElementById("createAccountInputConfirmPassword").value;
 
-        if(!this.validateData(aFirstName, aLastName, anEmail, aPassword, aConfirmedPassword)){
+        if(!this.validateData(aFirstName, aLastName, anEmail, aDisplayName, aPassword, aConfirmedPassword)){
             return;
         }
 
         var hashedPassword = passHashService.hashPassword(aPassword.trim());
 
-        user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), password_hash: hashedPassword};
+        user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), display_name: aDisplayName.trim(), password_hash: hashedPassword};
 
         await fetch("http://localhost:8080/api/createaccount", {  
             method: "POST",
@@ -168,6 +169,9 @@ class CreateAccount extends React.Component{
                             </div>
                             <div className="CreateAccount-Email-Row">
                                 <label className="createAccountLabel">Email: </label> <input className="createAccountInput" id="createAccountInputEmail"/>
+                            </div>
+                            <div className="CreateAccount-DisplayName-Row">
+                                <label className="createAccountLabel">Display Name: </label> <input className="createAccountInput" id="createAccountInputDisplayName"/>
                             </div>
                             <div className="CreateAccount-Password-Row">
                                 <label className="createAccountLabel">Password: </label> <input className="createAccountInput" id="createAccountInputPassword" type="password"/>

@@ -38,9 +38,14 @@ async function authenticate(aUsername, aPassword){
 }
 
 function logout(){
-    localStorage.removeItem('user');
+
     localStorage.setItem('logged_in', "false");
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('userID');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userDisplayName');
+    localStorage.removeItem("userEmail");
+    
 }
 
 function isLoggedIn(){

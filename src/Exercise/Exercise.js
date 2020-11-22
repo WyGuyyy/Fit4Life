@@ -137,6 +137,9 @@ class Exercise extends React.Component{
                             </div>
                             <div className="Exercise-Form-Wrapper">
                                 <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Exercise: </label> <input className="exerciseInput" id="Exercise-Input-Exercise" type="text" readOnly defaultValue={this.props.location.state.exercise.title}/>
+                                </div>
+                                <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Target Heart Rate: </label> <input className="exerciseInput" id="Exercise-Input-THR" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">

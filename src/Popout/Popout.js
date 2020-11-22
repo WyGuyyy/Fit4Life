@@ -56,6 +56,9 @@ class Popout extends React.Component{
                     <Link to={{pathname: "/invite", state: {goBack: true}}} className="inviteLink">
                         <button className="popoutButton">Invites</button>
                     </Link>
+                    <Link to={{pathname: "/changePassword", state: {goBack: true}}} className="inviteLink">
+                        <button className="popoutButton">Change Password</button>
+                    </Link>
                     <button className="popoutButton" onClick={e => this.logout(e)}>Logout</button>
                 </div>
             </div>

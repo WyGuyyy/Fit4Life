@@ -62,6 +62,7 @@ class Header extends React.Component{
         var popout = document.getElementsByClassName("popoutContainer")[0];
         popout.classList.remove("popoutWrapper-goUp");
         popout.classList.add("popoutWrapper-goDown");
+
         //
         //popout.style.visibility = "visbile";
         /*popout.style.transform = "scale(1)";
@@ -72,9 +73,11 @@ class Header extends React.Component{
     }
 
     closeMenu(){
+
         var popout = document.getElementsByClassName("popoutContainer")[0];
         popout.classList.remove("popoutWrapper-goDown");
         popout.classList.add("popoutWrapper-goUp");
+
         //popout.className = popout.className;
         //popout.style.visibility = "hidden";
     }
@@ -106,7 +109,7 @@ class Header extends React.Component{
                             <h1 className="pageTitle" title={this.props.breadCrumbs}>{this.state.title}</h1>
                         </div>
                         <div className="MMS-Title-Container">
-                            <Link to="/" className="titleLink">
+                            <Link to={"/"} className="titleLink">
                                 <MMS_Title />
                             </Link>
                         </div>

@@ -89,7 +89,8 @@ class ExerciseEditAdmin extends React.Component{
             //Start with these next time -> and consider how class_comp_ex will be solved/used
             await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
                 method: "POST",                          
-                body: fileData
+                body: fileData,
+                headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
             }).catch(console.log);
 
             this.confirmBackendTransaction();

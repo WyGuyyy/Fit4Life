@@ -29,7 +29,7 @@ class Authenticate extends React.Component{
         //var isLoggedIn = localStorage.getItem('logged_in');
         var isLoggedIn = data.success;
         
-        console.log(data.user.password);
+        console.log(data);
 
         //if(authService.isLoggedIn().localeCompare("true") === 0){
         if(isLoggedIn.localeCompare("true") === 0){
@@ -37,6 +37,7 @@ class Authenticate extends React.Component{
             localStorage.setItem('userID', data.user.userID);
             localStorage.setItem('userRole', data.user.userRole);
             localStorage.setItem('userDisplayName', data.user.displayName);
+            localStorage.setItem("userEmail", data.user.email);
             localStorage.setItem('logged_in', "true");
             localStorage.setItem('auth_token', data.user.token);
 

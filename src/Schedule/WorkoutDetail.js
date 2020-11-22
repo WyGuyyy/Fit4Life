@@ -111,6 +111,11 @@ class WorkoutDetail extends React.Component{
                          <AdminPopout hist={this.props.history}/>}
                         <div className="Workout-Detail-Wrapper">
                             <div className="Workout-Detail-Form-Wrapper">
+                                <div className="Workout-Detail-Classroom-Wrapper-Parent">
+                                    <div className="Workout-Detail-Classroom-Wrapper" id="Workout-Detail-Exercise-Wrapper">
+                                        <h2 className="Workout-Detail-Classroom">{"CLASSROOM: " + this.props.location.state.workout.classroom.title}</h2>
+                                    </div>
+                                </div>
                                 <div className="Workout-Detail-Exercise-Wrapper-Parent">
                                     <div className="Workout-Detail-Exercise-Wrapper" id="Workout-Detail-Exercise-Wrapper">
                                         <h2 className="Workout-Detail-Exercise"></h2>

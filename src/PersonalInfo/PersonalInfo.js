@@ -108,6 +108,12 @@ class PersonalInfo extends React.Component{
                                 </div>
                             </div>
 
+                            <div className="Personal-Info-DisplayName-Wrapper-Parent">
+                                <div className="Personal-Info-DisplayName-Wrapper">
+                                    <h2 className="Personal-Info-DisplayName">{"DISPLAY NAME: " + this.state.personalInfoObject.display_name}</h2>
+                                </div>
+                            </div>
+
                             <div className="Personal-Info-Email-Wrapper-Parent">
                                 <div className="Personal-Info-Email-Wrapper">
                                     <h2 className="Personal-Info-Email">{"EMAIL: " + this.state.personalInfoObject.email}</h2>

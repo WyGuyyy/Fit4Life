@@ -68,18 +68,19 @@ class PersonalInfoEdit extends React.Component{
 
         var newFirstName = document.getElementById("Personal-Info-Edit-First-Name-Input").value;
         var newLastName = document.getElementById("Personal-Info-Edit-Last-Name-Input").value;
+        var newDisplayName = document.getElementById("Personal-Info-Edit-DisplayName-Input").value;
         var newEmail = document.getElementById("Personal-Info-Edit-Email-Input").value;
         var newWeight = document.getElementById("Personal-Info-Edit-Weight-Input").value;
         var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
         var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
 
-        if(DataCheckService.validateFields([newFirstName, newLastName, newEmail, newWeight, newHeightFeet, newHeightInches])){
+        if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches])){
 
             await fetch("http://localhost:8080/api/user", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, display_name: newDisplayName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
             this.confirmBackendTransaction();
@@ -155,6 +156,10 @@ class PersonalInfoEdit extends React.Component{
 
                             <div className="Personal-Info-Edit-Last-Name-Wrapper">
                                 <label className="Personal-Info-Edit-Last-Name-Label">Last Name: </label> <input className="Personal-Info-Edit-Last-Name-Input" id="Personal-Info-Edit-Last-Name-Input" type="text" defaultValue={this.state.personalInfoObject.last_name} maxLength="30"/>
+                            </div>
+
+                            <div className="Personal-Info-Edit-DisplayName-Wrapper">
+                                <label className="Personal-Info-Edit-DisplayName-Label">Display Name: </label> <input className="Personal-Info-Edit-DisplayName-Input" id="Personal-Info-Edit-DisplayName-Input" type="text" defaultValue={this.state.personalInfoObject.display_name} maxLength="30"/>
                             </div>
 
                             <div className="Personal-Info-Edit-Email-Wrapper">
