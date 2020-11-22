@@ -147,6 +147,59 @@
     box-shadow: 2px 2px 10px black;
 }
 
+.Exercise-Edit-ViewImage-Button-Admin:hover{
+    background: #f1c752;
+}
+
+.Exercise-Edit-ImageView-CoverContainer-Admin{
+    /*display: none;*/
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Sit on top */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+}
+
+.Exercise-Edit-ImageView-Container-Admin{
+    position: absolute;
+    height: 300px;
+    width: 400px;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    z-index: 5;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Exercise-Edit-ImageView-Image-Admin{
+    height: 80%;
+    width: 80%;
+    object-fit: fill;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.Exercise-Edit-Ok-Button-Admin{
+    width: 100px;
+    height: 30px;
+    background: #ac8e3b;
+    font-size: 20px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Exercise-Edit-Ok-Button-Admin:hover{
+    background: #f1c752;
+}
+
 @media(max-width: 860px){
     
     .Exercise-Edit-Form-Wrapper-Admin{
@@ -179,6 +232,36 @@
 
     .Exercise-Edit-Title-Label-Admin{
         font-size: 35px;
+    }
+    
+    .Exercise-Edit-ImageView-Container-Admin{
+        position: absolute;
+        height: 130px;
+        width: 230px;
+        background: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        z-index: 5;
+    }
+
+    .Exercise-Edit-ImageView-Image-Admin{
+        height: 80%;
+        width: 80%;
+        object-fit: fill;
+        margin-bottom: 10px;
+    }
+
+    .Exercise-Edit-Ok-Button-Admin{
+        width: 80px;
+        height: 30px;
+        background: #ac8e3b;
+        font-size: 15px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
     }
 
 }

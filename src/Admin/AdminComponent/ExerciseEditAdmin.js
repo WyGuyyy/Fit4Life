@@ -4,9 +4,12 @@ import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
+import ExerciseTile from '../../Component/ExerciseTile';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
+import ReactDom from 'react-dom';
+import lhs_logo from '../../Assets/lhs_logo.png';
 
 class ExerciseEditAdmin extends React.Component{
     constructor(props){
@@ -20,7 +23,8 @@ class ExerciseEditAdmin extends React.Component{
                 exercise: props.location.state.exercise,
                 classroom: props.location.state.classroom,
                 component: props.location.state.component,
-                exerciseObject: ""
+                exerciseObject: "",
+                exerciseBlob: null
             }
 
             this.getExercise();
@@ -29,11 +33,53 @@ class ExerciseEditAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        
+        this.getExerciseImage();
     }
 
     componentWillUnmount(){
         
+    }
+
+    viewImage(event){
+
+        var staleCoverContainer = document.getElementsByClassName("Exercise-Edit-ImageView-CoverContainer-Admin")[0];
+        var staleContainer = document.getElementsByClassName("Exercise-Edit-ImageView-Container-Admin")[0];
+        var staleImage = document.getElementsByClassName("Exercise-Edit-ImageView-Image-Admin")[0];
+
+        if(!(staleCoverContainer === undefined || staleCoverContainer === null)){
+            staleImage.remove();
+            staleContainer.remove();
+            staleCoverContainer.remove();
+        }
+
+        var coverContainer = document.createElement("div");
+        var container = document.createElement("div");
+        var image = document.createElement("img");
+        var exit = document.createElement("button");
+        var pageContainer = document.getElementById("Exercise-Edit-Wrapper-Admin");
+
+        coverContainer.classList.add("Exercise-Edit-ImageView-CoverContainer-Admin");
+        container.classList.add("Exercise-Edit-ImageView-Container-Admin");
+        image.classList.add("Exercise-Edit-ImageView-Image-Admin");
+
+        exit.innerText = "Ok";
+        exit.classList.add("Exercise-Edit-Ok-Button-Admin");
+        exit.onclick = e => {document.getElementsByClassName("Exercise-Edit-ImageView-CoverContainer-Admin")[0].style.display = "none"};
+
+        var aSrc;
+
+        if(this.state.exerciseBlob.exercise_blob_id === undefined || this.state.exerciseBlob.exercise_blob_id === null){
+            aSrc = lhs_logo;
+        }else{
+            aSrc = "data:" + this.state.exerciseBlob.content_type + ";base64," + this.state.exerciseBlob.blob_data;
+        }
+
+        image.src = aSrc;
+
+        container.appendChild(image);
+        container.appendChild(exit);
+        coverContainer.appendChild(container);
+        pageContainer.appendChild(coverContainer);
     }
 
     async getExercise(){
@@ -60,6 +106,38 @@ class ExerciseEditAdmin extends React.Component{
 
     }
 
+    async getExerciseImage(){
+
+        var exerciseID = this.props.location.state.exercise.exercise_id;
+        var anExerciseBlob = "";
+
+        var imageEdit = document.getElementById("Exercise-Edit-Image-Label");
+
+        await fetch("http://localhost:8080/api/exercise_blob/forexercise/" + exerciseID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                //console.log(text);
+                var result = text.length ? JSON.parse(text) : {};
+                //exerciseBlobs = result;
+                anExerciseBlob = result;
+            }
+        ).catch(console.log);
+
+        console.log(anExerciseBlob.exercise_id);
+
+        this.setState({
+            exerciseBlob: anExerciseBlob
+        });
+
+        imageEdit.innerText = anExerciseBlob.filename;
+        
+    }
+
     async saveExercise(event){
 
         var aTitle = document.getElementById("Exercise-Edit-Title-Input-Admin").value;
@@ -67,6 +145,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var componentID = this.state.component.component_id;
         var exerciseID = this.state.exercise.exercise_id;
+        var exerciseBlobID = this.state.exerciseBlob.exercise_blob_id;
 
         if(DataCheckService.validateFields([aTitle])){
 
@@ -87,11 +166,13 @@ class ExerciseEditAdmin extends React.Component{
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used
-            await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
+            await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
             }).catch(console.log);
+
+            this.getExerciseImage();
 
             this.confirmBackendTransaction();
 
@@ -183,9 +264,9 @@ class ExerciseEditAdmin extends React.Component{
             <Fragment>
                 <AdminHeader title={"Exercise Edit"} breadCrumbs={"Edit Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal();}}/>
-                <div className="Exercise-Edit-Container-Admin">
+                <div className="Exercise-Edit-Container-Admin" id="Exercise-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>
-                    <div className="Exercise-Edit-Wrapper-Admin">
+                    <div className="Exercise-Edit-Wrapper-Admin" id="Exercise-Edit-Wrapper-Admin">
                         <ConfirmToast text="Exercise saved!"/>
                         <div className="Exercise-Edit-Form-Wrapper-Admin">
                             <div className="Exercise-Edit-Title-Wrapper-Admin">
@@ -195,7 +276,7 @@ class ExerciseEditAdmin extends React.Component{
                                 <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)} />
                             </div>
                             <div className="Exercise-Edit-ViewImage-Area">
-                                <button className="Exercise-Edit-ViewImage-Button-Admin"><i className="fa fa-eye"></i></button>
+                                <button className="Exercise-Edit-ViewImage-Button-Admin" onClick={e => this.viewImage(e)} title="Preview Current Image"><i className="fa fa-eye"></i></button>
                             </div>
                             <div className="Exercise-Edit-Button-Area-Admin"> 
                                 <button className="Exercise-Edit-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Save</button>
