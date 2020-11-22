@@ -194,6 +194,9 @@ class ExerciseEditAdmin extends React.Component{
                             <div className="Exercise-Edit-Image-Area">
                                 <label className="Exercise-Edit-Image-Label" id="Exercise-Edit-Image-Label" for="Exercise-Edit-Image-Input">Select an Image</label><input className="Exercise-Edit-Image-Input" id="Exercise-Edit-Image-Input" type="file" onChange={(e) => this.handleFileUpload(e)} />
                             </div>
+                            <div className="Exercise-Edit-ViewImage-Area">
+                                <button className="Exercise-Edit-ViewImage-Button-Admin"><i className="fa fa-eye"></i></button>
+                            </div>
                             <div className="Exercise-Edit-Button-Area-Admin"> 
                                 <button className="Exercise-Edit-Save-Button-Admin" onClick={(e) => this.showModal(e)}>Save</button>
                                 <button className="Exercise-Edit-Cancel-Button-Admin" onClick={e => this.cancelSave()}>Cancel</button>

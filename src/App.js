@@ -38,13 +38,14 @@ const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
     //(localStorage.getItem('logged_in') === true)
       (loggedIn().localeCompare("true") === 0)
-      ? /*(localStorage.getItem("userRole").localeCompare("STUDENT") === 0 || 
+      ? (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 || 
         (props.location.pathname.localeCompare("/workoutDetail") === 0 || 
          props.location.pathname.localeCompare("/schedule") === 0 || 
          props.location.pathname.localeCompare("/personal") === 0 ||
-         props.location.pathname.localeCompare("/personalEdit") === 0) ? 
-         <Component {...props} /> : <Redirect to="/admin"/>)*/
-         <Component {...props} />
+         props.location.pathname.localeCompare("/personalEdit") === 0 ||
+         props.location.pathname.localeCompare("/classroom") === 0 || 
+         props.location.pathname.localeCompare("/component") === 0) ? 
+         <Component {...props} /> : <Redirect to="/admin"/>)
       : <Redirect to='/login' login={authService}/>
   )}/>
 )
