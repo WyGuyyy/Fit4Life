@@ -63,12 +63,20 @@ class ChangePassword extends React.Component{
         var newPassword = document.getElementById("ChangePassword-Input-NewPassword").value;
         var confirmNewPassword = document.getElementById("ChangePassword-Input-ConfirmNewPassword").value;
 
-        var hashedPassword = passHashService.hashPassword(newPassword);
+        console.log(oldPassword + "|" + newPassword + "|" + confirmNewPassword);
+
+        var hashedPassword = passHashService.hashPassword(oldPassword);
 
         var data = await authService.authenticate(localStorage.getItem("userEmail"), hashedPassword);
 
+        console.log(localStorage.getItem("userEmail") + " | " + hashedPassword);
+
+        console.log(data);
+
         if(!(oldPassword.localeCompare(newPassword) === 0) && 
-        (newPassword.localeCompare(confirmNewPassword) === 0) && data.success){
+        (newPassword.localeCompare(confirmNewPassword) === 0) && data.success.localeCompare("true") === 0){
+
+            var hashedPassword = passHashService.hashPassword(newPassword);
 
             var user = "";
 
@@ -90,7 +98,7 @@ class ChangePassword extends React.Component{
             console.log(user);
 
             await fetch("http://localhost:8080/api/user", {  
-                method: "PUT",                          
+                method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify(user) 
