@@ -61,7 +61,9 @@ const PrivateAdminRoute = ({component: Component, ...rest}) => (
 
 function App() {
 
-  localStorage.setItem('logged_in', "false");
+  if(localStorage.getItem('logged_in') === undefined || localStorage.getItem('logged_in') === null){ 
+      localStorage.setItem('logged_in', "false");
+  }
 
   return (
     <Router>
