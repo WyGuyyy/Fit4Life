@@ -60,6 +60,9 @@ const PrivateAdminRoute = ({component: Component, ...rest}) => (
 )
 
 function App() {
+
+  localStorage.setItem('logged_in', "false");
+
   return (
     <Router>
       <Switch>
