@@ -99,6 +99,11 @@ function App() {
 }
 
 function loggedIn(){
+
+  if(localStorage.getItem("logged_in") === null || localStorage.getItem("logged_in") === undefined){
+    return "false";
+  }
+
   return localStorage.getItem("logged_in");
 }
 
