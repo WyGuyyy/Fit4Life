@@ -34,8 +34,6 @@ class Header extends React.Component{
     transformLogo(){
         var logo = document.getElementsByClassName("lhsLogo-Admin")[0];
 
-        console.log(logo);
-
         if(this.state.logoSelected){        
             
             this.setState({
@@ -84,7 +82,6 @@ class Header extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

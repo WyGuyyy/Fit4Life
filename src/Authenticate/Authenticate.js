@@ -28,8 +28,6 @@ class Authenticate extends React.Component{
         var data = await authService.authenticate(username, password);
         //var isLoggedIn = localStorage.getItem('logged_in');
         var isLoggedIn = data.success;
-        
-        console.log(data);
 
         //if(authService.isLoggedIn().localeCompare("true") === 0){
         if(isLoggedIn.localeCompare("true") === 0){

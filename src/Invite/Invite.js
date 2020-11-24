@@ -197,7 +197,6 @@ class Invite extends React.Component{
 
         for(rowCount = 0; rowCount < goalList.childNodes.length; rowCount++){
             goalList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(goalList.childNodes[rowCount].style.background);
         }
     }
 

@@ -37,8 +37,6 @@ class Classroom extends React.Component{
         var classroomWrapper = document.getElementById("classroomWrapper");
         var classroomID = this.state.classroom.classroom_id;
 
-        console.log(classroomWrapper);
-
         //await fetch("http://192.168.1.5:8080/api/classroom", {
             await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
@@ -79,8 +77,6 @@ class Classroom extends React.Component{
         var aComponent = this.state.classroomComponents[idNum];
         var aClassroom = this.state.classroom;
 
-        console.log(aClassroom);
-
         this.props.history.push({
             pathname: "/component",
             state: {selectedClassroom: aClassroom, selectedComponent: aComponent}
@@ -88,14 +84,12 @@ class Classroom extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }
     }
     
     render(){
-        console.log(this.props.location.state);
         if(!RedirectService.checkItemForUndefined(this.props.location.state)){
             return RedirectService.decideRedirect();
         }

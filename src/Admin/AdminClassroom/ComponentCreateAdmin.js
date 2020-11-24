@@ -51,11 +51,6 @@ class ComponentCreateAdmin extends React.Component{
                 }
             ).catch(console.log);
 
-            /*await fetch("http://localhost:8080/api/component/toclass/" + componentID + "/" + classroomID, {  
-            method: "POST",                          
-            headers: {"Content-Type": "application/json"}
-            }).catch(console.log);*/
-
             document.getElementById("Component-Create-Title-Input-Admin").value = "";
             this.confirmBackendTransaction();
 
@@ -94,7 +89,6 @@ class ComponentCreateAdmin extends React.Component{
     }
     
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

@@ -44,38 +44,6 @@ class Component extends React.Component{
         
     }
 
-    /*async renderTiles(){
-
-        var exercises;
-        var count = 0;
-        var exerciseWrapper = document.getElementById("classroomWrapper");
-
-        //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/exercise", {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json"}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    exercises = result;
-                }
-            ).catch(console.log);
-
-            for(count = 0; count < components.length; count++){
-                var exerciseTile = document.createElement("button");
-                var title = components[count].title;
-
-                componentButton.classList.add("homeButton");
-                componentButton.id = "Home-Button-" + count;
-                componentButton.onclick = e => this.goToComponent(e);
-                componentButton.textContent = title;
-
-                exerciseWrapper.appendChild(componentButton);
-            }
-    }*/
-
     triggerRerender(){
         this.setState({
             triggerRerender: true
@@ -93,19 +61,6 @@ class Component extends React.Component{
         var componentID = this.state.component.component_id;
 
         var classCompID;
-
-        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json"}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                classCompID = result;
-            }
-        ).catch(console.log);*/
-
 
         await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
             method: "GET",                          
@@ -128,14 +83,10 @@ class Component extends React.Component{
         .then(res => res.text())
         .then(
             (text) => {
-                //console.log(text);
                 var result = text.length ? JSON.parse(text) : {};
-                //exerciseBlobs = result;
                 exerciseBlobs = result;
             }
         ).catch(console.log);
-
-        console.log(exerciseBlobs);
 
         var tempNumOfTiles = 40;
         var numRows;
@@ -152,8 +103,6 @@ class Component extends React.Component{
 
         var tilesPerRow = this.calculateRowCount();
         numRows = Math.ceil(exercises.length/tilesPerRow);
-
-        console.log(tilesPerRow);
 
         for(countOuter = 0; countOuter < numRows; countOuter++){
             
@@ -190,7 +139,6 @@ class Component extends React.Component{
     showAdminNotAllowed(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
-        console.log(document);
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -227,15 +175,6 @@ class Component extends React.Component{
         var aImage = blobs[currExercise.exercise_id];
         var count = 0;
 
-        console.log(aImage);
-
-        /*for(count = 0; count < blobs.length; count++){
-            if(blobs[count].comp_ex_id === currExercise.exercise_id){
-                aImage = blobs[count];
-                break;
-            }
-        }*/
-
         return <ExerciseTile exercise={currExercise.title} image={aImage} tileClickEvent={e=>this.goToExercise(e, currExercise)} />
     }
 
@@ -253,7 +192,6 @@ class Component extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

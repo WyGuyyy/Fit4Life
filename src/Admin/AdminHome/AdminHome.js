@@ -34,8 +34,6 @@ class AdminHome extends React.Component{
 
         var classrooms = [];
 
-        console.log(localStorage.getItem("auth_token"));
-
         await fetch("http://localhost:8080/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
@@ -175,7 +173,6 @@ class AdminHome extends React.Component{
 
         for(rowCount = 0; rowCount < classroomList.childNodes.length; rowCount++){
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(classroomList.childNodes[rowCount].style.background);
         }
     }
 
@@ -279,7 +276,6 @@ class AdminHome extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

@@ -46,19 +46,6 @@ class AdminComponent extends React.Component{
         var componentID = this.state.component.component_id;
         var classCompID;
 
-        /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                classCompID = result;
-            }
-        ).catch(console.log);*/
-
         await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
@@ -174,7 +161,6 @@ class AdminComponent extends React.Component{
 
         for(rowCount = 0; rowCount < classroomList.childNodes.length; rowCount++){
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(classroomList.childNodes[rowCount].style.background);
         }
     }
 
@@ -257,7 +243,6 @@ class AdminComponent extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

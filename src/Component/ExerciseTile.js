@@ -12,8 +12,6 @@ class ExerciseTile extends React.Component{
             image: props.image
         };
 
-        console.log(props.image);
-
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
@@ -26,29 +24,16 @@ class ExerciseTile extends React.Component{
         
     }
 
-    /*goToExercise(){
-
-        console.log(this);
-
-        this.props.history.push({
-            pathname: "/exercise",
-            state: {exercise: this.state.exercise}
-        });
-    }*/
-
     //Render the Header component to the DOM/Screen
     render(){
 
         var aSrc;
 
-        //console.log(this.props.image);
         if(this.props.image === undefined || this.props.image === null){
             aSrc = lhs_logo;
         }else{
             aSrc = "data:" + this.props.image.content_type + ";base64," + this.props.image.blob_data;
         }
-
-        console.log(this.props.image);
 
         return(
             <div className="Exercise-Tile-Container" onClick={this.props.tileClickEvent}>

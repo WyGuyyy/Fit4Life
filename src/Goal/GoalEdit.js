@@ -68,8 +68,6 @@ class GoalEdit extends React.Component{
 
     async editGoal(event){
 
-        console.log("ran");
-
         var goalID = this.state.goal.goal_id;
         var aTitle = document.getElementById("Goal-Edit-Title-Input").value;
         var aProgress = (document.getElementById("notStarted").checked ? "Not Started" : 

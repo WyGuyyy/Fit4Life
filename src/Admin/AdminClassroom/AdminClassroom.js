@@ -54,18 +54,6 @@ class AdminClassroom extends React.Component{
                 }
             ).catch(console.log);
 
-        /*await fetch("http://localhost:8080/api/component", {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json"}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    components = result;
-                }
-            ).catch(console.log);*/
-
         for(count = 0; count < components.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
@@ -156,11 +144,6 @@ class AdminClassroom extends React.Component{
     returnListItemBackground(id){
         var classroomList = document.getElementById("componentList-Admin");
         this.recolorRows(classroomList);
-
-        /*var num = id.split("-")[1];
-        var backgroundColor = (parseInt(num) % 2 === 0 ? "#c08d00" : "#997000");
-
-        document.getElementById(id).style.background = backgroundColor;*/
     }
 
     recolorRows(classroomList){
@@ -168,7 +151,6 @@ class AdminClassroom extends React.Component{
 
         for(rowCount = 0; rowCount < classroomList.childNodes.length; rowCount++){
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(classroomList.childNodes[rowCount].style.background);
         }
     }
 
@@ -252,7 +234,6 @@ class AdminClassroom extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

@@ -58,25 +58,6 @@ class ExerciseCreateAdmin extends React.Component{
                 }
             ).catch(console.log);
 
-
-            /*await fetch("http://localhost:8080/api/component/classcomp/"  + classroomID + "/" + componentID, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json"}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    classCompID = result;
-                }
-            ).catch(console.log);*/
-
-                //start here next time ... need to add exercise to comp
-            /*await fetch("http://localhost:8080/api/exercise/tocomponent/" + exerciseID + "/" + classCompID, {  
-                method: "POST",                          
-                headers: {"Content-Type": "application/json"}
-            }).catch(console.log);*/
-
             fileData.append("files", this.state.selectedFile);
 
             await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID , { 
@@ -159,7 +140,6 @@ class ExerciseCreateAdmin extends React.Component{
     }
     
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

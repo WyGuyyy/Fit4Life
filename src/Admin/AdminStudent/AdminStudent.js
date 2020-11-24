@@ -164,39 +164,8 @@ class AdminStudent extends React.Component{
 
         for(rowCount = 0; rowCount < classroomList.childNodes.length; rowCount++){
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(classroomList.childNodes[rowCount].style.background);
         }
     }
-
-    /*async removeStudentFromClass(eventObj){
-
-        var idNum = eventObj.event.target.id.split("-")[1];
-        var studentID = this.state.students[idNum].user_id;
-        var classroomID = this.state.classroomID;
-
-        var count = 0;
-
-        var studentList = document.getElementById("studentList-Admin");
-        var listChildren = studentList.childNodes;
-
-        console.log(classroomID);
-
-        await fetch("http://localhost:8080/api/classroom/remove/" + studentID + "/" + classroomID, {  
-                method: "DELETE",                          
-                headers: {"Content-Type": "application/json"}
-            }).catch(console.log);
-
-        
-        for(count = 0; count < listChildren.length; count++){
-            if(listChildren[count].id.localeCompare("exerciseListItem-" + idNum + "-Admin") === 0){
-                studentList.removeChild(listChildren[count]); 
-                break;
-            }
-        }
-    
-        this.recolorRows(studentList);
-
-    }*/
 
     goToStudentInvite(eventObj){
 
@@ -282,7 +251,6 @@ class AdminStudent extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

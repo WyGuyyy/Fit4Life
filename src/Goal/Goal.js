@@ -59,8 +59,6 @@ class Goal extends React.Component{
             }
         ).catch(console.log);
 
-        console.log(goals);
-
         for(count = 0; count < goals.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
@@ -227,7 +225,6 @@ class Goal extends React.Component{
 
         for(rowCount = 0; rowCount < goalList.childNodes.length; rowCount++){
             goalList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(goalList.childNodes[rowCount].style.background);
         }
     }
 

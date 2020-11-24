@@ -63,15 +63,9 @@ class ChangePassword extends React.Component{
         var newPassword = document.getElementById("ChangePassword-Input-NewPassword").value;
         var confirmNewPassword = document.getElementById("ChangePassword-Input-ConfirmNewPassword").value;
 
-        console.log(oldPassword + "|" + newPassword + "|" + confirmNewPassword);
-
         var hashedPassword = passHashService.hashPassword(oldPassword);
 
         var data = await authService.authenticate(localStorage.getItem("userEmail"), hashedPassword);
-
-        console.log(localStorage.getItem("userEmail") + " | " + hashedPassword);
-
-        console.log(data);
 
         if(!(oldPassword.localeCompare(newPassword) === 0) && 
         (newPassword.localeCompare(confirmNewPassword) === 0) && data.success.localeCompare("true") === 0){
@@ -95,8 +89,6 @@ class ChangePassword extends React.Component{
 
             user.password_hash = hashedPassword;
 
-            console.log(user);
-
             await fetch("http://localhost:8080/api/user", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
@@ -116,7 +108,6 @@ class ChangePassword extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

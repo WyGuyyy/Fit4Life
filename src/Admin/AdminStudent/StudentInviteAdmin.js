@@ -169,8 +169,6 @@ class StudentInviteAdmin extends React.Component{
 
         var check;
 
-        console.log("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id);
-
         var c = await fetch("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
                     method: "GET",                          
                     headers: {"Content-Type": "application/json",
@@ -208,8 +206,6 @@ class StudentInviteAdmin extends React.Component{
                     }
             ).catch(console.log);
 
-            console.log(check);
-
         if(check === null){
             return false;
         }else{
@@ -236,7 +232,6 @@ class StudentInviteAdmin extends React.Component{
 
         for(rowCount = 0; rowCount < classroomList.childNodes.length; rowCount++){
             classroomList.childNodes[rowCount].style.background = (rowCount % 2 === 0 ? "#c08d00" : "#997000");
-            console.log(classroomList.childNodes[rowCount].style.background);
         }
     }
 
@@ -358,7 +353,6 @@ class StudentInviteAdmin extends React.Component{
     }
 
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

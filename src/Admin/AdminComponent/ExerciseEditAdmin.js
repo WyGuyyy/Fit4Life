@@ -121,14 +121,10 @@ class ExerciseEditAdmin extends React.Component{
         .then(res => res.text())
         .then(
             (text) => {
-                //console.log(text);
                 var result = text.length ? JSON.parse(text) : {};
-                //exerciseBlobs = result;
                 anExerciseBlob = result;
             }
         ).catch(console.log);
-
-        console.log(anExerciseBlob.exercise_id);
 
         this.setState({
             exerciseBlob: anExerciseBlob
@@ -244,7 +240,6 @@ class ExerciseEditAdmin extends React.Component{
     }
     
     goBack(){ //This isnt working, start here next time
-        console.log(this.props);
         if(this.state.canGoBack){
             this.props.history.goBack();
         }

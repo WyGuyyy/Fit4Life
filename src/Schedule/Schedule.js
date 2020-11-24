@@ -68,7 +68,6 @@ class Schedule extends React.Component{
         var classSelect = document.getElementById("Workout-Classroom-Select");
 
         for(classroom in classrooms){
-            console.log(classrooms[classroom]);
             classSelect.options[classSelect.options.length] = new Option(classrooms[classroom].title, classroom);
         }
 
@@ -116,41 +115,7 @@ class Schedule extends React.Component{
                         </div>
                     </Fragment>;
 
-       /* aWeekRow = document.createElement('div');
-        aWeekRow.className = "ScheduleWeek-Content-Wrapper";*/
-
         ReactDom.render(week, weekWrapper);
-
-              
-    
-        //weekWrapper.innerHTML = '';
-
-        //var day = document.createElement("div");
-        //day.classList.add("ScheduleWeek-Day");
-
-        //var dayP = document.createElement("p");
-        //dayP.classList.add("ScheduleWeek-Day-Content");
-       // dayP.textContent = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
-        //dayP.textContent = this.fitDayString(this.props.dayOfWeek);
-
-        //day.appendChild(dayP);
-        //weekWrapper.appendChild(day);
-
-        /*aFlexColumn = document.createElement('div');
-        aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
-
-        if(wrapArrIndex === 0){
-            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
-            ReactDom.render(this.renderDay([{title: "Title Row"}], aContext), aFlexColumn);
-            //var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
-        }else{
-            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
-            ReactDom.render(this.renderDay(workouts, aContext), aFlexColumn);
-            //console.log(this.state.userWorkouts);
-            //var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(this.state.userWorkouts)}</div>
-        }*/
-
-        //weekWrapper.appendChild(week);
 
     }
 

@@ -26,8 +26,7 @@ class ScheduleWeek extends React.Component{
             classroom: props.classroom,
             userWorkouts: []
         };
-       //window.addEventListener("resize", this.checkGrid.bind(this));
-        console.log(props.classroom);
+
         this.fillWorkouts();
     }
     
@@ -66,7 +65,6 @@ class ScheduleWeek extends React.Component{
     async fillWorkouts(){
         
         var workouts = [];
-        console.log(this.props);
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
 
         //await fetch("http://192.168.1.5:8080/api/classroom", {
@@ -82,8 +80,6 @@ class ScheduleWeek extends React.Component{
                     workouts = result;
                 }
             ).catch(console.log);
-
-            console.log(workouts);
 
             this.setState({
                 userWorkouts: workouts
@@ -103,74 +99,19 @@ class ScheduleWeek extends React.Component{
         var aFlexColumn;
         var workouts = this.state.userWorkouts;
         var count = 0;
-    
-        //weekWrapper.innerHTML = '';
-
-        //var day = document.createElement("div");
-        //day.classList.add("ScheduleWeek-Day");
-
-        //var dayP = document.createElement("p");
-        //dayP.classList.add("ScheduleWeek-Day-Content");
-       // dayP.textContent = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
-        //dayP.textContent = this.fitDayString(this.props.dayOfWeek);
-
-        //day.appendChild(dayP);
-        //weekWrapper.appendChild(day);
-
-        //aFlexColumn = document.createElement('div');
-        //aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
-        console.log(workouts);
         
-            if(wrapArrIndex === 0){;
-                var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
-            }else{
-                
-                var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
-                
-            }
-
-        /*if(wrapArrIndex === 0){
-            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
-            //ReactDom.render(this.renderDay([{title: "Title Row"}], this), aFlexColumn);
+        if(wrapArrIndex === 0){;
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
         }else{
-            //var content = <div className="ScheduleWeek-Content-Wrapper"></div>;
-            //ReactDom.render(this.renderDay(workouts), aFlexColumn);
-            //console.log(this.state.userWorkouts);
+                
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
-        }*/
+                
+        }
 
         var elArr = [];
         elArr.push(content);
 
-        console.log(elArr);
-
         return elArr;
-
-        //weekWrapper.appendChild(aFlexColumn);
-
-        //var arr = [];
-        //arr.push(content);
-
-        //return arr;
-
-        //return aFlexColumn;
-
-        //weekWrapper.appendChild(aFlexColumn);
-
-        /*for(countOuter = 0; countOuter < numRows; countOuter++){
-            
-            aFlexColumn = document.createElement('div');
-            aFlexColumn.className = "ScheduleWeek-Content-Wrapper";
-
-            for(countInner = 0; countInner < tilesPerRow; countInner++){
-
-                aTile = ReactDom.render(this.renderDay(workouts), aFlexColumn);
-                //ReactDOM.render(aTile, aFlexRow);
-            }
-
-            
-        }*/
 
     }
 
@@ -203,8 +144,6 @@ class ScheduleWeek extends React.Component{
     matchesFilters(workout){
         var strDate = workout.date.split("T")[0];
         var strDateForDay = this.formatDateForDay();
-
-        console.log(strDateForDay + " " + strDate);
  
         if(workout.classroom.classroom_id === this.props.classroom.classroom_id && 
             strDate.localeCompare(strDateForDay) === 0){
@@ -242,35 +181,6 @@ class ScheduleWeek extends React.Component{
         return currentDate;
 
     }
-
-   /* renderDay(workouts){
-
-        var count = 1;
-
-        if(workouts !== [] ){
-            return workouts.map(this.renderDayItem.bind(this, count));
-        }
-    }*/
-
-   /* renderDayItem(aContext, currWorkout){
-
-        console.log(aContext);
-
-        if(!(currWorkout.title)){
-            if(!(currWorkout.classroom.classroom_id === this.props.date)){
-                return;
-            }
-        }*/
-
-        
-
-        /*var newWC = aContext.state.currWorkoutCount + 1;
-        aContext.setState({
-            currWorkoutCount: newWC
-        });*/
-
- /*       return <ScheduleWeekContent workout={currWorkout} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aContext} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>
-    }*/
 
     getWeekWrapper(dayOfWeek){
         
@@ -329,9 +239,6 @@ class ScheduleWeek extends React.Component{
         }*/
 
         var dayOfWeek = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
-
-        /*console.log(this.props.dayOfWeek.localeCompare("Title") === 0);
-        console.log("ScheduleWeek-Day-Content-" + dayOfWeek);*/
 
         var aID = "ScheduleWeek-Day-Content-" + dayOfWeek;
         var day = this.fitDayString(dayOfWeek);
