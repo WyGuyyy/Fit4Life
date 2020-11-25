@@ -6,6 +6,7 @@ import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
+import {baseURI} from '../_services/APIService';
 
 class Classroom extends React.Component{
     constructor(props){
@@ -37,8 +38,8 @@ class Classroom extends React.Component{
         var classroomWrapper = document.getElementById("classroomWrapper");
         var classroomID = this.state.classroom.classroom_id;
 
-        //await fetch("/api/classroom", {
-            await fetch("/api/component/byclass/" + classroomID, {  
+        //await fetch(baseURI + "/api/classroom", {
+            await fetch(baseURI + "/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

@@ -10,6 +10,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
+import {baseURI} from '../_services/APIService';
 
 class GoalEdit extends React.Component{
     constructor(props){
@@ -45,7 +46,7 @@ class GoalEdit extends React.Component{
 
         var goal;
 
-        await fetch("/api/goal/" + this.props.location.state.goal.goal_id, {  
+        await fetch(baseURI + "/api/goal/" + this.props.location.state.goal.goal_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -77,7 +78,7 @@ class GoalEdit extends React.Component{
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-            await fetch("/api/goal", {  
+            await fetch(baseURI + "/api/goal", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

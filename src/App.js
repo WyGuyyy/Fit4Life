@@ -33,6 +33,7 @@ import EditWorkout from './Schedule/EditWorkout';
 import {authService} from './_services/AuthenticationService';
 import { AiFillPropertySafety, AiTwotoneQuestionCircle } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa';
+import {baseURI} from './_services/APIService';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -60,6 +61,8 @@ const PrivateAdminRoute = ({component: Component, ...rest}) => (
 )
 
 function App() {
+
+  console.log(baseURI);
 
   if(localStorage.getItem('logged_in') === undefined || localStorage.getItem('logged_in') === null){ 
       localStorage.setItem('logged_in', "false");

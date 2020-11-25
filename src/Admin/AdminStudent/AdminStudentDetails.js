@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../../_services/RedirectService';
+import {baseURI} from '../../_services/APIService';
 
 class AdminStudentDetails extends React.Component{
     constructor(props){

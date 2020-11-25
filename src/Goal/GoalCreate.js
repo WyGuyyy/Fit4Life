@@ -10,6 +10,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
+import {baseURI} from '../_services/APIService';
 
 class GoalCreate extends React.Component{
     constructor(props){
@@ -47,7 +48,7 @@ class GoalCreate extends React.Component{
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-            await fetch("/api/goal", {  
+            await fetch(baseURI + "/api/goal", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

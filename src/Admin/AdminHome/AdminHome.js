@@ -5,6 +5,7 @@ import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
+import {baseURI} from '../../_services/APIService';
 
 class AdminHome extends React.Component{
     constructor(props){
@@ -34,7 +35,7 @@ class AdminHome extends React.Component{
 
         var classrooms = [];
 
-        await fetch("/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
+        await fetch(baseURI + "/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -235,7 +236,7 @@ class AdminHome extends React.Component{
         var goalList = document.getElementById("classroomList-Admin");
         var listChildren = goalList.childNodes;
 
-        await fetch("/api/classroom/" + this.state.focusedClassroom.classroom_id, {  
+        await fetch(baseURI + "/api/classroom/" + this.state.focusedClassroom.classroom_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

@@ -8,6 +8,7 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {authService, AuthService} from '../_services/AuthenticationService';
 import {passHashService} from '../_services/PasswordHasherService';
+import {baseURI} from '../_services/APIService';
 
 class ChangePassword extends React.Component{
     constructor(props){
@@ -74,7 +75,7 @@ class ChangePassword extends React.Component{
 
             var user = "";
 
-            await fetch("/api/user/" + localStorage.getItem("userID"), {  
+            await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -89,7 +90,7 @@ class ChangePassword extends React.Component{
 
             user.password_hash = hashedPassword;
 
-            await fetch("/api/user", {  
+            await fetch(baseURI + "/api/user", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

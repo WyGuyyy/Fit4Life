@@ -6,6 +6,7 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {DataCheckService} from '../../_services/DataCheckService';
+import {baseURI} from '../../_services/APIService';
 
 class ClassroomCreateAdmin extends React.Component{
     constructor(props){
@@ -32,7 +33,7 @@ class ClassroomCreateAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("/api/classroom", {  
+            await fetch(baseURI + "/api/classroom", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

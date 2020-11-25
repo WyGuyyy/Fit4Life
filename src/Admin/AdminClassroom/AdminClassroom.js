@@ -6,6 +6,8 @@ import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
+import {baseURI} from '../../_services/APIService';
+
 
 class AdminClassroom extends React.Component{
     constructor(props){
@@ -41,7 +43,7 @@ class AdminClassroom extends React.Component{
         var components = [];
         var classroomID = this.state.classroom.classroom_id;
 
-        await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
+        await fetch(baseURI + "/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -193,7 +195,7 @@ class AdminClassroom extends React.Component{
         var componentList = document.getElementById("componentList-Admin");
         var listChildren = componentList.childNodes;
 
-        await fetch("http://localhost:8080/api/component/" + this.state.focusedComponent.component_id, {  
+        await fetch(baseURI + "/api/component/" + this.state.focusedComponent.component_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

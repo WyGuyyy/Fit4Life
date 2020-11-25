@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
+import {baseURI} from '../../_services/APIService';
 
 class ComponentEditAdmin extends React.Component{
     constructor(props){
@@ -38,7 +39,7 @@ class ComponentEditAdmin extends React.Component{
 
         var component;
 
-        await fetch("/api/component/" + this.props.location.state.component.component_id, {  
+        await fetch(baseURI + "/api/component/" + this.props.location.state.component.component_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -68,7 +69,7 @@ class ComponentEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("/api/component", {  
+            await fetch(baseURI + "/api/component", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

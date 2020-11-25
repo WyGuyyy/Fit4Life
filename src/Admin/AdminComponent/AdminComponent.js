@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {FaPen, FaRegDotCircle} from 'react-icons/fa';
 import {RedirectService} from '../../_services/RedirectService';
+import {baseURI} from '../../_services/APIService';
 
 class AdminComponent extends React.Component{
     constructor(props){
@@ -46,7 +47,7 @@ class AdminComponent extends React.Component{
         var componentID = this.state.component.component_id;
         var classCompID;
 
-        await fetch("/api/exercise/bycomponent/" + componentID, {  
+        await fetch(baseURI + "/api/exercise/bycomponent/" + componentID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -202,7 +203,7 @@ class AdminComponent extends React.Component{
         var exerciseList = document.getElementById("exerciseList-Admin");
         var listChildren = exerciseList.childNodes;
 
-        await fetch("/api/exercise/" + this.state.focusedExercise.exercise_id, {  
+        await fetch(baseURI + "/api/exercise/" + this.state.focusedExercise.exercise_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

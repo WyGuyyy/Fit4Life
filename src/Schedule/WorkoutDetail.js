@@ -10,6 +10,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import { FaDove } from 'react-icons/fa';
 import {RedirectService} from '../_services/RedirectService';
+import {baseURI} from '../_services/APIService';
 
 class WorkoutDetail extends React.Component{
     constructor(props){
@@ -52,7 +53,7 @@ class WorkoutDetail extends React.Component{
         var timeOff = document.getElementsByClassName("Workout-Detail-TimeOff")[0];
         var component = document.getElementsByClassName("Workout-Detail-Component")[0];
 
-        await fetch("/api/workout/" + this.props.location.state.workout.workout_id, {  
+        await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")}

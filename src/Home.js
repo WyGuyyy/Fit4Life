@@ -3,6 +3,7 @@ import './Home.css';
 import Header from './Header/Header';
 import Popout from './Popout/Popout'
 import { Link } from 'react-router-dom';
+import {baseURI} from './_services/APIService';
 
 class Home extends React.Component{
     constructor(props){
@@ -29,8 +30,8 @@ class Home extends React.Component{
         var count = 0;
         var classroomWrapper = document.getElementById("homeWrapper");
 
-        //await fetch("/api/classroom", {
-            await fetch("/api/classroom/foruser/" + localStorage.getItem("userID"), {  
+        //await fetch(baseURI + "/api/classroom", {
+            await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
 import { FaWpbeginner } from 'react-icons/fa';
+import {baseURI} from '../_services/APIService';
 
 var currWorkout = "";
 
@@ -53,7 +54,7 @@ class EditWorkout extends React.Component{
         var reps = document.getElementById("EditWorkout-Input-Reps");
         var date = document.getElementById("EditWorkout-Input-Date");
 
-        await fetch("/api/workout/" + this.props.location.state.workout.workout_id, {  
+        await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -103,7 +104,7 @@ class EditWorkout extends React.Component{
 
         if(DataCheckService.validateFields([aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
-            await fetch("/api/workout", {  
+            await fetch(baseURI + "/api/workout", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

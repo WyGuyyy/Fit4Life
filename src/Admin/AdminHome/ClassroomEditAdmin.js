@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
+import {baseURI} from '../../_services/APIService';
 
 class ClassroomEditAdmin extends React.Component{
     constructor(props){
@@ -36,7 +37,7 @@ class ClassroomEditAdmin extends React.Component{
 
         var classroom;
 
-        await fetch("/api/classroom/" + this.props.location.state.classroom.classroom_id, {  
+        await fetch(baseURI + "/api/classroom/" + this.props.location.state.classroom.classroom_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -65,7 +66,7 @@ class ClassroomEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){        
 
-            await fetch("/api/classroom", {  
+            await fetch(baseURI + "/api/classroom", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

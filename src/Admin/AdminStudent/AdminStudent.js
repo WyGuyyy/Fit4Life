@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {RedirectService} from '../../_services/RedirectService';
+import {baseURI} from '../../_services/APIService';
 
 class AdminStudent extends React.Component{
     constructor(props){
@@ -44,7 +45,7 @@ class AdminStudent extends React.Component{
 
         var classroomID = this.state.classroom.classroom_id;
 
-        await fetch("/api/user/forclass/" + classroomID, {  
+        await fetch(baseURI + "/api/user/forclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -203,7 +204,7 @@ class AdminStudent extends React.Component{
         var goalList = document.getElementById("studentList-Admin");
         var listChildren = goalList.childNodes;
 
-        await fetch("/api/classroom/remove/" + studentID + "/" + classroomID, {  
+        await fetch(baseURI + "/api/classroom/remove/" + studentID + "/" + classroomID, {  
                 method: "DELETE",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

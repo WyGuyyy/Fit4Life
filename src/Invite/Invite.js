@@ -7,6 +7,7 @@ import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
+import {baseURI} from '../_services/APIService';
 
 class Invite extends React.Component{
     constructor(props){
@@ -44,7 +45,7 @@ class Invite extends React.Component{
         var classroomTitle;
         var teacherLastName;
 
-        await fetch("/api/invite/foruser/" + localStorage.getItem("userID"), {  
+        await fetch(baseURI + "/api/invite/foruser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -143,7 +144,7 @@ class Invite extends React.Component{
     async getInviteClassroom(cID){
         var classroomTitle;
 
-        await fetch("/api/classroom/" + cID, {  
+        await fetch(baseURI + "/api/classroom/" + cID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -162,7 +163,7 @@ class Invite extends React.Component{
     async getInviteTeacher(tID){
         var teacherLastName;
 
-        await fetch("/api/user/" + tID, {  
+        await fetch(baseURI + "/api/user/" + tID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -208,7 +209,7 @@ class Invite extends React.Component{
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("/api/invite/" + this.state.focusedInvite.invite_id, {  
+        await fetch(baseURI + "/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -239,13 +240,13 @@ class Invite extends React.Component{
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("/api/invite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.classroom.classroom_id, {  
+        await fetch(baseURI + "/api/invite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.classroom.classroom_id, {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
-        await fetch("/api/invite/" + this.state.focusedInvite.invite_id, {  
+        await fetch(baseURI + "/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import Component from '../../Component/Component';
 import {DataCheckService} from '../../_services/DataCheckService';
+import {baseURI} from '../../_services/APIService';
 
 class ExerciseCreateAdmin extends React.Component{
     constructor(props){
@@ -46,7 +47,7 @@ class ExerciseCreateAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("/api/exercise", {  
+            await fetch(baseURI + "/api/exercise", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
@@ -60,7 +61,7 @@ class ExerciseCreateAdmin extends React.Component{
 
             fileData.append("files", this.state.selectedFile);
 
-            await fetch("/api/exercise_blob/" + exerciseID + "/" + componentID , { 
+            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID , { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}

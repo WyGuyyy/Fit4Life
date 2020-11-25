@@ -1,4 +1,5 @@
 import { AiOutlineLogout } from "react-icons/ai";
+import {baseURI} from './APIService';
 
 export const authService = {
     authenticate,
@@ -12,7 +13,7 @@ async function authenticate(aUsername, aPassword){
     var data;
     var user = {username: aUsername, password: aPassword};
 
-    await fetch("/api/authenticate", {  
+    await fetch(baseURI + "/api/authenticate", {  
             method: "POST",
             body: JSON.stringify(user),                          
             headers: {"Content-Type": "application/json"}

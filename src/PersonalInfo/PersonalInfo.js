@@ -8,6 +8,7 @@ import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {baseURI} from '../_services/APIService';
 
 class PersonalInfo extends React.Component{
     constructor(props){
@@ -42,7 +43,7 @@ class PersonalInfo extends React.Component{
 
         var personalInfo;
 
-        await fetch("/api/user/" + localStorage.getItem("userID"), {  
+        await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

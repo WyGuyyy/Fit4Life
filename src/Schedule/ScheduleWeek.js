@@ -7,6 +7,7 @@ import ScheduleWeekContent from './ScheduleWeekContent';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete, MdStayCurrentPortrait } from 'react-icons/md';
+import {baseURI} from '../_services/APIService';
 
 class ScheduleWeek extends React.Component{
     
@@ -67,8 +68,8 @@ class ScheduleWeek extends React.Component{
         var workouts = [];
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
 
-        //await fetch("/api/classroom", {
-            await fetch("/api/workout/byuser/" + userID, {  
+        //await fetch(baseURI + "/api/classroom", {
+            await fetch(baseURI + "/api/workout/byuser/" + userID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

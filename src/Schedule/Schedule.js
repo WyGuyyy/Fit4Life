@@ -10,6 +10,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {baseURI} from '../_services/APIService';
 
 class Schedule extends React.Component{
     constructor(props){
@@ -52,7 +53,7 @@ class Schedule extends React.Component{
 
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.location.state.student.user_id);
 
-        await fetch("/api/classroom/foruser/" + userID, {  
+        await fetch(baseURI + "/api/classroom/foruser/" + userID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

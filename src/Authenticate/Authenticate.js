@@ -5,6 +5,7 @@ import {passHashService} from '../_services/PasswordHasherService';
 import './Authenticate.css';
 import { Link } from 'react-router-dom';
 import ConfirmToast from '../Confirm/ConfirmToast';
+import {baseURI} from '../_services/APIService';
 
 class Authenticate extends React.Component{
     constructor(props){

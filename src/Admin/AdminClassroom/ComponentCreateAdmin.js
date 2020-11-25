@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link, Redirect } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
+import {baseURI} from '../../_services/APIService';
 
 class ComponentCreateAdmin extends React.Component{
     constructor(props){
@@ -38,7 +39,7 @@ class ComponentCreateAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
             
-            await fetch("/api/component", {  
+            await fetch(baseURI + "/api/component", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

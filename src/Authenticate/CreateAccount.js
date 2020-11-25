@@ -8,6 +8,7 @@ import ConfirmModal from '../Confirm/ConfirmModal';
 import './CreateAccount.css';
 import { Link } from 'react-router-dom';
 import { MdTransferWithinAStation } from 'react-icons/md';
+import {baseURI} from '../_services/APIService';
 
 class CreateAccount extends React.Component{
     constructor(props){
@@ -52,7 +53,9 @@ class CreateAccount extends React.Component{
 
         user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), display_name: aDisplayName.trim(), password_hash: hashedPassword};
 
-        await fetch("/api/createaccount", {  
+        console.log(user);
+
+        await fetch(baseURI + "/api/createaccount", {  
             method: "POST",
             body: JSON.stringify(user),                          
             headers: {"Content-Type": "application/json"}

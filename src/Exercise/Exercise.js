@@ -8,6 +8,7 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
+import {baseURI} from '../_services/APIService';
 
 class Exercise extends React.Component{
     constructor(props){
@@ -55,7 +56,7 @@ class Exercise extends React.Component{
 
         if(DataCheckService.validateFields([aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
-            await fetch("/api/workout", {  
+            await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

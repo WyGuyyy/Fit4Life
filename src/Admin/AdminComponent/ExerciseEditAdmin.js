@@ -10,6 +10,7 @@ import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
 import ReactDom from 'react-dom';
 import lhs_logo from '../../Assets/lhs_logo.png';
+import {baseURI} from '../../_services/APIService';
 
 class ExerciseEditAdmin extends React.Component{
     constructor(props){
@@ -86,7 +87,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var exercise;
 
-        await fetch("/api/exercise/" + this.props.location.state.exercise.exercise_id, {  
+        await fetch(baseURI + "/api/exercise/" + this.props.location.state.exercise.exercise_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -113,7 +114,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var imageEdit = document.getElementById("Exercise-Edit-Image-Label");
 
-        await fetch("/api/exercise_blob/forexercise/" + exerciseID, {  
+        await fetch(baseURI + "/api/exercise_blob/forexercise/" + exerciseID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -145,7 +146,7 @@ class ExerciseEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("/api/exercise", {  
+            await fetch(baseURI + "/api/exercise", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
@@ -162,7 +163,7 @@ class ExerciseEditAdmin extends React.Component{
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used
-            await fetch("/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
+            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}

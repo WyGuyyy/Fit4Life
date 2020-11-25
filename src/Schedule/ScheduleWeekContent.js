@@ -6,6 +6,7 @@ import Popout from '../Popout/Popout'
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
+import {baseURI} from '../_services/APIService';
 
 class ScheduleWeekContent extends React.Component{
     constructor(props){

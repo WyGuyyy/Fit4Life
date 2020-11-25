@@ -9,6 +9,7 @@ import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
+import {baseURI} from '../_services/APIService';
 
 class Component extends React.Component{
     constructor(props){
@@ -62,7 +63,7 @@ class Component extends React.Component{
 
         var classCompID;
 
-        await fetch("/api/exercise/bycomponent/" + componentID, {  
+        await fetch(baseURI + "/api/exercise/bycomponent/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -75,7 +76,7 @@ class Component extends React.Component{
             }
         ).catch(console.log);
 
-        await fetch("/api/exercise_blob/foracomp/" + componentID, {  
+        await fetch(baseURI + "/api/exercise_blob/foracomp/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -148,7 +149,7 @@ class Component extends React.Component{
         var exerciseBlob;
         var buffer;
 
-        await fetch("/api/exercise_blob/" + exerciseID  , { 
+        await fetch(baseURI + "/api/exercise_blob/" + exerciseID  , { 
             method: "GET"                         
             })
             .then(res => res.text())

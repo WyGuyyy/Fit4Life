@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {baseURI} from '../_services/APIService';
 
 class Goal extends React.Component{
     constructor(props){
@@ -46,7 +47,7 @@ class Goal extends React.Component{
 
         var goals = [];
 
-        await fetch("/api/goal/byUser/" + localStorage.getItem("userID"), {  
+        await fetch(baseURI + "/api/goal/byUser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -204,7 +205,7 @@ class Goal extends React.Component{
         var goalList = document.getElementById("goalList");
         var listChildren = goalList.childNodes;
 
-        await fetch("/api/goal/" + this.state.focusedGoal.goal_id, {  
+        await fetch(baseURI + "/api/goal/" + this.state.focusedGoal.goal_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
