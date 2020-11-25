@@ -45,7 +45,7 @@ class GoalEdit extends React.Component{
 
         var goal;
 
-        await fetch("http://localhost:8080/api/goal/" + this.props.location.state.goal.goal_id, {  
+        await fetch("/api/goal/" + this.props.location.state.goal.goal_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -77,7 +77,7 @@ class GoalEdit extends React.Component{
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-            await fetch("http://localhost:8080/api/goal", {  
+            await fetch("/api/goal", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

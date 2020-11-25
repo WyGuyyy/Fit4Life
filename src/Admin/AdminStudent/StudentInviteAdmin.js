@@ -45,7 +45,7 @@ class StudentInviteAdmin extends React.Component{
         }
 
         if(queryString.localeCompare("ALL") === 0){
-            await fetch("http://localhost:8080/api/user/student", {  
+            await fetch("/api/user/student", {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -59,7 +59,7 @@ class StudentInviteAdmin extends React.Component{
             ).catch(console.log);
         }else{
 
-            await fetch("http://localhost:8080/api/user/search/" + queryString, {  
+            await fetch("/api/user/search/" + queryString, {  
                     method: "GET",                          
                     headers: {"Content-Type": "application/json",
                               "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -169,7 +169,7 @@ class StudentInviteAdmin extends React.Component{
 
         var check;
 
-        var c = await fetch("http://localhost:8080/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
+        var c = await fetch("/api/user/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
                     method: "GET",                          
                     headers: {"Content-Type": "application/json",
                               "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -193,7 +193,7 @@ class StudentInviteAdmin extends React.Component{
     async studentInviteExists(student){
         var check;
 
-        await fetch("http://localhost:8080/api/invite/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
+        await fetch("/api/invite/" + this.state.classroom.classroom_id + "/" + student.user_id, {  
                     method: "GET",                          
                     headers: {"Content-Type": "application/json",
                               "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -250,7 +250,7 @@ class StudentInviteAdmin extends React.Component{
         var classroomID = this.state.classroomID;
         var studentID = this.state.focusedStudent.user_id;
 
-        await fetch("http://localhost:8080/api/invite/send/" + studentID + "/" + 2 + "/" + classroomID, {  
+        await fetch("/api/invite/send/" + studentID + "/" + 2 + "/" + classroomID, {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

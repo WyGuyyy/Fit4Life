@@ -52,7 +52,7 @@ class Schedule extends React.Component{
 
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.location.state.student.user_id);
 
-        await fetch("http://localhost:8080/api/classroom/foruser/" + userID, {  
+        await fetch("/api/classroom/foruser/" + userID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

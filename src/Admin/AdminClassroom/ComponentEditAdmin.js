@@ -38,7 +38,7 @@ class ComponentEditAdmin extends React.Component{
 
         var component;
 
-        await fetch("http://localhost:8080/api/component/" + this.props.location.state.component.component_id, {  
+        await fetch("/api/component/" + this.props.location.state.component.component_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -68,7 +68,7 @@ class ComponentEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("http://localhost:8080/api/component", {  
+            await fetch("/api/component", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

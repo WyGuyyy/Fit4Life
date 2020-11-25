@@ -86,7 +86,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var exercise;
 
-        await fetch("http://localhost:8080/api/exercise/" + this.props.location.state.exercise.exercise_id, {  
+        await fetch("/api/exercise/" + this.props.location.state.exercise.exercise_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -113,7 +113,7 @@ class ExerciseEditAdmin extends React.Component{
 
         var imageEdit = document.getElementById("Exercise-Edit-Image-Label");
 
-        await fetch("http://localhost:8080/api/exercise_blob/forexercise/" + exerciseID, {  
+        await fetch("/api/exercise_blob/forexercise/" + exerciseID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -145,7 +145,7 @@ class ExerciseEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("http://localhost:8080/api/exercise", {  
+            await fetch("/api/exercise", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
@@ -162,7 +162,7 @@ class ExerciseEditAdmin extends React.Component{
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used
-            await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
+            await fetch("/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}

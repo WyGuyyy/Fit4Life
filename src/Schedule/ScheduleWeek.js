@@ -67,8 +67,8 @@ class ScheduleWeek extends React.Component{
         var workouts = [];
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
 
-        //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/workout/byuser/" + userID, {  
+        //await fetch("/api/classroom", {
+            await fetch("/api/workout/byuser/" + userID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -144,6 +144,8 @@ class ScheduleWeek extends React.Component{
     matchesFilters(workout){
         var strDate = workout.date.split("T")[0];
         var strDateForDay = this.formatDateForDay();
+
+        console.log(strDate + " ||| " + strDateForDay);
  
         if(workout.classroom.classroom_id === this.props.classroom.classroom_id && 
             strDate.localeCompare(strDateForDay) === 0){
@@ -173,8 +175,8 @@ class ScheduleWeek extends React.Component{
         }
 
         var strYear = startOfWeek.getFullYear();
-        var strMonth = (startOfWeek.getMonth() < 9 ? "0" + (startOfWeek.getMonth() + 1) : startOfWeek.getMonth() + 1);
-        var strDate = (startOfWeek.getDate() < 9 ? "0" + startOfWeek.getDate() : startOfWeek.getDate());
+        var strMonth = (startOfWeek.getMonth() <= 9 ? "0" + (startOfWeek.getMonth() + 1) : startOfWeek.getMonth() + 1);
+        var strDate = (startOfWeek.getDate() <= 9 ? "0" + startOfWeek.getDate() : startOfWeek.getDate());
 
         currentDate = strYear + "-" + strMonth + "-" + strDate;
 

@@ -37,8 +37,8 @@ class Classroom extends React.Component{
         var classroomWrapper = document.getElementById("classroomWrapper");
         var classroomID = this.state.classroom.classroom_id;
 
-        //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/component/byclass/" + classroomID, {  
+        //await fetch("/api/classroom", {
+            await fetch("/api/component/byclass/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

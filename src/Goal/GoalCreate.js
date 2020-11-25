@@ -47,7 +47,7 @@ class GoalCreate extends React.Component{
 
         if(DataCheckService.validateFields([aTitle, aProgress, aDescription])){
 
-            await fetch("http://localhost:8080/api/goal", {  
+            await fetch("/api/goal", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

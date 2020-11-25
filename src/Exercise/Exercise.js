@@ -55,7 +55,7 @@ class Exercise extends React.Component{
 
         if(DataCheckService.validateFields([aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
-            await fetch("http://localhost:8080/api/workout", {  
+            await fetch("/api/workout", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

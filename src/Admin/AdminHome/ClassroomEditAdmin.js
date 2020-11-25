@@ -36,7 +36,7 @@ class ClassroomEditAdmin extends React.Component{
 
         var classroom;
 
-        await fetch("http://localhost:8080/api/classroom/" + this.props.location.state.classroom.classroom_id, {  
+        await fetch("/api/classroom/" + this.props.location.state.classroom.classroom_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -65,7 +65,7 @@ class ClassroomEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){        
 
-            await fetch("http://localhost:8080/api/classroom", {  
+            await fetch("/api/classroom", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

@@ -44,7 +44,7 @@ class Invite extends React.Component{
         var classroomTitle;
         var teacherLastName;
 
-        await fetch("http://localhost:8080/api/invite/foruser/" + localStorage.getItem("userID"), {  
+        await fetch("/api/invite/foruser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -143,7 +143,7 @@ class Invite extends React.Component{
     async getInviteClassroom(cID){
         var classroomTitle;
 
-        await fetch("http://localhost:8080/api/classroom/" + cID, {  
+        await fetch("/api/classroom/" + cID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -162,7 +162,7 @@ class Invite extends React.Component{
     async getInviteTeacher(tID){
         var teacherLastName;
 
-        await fetch("http://localhost:8080/api/user/" + tID, {  
+        await fetch("/api/user/" + tID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -208,7 +208,7 @@ class Invite extends React.Component{
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
+        await fetch("/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -239,13 +239,13 @@ class Invite extends React.Component{
         var inviteList = document.getElementById("inviteList");
         var listChildren = inviteList.childNodes;
 
-        await fetch("http://localhost:8080/api/invite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.classroom.classroom_id, {  
+        await fetch("/api/invite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.classroom.classroom_id, {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
-        await fetch("http://localhost:8080/api/invite/" + this.state.focusedInvite.invite_id, {  
+        await fetch("/api/invite/" + this.state.focusedInvite.invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

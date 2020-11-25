@@ -12,9 +12,7 @@ async function authenticate(aUsername, aPassword){
     var data;
     var user = {username: aUsername, password: aPassword};
 
-    console.log(aPassword);
-
-    await fetch("http://localhost:8080/api/authenticate", {  
+    await fetch("/api/authenticate", {  
             method: "POST",
             body: JSON.stringify(user),                          
             headers: {"Content-Type": "application/json"}
@@ -45,7 +43,7 @@ function logout(){
     localStorage.removeItem('userRole');
     localStorage.removeItem('userDisplayName');
     localStorage.removeItem("userEmail");
-    
+
 }
 
 function isLoggedIn(){

@@ -52,7 +52,7 @@ class CreateAccount extends React.Component{
 
         user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), display_name: aDisplayName.trim(), password_hash: hashedPassword};
 
-        await fetch("http://localhost:8080/api/createaccount", {  
+        await fetch("/api/createaccount", {  
             method: "POST",
             body: JSON.stringify(user),                          
             headers: {"Content-Type": "application/json"}

@@ -34,7 +34,7 @@ class AdminHome extends React.Component{
 
         var classrooms = [];
 
-        await fetch("http://localhost:8080/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
+        await fetch("/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -235,7 +235,7 @@ class AdminHome extends React.Component{
         var goalList = document.getElementById("classroomList-Admin");
         var listChildren = goalList.childNodes;
 
-        await fetch("http://localhost:8080/api/classroom/" + this.state.focusedClassroom.classroom_id, {  
+        await fetch("/api/classroom/" + this.state.focusedClassroom.classroom_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

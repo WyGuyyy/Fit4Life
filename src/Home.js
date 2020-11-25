@@ -29,8 +29,8 @@ class Home extends React.Component{
         var count = 0;
         var classroomWrapper = document.getElementById("homeWrapper");
 
-        //await fetch("http://192.168.1.5:8080/api/classroom", {
-            await fetch("http://localhost:8080/api/classroom/foruser/" + localStorage.getItem("userID"), {  
+        //await fetch("/api/classroom", {
+            await fetch("/api/classroom/foruser/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}

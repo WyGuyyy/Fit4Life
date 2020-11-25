@@ -32,7 +32,7 @@ class ClassroomCreateAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch("http://localhost:8080/api/classroom", {  
+            await fetch("/api/classroom", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

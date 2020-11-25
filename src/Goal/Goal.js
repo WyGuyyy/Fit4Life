@@ -46,7 +46,7 @@ class Goal extends React.Component{
 
         var goals = [];
 
-        await fetch("http://localhost:8080/api/goal/byUser/" + localStorage.getItem("userID"), {  
+        await fetch("/api/goal/byUser/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -204,7 +204,7 @@ class Goal extends React.Component{
         var goalList = document.getElementById("goalList");
         var listChildren = goalList.childNodes;
 
-        await fetch("http://localhost:8080/api/goal/" + this.state.focusedGoal.goal_id, {  
+        await fetch("/api/goal/" + this.state.focusedGoal.goal_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

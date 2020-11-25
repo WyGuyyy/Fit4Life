@@ -46,7 +46,7 @@ class AdminComponent extends React.Component{
         var componentID = this.state.component.component_id;
         var classCompID;
 
-        await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
+        await fetch("/api/exercise/bycomponent/" + componentID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -202,7 +202,7 @@ class AdminComponent extends React.Component{
         var exerciseList = document.getElementById("exerciseList-Admin");
         var listChildren = exerciseList.childNodes;
 
-        await fetch("http://localhost:8080/api/exercise/" + this.state.focusedExercise.exercise_id, {  
+        await fetch("/api/exercise/" + this.state.focusedExercise.exercise_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}

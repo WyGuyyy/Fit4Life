@@ -62,7 +62,7 @@ class Component extends React.Component{
 
         var classCompID;
 
-        await fetch("http://localhost:8080/api/exercise/bycomponent/" + componentID, {  
+        await fetch("/api/exercise/bycomponent/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -75,7 +75,7 @@ class Component extends React.Component{
             }
         ).catch(console.log);
 
-        await fetch("http://localhost:8080/api/exercise_blob/foracomp/" + componentID, {  
+        await fetch("/api/exercise_blob/foracomp/" + componentID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -148,7 +148,7 @@ class Component extends React.Component{
         var exerciseBlob;
         var buffer;
 
-        await fetch("http://localhost:8080/api/exercise_blob/" + exerciseID  , { 
+        await fetch("/api/exercise_blob/" + exerciseID  , { 
             method: "GET"                         
             })
             .then(res => res.text())
