@@ -46,7 +46,7 @@ class PersonalInfoEdit extends React.Component{
 
         var personalInfo;
 
-        await fetch("http://localhost:8080/api/user/" + localStorage.getItem("userID"), {  
+        await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -79,7 +79,7 @@ class PersonalInfoEdit extends React.Component{
 
         if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches])){
 
-            await fetch("http://localhost:8080/api/user", {  
+            await fetch(baseURI + "/api/user", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
