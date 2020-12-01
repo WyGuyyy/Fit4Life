@@ -52,7 +52,7 @@ class GoalCreate extends React.Component{
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({user: {user_id: 1}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({user: {user_id: localStorage.getItem("userID")}, title: aTitle, progress: aProgress, content: aDescription}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
             document.getElementById("Goal-Create-Title-Input").value = "";
