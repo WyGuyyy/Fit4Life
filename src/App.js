@@ -62,8 +62,6 @@ const PrivateAdminRoute = ({component: Component, ...rest}) => (
 
 function App() {
 
-  console.log(baseURI);
-
   if(localStorage.getItem('logged_in') === undefined || localStorage.getItem('logged_in') === null){ 
       localStorage.setItem('logged_in', "false");
   }

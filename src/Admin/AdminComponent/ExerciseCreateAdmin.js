@@ -42,6 +42,7 @@ class ExerciseCreateAdmin extends React.Component{
 
         var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
+        var exerciseBlobID = -1;
         var classCompID;
         var exerciseID;
 
@@ -61,7 +62,7 @@ class ExerciseCreateAdmin extends React.Component{
 
             fileData.append("files", this.state.selectedFile);
 
-            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID , { 
+            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID , { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
