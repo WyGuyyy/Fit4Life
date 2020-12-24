@@ -22,7 +22,8 @@ class Schedule extends React.Component{
                 resizeTrigger: "",
                 studentClassrooms: "",
                 date: "",
-                classroom: ""
+                classroom: "",
+                classroomTitle: ""
             };
         }
 
@@ -35,6 +36,9 @@ class Schedule extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillClassroomSelect();
         }
+        
+        this.resetFilters();
+
     }
 
     componentDidUpdate(){
@@ -44,6 +48,28 @@ class Schedule extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    resetFilters(){
+
+        if(localStorage.getItem("workoutClassroom") !== undefined && localStorage.getItem("workoutClassroom") !== null){
+            document.getElementById("Workout-Classroom-Select").selected = localStorage.getItem("workoutClassroom");
+
+            console.log(localStorage.getItem("workoutClassroom"));
+
+            this.setState({
+                classroomTitle: localStorage.getItem("workoutClassroom")
+            });
+        }
+
+        if(localStorage.getItem("workoutDate") !== undefined && localStorage.getItem("workoutDate") !== null){
+            document.getElementById("Workout-Input-Date").value = localStorage.getItem("workoutDate");
+
+            this.setState({
+                date: localStorage.getItem("workoutDate")
+            });
+        }
+
     }
 
     async fillClassroomSelect(){
@@ -203,6 +229,8 @@ class Schedule extends React.Component{
 
         dateInput.value = year + "-" + month + "-" + day;
 
+        localStorage.setItem('workoutDate', dateInput.value);
+
         this.setState({
             date: dateInput.value
         });
@@ -221,6 +249,8 @@ class Schedule extends React.Component{
                 break;
             }
         }
+
+        localStorage.setItem('workoutClassroom', aClassroom.title);
 
         this.setState({
             classroom: aClassroom

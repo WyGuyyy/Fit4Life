@@ -145,8 +145,6 @@ class ScheduleWeek extends React.Component{
     matchesFilters(workout){
         var strDate = workout.date.split("T")[0];
         var strDateForDay = this.formatDateForDay();
-
-        console.log(strDate + " ||| " + strDateForDay);
  
         if(workout.classroom.classroom_id === this.props.classroom.classroom_id && 
             strDate.localeCompare(strDateForDay) === 0){

@@ -131,7 +131,9 @@ class ExerciseEditAdmin extends React.Component{
             exerciseBlob: anExerciseBlob
         });
 
-        imageEdit.innerText = anExerciseBlob.filename;
+        imageEdit.innerText = (anExerciseBlob.filename === undefined ||
+                               anExerciseBlob.filename === null ? 
+                               "Select an Image" : anExerciseBlob.filename);
         
     }
 
@@ -143,6 +145,10 @@ class ExerciseEditAdmin extends React.Component{
         var componentID = this.state.component.component_id;
         var exerciseID = this.state.exercise.exercise_id;
         var exerciseBlobID = this.state.exerciseBlob.exercise_blob_id;
+
+        if(exerciseBlobID === undefined || exerciseBlobID === null){
+            exerciseBlobID = -1;
+        }
 
         if(DataCheckService.validateFields([aTitle])){
 
@@ -159,7 +165,7 @@ class ExerciseEditAdmin extends React.Component{
             ).catch(console.log);
 
             fileData.append("files", this.state.selectedFile);
-
+                console.log("hello");
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used

@@ -29,6 +29,11 @@ class Popout extends React.Component{
         
     }
 
+    clearFilters(event){
+        localStorage.removeItem("workoutClassroom");
+        localStorage.removeItem("workoutDate");
+    }
+
     logout(event){
         authService.logout();
         this.state.history.push("/login");
@@ -48,7 +53,7 @@ class Popout extends React.Component{
                         <button className="popoutButton">Goals</button>
                     </Link>
                     <Link to={{pathname: "/schedule", state: {goBack: true}}} className="scheduleLink">
-                        <button className="popoutButton">Schedule</button>
+                        <button className="popoutButton" onClick={e => this.clearFilters(e)}>Schedule</button>
                     </Link>
                     <Link to={{pathname: "/personal", state: {goBack: true}}} className="personalLink">
                         <button className="popoutButton">Personal Info</button>
