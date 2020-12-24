@@ -55,8 +55,6 @@ class Schedule extends React.Component{
         if(localStorage.getItem("workoutClassroom") !== undefined && localStorage.getItem("workoutClassroom") !== null){
             document.getElementById("Workout-Classroom-Select").selected = localStorage.getItem("workoutClassroom");
 
-            console.log(localStorage.getItem("workoutClassroom"));
-
             this.setState({
                 classroomTitle: localStorage.getItem("workoutClassroom")
             });
@@ -98,7 +96,12 @@ class Schedule extends React.Component{
             classSelect.options[classSelect.options.length] = new Option(classrooms[classroom].title, classroom);
         }
 
-        classSelect.selectedIndex = 0;
+        if(localStorage.getItem("workoutClassroom") === undefined || localStorage.getItem("workoutClassroom") === null){
+            classSelect.selectedIndex = 0;
+        }else{
+            classSelect.selected = localStorage.getItem("workoutClassroom");
+        }
+        
         var aClassroom = (this.state.classroom.localeCompare("") === 0 ? classrooms[0] : this.state.classroom);
 
         this.setState({

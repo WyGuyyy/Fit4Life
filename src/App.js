@@ -45,7 +45,8 @@ const PrivateRoute = ({component: Component, ...rest}) => (
          props.location.pathname.localeCompare("/personal") === 0 ||
          props.location.pathname.localeCompare("/personalEdit") === 0 ||
          props.location.pathname.localeCompare("/classroom") === 0 || 
-         props.location.pathname.localeCompare("/component") === 0) ? 
+         props.location.pathname.localeCompare("/component") === 0 || 
+         props.location.pathname.localeCompare("/changePassword") === 0) ? 
          <Component {...props} /> : <Redirect to="/admin"/>)
       : <Redirect to='/login' login={authService}/>
   )}/>
