@@ -1,4 +1,5 @@
-export const baseURI = "https://wels-fit4lifebackend.herokuapp.com";
+//export const baseURI = "https://wels-fit4lifebackend.herokuapp.com";
+export const baseURI = "http://localhost:8080";
 
 /*
  "scripts": {

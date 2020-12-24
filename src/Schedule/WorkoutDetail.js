@@ -5,6 +5,8 @@ import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
 import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
+import ConfirmModal from '../Confirm/ConfirmModal';
+import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -77,6 +79,26 @@ class WorkoutDetail extends React.Component{
 
     }
 
+    showModal(event){
+        document.getElementById("modalContainer").style.display = "flex";
+    }
+
+    closeModal(){
+        document.getElementById("modalContainer").style.display = "none";
+
+        this.props.history.replace({pathname: "/Schedule", state: {canGoBack: true}});
+    }
+
+    async deleteWorkout(event){
+
+        await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).catch(console.log);
+
+    }
+
     goToEditWorkout(event){
 
         this.props.history.push({
@@ -106,11 +128,13 @@ class WorkoutDetail extends React.Component{
                     {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                      <Header title="Workout Details" breadCrumbs="Workout Details" goBack={true} customClick={this.goBack.bind(this)}/> : 
                      <AdminHeader title={"Workout Details"} breadCrumbs="Workout Details" goBack={false} customClick={this.goBack.bind(this)}/>}
+                     <ConfirmModal text="Delete workout?" yesText="Yes" noText="No" onYes={e => {this.deleteWorkout(e); this.closeModal();}}/>
                     <div className="Workout-Detail-Container">
                         {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                          <Popout hist={this.props.history}/> : 
                          <AdminPopout hist={this.props.history}/>}
                         <div className="Workout-Detail-Wrapper">
+                            <ConfirmToast text="Workout deleted!"/>
                             <div className="Workout-Detail-Form-Wrapper">
                                 <div className="Workout-Detail-Classroom-Wrapper-Parent">
                                     <div className="Workout-Detail-Classroom-Wrapper" id="Workout-Detail-Exercise-Wrapper">
@@ -163,7 +187,10 @@ class WorkoutDetail extends React.Component{
                                     </div>
                                 </div>
                             </div>
-                            <button className="Workout-Detail-EditWorkout" onClick={e => this.goToEditWorkout(e)}>Edit Workout</button>
+                            <div className="Workout-Detail-Button-Wrapper">
+                                <button className="Workout-Detail-EditWorkout" onClick={e => this.goToEditWorkout(e)}>Edit Workout</button>
+                                <button className="Workout-Detail-DeleteWorkout" onClick={e => this.showModal(e)}>Delete Workout</button>
+                            </div>
                         </div>
                     </div>
                 </Fragment>

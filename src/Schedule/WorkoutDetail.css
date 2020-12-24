@@ -460,7 +460,30 @@
     margin-right: 10px;
 }
 
+.Workout-Detail-Button-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .Workout-Detail-EditWorkout{
+    width: 200px;
+    height: 70px;
+    font-size: 20px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    background: #ad7f00;
+    transition-duration: .5s;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.Workout-Detail-EditWorkout:hover{
+    background: #ffbb00;
+}
+
+.Workout-Detail-DeleteWorkout{
     width: 200px;
     height: 70px;
     font-size: 20px;
@@ -471,7 +494,7 @@
     margin-top: 20px;
 }
 
-.Workout-Detail-EditWorkout:hover{
+.Workout-Detail-DeleteWorkout:hover{
     background: #ffbb00;
 }
 
@@ -527,6 +550,19 @@
         white-space: nowrap;
     }
 
+}
+
+@media(max-width: 730px){
+    .Workout-Detail-Button-Wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Workout-Detail-EditWorkout{
+        margin-right: 0px;
+    }
 }
 
 @media(max-width: 425px){

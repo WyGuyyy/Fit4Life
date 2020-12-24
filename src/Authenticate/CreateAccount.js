@@ -45,21 +45,13 @@ class CreateAccount extends React.Component{
         var aPassword = document.getElementById("createAccountInputPassword").value;
         var aConfirmedPassword = document.getElementById("createAccountInputConfirmPassword").value;
 
-        console.log("hi");
-
         if(!this.validateData(aFirstName, aLastName, anEmail, aDisplayName, aPassword, aConfirmedPassword)){
             return;
         }
 
-        console.log("hi1");
-
         var hashedPassword = passHashService.hashPassword(aPassword.trim());
 
-        console.log("hi2");
-
         user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), display_name: aDisplayName.trim(), password_hash: hashedPassword};
-
-        console.log(user);
 
         await fetch(baseURI + "/api/createaccount", {  
             method: "POST",
@@ -107,13 +99,9 @@ class CreateAccount extends React.Component{
             return false;
         }
 
-        console.log(password + "|||" + confirmedPassword);
-
         if(!(password.localeCompare(confirmedPassword) === 0)){
             return false;
         }
-
-        console.log("sure");
 
         return true;
 

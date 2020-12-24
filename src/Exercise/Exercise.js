@@ -82,6 +82,19 @@ class Exercise extends React.Component{
 
     }
 
+    checkDate(event){
+
+        var value = event.target.value;
+        var day = new Date(value).getUTCDay();
+
+        if([6,0].includes(day)){
+            event.target.value = '';
+            this.showIllegalDate();
+        }
+
+
+    }
+
     showModal(event){
         document.getElementById("modalContainer").style.display = "flex";
     }
@@ -94,6 +107,14 @@ class Exercise extends React.Component{
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
         confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
+    showIllegalDate(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "Date cannot be a day of the weekend! Please choose a different day!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
@@ -158,7 +179,7 @@ class Exercise extends React.Component{
                                     <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999"/>
+                                    <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" onChange={e => this.checkDate(e)}/>
                                 </div>
                                 <div className="Exercise-Submit-Row">
                                     <button className="exerciseSubmit" onClick={(e) => this.showModal(e)}>Submit</button>
