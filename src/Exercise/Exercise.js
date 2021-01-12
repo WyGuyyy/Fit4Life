@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Popout from '../Popout/Popout';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
+import ScrollPicker from '../ScrollPicker/ScrollPicker';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
@@ -54,7 +55,7 @@ class Exercise extends React.Component{
         var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
 
-        if(DataCheckService.validateFields([aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
+        if(DataCheckService.validateFields([aDate])){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
@@ -144,6 +145,32 @@ class Exercise extends React.Component{
         var component = this.props.location.state.component.title;
         var exercise = this.props.location.state.exercise.title;
 
+        var count = 0;
+
+        var timeArr = [];
+
+        var secondsArr = [];
+        var minuteArr = [];
+
+        var setsArr = [];
+        var repsArr = [];
+
+        for(count = 0; count < 60; count++){
+            secondsArr.push(count);
+            minuteArr.push(count);
+        }
+
+        timeArr.push(minuteArr);
+        timeArr.push(secondsArr);
+
+        for(count = 0; count <= 10; count++){
+            setsArr.push(count);
+        }
+
+        for(count = 0; count <= 20; count++){
+            repsArr.push(count);
+        }
+
         return(
             <Fragment>
                 <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + component + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
@@ -158,25 +185,41 @@ class Exercise extends React.Component{
                             </div>
                             <div className="Exercise-Form-Wrapper">
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Exercise: </label> <input className="exerciseInput" id="Exercise-Input-Exercise" type="text" readOnly defaultValue={this.props.location.state.exercise.title}/>
+                                    <label className="exerciseLabel">Exercise: </label><input className="exerciseInput" id="Exercise-Input-Exercise" type="text" readOnly defaultValue={this.props.location.state.exercise.title}/>
+                                </div>
+                                <div className="Exercise-Details-Row" id="Exercise-Details-Row-Component">
+                                    <label className="exerciseLabel">Components: </label> 
+                                    <select className="exerciseSelect" id="exerciseSelectComponent" multiple={true}>
+                                        <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
+                                        <option value="Muscular Strength">Muscular Strength</option>
+                                        <option value="Muscular Endurance">Muscular Endurance</option>
+                                        <option value="Flexibility">Flexibility</option>
+                                    </select>
+                                </div>
+                                <div className="Exercise-Details-Row" id="Exercise-Details-Row-THR">
+                                    <label className="exerciseLabel">Target Heart Rate: </label> 
+                                    <select className="exerciseSelect">
+                                        <option value="zone1">Zone 1 (104-124 bpm)</option>
+                                        <option value="zone2">Zone 2 (124-144 bpm)</option>
+                                        <option value="zone3">Zone 3 (144-164 bpm)</option>
+                                        <option value="zone4">Zone 4 (164-184 bpm)</option>
+                                        <option value="zone5">Zone 5 (184-206 bpm)</option>
+                                    </select>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Target Heart Rate: </label> <input className="exerciseInput" id="Exercise-Input-THR" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Weight (lb): </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Weight: </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Time On: </label> <input className="exerciseInput" id="Exercise-Input-TimeOn" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Rest: </label> <input className="exerciseInput" id="Exercise-Input-Rest" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Sets: </label> <input className="exerciseInput" id="Exercise-Input-Sets" type="Number" min="0" max="999" maxLength="9"/>
-                                </div>
-                                <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" onChange={e => this.checkDate(e)}/>
@@ -199,3 +242,17 @@ export default Exercise;
 //<Hamburger />
 //
 //"react-router-dom": "^6.0.0-alpha.1",
+/*
+<div className="Exercise-Details-Row">
+    <label className="exerciseLabel">Time On: </label> <input className="exerciseInput" id="Exercise-Input-TimeOn" type="Number" min="0" max="999" maxLength="9"/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Rest: </label> <input className="exerciseInput" id="Exercise-Input-Rest" type="Number" min="0" max="999" maxLength="9"/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Sets: </label> <input className="exerciseInput" id="Exercise-Input-Sets" type="Number" min="0" max="999" maxLength="9"/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" maxLength="9"/>
+                                </div>
+*/
