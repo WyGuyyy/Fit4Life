@@ -17,7 +17,6 @@ class Component extends React.Component{
 
         if(RedirectService.checkItemForUndefined(props.location.state)){
             this.state = {
-                component: props.location.state.selectedComponent,
                 classroom: props.location.state.selectedClassroom,
                 canGoBack: true,
                 componentExercises: "",
@@ -59,11 +58,11 @@ class Component extends React.Component{
         var componentWrapper = document.getElementById("componentWrapper");
 
         var classroomID = this.state.classroom.classroom_id;
-        var componentID = this.state.component.component_id;
+        //var componentID = this.state.component.component_id;
 
         var classCompID;
 
-        await fetch(baseURI + "/api/exercise/bycomponent/" + componentID, {  
+        await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -76,7 +75,7 @@ class Component extends React.Component{
             }
         ).catch(console.log);
 
-        await fetch(baseURI + "/api/exercise_blob/foracomp/" + componentID, {  
+        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -130,7 +129,7 @@ class Component extends React.Component{
         if(localStorage.getItem("userRole").localeCompare("STUDENT") === 0){
             this.props.history.push({
                 pathname: "/exercise",
-                state: {exercise: selExercise, component: this.state.component, classroom: this.state.classroom}
+                state: {exercise: selExercise, classroom: this.state.classroom}
             });
         }else{
             this.showAdminNotAllowed();
@@ -206,12 +205,12 @@ class Component extends React.Component{
         }
 
         var classroom = this.props.location.state.selectedClassroom.title;
-        var component = this.props.location.state.selectedComponent.title;
+        //var component = this.props.location.state.selectedComponent.title;
 
         return(
             <Fragment>
                 {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
-                <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/> :
+                <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>

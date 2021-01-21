@@ -18,8 +18,7 @@ class ExerciseCreateAdmin extends React.Component{
             this.state = {
                 canGoBack: true,
                 selectedFile: "",
-                classroom: props.location.state.classroom,
-                component: props.location.state.component
+                classroom: props.location.state.classroom
             }
         }else{
             //error toast here
@@ -40,7 +39,7 @@ class ExerciseCreateAdmin extends React.Component{
         var aTitle = document.getElementById("Exercise-Create-Title-Input-Admin").value;
         const fileData = new FormData();
 
-        var componentID = this.state.component.component_id;
+        //var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
         var exerciseBlobID = -1;
         var classCompID;
@@ -52,7 +51,7 @@ class ExerciseCreateAdmin extends React.Component{
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).then(res => res.json())
             .then(
                 (text) => {
@@ -62,7 +61,7 @@ class ExerciseCreateAdmin extends React.Component{
 
             fileData.append("files", this.state.selectedFile);
 
-            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID , { 
+            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + classroomID + "/" + exerciseBlobID , { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -154,11 +153,11 @@ class ExerciseCreateAdmin extends React.Component{
         }
 
         var classroom = this.props.location.state.classroom.title;
-        var component = this.props.location.state.component.title;
+        //var component = this.props.location.state.component.title;
 
         return(
             <Fragment>
-                <AdminHeader title={"Exercise Create"} breadCrumbs={"Create Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Exercise Create"} breadCrumbs={"Create Exercise for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Create exercise?" yesText="Yes" noText="No" onYes={e => {this.createExercise(); this.closeModal();}}/>
                 <div className="Exercise-Create-Container-Admin">
                     <AdminPopout hist={this.props.history}/>

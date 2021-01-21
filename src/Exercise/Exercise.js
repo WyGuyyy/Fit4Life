@@ -19,7 +19,6 @@ class Exercise extends React.Component{
             this.state = {
                 exercise: props.location.state.exercise,
                 classroom: props.location.state.classroom,
-                component: props.location.state.component,
                 canGoBack: true
             };
         }
@@ -42,12 +41,26 @@ class Exercise extends React.Component{
 
     async submitWorkout(event){
 
-        var aTHR = document.getElementById("Exercise-Input-THR").value;
+        var aTHR = document.getElementById("exerciseSelectComponent");
+        aTHR = aTHR.options[aTHR.selectedIndex].text;
+
+        var componentOptions = document.getElementById("exerciseSelectComponent").options;
+        var count = 0;
+        var components = [];
+
+        for(count = 0; count < 4; count++){
+            var opt = componentOptions[count];
+
+            if(opt.selected){
+                components.push(opt.text);
+            }
+        }
+
         var aWeight = document.getElementById("Exercise-Input-Weight").value;
-        var aTimeOn = document.getElementById("Exercise-Input-TimeOn").value;
-        var aRest = document.getElementById("Exercise-Input-Rest").value;
-        var aSets = document.getElementById("Exercise-Input-Sets").value;
-        var aReps = document.getElementById("Exercise-Input-Reps").value;
+        var aTimeOn =""; //document.getElementById("Exercise-Input-TimeOn").value;
+        var aRest = "";//document.getElementById("Exercise-Input-Rest").value;
+        var aSets = "";//document.getElementById("Exercise-Input-Sets").value;
+        var aReps = "";//document.getElementById("Exercise-Input-Reps").value;
         var aDate = document.getElementById("Exercise-Input-Date").value;
 
         var userID = localStorage.getItem("userID"); 
@@ -67,12 +80,12 @@ class Exercise extends React.Component{
                     rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
             }).catch(console.log);
             
-            document.getElementById("Exercise-Input-THR").value = "";
+            //document.getElementById("Exercise-Input-THR").value = "";
             document.getElementById("Exercise-Input-Weight").value = "";
-            document.getElementById("Exercise-Input-TimeOn").value = "";
-            document.getElementById("Exercise-Input-Rest").value = "";
-            document.getElementById("Exercise-Input-Sets").value = "";
-            document.getElementById("Exercise-Input-Reps").value = "";
+            //document.getElementById("Exercise-Input-TimeOn").value = "";
+            //document.getElementById("Exercise-Input-Rest").value = "";
+            //document.getElementById("Exercise-Input-Sets").value = "";
+            //document.getElementById("Exercise-Input-Reps").value = "";
             document.getElementById("Exercise-Input-Date").value = "";
 
             this.confirmBackendTransaction();
@@ -142,7 +155,7 @@ class Exercise extends React.Component{
         }
 
         var classroom = this.props.location.state.classroom.title;
-        var component = this.props.location.state.component.title;
+        //var component = this.props.location.state.component.title;
         var exercise = this.props.location.state.exercise.title;
 
         var count = 0;
@@ -173,7 +186,7 @@ class Exercise extends React.Component{
 
         return(
             <Fragment>
-                <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + component + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
+                <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal();}}/>
                 <div className="exerciseContainer">
                     <Popout hist={this.props.history}/>
@@ -198,7 +211,8 @@ class Exercise extends React.Component{
                                 </div>
                                 <div className="Exercise-Details-Row" id="Exercise-Details-Row-THR">
                                     <label className="exerciseLabel">Target Heart Rate: </label> 
-                                    <select className="exerciseSelect">
+                                    <select className="exerciseSelect" id="exerciseSelectTHR">
+                                        <option value="none">None</option>
                                         <option value="zone1">Zone 1 (104-124 bpm)</option>
                                         <option value="zone2">Zone 2 (124-144 bpm)</option>
                                         <option value="zone3">Zone 3 (144-164 bpm)</option>

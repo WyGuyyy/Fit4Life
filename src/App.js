@@ -73,8 +73,7 @@ function App() {
         <Route exact path="/login" component={Authenticate} />
         <Route exact path="/createAccount" component={CreateAccount} />
         <PrivateRoute exact path="/" component={Home} />
-        <PrivateRoute exact path="/classroom" component={Classroom} />
-        <PrivateRoute exact path="/component" component={Component} />
+        <PrivateRoute exact path="/classroom" component={Component} />
         <PrivateRoute exact path="/exercise" component={Exercise} />
         <PrivateRoute exact path="/goal" component={Goal} />
         <PrivateRoute exact path="/goalDetail" component={GoalDetail} />
@@ -91,10 +90,7 @@ function App() {
         <PrivateAdminRoute exact path="/admin" component={AdminHome} />
         <PrivateAdminRoute exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
         <PrivateAdminRoute exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />
-        <PrivateAdminRoute exact path="/classroomAdmin" component={AdminClassroom} />
-        <PrivateAdminRoute exact path="/componentCreateAdmin" component={ComponentCreateAdmin} />
-        <PrivateAdminRoute exact path="/componentEditAdmin" component={ComponentEditAdmin} />
-        <PrivateAdminRoute exact path="/componentAdmin" component={AdminComponent} />
+        <PrivateAdminRoute exact path="/classroomAdmin" component={AdminComponent} />
         <PrivateAdminRoute exact path="/exerciseCreateAdmin" component={ExerciseCreateAdmin} />
         <PrivateAdminRoute exact path="/exerciseEditAdmin" component={ExerciseEditAdmin} />
         <PrivateAdminRoute exact path="/studentAdmin" component={AdminStudent} />
@@ -115,3 +111,10 @@ function loggedIn(){
 }
 
 export default App;
+
+//<PrivateRoute exact path="/classroom" component={Classroom} />
+/*
+<PrivateAdminRoute exact path="/componentCreateAdmin" component={ComponentCreateAdmin} />
+<PrivateAdminRoute exact path="/componentEditAdmin" component={ComponentEditAdmin} />
+<PrivateAdminRoute exact path="/classroomAdmin" component={AdminClassroom} />
+*/

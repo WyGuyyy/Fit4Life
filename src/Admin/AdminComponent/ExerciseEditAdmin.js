@@ -23,7 +23,6 @@ class ExerciseEditAdmin extends React.Component{
                 title: props.location.state.title,
                 exercise: props.location.state.exercise,
                 classroom: props.location.state.classroom,
-                component: props.location.state.component,
                 exerciseObject: "",
                 exerciseBlob: null
             }
@@ -142,7 +141,8 @@ class ExerciseEditAdmin extends React.Component{
         var aTitle = document.getElementById("Exercise-Edit-Title-Input-Admin").value;
         const fileData = new FormData();
 
-        var componentID = this.state.component.component_id;
+        //var componentID = this.state.component.component_id;
+        var classroomID = this.state.classroom.classroom_id;
         var exerciseID = this.state.exercise.exercise_id;
         var exerciseBlobID = this.state.exerciseBlob.exercise_blob_id;
 
@@ -156,7 +156,7 @@ class ExerciseEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({exercise_id: exerciseID, title: aTitle, component: {component_id: componentID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({exercise_id: exerciseID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).then(res => res.json())
             .then(
                 (text) => {
@@ -169,7 +169,7 @@ class ExerciseEditAdmin extends React.Component{
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used
-            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + componentID + "/" + exerciseBlobID, { 
+            await fetch(baseURI + "/api/exercise_blob/" + exerciseID + "/" + classroomID + "/" + exerciseBlobID, { 
                 method: "POST",                          
                 body: fileData,
                 headers: {"Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -259,12 +259,12 @@ class ExerciseEditAdmin extends React.Component{
         }
 
         var classroom = this.props.location.state.classroom.title;
-        var component = this.props.location.state.component.title;
+        //var component = this.props.location.state.component.title;
         var exercise = this.state.exerciseObject;
 
         return(
             <Fragment>
-                <AdminHeader title={"Exercise Edit"} breadCrumbs={"Edit Exercise for " + classroom + ">" + component} goBack={true} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Exercise Edit"} breadCrumbs={"Edit Exercise for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save exercise?" yesText="Yes" noText="No" onYes={e => {this.saveExercise(); this.closeModal();}}/>
                 <div className="Exercise-Edit-Container-Admin" id="Exercise-Edit-Container-Admin">
                     <AdminPopout hist={this.props.history}/>

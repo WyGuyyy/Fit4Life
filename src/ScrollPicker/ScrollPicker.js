@@ -18,7 +18,10 @@ class ScrollPicker extends React.Component{
             this.state = {
                 columnTitles: props.columnTitles,
                 columnItems: props.columnItems,
-                controlWrapperID: props.controlWrapperID
+                controlWrapperID: props.controlWrapperID,
+                selectedItem: [],
+                transform: [],
+                selected: []
             };
         //}
 
@@ -47,20 +50,36 @@ class ScrollPicker extends React.Component{
 
         var columnWrapper = "";
         var columnDiv = "";
+        var columnScrollDiv = "";
         var columnTitle = "";
         var itemWrapper = "";
         var item = "";
         var pickerArr = [];
 
+        var transforms = this.state.transform;
+        var newSelected = this.state.selected;
+        var newSelectedItem = this.state.selectedItem;
+
         var controlWrapper = document.getElementById(id);
 
         for(titleCount = 0; titleCount < titles.length; titleCount++){
             
+            transforms.push(0);
+            newSelected.push(-1);
+            newSelectedItem.push("");
+
             columnWrapper = document.createElement("div");
             columnTitle = document.createElement("h2");
             columnDiv = document.createElement("div");
+            columnScrollDiv = document.createElement("div");
 
             columnDiv.classList.add("Picker-ColumnDiv");
+            //columnDiv.id = "Picker-ColumnDiv-" + titles[titleCount];
+            //columnDiv.onwheel = e => this.controlScroll(e);
+            columnScrollDiv.onwheel = e => this.controlScroll(e);
+
+            columnScrollDiv.classList.add("Picker-ColumnScrollDiv");
+            columnScrollDiv.id = "Picker-ColumnScrollDiv-" + id + "-" + titles[titleCount];
 
             columnTitle.classList.add("Picker-ColumnTitle");
             columnTitle.textContent = titles[titleCount];
@@ -75,28 +94,75 @@ class ScrollPicker extends React.Component{
                 itemWrapper.classList.add("Picker-ItemWrapper");
                 item.classList.add("Picker-Item");
 
-                itemWrapper.id = titles[titleCount] + "Wrapper-" + itemCount;
+                itemWrapper.id = titles[titleCount] + "Wrapper-" + id + "-" + itemCount;
                 itemWrapper.onclick = e => this.onItemClick(e);
-                item.id = titles[titleCount] + "-" + itemCount;
-
+                item.id = titles[titleCount] + "-" + id + "-" + itemCount;
                 item.textContent = items[titleCount][itemCount];
                 console.log(items);
 
                 itemWrapper.appendChild(item);
-                columnDiv.appendChild(itemWrapper);
+                columnScrollDiv.appendChild(itemWrapper);
             }
 
+            columnDiv.appendChild(columnScrollDiv);
             columnWrapper.appendChild(columnDiv);
             controlWrapper.appendChild(columnWrapper);
 
         }
 
+        this.setState({
+            transform: transforms,
+            selected: newSelected,
+            selectedItem: newSelectedItem
+        });
+
+    }
+
+    //Need to refactor below methods
+    controlScroll(event){
+        var id = event.target.id;
+        var idType = id.split("-")[0].replace("Wrapper", "");
+        var newTransforms = this.state.transform;
+        var index = this.state.columnTitles.indexOf(idType);
+
+        var controlWrapperID = this.state.controlWrapperID;
+        var scroller = document.getElementById("Picker-ColumnScrollDiv-" + controlWrapperID + "-" + idType);
+        var newTransform = (event.deltaY < 0 ? newTransforms[index] + 100 : newTransforms[index] - 100);
+
+        var numItems = this.state.columnItems[index].length - 1;
+
+        if(newTransform > 0){
+            newTransform = 0;
+        }else if(newTransform < (-100 * numItems)){
+            newTransform = newTransform + 100;
+        }
+
+        newTransforms[index] = newTransform;
+
+        console.log(numItems);
+
+        scroller.style.transform = "translateY(" + newTransform + "px)";
+        
+        this.setState({
+            transform: newTransforms
+        });
+
+        event.preventDefault();
     }
 
     onItemClick(event){
         var id = event.target.id;
-        var idNum = id.split("-")[1];
+        var idNum = id.split("-")[2];
+        var idType = id.split("-")[0].replace("Wrapper", "");
         var columnTitles = this.state.columnTitles;
+        var controlID = this.state.controlWrapperID;
+
+        var index = this.state.columnTitles.indexOf(idType);
+        var newSelected = this.state.selected;
+        newSelected[index] = idNum;
+
+        var newSelectedItem = this.state.selectedItem;
+
         var count = 0;
 
         var titleToBeFound = "";
@@ -107,9 +173,27 @@ class ScrollPicker extends React.Component{
                 break;
             }
         }
+        
+        if(idNum.localeCompare(this.state.selectedItem[index]) === 0){
+            var itemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + parseInt(idNum));
+            itemWrapper.style.background = "radial-gradient(#111111, #000000)";
+            idNum = "";
+            newSelectedItem[index] = "";
+        }else{
+            if(this.state.selectedItem[index].localeCompare("") !== 0){
+                var oldItemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + this.state.selectedItem[index]);
+                oldItemWrapper.style.background = "radial-gradient(#111111, #000000)";
+            }
+            var itemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + parseInt(idNum));
+            itemWrapper.style.background = "radial-gradient(#6b4e00, #000000)";
+            newSelectedItem[index] = idNum;
+        }
 
-        var itemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + parseInt(idNum));
-        itemWrapper.style.background = "radial-gradient(#6b4e00, #000000)";
+        this.setState({
+            selectedItem: idNum,
+            selected: newSelected,
+            selectedItem: newSelectedItem
+        });
     }
 
     //Render the Header component to the DOM/Screen

@@ -32,11 +32,20 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 80px;
+    height: 100px;
     width: 80px;
     overflow-y: scroll;
     overflow-x: hidden;
-    scroll-snap-type: y mandatory;
+    /*scroll-snap-type: y mandatory;*/
+    transition-duration: .1s;
+}
+
+.Picker-ColumnScrollDiv{
+    transition-duration: .1s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .Picker-ColumnDiv::-webkit-scrollbar {
@@ -66,15 +75,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80px;
+    height: 100px;
     width: 80px;
     cursor: pointer;
     background: radial-gradient(#111111, #000000);
-    scroll-snap-align: start;
+   /* scroll-snap-align: center; */
+    transition-duration: 2s;
 }
 
 .Picker-Item{
     color: white;
     font-size: 50px;
-    margin: 0px;
+    transition-duration: .1s;
 }

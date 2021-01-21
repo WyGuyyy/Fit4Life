@@ -104,7 +104,7 @@ class AdminHome extends React.Component{
             listItemTitle.textContent = classrooms[count].title;
             listItemTitle.id = "classroomListItemTitle-" + count + "-Admin";
             listItemTitle.title = classrooms[count].title;
-            listItemTitle.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
+            listItemTitle.onclick = (e) => this.goToClassroomExercises({event: e, id: listItem.id});
 
             listStudentButton.classList.add("Classroom-List-Item-Student-Button-Admin");
             listStudentButton.id = "classroomListItemStudents-" + count + "-Admin";
@@ -197,7 +197,7 @@ class AdminHome extends React.Component{
         });
     }
 
-    goToClassroomComponents(eventObj){
+    goToClassroomExercises(eventObj){
 
             var idNum = eventObj.event.target.id.split("-")[1];
             var aClassroom = this.state.teacherClassrooms[idNum];

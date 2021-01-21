@@ -44,10 +44,10 @@ class AdminComponent extends React.Component{
         var exercises = [];
 
         var classroomID = this.state.classroom.classroom_id;
-        var componentID = this.state.component.component_id;
+        //var componentID = this.state.component.component_id;
         var classCompID;
 
-        await fetch(baseURI + "/api/exercise/bycomponent/" + componentID, {  
+        await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -256,12 +256,12 @@ class AdminComponent extends React.Component{
         }
 
         var classroom = this.props.location.state.classroom.title;
-        var component = this.props.location.state.component.title;
+        //var exercise = this.props.location.state.exercise.title;
 
         return(
 
             <Fragment>
-                <AdminHeader title={"Exercises"} breadCrumbs={classroom + ">" + component + " Exercises"} goBack={false} customClick={this.goBack.bind(this)}/>
+                <AdminHeader title={"Exercises"} breadCrumbs={classroom + " Exercises"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <div className="homeExercise">
                     <AdminPopout hist={this.props.history}/>

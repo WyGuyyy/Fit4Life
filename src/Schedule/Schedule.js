@@ -6,6 +6,7 @@ import Popout from '../Popout/Popout';
 import ScheduleWeek from './ScheduleWeek';
 import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
+import {getUserFullName} from '../_services/UserService';
 import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
@@ -38,6 +39,7 @@ class Schedule extends React.Component{
         }
         
         this.resetFilters();
+        this.setScheduleName();
 
     }
 
@@ -48,6 +50,14 @@ class Schedule extends React.Component{
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
         
+    }
+
+    async setScheduleName(){
+         var h2 = document.getElementsByClassName("Schedule-Grid-Title-Student")[0];
+         var data = await getUserFullName();
+         console.log(data);
+
+         h2.textContent = data.first + " " + data.last;
     }
 
     resetFilters(){
@@ -261,6 +271,10 @@ class Schedule extends React.Component{
 
     }
 
+    printSchedule(event){
+        window.print();
+    }
+
     formatMonth(month){
 
         if(parseInt(month) <  10){
@@ -324,6 +338,7 @@ class Schedule extends React.Component{
 
                                 <div className="Schedule-Grid-Title">
                                     <h1 className="Schedule-Grid-Title-Text">Physical Activity Log</h1>
+                                    <h2 className="Schedule-Grid-Title-Student"></h2>
                                 </div>
 
                                 <div className="Schedule-Grid-Categories">
@@ -368,6 +383,10 @@ class Schedule extends React.Component{
                                         <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="Schedule-Week-Print-Wrapper">
+                                <button className="Schedule-Week-Print" onClick={e => this.printSchedule(e)}><i  className="fa fa-print fa-2x"></i></button>
                             </div>
 
                         </div>

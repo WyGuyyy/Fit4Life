@@ -8,7 +8,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 800px;
+    height: 1750px;
     /*width: 100%;*/
     display: flex;
     flex-direction: column;
@@ -16,7 +16,7 @@
     align-items: center;
 }
 
-.scheduleGrid{
+.scheduleGrid{ /* Bring day row with the screen during scroll?? */
     width: 98%;
     height: 90%;
     display: flex;
@@ -29,7 +29,7 @@
     width: 100%;
     height: 5%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background: #7c5b00;
@@ -39,6 +39,12 @@
 
 .Schedule-Grid-Title-Text{
     text-align: center;
+    margin: 0;
+}
+
+.Schedule-Grid-Title-Student{ 
+    text-align: center;
+    margin: 0;
 }
 
 .Schedule-Grid-Categories{
@@ -107,6 +113,9 @@
     background: #d4d4d4;
     border: 1px black;
     border-style: solid;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 100px;
 }
 
 .Schedule-Grid-Chart-Monday{
@@ -223,6 +232,32 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.Schedule-Week-Print-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.Schedule-Week-Print{
+    height: 50px;
+    width: 120px;
+    background: #ac7e00;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    transition-duration: .75s;
+}
+
+.Schedule-Week-Print:hover{
+    background: #ffbb00;
+}
+
+.Schedule-Print-Icon{
+    size: 40;
 }
 
 .Workout-Select-Classroom-Label{
@@ -351,6 +386,10 @@
     .Schedule-Grid-Title-Text{
         font-size: 20px;
     }
+
+    .Schedule-Grid-Title-Student{
+        font-size: 18px;
+    }
 }
 
 @media(max-width: 375px){
@@ -387,6 +426,58 @@
     }
 
     .scheduleWrapper{
-        height: 1000px;
+        height: 1250px;
+    }
+}
+
+@media print {
+
+    .Schedule-Week-Print-Wrapper, .headerContainer, .headerContainer-Admin{
+        display: none;
+    }
+
+    .scheduleWrapper{
+        top: 0px;
+        height: auto;
+    }
+
+    .scheduleGrid{
+        height: auto;
+    }
+
+    .Schedule-Grid-Chart-Monday{
+        height: auto;
+    }
+    
+    .Schedule-Grid-Chart-Tuesday{
+        height: auto;
+    }
+    
+    .Schedule-Grid-Chart-Wednesday{
+        height: auto;
+    }
+    
+    .Schedule-Grid-Chart-Thursday{
+        height: auto;
+    }
+    
+    .Schedule-Grid-Chart-Friday{
+        height: auto;
+    }
+    
+    .Schedule-Grid-Chart-Titles{
+        position: static;
+    }
+
+    .Schedule-Grid-Title{
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #7c5b00;
+        border: 1px black;
+        border-style: solid;
     }
 }
