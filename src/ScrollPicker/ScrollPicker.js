@@ -65,7 +65,7 @@ class ScrollPicker extends React.Component{
         for(titleCount = 0; titleCount < titles.length; titleCount++){
             
             transforms.push(0);
-            newSelected.push(-1);
+            newSelected.push("");
             newSelectedItem.push("");
 
             columnWrapper = document.createElement("div");
@@ -180,6 +180,7 @@ class ScrollPicker extends React.Component{
             idNum = "";
             newSelectedItem[index] = "";
         }else{
+            console.log(this.state.selectedItem);
             if(this.state.selectedItem[index].localeCompare("") !== 0){
                 var oldItemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + this.state.selectedItem[index]);
                 oldItemWrapper.style.background = "radial-gradient(#111111, #000000)";
@@ -187,7 +188,10 @@ class ScrollPicker extends React.Component{
             var itemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + parseInt(idNum));
             itemWrapper.style.background = "radial-gradient(#6b4e00, #000000)";
             newSelectedItem[index] = idNum;
+            console.log(idNum);
         }
+
+        this.props.updateResults(newSelectedItem.slice(0));
 
         this.setState({
             selectedItem: idNum,

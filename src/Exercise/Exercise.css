@@ -5,7 +5,7 @@
 
 .exerciseWrapper{
     position: absolute;
-    top: 600px;
+    top: 700px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -22,7 +22,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 1650px;
+    height: 1750px;
     width: 50%;
     background: black;
     border-radius: 20px;
@@ -70,7 +70,7 @@
 }
 
 #Exercise-Details-Row-THR{
-    height: 100px;
+    height: 180px;
     overflow: hidden;
 }
 
@@ -85,7 +85,7 @@
 }
 
 #Exercise-Details-Row-Component{
-    height: 100px;
+    height: 180px;
     overflow: hidden;
 }
 

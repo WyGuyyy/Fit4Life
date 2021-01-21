@@ -16,10 +16,24 @@ class Exercise extends React.Component{
         super(props);
 
         if(RedirectService.checkItemForUndefined(props.location.state)){
+
+            var initResults = {
+                exercise: "",
+                components: [],
+                thr: "",
+                weight: -1,
+                timeOn: -1,
+                timeOff: -1,
+                sets: -1,
+                reps: -1,
+                date: ""
+            };
+
             this.state = {
                 exercise: props.location.state.exercise,
                 classroom: props.location.state.classroom,
-                canGoBack: true
+                canGoBack: true,
+                results: initResults
             };
         }
 
@@ -39,10 +53,70 @@ class Exercise extends React.Component{
         
     }
 
+    updateTimeOn = (time) => {
+        var newResults = this.state.results;
+
+        if(time[0].localeCompare("") === 0){
+            time[0] = 0;
+        }
+
+        if(time[1].localeCompare("") === 0){
+            time[1] = 0;
+        }
+
+        var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
+        newResults.timeOn = seconds;
+        
+        this.setState({
+            results: newResults
+        });
+    }
+
+    updateRest = (time) => {
+        var newResults = this.state.results;
+
+        if(time[0].localeCompare("") === 0){
+            time[0] = 0;
+        }
+
+        if(time[1].localeCompare("") === 0){
+            time[1] = 0;
+        }
+
+        var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
+        newResults.timeOff = seconds;
+
+        this.setState({
+            results: newResults
+        });
+    }
+
+    updateSets = (sets) => {
+        var newResults = this.state.results;
+        newResults.sets = parseInt(sets[0]);
+
+        this.setState({
+            results: newResults
+        });
+    }
+
+    updateReps = (reps) => {
+        var newResults = this.state.results;
+        newResults.reps = parseInt(reps[0]);
+
+        this.setState({
+            results: newResults
+        });
+    }
+
     async submitWorkout(event){
 
-        var aTHR = document.getElementById("exerciseSelectComponent");
-        aTHR = aTHR.options[aTHR.selectedIndex].text;
+        console.log(this.state.results);
+
+        var aTHR = document.getElementById("exerciseSelectTHR");
+        aTHR = aTHR.options[aTHR.selectedIndex].textContent;
+
+        console.log(aTHR);
 
         var componentOptions = document.getElementById("exerciseSelectComponent").options;
         var count = 0;
@@ -52,7 +126,7 @@ class Exercise extends React.Component{
             var opt = componentOptions[count];
 
             if(opt.selected){
-                components.push(opt.text);
+                components.push({component_id: count + 1, title: opt.text});
             }
         }
 
@@ -65,7 +139,7 @@ class Exercise extends React.Component{
 
         var userID = localStorage.getItem("userID"); 
         var exerciseID = this.state.exercise.exercise_id;
-        var componentID = this.state.component.component_id;
+       // var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
 
         if(DataCheckService.validateFields([aDate])){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
@@ -75,7 +149,7 @@ class Exercise extends React.Component{
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
-                    component: {component_id: componentID}, classroom: {classroom_id: classroomID},
+                    component: components, classroom: {classroom_id: classroomID},
                     target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
                     rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
             }).catch(console.log);
@@ -212,7 +286,7 @@ class Exercise extends React.Component{
                                 <div className="Exercise-Details-Row" id="Exercise-Details-Row-THR">
                                     <label className="exerciseLabel">Target Heart Rate: </label> 
                                     <select className="exerciseSelect" id="exerciseSelectTHR">
-                                        <option value="none">None</option>
+                                        <option value="none" selected={true}>None</option>
                                         <option value="zone1">Zone 1 (104-124 bpm)</option>
                                         <option value="zone2">Zone 2 (124-144 bpm)</option>
                                         <option value="zone3">Zone 3 (144-164 bpm)</option>
@@ -224,16 +298,16 @@ class Exercise extends React.Component{
                                     <label className="exerciseLabel">Weight (lb): </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"}/>
+                                    <label className="exerciseLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"} updateResults={this.updateTimeOn} type={"Dependent"} dependentConfig={[60, 60]}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"}/>
+                                    <label className="exerciseLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"} updateResults={this.updateRest} type={"Dependent"} dependentConfig={[60, 60]}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"}/>
+                                    <label className="exerciseLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"} updateResults={this.updateSets}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"}/>
+                                    <label className="exerciseLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"} updateResults={this.updateReps}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" onChange={e => this.checkDate(e)}/>
