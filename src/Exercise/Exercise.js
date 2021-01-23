@@ -111,8 +111,6 @@ class Exercise extends React.Component{
 
     async submitWorkout(event){
 
-        console.log(this.state.results);
-
         var aTHR = document.getElementById("exerciseSelectTHR");
         aTHR = aTHR.options[aTHR.selectedIndex].textContent;
 
@@ -120,13 +118,13 @@ class Exercise extends React.Component{
 
         var componentOptions = document.getElementById("exerciseSelectComponent").options;
         var count = 0;
-        var components = [];
+        var componentsArr = [];
 
         for(count = 0; count < 4; count++){
             var opt = componentOptions[count];
 
             if(opt.selected){
-                components.push({component_id: count + 1, title: opt.text});
+                componentsArr.push({component_id: count + 1, title: opt.text});
             }
         }
 
@@ -144,12 +142,14 @@ class Exercise extends React.Component{
 
         if(DataCheckService.validateFields([aDate])){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
+            console.log(componentsArr);
+
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
-                    component: components, classroom: {classroom_id: classroomID},
+                    components: componentsArr, classroom: {classroom_id: classroomID},
                     target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
                     rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
             }).catch(console.log);

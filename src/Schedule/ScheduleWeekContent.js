@@ -53,6 +53,8 @@ class ScheduleWeekContent extends React.Component{
 
         var elements = [];
 
+        console.log(workout.components);
+
         if(index === 0){
             var typeDiv = <div className="ScheduleWeek-Type" ><p className="ScheduleWeek-Type-Content" id="exerciseTitle">{"Exercise"}</p></div>;
             var thrDiv = <div className="ScheduleWeek-THR" ><p className="ScheduleWeek-THR-Content" id="thrTitle">{"THR"}</p></div>;
@@ -73,7 +75,7 @@ class ScheduleWeekContent extends React.Component{
             var weightDiv = <div className="ScheduleWeek-Weight"><p className="ScheduleWeek-Weight-Content">{workout.weight}</p></div>;
             var timeOnDiv = <div className="ScheduleWeek-TimeOn"><p className="ScheduleWeek-TimeOn-Content">{this.formatTime(workout.time_on_minute, workout.time_on_second)}</p></div>;
             var timeOffDiv = <div className="ScheduleWeek-TimeOff"><p className="ScheduleWeek-TimeOff-Content">{this.formatTime(workout.rest_minute, workout.rest_second)}</p></div>;
-            var frequencyDiv = <div className="ScheduleWeek-Frequency"><p className="ScheduleWeek-Frequency-Content">{workout.component.title}</p></div>; //Start here next time - get all components into flex column instead of just 1
+            var frequencyDiv = <div className="ScheduleWeek-Frequency">{this.getComponentString(workout.components)}</div>;
         }
 
         elements.push(typeDiv);
@@ -87,6 +89,18 @@ class ScheduleWeekContent extends React.Component{
         elements.push(frequencyDiv);
  
         return elements;
+    }
+
+    getComponentString(compArr){
+
+        var compStringArr = [];
+
+        for(var count = 0; count < compArr.length; count++){
+            compStringArr.push(<p className="ScheduleWeek-Frequency-Content">{compArr[count].title}<br/></p>);
+            compStringArr.push();
+        }
+
+        return compStringArr;
     }
 
     formatTime(minuteValue, secondValue){

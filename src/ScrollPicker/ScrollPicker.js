@@ -98,7 +98,6 @@ class ScrollPicker extends React.Component{
                 itemWrapper.onclick = e => this.onItemClick(e);
                 item.id = titles[titleCount] + "-" + id + "-" + itemCount;
                 item.textContent = items[titleCount][itemCount];
-                console.log(items);
 
                 itemWrapper.appendChild(item);
                 columnScrollDiv.appendChild(itemWrapper);
@@ -108,6 +107,27 @@ class ScrollPicker extends React.Component{
             columnWrapper.appendChild(columnDiv);
             controlWrapper.appendChild(columnWrapper);
 
+        }
+
+        if(this.props.defaultPosition !== null && 
+           this.props.defaultPosition !== undefined &&
+           this.props.defaultPosition.length === transforms.length){
+            var positions = this.props.defaultPosition;
+            var controlWrapperID = this.state.controlWrapperID;
+
+            for(var posCount = 0; posCount < positions.length; posCount++){
+                transforms[posCount] = (positions[posCount] * -100);
+                var idType = this.state.columnTitles[posCount];
+
+                var scroller = document.getElementById("Picker-ColumnScrollDiv-" + controlWrapperID + "-" + idType);
+                scroller.style.transform = "translateY(" + transforms[posCount] + "px)";
+
+                var itemWrapper = document.getElementById(this.state.columnTitles[posCount] + "Wrapper-" + controlWrapperID + "-" + positions[posCount]);
+                itemWrapper.style.background = "radial-gradient(#6b4e00, #000000)";
+
+                newSelected[posCount] = positions[posCount];
+                newSelectedItem[posCount] = positions[posCount] + "";
+            }
         }
 
         this.setState({

@@ -1,6 +1,6 @@
 .modalContainer{
     display: none;
-    position: absolute;
+    position: fixed;
     /*display: flex;*/
     flex-direction: column;
     justify-content: center;
@@ -9,10 +9,12 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     background-color: rgba(0, 0, 0, 0.5);
+    background-size: cover;
 }
 
 .modalContent{
     background-color: #9b7200;
+    position: fixed;
     margin: auto;
     padding: 20px;
     width: 50%;

@@ -75,8 +75,21 @@ class WorkoutDetail extends React.Component{
             sets.textContent = "SETS: " + aWorkout.sets;
             reps.textContent = "REPS: " + aWorkout.reps;
             max.textContent = "MAX%: MAX"
-            component.textContent = "COMPONENT: " + this.props.location.state.workout.component.title;
+            component.textContent = "COMPONENT: " + this.getComponentString(this.props.location.state.workout.components);
 
+    }
+
+    getComponentString(compArr){
+
+        var compString = "";
+
+        compString = compArr[0].title;
+
+        for(var count = 1; count < compArr.length; count++){
+            compString += ", " + compArr[count].title;
+        }
+
+        return compString;
     }
 
     showModal(event){

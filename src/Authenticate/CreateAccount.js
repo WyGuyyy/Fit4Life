@@ -46,6 +46,7 @@ class CreateAccount extends React.Component{
         var aConfirmedPassword = document.getElementById("createAccountInputConfirmPassword").value;
 
         if(!this.validateData(aFirstName, aLastName, anEmail, aDisplayName, aPassword, aConfirmedPassword)){
+            this.rejectBackendTransaction("There are empty fields. Please fill all fields!");
             return;
         }
 
@@ -53,21 +54,26 @@ class CreateAccount extends React.Component{
 
         user = {first_name: aFirstName.trim(), last_name: aLastName.trim(), email: anEmail.trim(), display_name: aDisplayName.trim(), password_hash: hashedPassword};
 
-        await fetch(baseURI + "/api/createaccount", {  
+        var response = await fetch(baseURI + "/api/createaccount", {  
             method: "POST",
             body: JSON.stringify(user),                          
             headers: {"Content-Type": "application/json"}
         }).catch(console.log);
 
-        document.getElementById("createAccountInputFirstName").value = "";
-        document.getElementById("createAccountInputLastName").value = "";
-        document.getElementById("createAccountInputEmail").value = "";
-        document.getElementById("createAccountInputPassword").value = "";
-        document.getElementById("createAccountInputConfirmPassword").value = "";
+        
+        if(response.status === 200){
+            document.getElementById("createAccountInputFirstName").value = "";
+            document.getElementById("createAccountInputLastName").value = "";
+            document.getElementById("createAccountInputEmail").value = "";
+            document.getElementById("createAccountInputPassword").value = "";
+            document.getElementById("createAccountInputConfirmPassword").value = "";
 
 
-        this.showModal();
-        this.confirmBackendTransaction();
+            this.showModal();
+            this.confirmBackendTransaction();
+        }else{
+            this.rejectBackendTransaction("Account email or display name already exists. Please enter different account details.");
+        }
 
         //May need to do email confirmation to avoid other students creating account
 
@@ -131,6 +137,15 @@ class CreateAccount extends React.Component{
     confirmBackendTransaction(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
+        confirmation.textContent = "Account created!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
+    }
+
+    rejectBackendTransaction(message){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.textContent = message;
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
