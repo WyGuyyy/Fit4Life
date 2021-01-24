@@ -19,6 +19,7 @@ class ScrollPicker extends React.Component{
                 columnTitles: props.columnTitles,
                 columnItems: props.columnItems,
                 controlWrapperID: props.controlWrapperID,
+                defaultPosition: props.defaultPosition,
                 selectedItem: [],
                 transform: [],
                 selected: []

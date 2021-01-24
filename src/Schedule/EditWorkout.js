@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
 import ScrollPicker from '../ScrollPicker/ScrollPicker';
-import { FaWpbeginner } from 'react-icons/fa';
+import { FaWordpress, FaWpbeginner } from 'react-icons/fa';
 import {baseURI} from '../_services/APIService';
 
 var currWorkout = "";
@@ -29,11 +29,14 @@ class EditWorkout extends React.Component{
 
         }
 
+        this.getUpdatedWorkout();
+
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        this.getUpdatedWorkout();
+        //var workout = this.getUpdatedWorkout();
+
         this.fillFields();
     }
 
@@ -46,11 +49,11 @@ class EditWorkout extends React.Component{
         
     }
 
-    async getUpdatedWorkout(){
+    getUpdatedWorkout(){
 
         var aWorkout = {};
         var newResult = {};
-        await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
+        const refreshWorkout = async () => await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -58,16 +61,23 @@ class EditWorkout extends React.Component{
         .then((text) => {
 
             var result = text.length ? JSON.parse(text) : {};
-            aWorkout = result;
-
+            return result;
         }).catch(console.log);
+        aWorkout = refreshWorkout();
+        
+        aWorkout.then(function(res){
+            this.setState({
+                workout: res,
+                results: res
+            });
 
-        this.setState({
+            console.log(res);
+        }.bind(this));
+
+        /*this.state = {
             workout: aWorkout,
             results: aWorkout
-        });
-
-        console.log(this.state);
+        };*/
 
     }
 
@@ -141,9 +151,6 @@ class EditWorkout extends React.Component{
         var weight = document.getElementById("EditWorkout-Input-Weight");
         var date = document.getElementById("EditWorkout-Input-Date");
 
-        this.activateSelectedComponents(componentSelect, this.props.location.state.workout.components);
-        this.activateSelectedTHR(thr, this.props.location.state.workout.target_heart_rate);
-
         await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
@@ -156,9 +163,11 @@ class EditWorkout extends React.Component{
 
             }).catch(console.log);
 
+            this.activateSelectedComponents(componentSelect, this.props.location.state.workout.components);
+            this.activateSelectedTHR(thr, this.props.location.state.workout.target_heart_rate);
+
             weight.value = aWorkout.weight;
             date.value = aWorkout.date;//.split("T")[0];
-            console.log(aWorkout.date);
     }
 
     async submitWorkout(event){
