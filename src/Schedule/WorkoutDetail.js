@@ -55,6 +55,11 @@ class WorkoutDetail extends React.Component{
         var timeOff = document.getElementsByClassName("Workout-Detail-TimeOff")[0];
         var component = document.getElementsByClassName("Workout-Detail-Component")[0];
 
+        var onMinute = 0;
+        var onSecond = 0;
+        var restMinute = 0;
+        var restSecond = 0;
+
         await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
@@ -67,11 +72,17 @@ class WorkoutDetail extends React.Component{
 
             }).catch(console.log);
 
+            onMinute = (aWorkout.time_on_minute <= 9 ? "0" + aWorkout.time_on_minute : aWorkout.time_on_minute);
+            onSecond = (aWorkout.time_on_second <= 9 ? "0" + aWorkout.time_on_second : aWorkout.time_on_second);
+
+            restMinute = (aWorkout.rest_minute <= 9 ? "0" + aWorkout.rest_minute : aWorkout.rest_minute);
+            restSecond = (aWorkout.rest_second <= 9 ? "0" + aWorkout.rest_second : aWorkout.rest_second);
+
             exercise.textContent = "EXERCISE: " + aWorkout.exercise.title;
             thr.textContent = "TARGET HEART RATE: " + aWorkout.target_heart_rate;
             weight.textContent = "WEIGHT: " + aWorkout.weight;
-            timeOn.textContent = "TIME ON: " + aWorkout.time_on_minute;
-            timeOff.textContent = "TIME OFF: " + aWorkout.rest_minute;
+            timeOn.textContent = "TIME ON: " + onMinute + ":" + onSecond;
+            timeOff.textContent = "TIME OFF: " + restMinute + ":" + restSecond;
             sets.textContent = "SETS: " + aWorkout.sets;
             reps.textContent = "REPS: " + aWorkout.reps;
             max.textContent = "MAX%: MAX"

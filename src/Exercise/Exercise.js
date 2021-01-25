@@ -21,11 +21,13 @@ class Exercise extends React.Component{
                 exercise: "",
                 components: [],
                 thr: "",
-                weight: -1,
-                timeOn: -1,
-                timeOff: -1,
-                sets: -1,
-                reps: -1,
+                weight: "",
+                timeOnMinutes: "",
+                timeOnSeconds: "",
+                restMinutes: "",
+                restSeconds: "",
+                sets: "",
+                reps: "",
                 date: ""
             };
 
@@ -53,7 +55,26 @@ class Exercise extends React.Component{
         
     }
 
-    updateTimeOn = (time) => {
+    componentSelect(event){
+        var compSelect = document.getElementById("exerciseSelectComponent");
+        var options = compSelect.options;
+        var noneSelected = true;
+
+        for(var count = 1; count < options.length; count++){
+            if(options[count].selected){
+                noneSelected = false;
+                break;
+            }
+        }
+
+        if(noneSelected){
+            options[0].selected = true;
+        }else{
+            options[0].selected = false;
+        }
+    }
+
+    updateTimeOn = (time) => { //start here and change time on and off to correct sc and min
         var newResults = this.state.results;
 
         if(time[0].localeCompare("") === 0){
@@ -64,8 +85,9 @@ class Exercise extends React.Component{
             time[1] = 0;
         }
 
-        var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
-        newResults.timeOn = seconds;
+        //var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
+        newResults.timeOnMinutes = time[0];
+        newResults.timeOnSeconds = time[1];
         
         this.setState({
             results: newResults
@@ -83,8 +105,9 @@ class Exercise extends React.Component{
             time[1] = 0;
         }
 
-        var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
-        newResults.timeOff = seconds;
+        //var seconds = (parseInt(time[0]) * 60) + parseInt(time[1]);
+        newResults.restMinutes = time[0];
+        newResults.restSeconds = time[1];
 
         this.setState({
             results: newResults
@@ -111,16 +134,30 @@ class Exercise extends React.Component{
 
     async submitWorkout(event){
 
+        var aWorkout = {
+            user: "",
+            exercise: "",
+            classroom: "",
+            components: "",
+            target_heart_rate: "",
+            weight: "",
+            time_on_minute: "",
+            time_on_second: "",
+            rest_minute: "",
+            rest_second: "",
+            sets: "",
+            reps: "",
+            date: ""
+        };
+
         var aTHR = document.getElementById("exerciseSelectTHR");
         aTHR = aTHR.options[aTHR.selectedIndex].textContent;
-
-        console.log(aTHR);
 
         var componentOptions = document.getElementById("exerciseSelectComponent").options;
         var count = 0;
         var componentsArr = [];
 
-        for(count = 0; count < 4; count++){
+        for(count = 0; count < componentOptions.length; count++){
             var opt = componentOptions[count];
 
             if(opt.selected){
@@ -129,10 +166,10 @@ class Exercise extends React.Component{
         }
 
         var aWeight = document.getElementById("Exercise-Input-Weight").value;
-        var aTimeOn =""; //document.getElementById("Exercise-Input-TimeOn").value;
-        var aRest = "";//document.getElementById("Exercise-Input-Rest").value;
-        var aSets = "";//document.getElementById("Exercise-Input-Sets").value;
-        var aReps = "";//document.getElementById("Exercise-Input-Reps").value;
+       // var aTimeOn =""; //document.getElementById("Exercise-Input-TimeOn").value;
+       // var aRest = "";//document.getElementById("Exercise-Input-Rest").value;
+       // var aSets = "";//document.getElementById("Exercise-Input-Sets").value;
+       // var aReps = "";//document.getElementById("Exercise-Input-Reps").value;
         var aDate = document.getElementById("Exercise-Input-Date").value;
 
         var userID = localStorage.getItem("userID"); 
@@ -140,7 +177,21 @@ class Exercise extends React.Component{
        // var componentID = this.state.component.component_id;
         var classroomID = this.state.classroom.classroom_id;
 
-        if(DataCheckService.validateFields([aDate])){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
+        aWorkout.user = {user_id: userID};
+        aWorkout.exercise = {exercise_id: exerciseID};
+        aWorkout.classroom = {classroom_id: classroomID};
+        aWorkout.components = componentsArr;
+        aWorkout.target_heart_rate = aTHR;
+        aWorkout.weight = aWeight;
+        aWorkout.time_on_minute = this.state.results.timeOnMinutes;
+        aWorkout.time_on_second = this.state.results.timeOnSeconds;
+        aWorkout.rest_minute = this.state.results.restMinutes;
+        aWorkout.rest_second = this.state.results.restSeconds;
+        aWorkout.sets = this.state.results.sets;
+        aWorkout.reps = this.state.results.reps;
+        aWorkout.date = aDate;
+
+        if(DataCheckService.validateFields([aDate]) && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
             console.log(componentsArr);
 
@@ -148,10 +199,7 @@ class Exercise extends React.Component{
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({user: {user_id: userID}, exercise: {exercise_id: exerciseID},
-                    components: componentsArr, classroom: {classroom_id: classroomID},
-                    target_heart_rate: aTHR, weight: aWeight, time_on_minute: aTimeOn, time_on_second: 12, 
-                    rest_minute: aRest, rest_second: 12, sets: aSets, reps: aReps, date: aDate})
+                body: JSON.stringify(aWorkout)
             }).catch(console.log);
             
             //document.getElementById("Exercise-Input-THR").value = "";
@@ -276,7 +324,8 @@ class Exercise extends React.Component{
                                 </div>
                                 <div className="Exercise-Details-Row" id="Exercise-Details-Row-Component">
                                     <label className="exerciseLabel">Components: </label> 
-                                    <select className="exerciseSelect" id="exerciseSelectComponent" multiple={true}>
+                                    <select className="exerciseSelect" id="exerciseSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
+                                        <option value="None" selected={true}>None</option>
                                         <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
                                         <option value="Muscular Strength">Muscular Strength</option>
                                         <option value="Muscular Endurance">Muscular Endurance</option>

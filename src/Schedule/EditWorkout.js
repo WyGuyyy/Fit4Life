@@ -49,6 +49,25 @@ class EditWorkout extends React.Component{
         
     }
 
+    componentSelect(event){
+        var compSelect = document.getElementById("exerciseSelectComponent");
+        var options = compSelect.options;
+        var noneSelected = true;
+
+        for(var count = 1; count < options.length; count++){
+            if(options[count].selected){
+                noneSelected = false;
+                break;
+            }
+        }
+
+        if(noneSelected){
+            options[0].selected = true;
+        }else{
+            options[0].selected = false;
+        }
+    }
+
     getUpdatedWorkout(){
 
         var aWorkout = {};
@@ -179,13 +198,11 @@ class EditWorkout extends React.Component{
         var aTHR = document.getElementById("editWorkoutSelectTHR");
         aTHR = aTHR.options[aTHR.selectedIndex].textContent;
 
-        console.log(aTHR);
-
         var componentOptions = document.getElementById("editWorkoutSelectComponent").options;
         var count = 0;
         var componentsArr = [];
 
-        for(count = 0; count < 4; count++){
+        for(count = 0; count < componentOptions.length; count++){
             var opt = componentOptions[count];
 
             if(opt.selected){
@@ -207,7 +224,6 @@ class EditWorkout extends React.Component{
        // var componentID = this.state.component.component_id;
         var classroomID = this.state.workout.classroom.classroom_id;
 
-        console.log(results);
 
         aWorkout.workout_id = workoutID;
         aWorkout.user = {user_id: userID};
@@ -224,15 +240,13 @@ class EditWorkout extends React.Component{
         aWorkout.reps = aReps;
         aWorkout.date = aDate;
 
-        console.log(aWorkout);
-
         var workoutID = this.state.workout.workout_id;
         var userID = localStorage.getItem("userID"); 
         var exerciseID = this.state.workout.exercise.exercise_id;
        // var componentID = this.state.component.component_id;
         var classroomID = this.state.workout.classroom.classroom_id;
 
-        if(DataCheckService.validateFields([aDate])){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
+        if(DataCheckService.validateFields([aDate])  && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
@@ -461,7 +475,8 @@ class EditWorkout extends React.Component{
                                 </div>
                                 <div className="EditWorkout-Details-Row" id="EditWorkout-Details-Row-Component">
                                     <label className="editWorkoutLabel">Components: </label> 
-                                    <select className="editWorkoutSelect" id="editWorkoutSelectComponent" multiple={true}>
+                                    <select className="editWorkoutSelect" id="editWorkoutSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
+                                        <option value="None">None</option>
                                         <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
                                         <option value="Muscular Strength">Muscular Strength</option>
                                         <option value="Muscular Endurance">Muscular Endurance</option>
