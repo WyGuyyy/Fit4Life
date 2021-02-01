@@ -30,7 +30,30 @@ class ScrollPicker extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
+       
         this.renderColumns();
+       
+        /* var positions = this.props.defaultPosition;
+        var controlWrapperID = this.props.controlWrapperID;
+        var transforms = [];
+        var newSelected = [];
+        var newSelectedItem = [];
+
+        var scrollDivs = document.getElementsByClassName("Picker-ColumnScrollDiv");
+
+        for(var posCount = 0; posCount < positions.length; posCount++){
+            transforms[posCount] = (positions[posCount] * -100);
+            var idType = this.state.columnTitles[posCount];
+
+            newSelected[posCount] = positions[posCount];
+            newSelectedItem[posCount] = positions[posCount] + "";
+        }
+
+        this.setState({
+            transform: transforms,
+            selected: newSelected,
+            selectedItem: newSelectedItem
+        });*/
     }
 
     componentDidUpdate(){
@@ -41,6 +64,15 @@ class ScrollPicker extends React.Component{
     componentWillUnmount(){
         
     }
+
+    /*clearColumns(){
+        var id = this.props.controlWrapperID;
+        var controlWrapper = document.getElementById(id);
+
+        while(controlWrapper.firstChild){
+            controlWrapper.removeChild(controlWrapper.lastChild);
+        }
+    }*/
 
     renderColumns(){
         var titles = this.props.columnTitles;
@@ -59,7 +91,7 @@ class ScrollPicker extends React.Component{
 
         var transforms = this.state.transform;
         var newSelected = this.state.selected;
-        var newSelectedItem = this.state.selectedItem;
+        var newSelectedItem = [];//this.state.selectedItem;
 
         var controlWrapper = document.getElementById(id);
 
@@ -139,13 +171,52 @@ class ScrollPicker extends React.Component{
 
     }
 
+    /*renderColumns(){
+        var titles = this.props.columnTitles;
+        var items = this.props.columnItems;
+        var id = this.props.controlWrapperID;
+        var positions = this.props.defaultPosition;
+        var titleCount = 0;
+
+        var columnList = titles.map((t) => {
+            return <div className="Picker-ColumnWrapper">
+                <h2 className="Picker-ColumnTitle">{t}</h2>
+                <div className="Picker-ColumnDiv">
+                    <div className="Picker-ColumnScrollDiv" id={"Picker-ColumnScrollDiv-" + id + "-" + t} onWheel={e => this.controlScroll(e)}  style={{transform: "translateY(" + (positions[titleCount] * -100) + "px)"}}>
+                        {this.buildColumn(titles, items, titleCount++, id)}
+                    </div>
+                </div>
+            </div>})
+
+        return columnList;
+
+    }*/
+
+    /*buildColumn(titles, items, titleCount, aId){
+
+        var index = 0;
+        var selPosition = this.props.defaultPosition[titleCount];
+
+        var column = <div>
+            {items[titleCount].map((i) => {
+                return <div className={"Picker-ItemWrapper"} id={titles[titleCount] + "Wrapper-" + aId + "-" + i} onClick={e => this.onItemClick(e)} style={{background: (selPosition === parseInt(i) ? "radial-gradient(#6b4e00, #000000)" : "radial-gradient(#111111, #000000)")}}>
+                    <h1 className="Picker-Item" id={titles[titleCount] + "-" + aId + "-" + i}>
+                        {i}
+                    </h1>
+                </div>      
+            })}
+        </div>;
+
+        return column;
+
+    }*/
+
     //Need to refactor below methods
     controlScroll(event){
         var id = event.target.id;
         var idType = id.split("-")[0].replace("Wrapper", "");
         var newTransforms = this.state.transform;
         var index = this.state.columnTitles.indexOf(idType);
-
         var controlWrapperID = this.state.controlWrapperID;
         var scroller = document.getElementById("Picker-ColumnScrollDiv-" + controlWrapperID + "-" + idType);
         var newTransform = (event.deltaY < 0 ? newTransforms[index] + 100 : newTransforms[index] - 100);
@@ -159,8 +230,6 @@ class ScrollPicker extends React.Component{
         }
 
         newTransforms[index] = newTransform;
-
-        console.log(numItems);
 
         scroller.style.transform = "translateY(" + newTransform + "px)";
         
@@ -201,7 +270,7 @@ class ScrollPicker extends React.Component{
             idNum = "";
             newSelectedItem[index] = "";
         }else{
-            console.log(this.state.selectedItem);
+            console.log(titleToBeFound + "Wrapper-" + controlID + "-" + this.state.selectedItem[index]);
             if(this.state.selectedItem[index].localeCompare("") !== 0){
                 var oldItemWrapper = document.getElementById(titleToBeFound + "Wrapper-" + controlID + "-" + this.state.selectedItem[index]);
                 oldItemWrapper.style.background = "radial-gradient(#111111, #000000)";
@@ -228,7 +297,7 @@ class ScrollPicker extends React.Component{
             <Fragment>
                 <div className="Scroll-Picker-Container">
                     <div className="Scroll-Picker-Wrapper" id={this.props.controlWrapperID}>
-
+            
                     </div>
                 </div>
             </Fragment>

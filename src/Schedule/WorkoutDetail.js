@@ -88,6 +88,9 @@ class WorkoutDetail extends React.Component{
             max.textContent = "MAX%: MAX"
             component.textContent = "COMPONENT: " + this.getComponentString(this.props.location.state.workout.components);
 
+            this.setState({
+                workout: aWorkout
+            });
     }
 
     getComponentString(compArr){

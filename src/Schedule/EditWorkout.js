@@ -24,12 +24,14 @@ class EditWorkout extends React.Component{
             this.state = {
                 canGoBack: true,
                 workout: props.location.state.workout,
-                results: ""
+                results: {}
             };
 
         }
 
         this.getUpdatedWorkout();
+
+        //this.getUpdatedWorkout();
 
     }
     
@@ -41,7 +43,7 @@ class EditWorkout extends React.Component{
     }
 
     componentDidUpdate(){
-
+        
     }
 
     //Lifecycle event preparing Header component to unmount from DOM
@@ -68,7 +70,7 @@ class EditWorkout extends React.Component{
         }
     }
 
-    getUpdatedWorkout(){
+    async getUpdatedWorkout(){
 
         var aWorkout = {};
         var newResult = {};
@@ -82,22 +84,43 @@ class EditWorkout extends React.Component{
             var result = text.length ? JSON.parse(text) : {};
             return result;
         }).catch(console.log);
-        aWorkout = refreshWorkout();
+        aWorkout = await refreshWorkout();
         
-        aWorkout.then(function(res){
+        if(this.checkWorkout(aWorkout)){
+            console.log("good");
+            this.setState({
+                workout: aWorkout
+            });
+            
+        }
+
+        /*aWorkout.then(function(res){
             this.setState({
                 workout: res,
                 results: res
             });
 
             console.log(res);
-        }.bind(this));
+        }.bind(this));*/
 
         /*this.state = {
             workout: aWorkout,
             results: aWorkout
         };*/
 
+    }
+
+    checkWorkout(aWorkout){
+        if(aWorkout.time_on_minute !== this.state.workout.time_on_minute ||
+            aWorkout.time_on_second !== this.state.workout.time_on_second ||
+            aWorkout.rest_minute !== this.state.workout.rest_minute ||
+            aWorkout.rest_second !== this.state.workout.rest_second ||
+            aWorkout.sets !== this.state.workout.sets ||
+            aWorkout.reps !== this.state.workout.reps){
+                return true;
+        }else{
+            return false
+        }
     }
 
     updateTimeOn = (time) => {
@@ -161,7 +184,7 @@ class EditWorkout extends React.Component{
 
     async fillFields(){
 
-        this.getUpdatedWorkout();
+        await this.getUpdatedWorkout();
 
         var aWorkout = "";
 
@@ -211,12 +234,12 @@ class EditWorkout extends React.Component{
         }
 
         var aWeight = document.getElementById("EditWorkout-Input-Weight").value;
-        var timeOnMinute = results.time_on_minute;
-        var timeOnSecond = results.time_on_second;
-        var timeOffMinute = results.rest_minute;
-        var timeOffSecond = results.rest_second;
-        var aSets = results.sets;
-        var aReps = results.reps;
+        var timeOnMinute = (results.time_on_minute === undefined ? aWorkout.time_on_minute : results.time_on_minute);
+        var timeOnSecond = (results.time_on_second === undefined ? aWorkout.time_on_second : results.time_on_second);
+        var timeOffMinute = (results.rest_minute == undefined ? aWorkout.rest_minute : results.rest_minute);
+        var timeOffSecond = (results.rest_second === undefined ? aWorkout.rest_second : results.rest_second);
+        var aSets = (results.sets === undefined ? aWorkout.sets : results.sets);
+        var aReps = (results.reps === undefined ? aWorkout.reps : results.reps);
         var aDate = document.getElementById("EditWorkout-Input-Date").value;
         var workoutID = this.state.workout.workout_id;
         var userID = localStorage.getItem("userID"); 
@@ -267,6 +290,11 @@ class EditWorkout extends React.Component{
 
             this.setState({
                 workout: aWorkout
+            });
+
+            this.props.history.replace({
+                pathname: '/workoutEdit',
+                state: {workout: aWorkout}
             });
 
         }else{
