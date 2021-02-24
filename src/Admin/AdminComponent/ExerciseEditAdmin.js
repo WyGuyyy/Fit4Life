@@ -243,7 +243,7 @@ class ExerciseEditAdmin extends React.Component{
     }
 
     cancelSave(){
-        this.props.history.push({pathname: "componentAdmin", state: {goBack: true, classroom: this.state.classroom, component: this.state.component}});
+        this.props.history.push({pathname: "classroomAdmin", state: {goBack: true, classroom: this.state.classroom, component: this.state.component}});
     }
     
     goBack(){ //This isnt working, start here next time

@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import './ChangePassword.css';
 import Header from '../Header/Header';
+import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import Popout from '../Popout/Popout';
+import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import ConfirmModal from '../Confirm/ConfirmModal';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
@@ -128,10 +130,13 @@ class ChangePassword extends React.Component{
         return(
 
             <Fragment>
-                <Header title={"Change Password"} breadCrumbs={"Change Password"} goBack={true} customClick={this.goBack.bind(this)}/>
+                {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                <Header title={"Change Password"} breadCrumbs={"Change Password"} goBack={true} customClick={this.goBack.bind(this)}/> :
+                <AdminHeader title="Change Password" breadCrumbs={"Change Password"} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <ConfirmModal text="Confirm password change?" yesText="Yes" noText="No" onYes={e => {this.changePassword(); this.closeModal();}}/>
                 <div className="changePasswordContainer">
                     <Popout hist={this.props.history}/>
+                    <AdminPopout hist={this.props.history}/>
                     <div className="changePasswordWrapper">
                         <ConfirmToast text="Password changed!"/>
                         <div className="changePasswordForm">
