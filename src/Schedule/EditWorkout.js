@@ -11,6 +11,7 @@ import {DataCheckService} from '../_services/DataCheckService';
 import ScrollPicker from '../ScrollPicker/ScrollPicker';
 import { FaWordpress, FaWpbeginner } from 'react-icons/fa';
 import {baseURI} from '../_services/APIService';
+import { MdSystemUpdate } from 'react-icons/md';
 
 var currWorkout = "";
 
@@ -52,7 +53,7 @@ class EditWorkout extends React.Component{
     }
 
     componentSelect(event){
-        var compSelect = document.getElementById("exerciseSelectComponent");
+        var compSelect = document.getElementById("editWorkoutSelectComponent");
         var options = compSelect.options;
         var noneSelected = true;
 
@@ -85,7 +86,7 @@ class EditWorkout extends React.Component{
             return result;
         }).catch(console.log);
         aWorkout = await refreshWorkout();
-        
+
         if(this.checkWorkout(aWorkout)){
             console.log("good");
             this.setState({
@@ -111,16 +112,37 @@ class EditWorkout extends React.Component{
     }
 
     checkWorkout(aWorkout){
+
         if(aWorkout.time_on_minute !== this.state.workout.time_on_minute ||
             aWorkout.time_on_second !== this.state.workout.time_on_second ||
             aWorkout.rest_minute !== this.state.workout.rest_minute ||
             aWorkout.rest_second !== this.state.workout.rest_second ||
             aWorkout.sets !== this.state.workout.sets ||
-            aWorkout.reps !== this.state.workout.reps){
+            aWorkout.reps !== this.state.workout.reps ||
+            aWorkout.weight !== this.state.workout.weight ||
+            this.checkComponents(aWorkout)){
                 return true;
         }else{
             return false
         }
+    }
+
+    checkComponents(aWorkout){
+        var comps = aWorkout.components;
+        var stateComps = this.state.workout.components;
+        var compIDs = [];
+
+        for(var count = 0; count < stateComps.length; count++){
+            compIDs.push(stateComps[count].id);
+        }
+
+        for(var count = 0; count < comps.length; count++){
+            if(!compIDs.includes(comps[count].id)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     updateTimeOn = (time) => {
@@ -270,6 +292,8 @@ class EditWorkout extends React.Component{
         var classroomID = this.state.workout.classroom.classroom_id;
 
         if(DataCheckService.validateFields([aDate])  && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
+            
+            console.log(aWorkout);
 
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
@@ -313,7 +337,7 @@ class EditWorkout extends React.Component{
             titles.push(components[titleCount].title);
         }
 
-        for(count = 0; count < 4; count++){
+        for(count = 0; count < 5; count++){
             var opt = componentOptions[count];
             if(titles.includes(opt.text)){
                 opt.selected = true;
