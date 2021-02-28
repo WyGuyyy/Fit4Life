@@ -32,8 +32,6 @@ class ConfirmModal extends React.Component{
 
     /*goToExercise(){
 
-        console.log(this);
-
         this.props.history.push({
             pathname: "/exercise",
             state: {exercise: this.state.exercise}

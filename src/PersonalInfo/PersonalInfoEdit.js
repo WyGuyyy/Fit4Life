@@ -75,8 +75,6 @@ class PersonalInfoEdit extends React.Component{
         var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
         var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
 
-        console.log(newDisplayName);
-
         if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches])){
 
             await fetch(baseURI + "/api/user", {  

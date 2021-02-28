@@ -55,7 +55,6 @@ class Schedule extends React.Component{
     async setScheduleName(){
          var h2 = document.getElementsByClassName("Schedule-Grid-Title-Student")[0];
          var data = await getUserFullName();
-         console.log(data);
 
          h2.textContent = data.first + " " + data.last;
     }
