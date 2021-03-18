@@ -88,7 +88,6 @@ class EditWorkout extends React.Component{
         aWorkout = await refreshWorkout();
 
         if(this.checkWorkout(aWorkout)){
-            console.log("good");
             this.setState({
                 workout: aWorkout
             });
@@ -101,7 +100,6 @@ class EditWorkout extends React.Component{
                 results: res
             });
 
-            console.log(res);
         }.bind(this));*/
 
         /*this.state = {
@@ -292,8 +290,6 @@ class EditWorkout extends React.Component{
         var classroomID = this.state.workout.classroom.classroom_id;
 
         if(DataCheckService.validateFields([aDate])  && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
-            
-            console.log(aWorkout);
 
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          

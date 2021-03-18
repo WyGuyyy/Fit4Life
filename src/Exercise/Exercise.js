@@ -193,8 +193,6 @@ class Exercise extends React.Component{
 
         if(DataCheckService.validateFields([aDate]) && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
 
-            console.log(componentsArr);
-
             await fetch(baseURI + "/api/workout", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
