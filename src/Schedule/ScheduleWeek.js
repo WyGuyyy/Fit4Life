@@ -119,21 +119,23 @@ class ScheduleWeek extends React.Component{
     renderDay(workouts){
 
         var aCount = 0;
+        var matchCount = 0;
         var elementArr = [];
 
         for(aCount = 0; aCount < workouts.length; aCount++){
             if(workouts !== [] ){
                 if(workouts[0].title){
-
+                    console.log(workouts);
                     var el = <ScheduleWeekContent workout={workouts} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                     elementArr.push(el);
                     break;
 
                 }else{
-            
+                    console.log(workouts);
                     if(this.matchesFilters(workouts[aCount])){
-                        var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
+                        var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                         elementArr.push(el);
+                        matchCount++;
                     }
                 }
             }

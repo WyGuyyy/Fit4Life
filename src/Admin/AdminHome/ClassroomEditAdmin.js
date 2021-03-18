@@ -66,14 +66,18 @@ class ClassroomEditAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){        
 
-            await fetch(baseURI + "/api/classroom", {  
+            var response = await fetch(baseURI + "/api/classroom", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify({classroom_id: classroomID, title: aTitle, teacher: {user_id: aTeacherID}}) 
             }).catch(console.log);
 
-            this.confirmBackendTransaction();
+            if(response.status === 500){
+                this.showAlreadyExists();
+            }else{
+                this.confirmBackendTransaction();
+            }
 
         }else{
             this.showError();
@@ -100,6 +104,14 @@ class ClassroomEditAdmin extends React.Component{
 
     closeModal(){
         document.getElementById("modalContainer").style.display = "none";
+    }
+
+    showAlreadyExists(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "This classroom already exists. Please try a different name!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     showError(){

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
+import {authService} from '../_services/AuthenticationService';
 import {baseURI} from '../_services/APIService';
 
 class PersonalInfoEdit extends React.Component{
@@ -70,12 +71,10 @@ class PersonalInfoEdit extends React.Component{
         var newFirstName = document.getElementById("Personal-Info-Edit-First-Name-Input").value;
         var newLastName = document.getElementById("Personal-Info-Edit-Last-Name-Input").value;
         var newDisplayName = document.getElementById("Personal-Info-Edit-DisplayName-Input").value;
-        var newEmail = document.getElementById("Personal-Info-Edit-Email-Input").value;
+        var newEmail = localStorage.getItem("userEmail");
         var newWeight = document.getElementById("Personal-Info-Edit-Weight-Input").value;
         var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
         var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
-
-        console.log(newDisplayName);
 
         if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches])){
 
@@ -166,7 +165,7 @@ class PersonalInfoEdit extends React.Component{
                             </div>
 
                             <div className="Personal-Info-Edit-Email-Wrapper">
-                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <input className="Personal-Info-Edit-Email-Input" id="Personal-Info-Edit-Email-Input" type="text" defaultValue={this.state.personalInfoObject.email} />
+                                <label className="Personal-Info-Edit-Email-Label">Email: </label> <h2 className="Personal-Info-Edit-Email-Input" id="Personal-Info-Edit-Email-Input" type="text">{this.state.personalInfoObject.email}</h2>
                             </div>
 
                             <div className="Personal-Info-Edit-Weight-Wrapper">

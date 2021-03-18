@@ -33,14 +33,18 @@ class ClassroomCreateAdmin extends React.Component{
 
         if(DataCheckService.validateFields([aTitle])){
 
-            await fetch(baseURI + "/api/classroom", {  
+            var response = await fetch(baseURI + "/api/classroom", {  
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify({title: aTitle, teacher: {user_id: aTeacherID}}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
-            this.confirmBackendTransaction();
+            if(response.status === 500){
+                this.showAlreadyExists();
+            }else{
+                this.confirmBackendTransaction();
+            }
 
         }else{
             this.showError();
@@ -56,6 +60,14 @@ class ClassroomCreateAdmin extends React.Component{
 
     closeModal(){
         document.getElementById("modalContainer").style.display = "none";
+    }
+
+    showAlreadyExists(){
+        // Get the snackbar confirmation
+        var confirmation = document.getElementById("snackbar");
+        confirmation.innerText = "This classroom already exists. Please try a different name!";
+        confirmation.className = "show";
+        setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
 
     showError(){

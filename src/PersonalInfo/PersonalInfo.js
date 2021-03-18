@@ -53,6 +53,7 @@ class PersonalInfo extends React.Component{
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 personalInfo = result;
+                console.log(personalInfo);
             }
         ).catch(console.log);
 

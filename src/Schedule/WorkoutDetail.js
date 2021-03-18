@@ -214,10 +214,12 @@ class WorkoutDetail extends React.Component{
                                     </div>
                                 </div>
                             </div>
+                            { localStorage.getItem("userRole").localeCompare("ADMIN") !== 0 ?
                             <div className="Workout-Detail-Button-Wrapper">
                                 <button className="Workout-Detail-EditWorkout" onClick={e => this.goToEditWorkout(e)}>Edit Workout</button>
                                 <button className="Workout-Detail-DeleteWorkout" onClick={e => this.showModal(e)}>Delete Workout</button>
-                            </div>
+                            </div> : ""
+                            }
                         </div>
                     </div>
                 </Fragment>

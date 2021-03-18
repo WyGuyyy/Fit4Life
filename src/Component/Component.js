@@ -124,6 +124,89 @@ class Component extends React.Component{
 
     }
 
+    async searchExercises(event){
+        var exercises = [];
+        var exerciseBlobs = [];
+        var count = 0;
+        var componentWrapper = document.getElementById("componentWrapper");
+        var searchText = document.getElementsByClassName("Fit4Life-Searchbar")[0].value.trim();
+
+        console.log(searchText);
+
+        var classroomID = this.state.classroom.classroom_id;
+        //var componentID = this.state.component.component_id;
+
+        var classCompID;
+
+        await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+            }
+        ).catch(console.log);
+
+        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exerciseBlobs = result;
+            }
+        ).catch(console.log);
+
+        var tempNumOfTiles = 40;
+        var numRows;
+
+        for(var exCount = 0; exCount < exercises.length; exCount++){
+            console.log(exercises);
+            if(!exercises[exCount].title.toLowerCase().includes(searchText.toLowerCase())){
+                exercises.splice(exCount, 1);
+                exCount = exCount - 1;
+            }
+        }
+
+        //var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
+
+        /*var componentWrapper = document.getElementById("componentWrapper");*/
+        componentWrapper.innerHTML = '';
+
+        var aTile;
+        var aFlexRow;
+        var countOuter;
+        var countInner;
+
+        var tilesPerRow = this.calculateRowCount();
+        numRows = Math.ceil(exercises.length/tilesPerRow);
+
+        for(countOuter = 0; countOuter < numRows; countOuter++){
+            
+            aFlexRow = document.createElement('div');
+            aFlexRow.className = "Component-Tile-Wrapper";
+
+            for(countInner = 0; countInner < tilesPerRow; countInner++){
+
+                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow), exerciseBlobs), aFlexRow);
+                //ReactDOM.render(aTile, aFlexRow);
+            }
+
+            componentWrapper.appendChild(aFlexRow);
+        }
+
+        this.setState({
+            componentExercises: exercises
+        });
+    }
+
     goToExercise(event, selExercise){
 
         if(localStorage.getItem("userRole").localeCompare("STUDENT") === 0){
@@ -218,6 +301,10 @@ class Component extends React.Component{
                     <ConfirmToast text="Cannot access in Admin mode!"/>
                     <div className="componentWrapper" id="componentWrapper">
                         
+                    </div>
+                    <div className="Fit4Life-SearchbarWrapper">
+                        <input className="Fit4Life-Searchbar"/>
+                        <button className="Fit4Life-SearchButton" onClick={e => this.searchExercises(e)}>Search</button>
                     </div>
                 </div>
             </Fragment>
