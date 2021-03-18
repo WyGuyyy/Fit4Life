@@ -40,13 +40,35 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow: scroll;
+}
+
+.Exercise-Tile-Title-Wrapper::-webkit-scrollbar {
+    display: none;
+    width: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } 
+
+  .Exercise-Tile-Title-Wrapper::-webkit-scrollbar-thumb{
+    display: none;
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.Exercise-Tile-Title-Wrapper::-webkit-scrollbar-track {
+    display: none;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
 }
 
 .Exercise-Tile-Title{
-    font-size: 40px;
+    font-size: 20px;
     color: white;
     margin: 0;
+    text-align: center;
 }
 
 @media(max-width: 700px){
@@ -55,9 +77,6 @@
         height: 250px;
     }
 
-    .Exercise-Tile-Title{
-        font-size: 30px;
-    }
 }
 
 @media(max-width: 490px){
@@ -65,19 +84,11 @@
         width: 150px;
         height: 200px;
     }
-
-    .Exercise-Tile-Title{
-        font-size: 25px;
-    }
 }
 
 @media(max-width: 375px){
     .Exercise-Tile-Wrapper{
         width: 100px;
         height: 150px;
-    }
-
-    .Exercise-Tile-Title{
-        font-size: 20px;
     }
 }

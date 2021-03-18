@@ -131,8 +131,6 @@ class Component extends React.Component{
         var componentWrapper = document.getElementById("componentWrapper");
         var searchText = document.getElementsByClassName("Fit4Life-Searchbar")[0].value.trim();
 
-        console.log(searchText);
-
         var classroomID = this.state.classroom.classroom_id;
         //var componentID = this.state.component.component_id;
 
@@ -168,7 +166,6 @@ class Component extends React.Component{
         var numRows;
 
         for(var exCount = 0; exCount < exercises.length; exCount++){
-            console.log(exercises);
             if(!exercises[exCount].title.toLowerCase().includes(searchText.toLowerCase())){
                 exercises.splice(exCount, 1);
                 exCount = exCount - 1;
