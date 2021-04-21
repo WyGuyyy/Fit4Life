@@ -70,7 +70,7 @@ class ClassroomEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({classroom_id: classroomID, title: aTitle, teacher: {user_id: aTeacherID}}) 
+                body: JSON.stringify({classroom_id: classroomID, title: aTitle.trim(), teacher: {user_id: aTeacherID}}) 
             }).catch(console.log);
 
             if(response.status === 500){

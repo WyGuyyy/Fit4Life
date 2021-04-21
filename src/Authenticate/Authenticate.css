@@ -4,12 +4,35 @@
 }
 
 .authenticateWrapper{
+    position: absolute;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
+}
+
+.authenticateWrapper::-webkit-scrollbar {
+    width: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } 
+
+  .authenticateWrapper::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.authenticateWrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
 }
 
 .authenticateForm{
@@ -136,9 +159,8 @@
 }
 
 @media(max-height: 450px){
-    .authenticateWrapper{
-        height: 600px;
-        position: absolute;
+    .authenticateForm{
+        margin-top: 100px;
     }
 }
 

@@ -7,6 +7,7 @@ import Popout from '../Popout/Popout';
 import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import ConfirmToast from '../Confirm/ConfirmToast';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
@@ -51,6 +52,8 @@ class Component extends React.Component{
     }
 
     async renderTiles(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var exercises = [];
         var exerciseBlobs = [];
@@ -122,9 +125,14 @@ class Component extends React.Component{
             componentExercises: exercises
         });
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     async searchExercises(event){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var exercises = [];
         var exerciseBlobs = [];
         var count = 0;
@@ -202,6 +210,9 @@ class Component extends React.Component{
         this.setState({
             componentExercises: exercises
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     goToExercise(event, selExercise){
@@ -292,6 +303,7 @@ class Component extends React.Component{
                 {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
                 <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
+                <LoadingSpinner />
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>
                     <AdminPopout hist={this.props.history}/>

@@ -4,6 +4,7 @@ import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {FaPen, FaRegDotCircle} from 'react-icons/fa';
 import {RedirectService} from '../../_services/RedirectService';
@@ -37,6 +38,8 @@ class AdminComponent extends React.Component{
     }
 
     async fillExercises(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var list = document.getElementById("exerciseList-Admin");
         var count = 0;
@@ -141,9 +144,14 @@ class AdminComponent extends React.Component{
             componentExercises: exercises
         });
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     async searchExercises(event){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var list = document.getElementById("exerciseList-Admin");
         var searchText = document.getElementsByClassName("Fit4Life-Searchbar-Admin")[0].value.trim();
         var count = 0;
@@ -253,6 +261,9 @@ class AdminComponent extends React.Component{
 
             list.appendChild(listItem);
         }
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     changeListItemBackground(id){
@@ -375,6 +386,7 @@ class AdminComponent extends React.Component{
             <Fragment>
                 <AdminHeader title={"Exercises"} breadCrumbs={classroom + " Exercises"} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <LoadingSpinner />
                 <div className="homeExercise">
                     <AdminPopout hist={this.props.history}/>
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>

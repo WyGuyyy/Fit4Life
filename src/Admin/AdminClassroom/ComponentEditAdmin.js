@@ -73,7 +73,7 @@ class ComponentEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({component_id: componentID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({component_id: componentID, title: aTitle.trim(), classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
             this.confirmBackendTransaction();

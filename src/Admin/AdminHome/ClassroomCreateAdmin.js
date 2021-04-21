@@ -37,7 +37,7 @@ class ClassroomCreateAdmin extends React.Component{
                 method: "POST",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({title: aTitle, teacher: {user_id: aTeacherID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({title: aTitle.trim(), teacher: {user_id: aTeacherID}}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
             if(response.status === 500){
