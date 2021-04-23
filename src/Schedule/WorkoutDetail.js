@@ -41,6 +41,10 @@ class WorkoutDetail extends React.Component{
         
     }
 
+    returnNonNegativeValue(value){
+        return value === -1 ? 0 : value;
+    }
+
     async fillFields(){
 
         var aWorkout = "";
@@ -72,20 +76,26 @@ class WorkoutDetail extends React.Component{
 
             }).catch(console.log);
 
-            onMinute = (aWorkout.time_on_minute <= 9 ? "0" + aWorkout.time_on_minute : aWorkout.time_on_minute);
-            onSecond = (aWorkout.time_on_second <= 9 ? "0" + aWorkout.time_on_second : aWorkout.time_on_second);
+            var timeOnMinute = this.returnNonNegativeValue(aWorkout.time_on_minute);
+            var timeOnSecond = this.returnNonNegativeValue(aWorkout.time_on_second);
 
-            restMinute = (aWorkout.rest_minute <= 9 ? "0" + aWorkout.rest_minute : aWorkout.rest_minute);
-            restSecond = (aWorkout.rest_second <= 9 ? "0" + aWorkout.rest_second : aWorkout.rest_second);
+            var timeOffMinute = this.returnNonNegativeValue(aWorkout.rest_minute);
+            var timeOffSecond = this.returnNonNegativeValue(aWorkout.rest_second);
+
+            onMinute = (timeOnMinute <= 9 ? "0" + timeOnMinute : timeOnMinute);
+            onSecond = (timeOnSecond <= 9 ? "0" + timeOnSecond : timeOnSecond);
+
+            restMinute = (timeOffMinute <= 9 ? "0" + timeOffMinute : timeOffMinute);
+            restSecond = (timeOffSecond <= 9 ? "0" + timeOffSecond : timeOffSecond);
 
             exercise.textContent = "EXERCISE: " + aWorkout.exercise.title;
             thr.textContent = "TARGET HEART RATE: " + aWorkout.target_heart_rate;
-            weight.textContent = "WEIGHT: " + aWorkout.weight;
+            weight.textContent = "WEIGHT: " + this.returnNonNegativeValue(aWorkout.weight);
             timeOn.textContent = "TIME ON: " + onMinute + ":" + onSecond;
             timeOff.textContent = "TIME OFF: " + restMinute + ":" + restSecond;
-            sets.textContent = "SETS: " + aWorkout.sets;
-            reps.textContent = "REPS: " + aWorkout.reps;
-            max.textContent = "MAX%: MAX"
+            sets.textContent = "SETS: " + this.returnNonNegativeValue(aWorkout.sets);
+            reps.textContent = "REPS: " + this.returnNonNegativeValue(aWorkout.reps);
+            max.textContent = "MAX%: " + this.returnNonNegativeValue(aWorkout.max) + "%";
             component.textContent = "COMPONENT: " + this.getComponentString(aWorkout.components);
 
             this.setState({

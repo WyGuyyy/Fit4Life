@@ -63,10 +63,198 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 180px;
+    height: 150px;
     margin-right: 0;
     width: 100%;
     margin-bottom: 5px;
+}
+
+/*TimeOn styling*/
+.TimeOn-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.TimeOn-Minute-Wrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.TimeOn-Second-Wrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.TimeOn-Details-Minute-Label{
+    color: white;
+}
+
+.TimeOn-Details-Second-Label{
+    color: white;
+}
+
+.TimeOn-Details-Minute{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+.TimeOn-Details-Second{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+/*Rest styling*/
+.Rest-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Rest-Minute-Wrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Rest-Second-Wrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Rest-Details-Minute-Label{
+    color: white;
+}
+
+.Rest-Details-Second-Label{
+    color: white;
+}
+
+.Rest-Details-Minute{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+.Rest-Details-Second{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+/*Sets styling*/
+.Sets-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Sets-Details-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Sets-Details{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+
+/*Reps styling*/
+.Reps-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Reps-Details-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Reps-Details{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+/*Max styling*/
+.Max-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Max-Details-Wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Max-Details{
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
 }
 
 .exerciseLabel{
@@ -212,7 +400,7 @@ option:not(checked) {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 180px;
+        height: 150px;
         width: 100%;
         margin-right: 0;
         margin-bottom: 5px;

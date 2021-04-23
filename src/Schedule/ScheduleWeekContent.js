@@ -47,6 +47,10 @@ class ScheduleWeekContent extends React.Component{
         }
     }
 
+    returnNonNegativeValue(value){
+        return value === -1 ? 0 : value;
+    }
+
     fillWorkoutContent(index){
 
         var workout = this.state.workout;
@@ -65,11 +69,11 @@ class ScheduleWeekContent extends React.Component{
             var frequencyDiv = <div className="ScheduleWeek-Frequency" ><p className="ScheduleWeek-Frequency-Content" id="componentTitle">{"Component"}</p></div>;
         }else{
             var typeDiv = <div className="ScheduleWeek-Type"><p className="ScheduleWeek-Type-Content">{workout.exercise.title}</p></div>;
-            var thrDiv = <div className="ScheduleWeek-THR"><p className="ScheduleWeek-THR-Content">{workout.target_heart_rate}</p></div>;
-            var maxDiv = <div className="ScheduleWeek-Max"><p className="ScheduleWeek-Max-Content">{"MAX%"}</p></div>;
-            var setsDiv = <div className="ScheduleWeek-Sets"><p className="ScheduleWeek-Sets-Content">{workout.sets}</p></div>;
-            var repsDiv = <div className="ScheduleWeek-Reps"><p className="ScheduleWeek-Reps-Content">{workout.reps}</p></div>;
-            var weightDiv = <div className="ScheduleWeek-Weight"><p className="ScheduleWeek-Weight-Content">{workout.weight}</p></div>;
+            var thrDiv = <div className="ScheduleWeek-THR"><p className="ScheduleWeek-THR-Content">{workout.target_heart_rate.localeCompare("None") === 0 ? "" : workout.target_heart_rate}</p></div>;
+            var maxDiv = <div className="ScheduleWeek-Max"><p className="ScheduleWeek-Max-Content">{(workout.max === -1 ? "" : workout.max + "%")}</p></div>;
+            var setsDiv = <div className="ScheduleWeek-Sets"><p className="ScheduleWeek-Sets-Content">{workout.sets === -1 ? "" : workout.sets}</p></div>;
+            var repsDiv = <div className="ScheduleWeek-Reps"><p className="ScheduleWeek-Reps-Content">{workout.reps === -1 ? "" : workout.reps}</p></div>;
+            var weightDiv = <div className="ScheduleWeek-Weight"><p className="ScheduleWeek-Weight-Content">{workout.weight === -1 ? "" : workout.weight}</p></div>;
             var timeOnDiv = <div className="ScheduleWeek-TimeOn"><p className="ScheduleWeek-TimeOn-Content">{this.formatTime(workout.time_on_minute, workout.time_on_second)}</p></div>;
             var timeOffDiv = <div className="ScheduleWeek-TimeOff"><p className="ScheduleWeek-TimeOff-Content">{this.formatTime(workout.rest_minute, workout.rest_second)}</p></div>;
             var frequencyDiv = <div className="ScheduleWeek-Frequency">{this.getComponentString(workout.components)}</div>;
@@ -91,6 +95,10 @@ class ScheduleWeekContent extends React.Component{
     getComponentString(compArr){
 
         var compStringArr = [];
+        
+        if(compArr[0].title.localeCompare("None") === 0){
+            return "";
+        }
 
         for(var count = 0; count < compArr.length; count++){
             compStringArr.push(<p className="ScheduleWeek-Frequency-Content">{compArr[count].title}<br/></p>);
@@ -101,7 +109,12 @@ class ScheduleWeekContent extends React.Component{
     }
 
     formatTime(minuteValue, secondValue){
-        return minuteValue + "m " + secondValue + "s";
+
+        if(minuteValue === -1 && secondValue === -1){
+            return "";
+        }
+
+        return this.returnNonNegativeValue(minuteValue) + "m " + this.returnNonNegativeValue(secondValue) + "s";
     }
 
     changeListItemBackground(event){

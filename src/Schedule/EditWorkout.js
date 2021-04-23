@@ -143,7 +143,7 @@ class EditWorkout extends React.Component{
         return false;
     }
 
-    updateTimeOn = (time) => {
+    /*updateTimeOn = (time) => {
         var newResults = this.state.results;
 
         if(time[0].localeCompare("") === 0){
@@ -200,7 +200,7 @@ class EditWorkout extends React.Component{
         this.setState({
             results: newResults
         });
-    }
+    }*/
 
     async fillFields(){
 
@@ -210,7 +210,14 @@ class EditWorkout extends React.Component{
 
         var componentSelect = document.getElementById("editWorkoutSelectComponent");
         var thr = document.getElementById("editWorkoutSelectTHR");
+        var timeOnMinutes = document.getElementsByClassName("TimeOn-Details-Minute")[0];
+        var timeOnSeconds = document.getElementsByClassName("TimeOn-Details-Second")[0];
+        var restMinutes = document.getElementsByClassName("Rest-Details-Minute")[0];
+        var restSeconds = document.getElementsByClassName("Rest-Details-Second")[0];
+        var sets = document.getElementsByClassName("Sets-Details")[0];
+        var reps = document.getElementsByClassName("Reps-Details")[0];
         var weight = document.getElementById("EditWorkout-Input-Weight");
+        var max = document.getElementsByClassName("Max-Details")[0];
         var date = document.getElementById("EditWorkout-Input-Date");
 
         await fetch(baseURI + "/api/workout/" + this.props.location.state.workout.workout_id, {  
@@ -228,7 +235,14 @@ class EditWorkout extends React.Component{
             this.activateSelectedComponents(componentSelect, this.props.location.state.workout.components);
             this.activateSelectedTHR(thr, this.props.location.state.workout.target_heart_rate);
 
-            weight.value = aWorkout.weight;
+            timeOnMinutes.value = (aWorkout.time_on_minute === -1 ? 0 : aWorkout.time_on_minute);
+            timeOnSeconds.value = (aWorkout.time_on_second === -1 ? 0 : aWorkout.time_on_second);
+            restMinutes.value = (aWorkout.rest_minute === -1 ? 0 : aWorkout.rest_minute);
+            restSeconds.value = (aWorkout.rest_second === -1 ? 0 : aWorkout.rest_second);
+            sets.value = (aWorkout.sets === -1 ? 0 : aWorkout.sets);
+            reps.value = (aWorkout.reps === -1 ? 0 : aWorkout.reps);
+            weight.value = (aWorkout.weight === -1 ? 0 : aWorkout.weight);
+            max.value = (aWorkout.max === -1 ? 0 : aWorkout.max);
             date.value = aWorkout.date;//.split("T")[0];
     }
 
@@ -254,12 +268,19 @@ class EditWorkout extends React.Component{
         }
 
         var aWeight = document.getElementById("EditWorkout-Input-Weight").value;
-        var timeOnMinute = (results.time_on_minute === undefined ? aWorkout.time_on_minute : results.time_on_minute);
+        var max = document.getElementsByClassName("Max-Details")[0].value;
+        /*var timeOnMinute = (results.time_on_minute === undefined ? aWorkout.time_on_minute : results.time_on_minute);
         var timeOnSecond = (results.time_on_second === undefined ? aWorkout.time_on_second : results.time_on_second);
         var timeOffMinute = (results.rest_minute == undefined ? aWorkout.rest_minute : results.rest_minute);
         var timeOffSecond = (results.rest_second === undefined ? aWorkout.rest_second : results.rest_second);
         var aSets = (results.sets === undefined ? aWorkout.sets : results.sets);
-        var aReps = (results.reps === undefined ? aWorkout.reps : results.reps);
+        var aReps = (results.reps === undefined ? aWorkout.reps : results.reps);*/
+        var timeOnMinute = document.getElementsByClassName("TimeOn-Details-Minute")[0].value;
+        var timeOnSecond = document.getElementsByClassName("TimeOn-Details-Second")[0].value;
+        var timeOffMinute = document.getElementsByClassName("Rest-Details-Minute")[0].value;
+        var timeOffSecond = document.getElementsByClassName("Rest-Details-Second")[0].value;
+        var aSets = document.getElementsByClassName("Sets-Details")[0].value;
+        var aReps = document.getElementsByClassName("Reps-Details")[0].value;
         var aDate = document.getElementById("EditWorkout-Input-Date").value;
         var workoutID = this.state.workout.workout_id;
         var userID = localStorage.getItem("userID"); 
@@ -267,20 +288,20 @@ class EditWorkout extends React.Component{
        // var componentID = this.state.component.component_id;
         var classroomID = this.state.workout.classroom.classroom_id;
 
-
         aWorkout.workout_id = workoutID;
         aWorkout.user = {user_id: userID};
         aWorkout.exercise = {exercise_id: exerciseID};
         aWorkout.classroom = {classroom_id: classroomID};
         aWorkout.components = componentsArr;
         aWorkout.target_heart_rate = aTHR;
-        aWorkout.weight = aWeight;
-        aWorkout.time_on_minute = timeOnMinute;
-        aWorkout.time_on_second = timeOnSecond;
-        aWorkout.rest_minute = timeOffMinute;
-        aWorkout.rest_second = timeOffSecond;
-        aWorkout.sets = aSets;
-        aWorkout.reps = aReps;
+        aWorkout.weight = (aWeight.localeCompare("") === 0 ? -1 : aWeight);
+        aWorkout.max = (max.localeCompare("") === 0 ? -1 : max);
+        aWorkout.time_on_minute = (timeOnMinute.localeCompare("") === 0 ? -1 : timeOnMinute);
+        aWorkout.time_on_second = (timeOnSecond.localeCompare("") === 0 ? -1 : timeOnSecond);
+        aWorkout.rest_minute = (timeOffMinute.localeCompare("") === 0 ? -1 : timeOffMinute);
+        aWorkout.rest_second = (timeOffSecond.localeCompare("") === 0 ? -1 : timeOffSecond);
+        aWorkout.sets = (aSets.localeCompare("") === 0 ? -1 : aSets);
+        aWorkout.reps = (aReps.localeCompare("") === 0 ? -1 : aReps);
         aWorkout.date = aDate;
 
         var workoutID = this.state.workout.workout_id;
@@ -366,6 +387,19 @@ class EditWorkout extends React.Component{
         }
 
 
+    }
+
+    checkMax(event, max){
+        var input = event.target;
+        var value = parseInt(input.value);
+
+        if(value > max){
+            input.value = max;
+        }else if(value < 0){
+            input.value = 0;
+        }else{
+            return;
+        }
     }
 
     showIllegalDate(){
@@ -461,7 +495,7 @@ class EditWorkout extends React.Component{
        // var component = this.props.location.state.workout.component.title;
         var exercise = this.props.location.state.workout.exercise.title;
 
-        var count = 0;
+       /* var count = 0;
 
         var timeArr = [];
 
@@ -485,9 +519,9 @@ class EditWorkout extends React.Component{
 
         for(count = 0; count <= 20; count++){
             repsArr.push(count);
-        }
+        }*/
 
-        var onMinutes = this.state.workout.time_on_minute;
+        /*var onMinutes = this.state.workout.time_on_minute;
         onMinutes = (onMinutes === -1 ? 0 : onMinutes);
 
         var onSeconds = this.state.workout.time_on_second;
@@ -503,7 +537,7 @@ class EditWorkout extends React.Component{
         sets = (sets === -1 ? 0 : sets);
 
         var reps = this.state.workout.reps;
-        reps = (reps === -1 ? 0 : reps);
+        reps = (reps === -1 ? 0 : reps);*/
 
         return(
             <Fragment>
@@ -545,17 +579,55 @@ class EditWorkout extends React.Component{
                                 <div className="EditWorkout-Details-Row">
                                     <label className="editWorkoutLabel">Weight (lb): </label> <input className="editWorkoutInput" id="EditWorkout-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
-                                <div className="EditWorkout-Details-Row">
-                                    <label className="editWorkoutLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"} updateResults={this.updateTimeOn} type={"Dependent"} dependentConfig={[60, 60]} defaultPosition={[onMinutes, onSeconds]}/>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Max%: </label> 
+                                    <div className="Max-Wrapper">
+                                        <div className="Max-Details-Wrapper">
+                                            <input className="Max-Details" type="number" onBlur={e => this.checkMax(e, 100)}/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="EditWorkout-Details-Row">
-                                    <label className="editWorkoutLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"} updateResults={this.updateRest} type={"Dependent"} dependentConfig={[60, 60]} defaultPosition={[offMinutes, offSeconds]}/>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Time On: </label> 
+                                    <div className="TimeOn-Wrapper">
+                                        <div className="TimeOn-Minute-Wrapper">
+                                            <label className="TimeOn-Details-Minute-Label">Minute</label>
+                                            <input className="TimeOn-Details-Minute" type="number" onBlur={e => this.checkMax(e, 30)} />
+                                        </div>
+                                        <div className="TimeOn-Second-Wrapper">
+                                            <label className="TimeOn-Details-Second-Label">Second</label>
+                                            <input className="TimeOn-Details-Second" type="number" onBlur={e => this.checkMax(e, 59)} />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="EditWorkout-Details-Row">
-                                    <label className="editWorkoutLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"} updateResults={this.updateSets} defaultPosition={[sets]}/>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Rest: </label> 
+                                    <div className="Rest-Wrapper">
+                                        <div className="Rest-Minute-Wrapper">
+                                            <label className="Rest-Details-Minute-Label">Minute</label>
+                                            <input className="Rest-Details-Minute" type="number" onBlur={e => this.checkMax(e, 30)} />
+                                        </div>
+                                        <div className="Rest-Second-Wrapper">
+                                            <label className="Rest-Details-Second-Label">Second</label>
+                                            <input className="Rest-Details-Second" type="number" onBlur={e => this.checkMax(e, 59)} />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="EditWorkout-Details-Row">
-                                    <label className="editWorkoutLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"} updateResults={this.updateReps} defaultPosition={[reps]}/>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Sets: </label> 
+                                    <div className="Sets-Wrapper">
+                                        <div className="Sets-Details-Wrapper">
+                                            <input className="Sets-Details" type="number" onBlur={e => this.checkMax(e, 20)} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Reps: </label> 
+                                    <div className="Reps-Wrapper">
+                                        <div className="Reps-Details-Wrapper">
+                                            <input className="Reps-Details" type="number" onBlur={e => this.checkMax(e, 50)} />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="EditWorkout-Details-Row">
                                     <label className="editWorkoutLabel">Date: </label> <input className="editWorkoutInput" id="EditWorkout-Input-Date" type="date" min="0" max="999" onChange={e => this.checkDate(e)}/>
@@ -616,3 +688,17 @@ export default EditWorkout;
                                 </div>
                             </div>
                         </div>*/ 
+/*
+<div className="EditWorkout-Details-Row">
+                                    <label className="editWorkoutLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"} updateResults={this.updateTimeOn} type={"Dependent"} dependentConfig={[60, 60]} defaultPosition={[onMinutes, onSeconds]}/>
+                                </div>
+                                <div className="EditWorkout-Details-Row">
+                                    <label className="editWorkoutLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"} updateResults={this.updateRest} type={"Dependent"} dependentConfig={[60, 60]} defaultPosition={[offMinutes, offSeconds]}/>
+                                </div>
+                                <div className="EditWorkout-Details-Row">
+                                    <label className="editWorkoutLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"} updateResults={this.updateSets} defaultPosition={[sets]}/>
+                                </div>
+                                <div className="EditWorkout-Details-Row">
+                                    <label className="editWorkoutLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"} updateResults={this.updateReps} defaultPosition={[reps]}/>
+                                </div>
+*/

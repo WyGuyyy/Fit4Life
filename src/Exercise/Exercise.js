@@ -22,12 +22,12 @@ class Exercise extends React.Component{
                 components: [],
                 thr: "",
                 weight: "",
-                timeOnMinutes: "",
+                /*timeOnMinutes: "",
                 timeOnSeconds: "",
                 restMinutes: "",
                 restSeconds: "",
                 sets: "",
-                reps: "",
+                reps: "",*/
                 date: ""
             };
 
@@ -74,7 +74,7 @@ class Exercise extends React.Component{
         }
     }
 
-    updateTimeOn = (time) => { //start here and change time on and off to correct sc and min
+    /*updateTimeOn = (time) => { //start here and change time on and off to correct sc and min
         var newResults = this.state.results;
 
         if(time[0].localeCompare("") === 0){
@@ -130,7 +130,7 @@ class Exercise extends React.Component{
         this.setState({
             results: newResults
         });
-    }
+    }*/
 
     async submitWorkout(event){
 
@@ -141,6 +141,7 @@ class Exercise extends React.Component{
             components: "",
             target_heart_rate: "",
             weight: "",
+            max: "",
             time_on_minute: "",
             time_on_second: "",
             rest_minute: "",
@@ -166,6 +167,13 @@ class Exercise extends React.Component{
         }
 
         var aWeight = document.getElementById("Exercise-Input-Weight").value;
+        var max = document.getElementsByClassName("Max-Details")[0].value;
+        var timeOnMinute = document.getElementsByClassName("TimeOn-Details-Minute")[0].value;
+        var timeOnSecond = document.getElementsByClassName("TimeOn-Details-Second")[0].value;
+        var restMinute = document.getElementsByClassName("Rest-Details-Minute")[0].value;
+        var restSecond = document.getElementsByClassName("Rest-Details-Second")[0].value;
+        var sets = document.getElementsByClassName("Sets-Details")[0].value;
+        var reps = document.getElementsByClassName("Reps-Details")[0].value;
        // var aTimeOn =""; //document.getElementById("Exercise-Input-TimeOn").value;
        // var aRest = "";//document.getElementById("Exercise-Input-Rest").value;
        // var aSets = "";//document.getElementById("Exercise-Input-Sets").value;
@@ -182,13 +190,20 @@ class Exercise extends React.Component{
         aWorkout.classroom = {classroom_id: classroomID};
         aWorkout.components = componentsArr;
         aWorkout.target_heart_rate = aTHR;
-        aWorkout.weight = aWeight;
-        aWorkout.time_on_minute = this.state.results.timeOnMinutes;
+        aWorkout.weight = (aWeight.localeCompare("") === 0 ? -1 : aWeight);
+        aWorkout.max = (max.localeCompare("") === 0 ? -1 : max);
+        /*aWorkout.time_on_minute = this.state.results.timeOnMinutes;
         aWorkout.time_on_second = this.state.results.timeOnSeconds;
         aWorkout.rest_minute = this.state.results.restMinutes;
         aWorkout.rest_second = this.state.results.restSeconds;
         aWorkout.sets = this.state.results.sets;
-        aWorkout.reps = this.state.results.reps;
+        aWorkout.reps = this.state.results.reps;*/
+        aWorkout.time_on_minute = (timeOnMinute.localeCompare("") === 0 ? -1 : timeOnMinute);
+        aWorkout.time_on_second = (timeOnSecond.localeCompare("") === 0 ? -1 : timeOnSecond);
+        aWorkout.rest_minute = (restMinute.localeCompare("") === 0 ? -1 : restMinute);
+        aWorkout.rest_second = (restSecond.localeCompare("") === 0 ? -1 : restSecond);
+        aWorkout.sets = (sets.localeCompare("") === 0 ? -1 : sets);
+        aWorkout.reps = (reps.localeCompare("") === 0 ? -1 : reps);
         aWorkout.date = aDate;
 
         if(DataCheckService.validateFields([aDate]) && componentsArr.length > 0){//[aTHR, aWeight, aTimeOn, aRest, aSets, aReps, aDate])){
@@ -202,6 +217,13 @@ class Exercise extends React.Component{
             
             //document.getElementById("Exercise-Input-THR").value = "";
             document.getElementById("Exercise-Input-Weight").value = "";
+            document.getElementsByClassName("Max-Details")[0].value = "";
+            document.getElementsByClassName("TimeOn-Details-Minute")[0].value = "";
+            document.getElementsByClassName("TimeOn-Details-Second")[0].value = "";
+            document.getElementsByClassName("Rest-Details-Minute")[0].value = "";
+            document.getElementsByClassName("Rest-Details-Second")[0].value = "";
+            document.getElementsByClassName("Sets-Details")[0].value = "";
+            document.getElementsByClassName("Reps-Details")[0].value = "";
             //document.getElementById("Exercise-Input-TimeOn").value = "";
             //document.getElementById("Exercise-Input-Rest").value = "";
             //document.getElementById("Exercise-Input-Sets").value = "";
@@ -227,6 +249,18 @@ class Exercise extends React.Component{
         }
 
 
+    }
+
+    checkMax(event, max){
+        var input = event.target;
+        var value = parseInt(input.value);
+        
+        if(value > max){
+            input.value = max;
+        }else if(value < 0){
+            input.value = 0;
+        }
+        
     }
 
     showModal(event){
@@ -278,7 +312,7 @@ class Exercise extends React.Component{
         //var component = this.props.location.state.component.title;
         var exercise = this.props.location.state.exercise.title;
 
-        var count = 0;
+        /*var count = 0;
 
         var timeArr = [];
 
@@ -302,7 +336,7 @@ class Exercise extends React.Component{
 
         for(count = 0; count <= 20; count++){
             repsArr.push(count);
-        }
+        }*/
 
         return(
             <Fragment>
@@ -345,16 +379,54 @@ class Exercise extends React.Component{
                                     <label className="exerciseLabel">Weight (lb): </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"} updateResults={this.updateTimeOn} type={"Dependent"} dependentConfig={[60, 60]}/>
+                                    <label className="exerciseLabel">Max%: </label> 
+                                    <div className="Max-Wrapper">
+                                        <div className="Max-Details-Wrapper">
+                                            <input className="Max-Details" type="number" onBlur={e => this.checkMax(e, 100)}/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"} updateResults={this.updateRest} type={"Dependent"} dependentConfig={[60, 60]}/>
+                                    <label className="exerciseLabel">Time On: </label> 
+                                    <div className="TimeOn-Wrapper">
+                                        <div className="TimeOn-Minute-Wrapper">
+                                            <label className="TimeOn-Details-Minute-Label">Minute</label>
+                                            <input className="TimeOn-Details-Minute" type="number" onBlur={e => this.checkMax(e, 30)}/>
+                                        </div>
+                                        <div className="TimeOn-Second-Wrapper">
+                                            <label className="TimeOn-Details-Second-Label">Second</label>
+                                            <input className="TimeOn-Details-Second" type="number" onBlur={e => this.checkMax(e, 59)}/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"} updateResults={this.updateSets}/>
+                                    <label className="exerciseLabel">Rest: </label> 
+                                    <div className="Rest-Wrapper">
+                                        <div className="Rest-Minute-Wrapper">
+                                            <label className="Rest-Details-Minute-Label">Minute</label>
+                                            <input className="Rest-Details-Minute" type="number" onBlur={e => this.checkMax(e, 30)}/>
+                                        </div>
+                                        <div className="Rest-Second-Wrapper">
+                                            <label className="Rest-Details-Second-Label">Second</label>
+                                            <input className="Rest-Details-Second" type="number" onBlur={e => this.checkMax(e, 59)}/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"} updateResults={this.updateReps}/>
+                                    <label className="exerciseLabel">Sets: </label> 
+                                    <div className="Sets-Wrapper">
+                                        <div className="Sets-Details-Wrapper">
+                                            <input className="Sets-Details" type="number" onBlur={e => this.checkMax(e, 20)}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Reps: </label> 
+                                    <div className="Reps-Wrapper">
+                                        <div className="Reps-Details-Wrapper">
+                                            <input className="Reps-Details" type="number" onBlur={e => this.checkMax(e, 50)}/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Date: </label> <input className="exerciseInput" id="Exercise-Input-Date" type="date" min="0" max="999" onChange={e => this.checkDate(e)}/>
@@ -389,5 +461,20 @@ export default Exercise;
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Reps: </label> <input className="exerciseInput" id="Exercise-Input-Reps" type="Number" min="0" max="999" maxLength="9"/>
+                                </div>
+*/
+
+/*
+<div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Time On: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"TimeOn"} updateResults={this.updateTimeOn} type={"Dependent"} dependentConfig={[60, 60]}/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Rest: </label> <ScrollPicker columnTitles={["Minutes", "Seconds"]} columnItems={timeArr} controlWrapperID={"Rest"} updateResults={this.updateRest} type={"Dependent"} dependentConfig={[60, 60]}/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Sets: </label> <ScrollPicker columnTitles={["Sets"]} columnItems={[setsArr]} controlWrapperID={"Sets"} updateResults={this.updateSets}/>
+                                </div>
+                                <div className="Exercise-Details-Row">
+                                    <label className="exerciseLabel">Reps: </label> <ScrollPicker columnTitles={["Reps"]} columnItems={[repsArr]} controlWrapperID={"Reps"} updateResults={this.updateReps}/>
                                 </div>
 */

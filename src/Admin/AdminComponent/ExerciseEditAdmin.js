@@ -156,7 +156,7 @@ class ExerciseEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({exercise_id: exerciseID, title: aTitle, classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({exercise_id: exerciseID, title: aTitle.trim(), classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).then(res => res.json())
             .then(
                 (text) => {
@@ -164,7 +164,10 @@ class ExerciseEditAdmin extends React.Component{
                 }
             ).catch(console.log);
 
+            
+
             fileData.append("files", this.state.selectedFile);
+                console.log("hello");
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used
