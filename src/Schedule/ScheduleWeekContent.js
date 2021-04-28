@@ -96,6 +96,10 @@ class ScheduleWeekContent extends React.Component{
 
         var compStringArr = [];
         
+        if(compArr.length === 0 || compArr[0] === undefined || compArr[0] === null){
+            return "";
+        }
+
         if(compArr[0].title.localeCompare("None") === 0){
             return "";
         }

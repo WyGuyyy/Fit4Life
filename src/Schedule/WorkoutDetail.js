@@ -107,6 +107,14 @@ class WorkoutDetail extends React.Component{
 
         var compString = "";
 
+        if(compArr.length === 0 || compArr[0] === undefined || compArr[0] === null){
+            return "";
+        }
+
+        if(compArr[0].title.localeCompare("None") === 0){
+            return "";
+        }
+
         compString = compArr[0].title;
 
         for(var count = 1; count < compArr.length; count++){

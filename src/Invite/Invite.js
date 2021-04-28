@@ -71,7 +71,7 @@ class Invite extends React.Component{
             var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
-            console.log(invites[count]);
+
             classroomTitle = await this.getInviteClassroom(invites[count].classroom.classroom_id);
             teacherLastName = await this.getInviteTeacher(invites[count].teacher.user_id);
 
@@ -162,7 +162,6 @@ class Invite extends React.Component{
 
     async getInviteTeacher(tID){
         var teacherLastName;
-        console.log(tID);
 
         await fetch(baseURI + "/api/user/" + tID, {  
             method: "GET",                          

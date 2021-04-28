@@ -376,7 +376,7 @@ class Exercise extends React.Component{
                                     </select>
                                 </div>
                                 <div className="Exercise-Details-Row">
-                                    <label className="exerciseLabel">Weight (lb): </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="exerciseLabel">Weight (lb): </label> <input className="exerciseInput" id="Exercise-Input-Weight" type="Number" min="0" max="999" maxLength="9" onBlur={e => this.checkMax(e, 9999)}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Max%: </label> 

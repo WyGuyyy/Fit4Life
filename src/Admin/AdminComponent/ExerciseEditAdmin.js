@@ -167,7 +167,6 @@ class ExerciseEditAdmin extends React.Component{
             
 
             fileData.append("files", this.state.selectedFile);
-                console.log("hello");
             //Would instead need to update the picture here instead of creating a new one
             //Possible that exercise ID is also unique? (Use as primary key for Blob?)
             //Start with these next time -> and consider how class_comp_ex will be solved/used

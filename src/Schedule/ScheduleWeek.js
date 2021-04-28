@@ -104,7 +104,7 @@ class ScheduleWeek extends React.Component{
         if(wrapArrIndex === 0){;
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
         }else{
-                
+              
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
                 
         }
@@ -122,16 +122,18 @@ class ScheduleWeek extends React.Component{
         var matchCount = 0;
         var elementArr = [];
 
+        if(workouts[0] === null || workouts[0] === undefined || workouts[0] === {}){
+            return elementArr;
+        }
+
         for(aCount = 0; aCount < workouts.length; aCount++){
             if(workouts !== [] ){
                 if(workouts[0].title){
-                    console.log(workouts);
                     var el = <ScheduleWeekContent workout={workouts} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                     elementArr.push(el);
                     break;
 
                 }else{
-                    console.log(workouts);
                     if(this.matchesFilters(workouts[aCount])){
                         var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                         elementArr.push(el);

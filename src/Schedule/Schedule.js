@@ -99,6 +99,10 @@ class Schedule extends React.Component{
             }
         ).catch(console.log);
 
+        if(classrooms.length === 0){
+            return;
+        }
+
         var classSelect = document.getElementById("Workout-Classroom-Select");
 
         for(classroom in classrooms){

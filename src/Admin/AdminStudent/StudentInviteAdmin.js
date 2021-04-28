@@ -251,7 +251,6 @@ class StudentInviteAdmin extends React.Component{
         var classroomID = this.state.classroomID;
         var studentID = this.state.focusedStudent.user_id;
         var teacherID = localStorage.getItem("userID");
-        console.log(teacherID);
 
         await fetch(baseURI + "/api/invite/send/" + studentID + "/" + teacherID + "/" + classroomID, {  
             method: "POST",                          

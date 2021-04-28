@@ -235,14 +235,14 @@ class EditWorkout extends React.Component{
             this.activateSelectedComponents(componentSelect, this.props.location.state.workout.components);
             this.activateSelectedTHR(thr, this.props.location.state.workout.target_heart_rate);
 
-            timeOnMinutes.value = (aWorkout.time_on_minute === -1 ? 0 : aWorkout.time_on_minute);
-            timeOnSeconds.value = (aWorkout.time_on_second === -1 ? 0 : aWorkout.time_on_second);
-            restMinutes.value = (aWorkout.rest_minute === -1 ? 0 : aWorkout.rest_minute);
-            restSeconds.value = (aWorkout.rest_second === -1 ? 0 : aWorkout.rest_second);
-            sets.value = (aWorkout.sets === -1 ? 0 : aWorkout.sets);
-            reps.value = (aWorkout.reps === -1 ? 0 : aWorkout.reps);
-            weight.value = (aWorkout.weight === -1 ? 0 : aWorkout.weight);
-            max.value = (aWorkout.max === -1 ? 0 : aWorkout.max);
+            timeOnMinutes.value = (aWorkout.time_on_minute === -1 ? "" : aWorkout.time_on_minute);
+            timeOnSeconds.value = (aWorkout.time_on_second === -1 ? "" : aWorkout.time_on_second);
+            restMinutes.value = (aWorkout.rest_minute === -1 ? "" : aWorkout.rest_minute);
+            restSeconds.value = (aWorkout.rest_second === -1 ? "" : aWorkout.rest_second);
+            sets.value = (aWorkout.sets === -1 ? "" : aWorkout.sets);
+            reps.value = (aWorkout.reps === -1 ? "" : aWorkout.reps);
+            weight.value = (aWorkout.weight === -1 ? "" : aWorkout.weight);
+            max.value = (aWorkout.max === -1 ? "" : aWorkout.max);
             date.value = aWorkout.date;//.split("T")[0];
     }
 
@@ -577,7 +577,7 @@ class EditWorkout extends React.Component{
                                     </select>
                                 </div>
                                 <div className="EditWorkout-Details-Row">
-                                    <label className="editWorkoutLabel">Weight (lb): </label> <input className="editWorkoutInput" id="EditWorkout-Input-Weight" type="Number" min="0" max="999" maxLength="9"/>
+                                    <label className="editWorkoutLabel">Weight (lb): </label> <input className="editWorkoutInput" id="EditWorkout-Input-Weight" type="Number" min="0" max="999" maxLength="9" onBlur={e => this.checkMax(e, 9999)}/>
                                 </div>
                                 <div className="Exercise-Details-Row">
                                     <label className="exerciseLabel">Max%: </label> 
