@@ -97,41 +97,81 @@ class PersonalInfo extends React.Component{
                                 <h2 className="Personal-Info-Form-Title">My Information</h2>
                             </div>
 
-                            <div className="Personal-Info-First-Name-Wrapper-Parent">
-                                <div className="Personal-Info-First-Name-Wrapper">
-                                    <h2 className="Personal-Info-First-Name">{"FIRST NAME: " + this.state.personalInfoObject.first_name}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"FIRST NAME: " + this.state.personalInfoObject.first_name}</h2>
                                 </div>
                             </div>
 
-                            <div className="Personal-Info-Last-Name-Wrapper-Parent">
-                                <div className="Personal-Info-Last-Name-Wrapper">
-                                    <h2 className="Personal-Info-Last-Name">{"LAST NAME: " + this.state.personalInfoObject.last_name}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"LAST NAME: " + this.state.personalInfoObject.last_name}</h2>
                                 </div>
                             </div>
 
-                            <div className="Personal-Info-DisplayName-Wrapper-Parent">
-                                <div className="Personal-Info-DisplayName-Wrapper">
-                                    <h2 className="Personal-Info-DisplayName">{"DISPLAY NAME: " + this.state.personalInfoObject.display_name}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"DISPLAY NAME: " + this.state.personalInfoObject.display_name}</h2>
                                 </div>
                             </div>
 
-                            <div className="Personal-Info-Email-Wrapper-Parent">
-                                <div className="Personal-Info-Email-Wrapper">
-                                    <h2 className="Personal-Info-Email">{"EMAIL: " + this.state.personalInfoObject.email}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"EMAIL: " + this.state.personalInfoObject.email}</h2>
                                 </div>
                             </div>
 
-                            <div className="Personal-Info-Weight-Wrapper-Parent">
-                                <div className="Personal-Info-Weight-Wrapper">
-                                    <h2 className="Personal-Info-Weight">{"WEIGHT: " + this.state.personalInfoObject.weight + " lb"}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"WEIGHT: " + this.state.personalInfoObject.weight + " lb"}</h2>
                                 </div>
                             </div>
 
-                            <div className="Personal-Info-Height-Wrapper-Parent">
-                                <div className="Personal-Info-Height-Wrapper">
-                                    <h2 className="Personal-Info-Height">{"HEIGHT: " + this.state.personalInfoObject.height_feet + " " + this.state.personalInfoObject.height_inches}</h2>
+                            <div className="Personal-Info-Field-Wrapper-Parent">
+                                <div className="Personal-Info-Field-Wrapper">
+                                    <h2 className="Personal-Info-Field">{"HEIGHT: " + this.state.personalInfoObject.height_feet + " " + this.state.personalInfoObject.height_inches}</h2>
                                 </div>
                             </div>
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
+                                <div className="Personal-Info-Field-Wrapper-Parent">
+                                    <div className="Personal-Info-Field-Wrapper">
+                                        <h2 className="Personal-Info-Field">{"SQUAT MAX: " + this.state.personalInfoObject.squat_max}</h2>
+                                    </div>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Field-Wrapper-Parent">
+                                    <div className="Personal-Info-Field-Wrapper">
+                                        <h2 className="Personal-Info-Field">{"DEADLIFT MAX: " + this.state.personalInfoObject.deadlift_max}</h2>
+                                    </div>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Field-Wrapper-Parent">
+                                    <div className="Personal-Info-Field-Wrapper">
+                                        <h2 className="Personal-Info-Field">{"BENCH MAX: " + this.state.personalInfoObject.bench_max}</h2>
+                                    </div>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Field-Wrapper-Parent">
+                                    <div className="Personal-Info-Field-Wrapper">
+                                        <h2 className="Personal-Info-Field">{"HANG CLEAN MAX: " + this.state.personalInfoObject.hang_clean_max}</h2>
+                                    </div>
+                                </div>
+                                :
+                                ""
+                            }
 
                             <div className="Personal-Info-Edit-Button-Wrapper">
                                  <button className="Personal-Info-Edit-Button" onClick={(e) => this.goToPersonalInfoEdit(e)}>Edit</button>

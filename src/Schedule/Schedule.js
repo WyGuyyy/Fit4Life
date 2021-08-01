@@ -53,10 +53,19 @@ class Schedule extends React.Component{
     }
 
     async setScheduleName(){
-         var h2 = document.getElementsByClassName("Schedule-Grid-Title-Student")[0];
-         var data = await getUserFullName();
 
-         h2.textContent = data.first + " " + data.last;
+        var h2 = document.getElementsByClassName("Schedule-Grid-Title-Student")[0];
+        console.log(this.props.location.state.student);
+        if(localStorage.getItem("userRole") === "ADMIN"){
+            var first = this.props.location.state.student.first_name;
+            var last = this.props.location.state.student.last_name;
+
+            h2.textContent = first + " " + last;
+        }else{
+            var data = await getUserFullName();
+
+            h2.textContent = data.first + " " + data.last;
+        }
     }
 
     resetFilters(){

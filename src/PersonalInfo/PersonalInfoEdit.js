@@ -75,14 +75,20 @@ class PersonalInfoEdit extends React.Component{
         var newWeight = document.getElementById("Personal-Info-Edit-Weight-Input").value;
         var newHeightFeet = document.getElementById("Personal-Info-Edit-Height-Feet-Input").value;
         var newHeightInches = document.getElementById("Personal-Info-Edit-Height-Inches-Input").value;
+        var newSquatMax = document.getElementById("Personal-Info-Edit-MaxSquat-Input").value;
+        var newDeadliftMax = document.getElementById("Personal-Info-Edit-MaxDeadlift-Input").value;
+        var newBenchMax = document.getElementById("Personal-Info-Edit-MaxBench-Input").value;
+        var newHangCleanMax = document.getElementById("Personal-Info-Edit-MaxHangClean-Input").value;
 
-        if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches])){
+        console.log(newHeightFeet);
+
+        if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches, newSquatMax, newDeadliftMax, newBenchMax, newHangCleanMax])){
 
             await fetch(baseURI + "/api/user", {  
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, display_name: newDisplayName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({user_id: this.state.personalInfoObject.user_id, first_name: newFirstName, last_name: newLastName, display_name: newDisplayName, email: newEmail, weight: newWeight, height_feet: newHeightFeet, height_inches: newHeightInches, squat_max: newSquatMax, deadlift_max: newDeadliftMax, bench_max: newBenchMax, hang_clean_max: newHangCleanMax, access_type: this.state.personalInfoObject.access_type, password_hash: this.state.personalInfoObject.password_hash}) //Need to add in other fields here, back end and front end
             }).catch(console.log);
 
             this.confirmBackendTransaction();
@@ -175,6 +181,38 @@ class PersonalInfoEdit extends React.Component{
                             <div className="Personal-Info-Edit-Height-Wrapper">
                                 <label className="Personal-Info-Edit-Height-Label">Height: </label> <div className="Personal-Info-Edit-Height-Input-Wrapper"> <input className="Personal-Info-Edit-Height-Feet-Input" id="Personal-Info-Edit-Height-Feet-Input" type="number" defaultValue={this.state.personalInfoObject.height_feet} /> <input className="Personal-Info-Edit-Height-Inches-Input" id="Personal-Info-Edit-Height-Inches-Input" type="number" defaultValue={this.props.location.state.personalInfo.height_inches} /> </div>
                             </div>
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Edit-Max-Wrapper">
+                                    <label className="Personal-Info-Edit-Max-Label">Squat Max: </label> <input className="Personal-Info-Edit-Max-Input" id="Personal-Info-Edit-MaxSquat-Input" type="number" defaultValue={this.state.personalInfoObject.squat_max} maxLength="4"/>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Edit-Max-Wrapper">
+                                    <label className="Personal-Info-Edit-Max-Label">Deadlift Max: </label> <input className="Personal-Info-Edit-Max-Input" id="Personal-Info-Edit-MaxDeadlift-Input" type="number" defaultValue={this.state.personalInfoObject.deadlift_max} maxLength="4"/>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Edit-Max-Wrapper">
+                                    <label className="Personal-Info-Edit-Max-Label">Bench Max: </label> <input className="Personal-Info-Edit-Max-Input" id="Personal-Info-Edit-MaxBench-Input" type="number" defaultValue={this.state.personalInfoObject.bench_max} maxLength="4"/>
+                                </div>
+                                :
+                                ""
+                            }
+
+                            {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
+                                <div className="Personal-Info-Edit-Max-Wrapper">
+                                    <label className="Personal-Info-Edit-Max-Label">Hang Clean Max: </label> <input className="Personal-Info-Edit-Max-Input" id="Personal-Info-Edit-MaxHangClean-Input" type="number" defaultValue={this.state.personalInfoObject.hang_clean_max} maxLength="4"/>
+                                </div>
+                                :
+                                ""
+                            }
 
                             <div className="Personal-Info-Edit-Submit-Wrapper">
                                  <button className="Personal-Info-Edit-Cancel-Button" onClick={e => this.cancelEdit()}>Cancel</button> <button className="Personal-Info-Edit-Save-Button" onClick={(e) => this.showModal(e)}>Save</button>
