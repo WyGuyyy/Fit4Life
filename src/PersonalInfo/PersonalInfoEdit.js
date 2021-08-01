@@ -80,11 +80,11 @@ class PersonalInfoEdit extends React.Component{
         var newBenchMax = document.getElementById("Personal-Info-Edit-MaxBench-Input").value;
         var newHangCleanMax = document.getElementById("Personal-Info-Edit-MaxHangClean-Input").value;
 
-        console.log(newHeightFeet);
-
         if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches, newSquatMax, newDeadliftMax, newBenchMax, newHangCleanMax])){
 
-            await fetch(baseURI + "/api/user", {  
+            console.log(this.state.personalInfoObject.access_type);
+
+            await fetch(baseURI + "/api/user", {
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},

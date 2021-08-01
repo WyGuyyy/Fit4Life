@@ -263,6 +263,45 @@ class Exercise extends React.Component{
         
     }
 
+    async updateWeight(event){
+        var input = event.target;
+        var weightInput = document.getElementById("Exercise-Input-Weight");
+
+        var value = parseInt(input.value);
+        var exercise = this.props.location.state.exercise.title;
+
+        var userData;
+
+        await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                userData = result;
+        }).catch(console.log);
+        console.log(userData);
+
+        switch(exercise){
+            case "Back Squats":
+                weightInput.value = parseInt(userData.squat_max * (value/100));
+                break;
+            case "Bench Press":
+                weightInput.value = parseInt(userData.bench_max * (value/100));
+                break;
+            case "Deadlift":
+                weightInput.value = parseInt(userData.deadlift_max * (value/100));
+                break;
+            case "Hang Clean":
+                weightInput.value = parseInt(userData.hang_clean_max * (value/100));
+                break;
+            default:
+                break;
+        }
+    }
+
     showModal(event){
         document.getElementById("modalContainer").style.display = "flex";
     }
@@ -382,7 +421,7 @@ class Exercise extends React.Component{
                                     <label className="exerciseLabel">Max%: </label> 
                                     <div className="Max-Wrapper">
                                         <div className="Max-Details-Wrapper">
-                                            <input className="Max-Details" type="number" onBlur={e => this.checkMax(e, 100)}/>
+                                            <input className="Max-Details" type="number" onBlur={e => {this.checkMax(e, 100); this.updateWeight(e);}}/>
                                         </div>
                                     </div>
                                 </div>
