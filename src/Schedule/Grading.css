@@ -1,0 +1,36 @@
+.Grading-Wrapper{
+    position: absolute;
+    right: 0;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    background: #976f00;
+    z-index: 2;
+}
+
+.Grading-Title-Wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30%;
+}
+
+.Grading-Title-Label{
+    font-size: 30px;
+}
+
+.Grading-Day-Wrapper{
+    display: flex;
+    flex-direction: vertical;
+    align-items: center;
+    justify-content: center;
+    height: 19%;
+}
+
+.Grading-Input{
+    width: 100px;
+    border: none;
+}

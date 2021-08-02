@@ -16,12 +16,11 @@
     justify-content: flex-start;
     align-items: center;
     overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .ScheduleWeek-Content-Wrapper::-webkit-scrollbar {
     width: 10px;
-    background-color: #b48400;
+    background-color: #b98800;
     height: 10px;
     /*border-radius: 10px;*/
   } 
@@ -30,10 +29,14 @@
     background-color: black;
     border-radius: 10px;
 }
+
+.ScheduleWeek-Content-Wrapper::-webkit-scrollbar-corner{
+    background-color: transparent;
+}
   
 #Workout-Detail-TimeOn-Wrapper::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color:#b48400;
+    background-color:#b98800;
     /*border-radius: 10px;*/
 }
 

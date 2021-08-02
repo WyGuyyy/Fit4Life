@@ -88,7 +88,7 @@ class ScheduleWeekContent extends React.Component{
         elements.push(timeOnDiv);
         elements.push(timeOffDiv);
         elements.push(frequencyDiv);
- 
+        
         return elements;
     }
 
