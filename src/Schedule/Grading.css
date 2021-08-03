@@ -1,13 +1,32 @@
 .Grading-Wrapper{
     position: absolute;
-    right: 0;
+    right: -150px;
     height: 90%;
+    width: 150px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-content: center;
     background: #976f00;
     z-index: 2;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Grading-Arrow{
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    left: -24px;
+    top: 12%;
+    background: #976f00;
+    border-top: 1px black solid;
+    border-left: 1px black solid;
+    border-bottom: 1px black solid;
+    box-shadow: -5px 2px 5px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .Grading-Title-Wrapper{
@@ -15,7 +34,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 30%;
+    height: 29.6%;
+    border: 1px black;
+    border-style: solid;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+}
+
+.popout{
+    animation: popout .25s linear forwards;
+}
+
+.hidden{
+    animation: hide .25s linear forwards;
 }
 
 .Grading-Title-Label{
@@ -27,10 +58,83 @@
     flex-direction: vertical;
     align-items: center;
     justify-content: center;
-    height: 19%;
+    height: 15.2%;
+    border: 1px black;
+    border-style: solid;
 }
 
 .Grading-Input{
     width: 100px;
+    height: 30px;
+    border-radius: 10px;
     border: none;
+    background: radial-gradient(#ffffff, #aaaaaa);
+    font-size: 20px;
+    padding: 3px;
+}
+
+.Grading-Total-Wrapper{
+    position: absolute;
+    display: flex;
+    flex-direction: vertical;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+    background: #976f00;
+    border: 1px black;
+    border-style: solid;
+    bottom: -100px;
+}
+
+@media(max-width: 450px){
+    .Grading-Wrapper{
+        height: 85%;
+    }
+
+    .Grading-Day-Wrapper{
+        height: 15%;
+    }
+}
+
+@keyframes popout {
+    0% {
+        transform: translateX(0px);
+    }
+    20% {
+        transform: translateX(-30px);
+    }
+    40% {
+        transform: translateX(-60px);
+    }
+    60% {
+        transform: translateX(-90px);
+    }
+    80% {
+        transform: translateX(-120px);
+    }
+    100% {
+        transform: translateX(-150px);
+    }
+}
+
+@keyframes hide {
+    0% {
+        transform: translateX(-150px);
+    }
+    20% {
+        transform: translateX(-120px);
+    }
+    40% {
+        transform: translateX(-90px);
+    }
+    60% {
+        transform: translateX(-60px);
+    }
+    80% {
+        transform: translateX(-30px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
 }

@@ -347,65 +347,69 @@ class Schedule extends React.Component{
                                 </div>
                             </div>
 
-                            <div className="Schedule-Week-ScheduleGrade-Wrapper">
+                            <div className="Schedule-Week-ScheduleGrade-Container">
 
-                                <div className="scheduleGrid" id="scheduleGrid">
+                                <div className="Schedule-Week-ScheduleGrade-Wrapper">
 
-                                    <div className="Schedule-Grid-Title">
-                                        <h1 className="Schedule-Grid-Title-Text">Physical Activity Log</h1>
-                                        <h2 className="Schedule-Grid-Title-Student"></h2>
+                                    <div className="scheduleGrid" id="scheduleGrid">
+
+                                        <div className="Schedule-Grid-Title">
+                                            <h1 className="Schedule-Grid-Title-Text">Physical Activity Log</h1>
+                                            <h2 className="Schedule-Grid-Title-Student"></h2>
+                                        </div>
+
+                                        <div className="Schedule-Grid-Categories">
+                                            <div className="Schedule-Grid-Categories-Days">
+                                                <h2 className="Schedule-Grid-Categories-Title" id="Days-Categories-Title">Days of the Week</h2>
+                                            </div>
+                                            <div className="Schedule-Grid-Categories-Type">
+                                                <h2 className="Schedule-Grid-Categories-Title" id="Type-Categories-Title">Type</h2>
+                                                <p className="Schedule-Grid-Categories-Text">(What exercises or types of activity did you do?)</p>
+                                            </div>
+                                            <div className="Schedule-Grid-Categories-Intensity">
+                                                <h2 className="Schedule-Grid-Categories-Title" id="Intensity-Categories-Title">Intensity</h2>
+                                                <p className="Schedule-Grid-Categories-Text">(How hard was your workout? Did you do a certain number of reps or sets?)</p>
+                                            </div>
+                                            <div className="Schedule-Grid-Categories-Time">
+                                                <h2 className="Schedule-Grid-Categories-Title" id="Time-Categories-Title">Time</h2>
+                                                <p className="Schedule-Grid-Categories-Text">(How long did you work out for? Did you incorporate periods of rest?)</p>
+                                            </div>
+                                            <div className="Schedule-Grid-Categories-Frequency">
+                                                <h2 className="Schedule-Grid-Categories-Title" id="Frequency-Categories-Title">Frequency</h2>
+                                                <p className="Schedule-Grid-Categories-Text">(Which of the five fitness components did you do?)</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="Schedule-Grid-Chart">
+                                            <div className="Schedule-Grid-Chart-Titles">
+                                                <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                            <div className="Schedule-Grid-Chart-Monday">
+                                                <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                            <div className="Schedule-Grid-Chart-Tuesday">
+                                                <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                            <div className="Schedule-Grid-Chart-Wednesday">
+                                                <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                            <div className="Schedule-Grid-Chart-Thursday">
+                                                <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                            <div className="Schedule-Grid-Chart-Friday">
+                                                <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div className="Schedule-Grid-Categories">
-                                        <div className="Schedule-Grid-Categories-Days">
-                                            <h2 className="Schedule-Grid-Categories-Title" id="Days-Categories-Title">Days of the Week</h2>
-                                        </div>
-                                        <div className="Schedule-Grid-Categories-Type">
-                                            <h2 className="Schedule-Grid-Categories-Title" id="Type-Categories-Title">Type</h2>
-                                            <p className="Schedule-Grid-Categories-Text">(What exercises or types of activity did you do?)</p>
-                                        </div>
-                                        <div className="Schedule-Grid-Categories-Intensity">
-                                            <h2 className="Schedule-Grid-Categories-Title" id="Intensity-Categories-Title">Intensity</h2>
-                                            <p className="Schedule-Grid-Categories-Text">(How hard was your workout? Did you do a certain number of reps or sets?)</p>
-                                        </div>
-                                        <div className="Schedule-Grid-Categories-Time">
-                                            <h2 className="Schedule-Grid-Categories-Title" id="Time-Categories-Title">Time</h2>
-                                            <p className="Schedule-Grid-Categories-Text">(How long did you work out for? Did you incorporate periods of rest?)</p>
-                                        </div>
-                                        <div className="Schedule-Grid-Categories-Frequency">
-                                            <h2 className="Schedule-Grid-Categories-Title" id="Frequency-Categories-Title">Frequency</h2>
-                                            <p className="Schedule-Grid-Categories-Text">(Which of the five fitness components did you do?)</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="Schedule-Grid-Chart">
-                                        <div className="Schedule-Grid-Chart-Titles">
-                                            <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                        <div className="Schedule-Grid-Chart-Monday">
-                                            <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                        <div className="Schedule-Grid-Chart-Tuesday">
-                                            <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                        <div className="Schedule-Grid-Chart-Wednesday">
-                                            <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                        <div className="Schedule-Grid-Chart-Thursday">
-                                            <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                        <div className="Schedule-Grid-Chart-Friday">
-                                            <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 { 
                                     localStorage.getItem("userRole") === "STUDENT" ? 
-                                    <Grading />
+                                    <Grading date={this.state.date}/>
                                     :
                                     ""
                                 }
+
+                                </div>
 
                             </div>
 
