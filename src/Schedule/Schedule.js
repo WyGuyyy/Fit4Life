@@ -404,7 +404,7 @@ class Schedule extends React.Component{
 
                                 { 
                                     localStorage.getItem("userRole") === "STUDENT" ? 
-                                    <Grading date={this.state.date}/>
+                                    <Grading date={this.state.date} classroom={aClassroom}/>
                                     :
                                     ""
                                 }

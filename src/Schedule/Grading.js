@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import {baseURI} from '../_services/APIService';
 import ReactDom from 'react-dom';
 import './Grading.css';
 
@@ -44,22 +45,45 @@ class Grading extends React.Component{
 
     }
 
-    onGradeChange(event){
+    async onGradeChange(event){
         
         var input = event.target;
+        var totalInput = document.getElementById("Grading-Input-6");
+
         var id = input.id;
         var grade = input.value;
         var date = new Date(this.props.date);
-        console.log(this.props.date);
 
         if(!date){
             return;
         }
-        console.log(id);
+
+        if(grade === ""){
+            grade = 0;
+        }
+
+        if(isNaN(grade)){
+            grade = 0;
+            input.value = "";
+        }else{
+            grade = parseInt(grade);
+        }
+        
         var daysToAdd = parseInt(id.split("-")[2]) - 1;
         date.setDate(date.getDate() + daysToAdd);
 
-        console.log(date.getUTCDate());
+        //var strDate = date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear();
+
+        var classroom = this.props.classroom;
+
+        await fetch(baseURI + "/api/grade", {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+            body: JSON.stringify({user: {user_id: localStorage.getItem("userID")}, classroom: {classroom_id: classroom.classroom_id}, grade_date: date, score: grade})
+        }).catch(console.log);
+
+        totalInput.value = grade + parseInt(totalInput.value);
 
     }
 
@@ -86,19 +110,19 @@ class Grading extends React.Component{
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-2" onChange={e => this.onGradeChange(e)}></input>
-                        </div>
-
-                        <div className="Grading-Day-Wrapper">
                             <input className="Grading-Input" id="Grading-Input-3" onChange={e => this.onGradeChange(e)}></input>
                         </div>
 
                         <div className="Grading-Day-Wrapper">
                             <input className="Grading-Input" id="Grading-Input-4" onChange={e => this.onGradeChange(e)}></input>
+                        </div>
+
+                        <div className="Grading-Day-Wrapper">
+                            <input className="Grading-Input" id="Grading-Input-5" onChange={e => this.onGradeChange(e)}></input>
                         </div >
                             
                         <div className="Grading-Total-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-5" readOnly></input>
+                            <input className="Grading-Input" id="Grading-Input-6" value="0" readOnly></input>
                         </div>
 
                     </div>
