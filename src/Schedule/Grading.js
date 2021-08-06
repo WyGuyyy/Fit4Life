@@ -47,6 +47,12 @@ class Grading extends React.Component{
 
     async onGradeChange(event){
         
+        return;
+
+        if(!this.props.date){
+            return;
+        }
+
         var input = event.target;
         var totalInput = document.getElementById("Grading-Input-6");
 

@@ -218,10 +218,11 @@ class Schedule extends React.Component{
 
     }
 
-    dateChange(event){
+    async dateChange(event){
 
         var dateInput = event.target;
         var date = new Date(dateInput.value);
+        var grades = [];
 
         switch(date.getDay()){
             case 0:
@@ -254,6 +255,25 @@ class Schedule extends React.Component{
         var day = this.formatDay(date.getDate() + 1);
 
         dateInput.value = year + "-" + month + "-" + day;
+
+        var startDate = dateInput.value;
+        var d = new Date(startDate);
+        d.setDate(d.getDate() + 4);
+        var endDate = d.getUTCFullYear() + "-" + d.getUTCDate() + "-" + d.getUTCMonth();
+
+        await fetch(baseURI + "/api/grade/forWeek/" + localStorage.getItem("userID") + "/" + this.state.classroom.classroom_id + "/" + dateInput.value + "/" + endDate, {
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                grades = result;
+                console.log(grades);
+            }
+        ).catch(console.log);
 
         localStorage.setItem('workoutDate', dateInput.value);
 
