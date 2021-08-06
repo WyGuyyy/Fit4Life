@@ -75,12 +75,12 @@ class Grading extends React.Component{
         //var strDate = date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear();
 
         var classroom = this.props.classroom;
-
+        console.log(localStorage.getItem("userID"));
         await fetch(baseURI + "/api/grade", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({user: {user_id: localStorage.getItem("userID")}, classroom: {classroom_id: classroom.classroom_id}, grade_date: date, score: grade})
+            body: JSON.stringify({user_id: localStorage.getItem("userID"), classroom_id: classroom.classroom_id, grade_date: date, score: grade})
         }).catch(console.log);
 
         totalInput.value = grade + parseInt(totalInput.value);
