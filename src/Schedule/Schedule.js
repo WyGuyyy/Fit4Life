@@ -259,7 +259,10 @@ class Schedule extends React.Component{
         var startDate = dateInput.value;
         var d = new Date(startDate);
         d.setDate(d.getDate() + 4);
-        var endDate = d.getUTCFullYear() + "-" + d.getUTCDate() + "-" + d.getUTCMonth();
+        var endDate = d.getUTCFullYear() + "-" + this.formatMonth(d.getUTCMonth()) + "-" + this.formatDay(d.getUTCDate());
+
+        console.log(startDate);
+        console.log(endDate);
 
         await fetch(baseURI + "/api/grade/forWeek/" + localStorage.getItem("userID") + "/" + this.state.classroom.classroom_id + "/" + dateInput.value + "/" + endDate, {
             method: "GET",                          
