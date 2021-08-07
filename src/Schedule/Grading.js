@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import {baseURI} from '../_services/APIService';
+import {getStudentGradesForWeek} from '../_services/GradeService';
 import ReactDom from 'react-dom';
 import './Grading.css';
 
@@ -8,7 +9,10 @@ class Grading extends React.Component{
         super(props);
 
         this.state = {
-            selectedDate: props.date
+            selectedDate: props.date,
+            endDate: "",
+            classroom: props.classroom,
+            gradeCache: [-1, -1]
         };
 
     }
@@ -19,12 +23,102 @@ class Grading extends React.Component{
     }
 
     componentDidUpdate(){
+        var d = new Date(this.props.date);
+        d.setDate(d.getDate() + 4);
+        var newEndDate = d.getFullYear() + "-" + this.formatMonth(d.getMonth() + 1) + "-" + this.formatDay(d.getDate() + 1);
 
+        if(this.state.endDate !== newEndDate && this.props.classroom.classroom_id !== undefined && this.props.date !== "")
+        {
+            this.fillGrades(localStorage.getItem("userID"), this.props.classroom.classroom_id, this.props.date, newEndDate);
+        }
+        
     }
 
     //Lifecycle event preparing Header component to unmount from DOM
     componentWillUnmount(){
+        this.saveGradeCache();
+    }
+
+    fillGrades(userID, classroomID, startDate, newEndDate){
+
+        var totalScore = 0;
+        var weeklyGrades = getStudentGradesForWeek(userID, classroomID, startDate, newEndDate);
+
+        var that = this;
+
+        weeklyGrades.then((value) => {
+
+            if(value !== null){
+
+                for(var count = 1; count <= 5; count++){
+                    document.getElementById("Grading-Input-" + count).value = "";
+                }
+
+                for(var count = 0; count < value.length; count++){
+                    var grade_date = value[count].grade_Date;
+                    var grade = value[count].score;
+
+                    totalScore += grade;
+
+                    var d = new Date(grade_date);
+                    d.setDate(d.getDate() + 1);
+
+                    var idNum = d.getDay();
+
+                    document.getElementById("Grading-Input-" + idNum).value = grade;
+
+                    var cacheIndex = idNum - 1;
+                }
+
+                console.log(totalScore);
+
+                document.getElementById("Grading-Input-6").value = totalScore;
+
+                that.setState({
+                    endDate: newEndDate,
+                    grades: value
+                });
+
+            }
+
+        });
+    }
+
+    onUpdateGradeCache(event){
+        var input = event.target;
+        var grade = input.value;
+        var id = input.id.split("-")[2];
+
+        var newGradeCache = this.state.gradeCache;
         
+        if(isNaN(grade)){
+            grade = -1;
+            input.value = "";
+        }
+
+        newGradeCache[0] = grade;
+        newGradeCache[1] = parseInt(id) - 1;
+
+        this.setState({
+            gradeCache: newGradeCache
+        });
+    }
+
+    formatMonth(month){
+
+        if(parseInt(month) <  10){
+            month = "0" + month;
+        }
+
+        return month;
+    }
+
+    formatDay(day){
+        if(parseInt(day) <  10){
+            day = "0" + day;
+        }
+
+        return day;
     }
 
     onHandleGradingPopout(event){
@@ -46,8 +140,6 @@ class Grading extends React.Component{
     }
 
     async onGradeChange(event){
-        
-        return;
 
         if(!this.props.date){
             return;
@@ -60,17 +152,13 @@ class Grading extends React.Component{
         var grade = input.value;
         var date = new Date(this.props.date);
 
-        if(!date){
+        if(!date || grade === ""){
             return;
         }
 
-        if(grade === ""){
-            grade = 0;
-        }
-
         if(isNaN(grade)){
-            grade = 0;
             input.value = "";
+            return;
         }else{
             grade = parseInt(grade);
         }
@@ -80,6 +168,7 @@ class Grading extends React.Component{
 
         //var strDate = date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear();
 
+        //NEED TO SOMEHOW ADD GRADE HERE NEXT
         var classroom = this.props.classroom;
         console.log(localStorage.getItem("userID"));
         await fetch(baseURI + "/api/grade", {  
@@ -90,6 +179,42 @@ class Grading extends React.Component{
         }).catch(console.log);
 
         totalInput.value = grade + parseInt(totalInput.value);
+
+        var cacheIndex = daysToAdd;
+
+    }
+
+    async saveGradeCache(){
+        if(!this.props.date){
+            return;
+        }
+
+        var date = new Date(this.props.date);
+
+        if(!date){
+            return;
+        }
+
+        var classroom = this.props.classroom;
+
+        var gradeCache = this.state.gradeCache;
+        
+        var grade = gradeCache[0];
+        var id = gradeCache[1];
+
+        if(grade === -1){
+            return;
+        }
+
+        var daysToAdd = id;
+        date.setDate(date.getDate() + daysToAdd);
+
+        await fetch(baseURI + "/api/grade", {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+            body: JSON.stringify({user_id: localStorage.getItem("userID"), classroom_id: classroom.classroom_id, grade_date: date, score: grade})
+        }).catch(console.log);
 
     }
 
@@ -108,27 +233,27 @@ class Grading extends React.Component{
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-1" onChange={e => this.onGradeChange(e)}></input>
+                            <input className="Grading-Input" id="Grading-Input-1" onChange={e => this.onUpdateGradeCache(e)} onBlur={e => this.onGradeChange(e)}></input>
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-2" onChange={e => this.onGradeChange(e)}></input>
+                            <input className="Grading-Input" id="Grading-Input-2" onChange={e => this.onUpdateGradeCache(e)} onBlur={e => this.onGradeChange(e)}></input>
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-3" onChange={e => this.onGradeChange(e)}></input>
+                            <input className="Grading-Input" id="Grading-Input-3" onChange={e => this.onUpdateGradeCache(e)} onBlur={e => this.onGradeChange(e)}></input>
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-4" onChange={e => this.onGradeChange(e)}></input>
+                            <input className="Grading-Input" id="Grading-Input-4" onChange={e => this.onUpdateGradeCache(e)} onBlur={e => this.onGradeChange(e)}></input>
                         </div>
 
                         <div className="Grading-Day-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-5" onChange={e => this.onGradeChange(e)}></input>
+                            <input className="Grading-Input" id="Grading-Input-5" onChange={e => this.onUpdateGradeCache(e)} onBlur={e => this.onGradeChange(e)}></input>
                         </div >
                             
                         <div className="Grading-Total-Wrapper">
-                            <input className="Grading-Input" id="Grading-Input-6" value="0" readOnly></input>
+                            <input className="Grading-Input" id="Grading-Input-6" readOnly></input>
                         </div>
 
                     </div>

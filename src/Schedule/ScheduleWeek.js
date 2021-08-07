@@ -236,6 +236,13 @@ class ScheduleWeek extends React.Component{
         }
     }
 
+    onDayClick(event){
+        var day = event.target.id.split("-")[2];
+        var dayContainer = document.getElementsByClassName("Schedule-Grid-Chart-" + day)[0];
+
+        
+    }
+
     //Render the Header component to the DOM/Screen
     render(){
 
@@ -251,7 +258,7 @@ class ScheduleWeek extends React.Component{
         return(
 
             <div className="ScheduleWeek-Row-Wrapper" style={{height: this.state.cellHeight}}>
-                <div className="ScheduleWeek-Day">
+                <div className="ScheduleWeek-Day" id={"ScheduleWeek-Day-" + this.props.dayOfWeek} onClick={e => this.onDayClick(e)}>
                     <p className="ScheduleWeek-Day-Content" id={aID}>{this.fitDayString(dayOfWeek)}</p>
                 </div>
                 {this.fillSchedule()}

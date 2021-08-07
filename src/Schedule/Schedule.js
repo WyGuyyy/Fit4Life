@@ -12,6 +12,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
+import {getStudentGradesForWeek} from '../_services/GradeService';
 import {baseURI} from '../_services/APIService';
 
 class Schedule extends React.Component{
@@ -45,7 +46,7 @@ class Schedule extends React.Component{
     }
 
     componentDidUpdate(){
-
+            
     }
 
     //Lifecycle event preparing Header component to unmount from DOM
@@ -56,7 +57,7 @@ class Schedule extends React.Component{
     async setScheduleName(){
 
         var h2 = document.getElementsByClassName("Schedule-Grid-Title-Student")[0];
-        console.log(this.props.location.state.student);
+
         if(localStorage.getItem("userRole") === "ADMIN"){
             var first = this.props.location.state.student.first_name;
             var last = this.props.location.state.student.last_name;
@@ -69,7 +70,7 @@ class Schedule extends React.Component{
         }
     }
 
-    resetFilters(){
+    async resetFilters(){
 
         if(localStorage.getItem("workoutClassroom") !== undefined && localStorage.getItem("workoutClassroom") !== null){
             document.getElementById("Workout-Classroom-Select").selected = localStorage.getItem("workoutClassroom");
@@ -219,10 +220,8 @@ class Schedule extends React.Component{
     }
 
     async dateChange(event){
-
         var dateInput = event.target;
         var date = new Date(dateInput.value);
-        var grades = [];
 
         switch(date.getDay()){
             case 0:
@@ -256,27 +255,12 @@ class Schedule extends React.Component{
 
         dateInput.value = year + "-" + month + "-" + day;
 
-        var startDate = dateInput.value;
+        /*var startDate = dateInput.value;
         var d = new Date(startDate);
         d.setDate(d.getDate() + 4);
-        var endDate = d.getUTCFullYear() + "-" + this.formatMonth(d.getUTCMonth()) + "-" + this.formatDay(d.getUTCDate());
+        var endDate = d.getFullYear() + "-" + this.formatMonth(d.getMonth() + 1) + "-" + this.formatDay(d.getDate() + 1);
 
-        console.log(startDate);
-        console.log(endDate);
-
-        await fetch(baseURI + "/api/grade/forWeek/" + localStorage.getItem("userID") + "/" + this.state.classroom.classroom_id + "/" + dateInput.value + "/" + endDate, {
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                grades = result;
-                console.log(grades);
-            }
-        ).catch(console.log);
+        weeklyGrades = await getStudentGradesForWeek(localStorage.getItem("userID"), this.state.classroom.classroom_id, dateInput.value, endDate);*/
 
         localStorage.setItem('workoutDate', dateInput.value);
 
