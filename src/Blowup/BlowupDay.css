@@ -1,4 +1,4 @@
-.ScheduleWeek-Row-Wrapper{
+.BlowupDay-Row-Wrapper{
     width: 100%;
     height: 100%;
     display: flex;
@@ -8,7 +8,7 @@
     background: #b98800;
 }
 
-.ScheduleWeek-Content-Wrapper{
+.BlowupDay-Content-Wrapper{
     width: 85%;
     height: 100%;
     display: flex;
@@ -18,19 +18,19 @@
     overflow-y: scroll;
 }
 
-.ScheduleWeek-Content-Wrapper::-webkit-scrollbar {
+.BlowupDay-Content-Wrapper::-webkit-scrollbar {
     width: 10px;
     background-color: #b98800;
     height: 10px;
     /*border-radius: 10px;*/
   } 
 
-  .ScheduleWeek-Content-Wrapper::-webkit-scrollbar-thumb{
+  .BlowupDay-Content-Wrapper::-webkit-scrollbar-thumb{
     background-color: black;
     border-radius: 10px;
 }
 
-.ScheduleWeek-Content-Wrapper::-webkit-scrollbar-corner{
+.BlowupDay-Content-Wrapper::-webkit-scrollbar-corner{
     background-color: transparent;
 }
   
@@ -40,7 +40,7 @@
     /*border-radius: 10px;*/
 }
 
-.ScheduleWeek-Row-Content-Wrapper{
+.BlowupDay-Row-Content-Wrapper{
     width: 100%;
     height: 100%;
     display: flex;
@@ -49,7 +49,7 @@
     justify-content: center;
 }
 
-.ScheduleWeek-Day{
+.BlowupDay-Day{
     height: 100%;
     width: 15%;
     display: flex;
@@ -64,27 +64,27 @@
     border-style: solid;*/
 }
 
-#ScheduleWeek-Day-Monday:hover{
+#BlowupDay-Day-Monday:hover{
     background: #dba100;
 }
 
-#ScheduleWeek-Day-Tuesday:hover{
+#BlowupDay-Day-Tuesday:hover{
     background: #dba100;
 }
 
-#ScheduleWeek-Day-Wednesday:hover{
+#BlowupDay-Day-Wednesday:hover{
     background: #dba100;
 }
 
-#ScheduleWeek-Day-Thursday:hover{
+#BlowupDay-Day-Thursday:hover{
     background: #dba100;
 }
 
-#ScheduleWeek-Day-Friday:hover{
+#BlowupDay-Day-Friday:hover{
     background: #dba100;
 }
 
-.ScheduleWeek-Type{
+.BlowupDay-Type{
     height: 100%;
     width: 20%;
     display: flex;
@@ -95,7 +95,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-THR{
+.BlowupDay-THR{
     height: 100%;
     width: 5%;
     display: flex;
@@ -106,7 +106,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Max{
+.BlowupDay-Max{
     height: 100%;
     width: 5%;
     display: flex;
@@ -117,7 +117,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Sets{
+.BlowupDay-Sets{
     height: 100%;
     width: 5%;
     display: flex;
@@ -128,7 +128,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Reps{
+.BlowupDay-Reps{
     height: 100%;
     width: 5%;
     display: flex;
@@ -139,7 +139,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Weight{
+.BlowupDay-Weight{
     height: 100%;
     width: 5%;
     display: flex;
@@ -150,7 +150,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-TimeOn{
+.BlowupDay-TimeOn{
     height: 100%;
     width: 10%;
     display: flex;
@@ -161,7 +161,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-TimeOff{
+.BlowupDay-TimeOff{
     height: 100%;
     width: 10%;
     display: flex;
@@ -172,7 +172,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Frequency{
+.BlowupDay-Frequency{
     height: 100%;
     width: 20%;
     display: flex;
@@ -183,7 +183,7 @@
     border-style: solid;*/
 }
 
-.ScheduleWeek-Day-Content{
+.BlowupDay-Day-Content{
     font-size: 13px;
 }
 

@@ -1,0 +1,368 @@
+.BlowupDay-Row-Content-Wrapper{    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    background: #ffbb00;
+    transition-duration: 0.5s;
+    /*border: 1px black;
+    border-style: solid;*/
+}
+
+.BlowupDay-Type{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+.BlowupDay-THR{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.BlowupDay-Max{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.BlowupDay-Sets{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.BlowupDay-Reps{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+}
+
+.BlowupDay-Weight{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 7%;
+}
+
+.BlowupDay-TimeOn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.BlowupDay-TimeOff{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.BlowupDay-Frequency{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 18%;
+}
+
+.BlowupDay-Type-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 100px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-THR-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-Max-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-Sets-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-Reps-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-Weight-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-TimeOn-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 65px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-TimeOff-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 65px;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.BlowupDay-Frequency-Content{
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+    margin: 0;
+    z-index: 2;
+    color: black;
+}
+
+@media(max-width: 767px){
+    .BlowupDay-Type-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 60px;
+    }
+    
+    .BlowupDay-THR-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+    }
+    
+    .BlowupDay-Max-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+    }
+    
+    .BlowupDay-Sets-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+    }
+    
+    .BlowupDay-Reps-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+    }
+    
+    .BlowupDay-Weight-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 40px;
+    }
+    
+    .BlowupDay-TimeOn-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 50px;
+    }
+    
+    .BlowupDay-TimeOff-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 50px;
+    }
+    
+    .BlowupDay-Frequency-Content{
+        font-size: 10px;
+        text-align: center;
+        width: 70px;
+    }
+}
+
+@media(max-width: 600px){
+    .BlowupDay-Type{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+    }
+    
+    .BlowupDay-THR{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+    }
+    
+    .BlowupDay-Max{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 12%;
+    }
+    
+    .BlowupDay-Sets{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+    }
+    
+    .BlowupDay-Reps{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+    }
+    
+    .BlowupDay-Weight{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+    }
+    
+    .BlowupDay-TimeOn{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-TimeOff{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-Frequency{
+        display: none;
+    }      
+
+}
+
+@media(max-width: 425px){
+    .BlowupDay-Type{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 25%;
+    }
+    
+    .BlowupDay-THR{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-Max{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 17%;
+    }
+    
+    .BlowupDay-Sets{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-Reps{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-Weight{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+    }
+    
+    .BlowupDay-TimeOn{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+        display: none;
+    }
+    
+    .BlowupDay-TimeOff{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 15%;
+        display: none;
+    }
+    
+    .BlowupDay-Frequency{
+        display: none;
+    }      
+
+}

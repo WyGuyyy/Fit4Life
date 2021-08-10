@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
-import './ScheduleWeek.css';
+import './BlowupDay.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
-import ScheduleWeekContent from './ScheduleWeekContent';
+import BlowupDayContent from './BlowupDayContent';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete, MdStayCurrentPortrait } from 'react-icons/md';
 import {baseURI} from '../_services/APIService';
 
-class ScheduleWeek extends React.Component{
+class BlowupDay extends React.Component{
     
      count = 0;
 
@@ -95,17 +95,17 @@ class ScheduleWeek extends React.Component{
 
         var wrapArrIndex = this.getWeekWrapper(this.props.dayOfWeek);
         var count = 0;
-        var weekWrapperArr = document.getElementsByClassName("ScheduleWeek-Row-Wrapper");
+        var weekWrapperArr = document.getElementsByClassName("BlowupDay-Row-Wrapper");
         var weekWrapper = weekWrapperArr[wrapArrIndex];
         var aFlexColumn;
         var workouts = this.state.userWorkouts;
         var count = 0;
         
         if(wrapArrIndex === 0){;
-            var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
+            var content = <div className="BlowupDay-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
         }else{
               
-            var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
+            var content = <div className="BlowupDay-Content-Wrapper">{this.renderDay(workouts)}</div>
                 
         }
 
@@ -129,13 +129,13 @@ class ScheduleWeek extends React.Component{
         for(aCount = 0; aCount < workouts.length; aCount++){
             if(workouts !== [] ){
                 if(workouts[0].title){
-                    var el = <ScheduleWeekContent workout={workouts} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
+                    var el = <BlowupDayContent workout={workouts} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={aCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                     elementArr.push(el);
                     break;
 
                 }else{
                     if(this.matchesFilters(workouts[aCount])){
-                        var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
+                        var el = <BlowupDayContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                         elementArr.push(el);
                         matchCount++;
                     }
@@ -250,15 +250,12 @@ class ScheduleWeek extends React.Component{
 
         var dayOfWeek = (this.props.dayOfWeek.localeCompare("Title") === 0 ? "Day" : this.props.dayOfWeek);
 
-        var aID = "ScheduleWeek-Day-Content-" + dayOfWeek;
+        var aID = "Blowup-Day-Content-" + dayOfWeek;
         var day = this.fitDayString(dayOfWeek);
 
         return(
 
-            <div className="ScheduleWeek-Row-Wrapper" style={{height: this.state.cellHeight}}>
-                <div className="ScheduleWeek-Day" id={"ScheduleWeek-Day-" + this.props.dayOfWeek} onClick={this.props.customClick}>
-                    <p className="ScheduleWeek-Day-Content" id={aID}>{this.fitDayString(dayOfWeek)}</p>
-                </div>
+            <div className="BlowupDay-Row-Wrapper" style={{height: this.state.cellHeight}}>
                 {this.fillSchedule()}
             </div>                    
                                 
@@ -267,10 +264,15 @@ class ScheduleWeek extends React.Component{
     }
 }
 
-export default ScheduleWeek;
+export default BlowupDay;
 
 //<Hamburger />
 //
 //"react-router-dom": "^6.0.0-alpha.1",
 //<p className="ScheduleWeek-Day-Content" id={aID}>{this}</p>
 //{this.fillSchedule()}
+/*
+                <div className="BlowupDay-Day" id={"Blowup-Day-" + this.props.dayOfWeek} onClick={this.props.customClick}>
+                    <p className="Blowup-Day-Content" id={aID}>{this.fitDayString(dayOfWeek)}</p>
+                </div>
+*/

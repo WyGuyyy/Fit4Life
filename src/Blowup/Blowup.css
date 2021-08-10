@@ -1,0 +1,296 @@
+.Blowup-Container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    display: none;
+}
+
+.Blowup-Wrapper{
+    position: fixed;
+    width: 98%;
+    height: 500px;
+    background: #664b00;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Blowup-Title-Area{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    background: #946c00;
+}
+
+.Blowup-Title-Date-Area{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Blowup-Title-Name-Area{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Blowup-Table-Wrapper{
+    width: auto;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.Blowup-Table-Wrapper::-webkit-scrollbar {
+    width: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } 
+
+  .Blowup-Table-Wrapper::-webkit-scrollbar-thumb{
+    background-color: rgb(46, 46, 46);
+    border-radius: 10px;
+}
+
+.Blowup-Table-Wrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.Blowup-Column-Titles-Area{
+    width: 2000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background: #aa7d00;
+    border-style: solid;
+    border-width: 1px;
+    position: sticky;
+    position: -webkit-sticky;
+}
+
+.Blowup-Type{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-THR{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Max{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Sets{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Reps{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Weight{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-TimeOn{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-TimeOff{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Frequency{
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-DayOfWeek{
+    margin-right: 20px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.Blowup-Date{
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.Blowup-Name{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.Blowup-Exit{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 30px;
+    transition-duration: .5s;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+
+.Blowup-Exit:hover{
+    color: white;
+}
+
+.Blowup-List{ /* START HERE NEXT TIME... NOT LETTING LAST ELEMENT BE SEEN */
+    width: 2000px;
+    height: 600px;
+    /*overflow-y: scroll;*/
+}
+
+.Blowup-List::-webkit-scrollbar {
+    display:none;
+    width: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } 
+
+  .Blowup-List::-webkit-scrollbar-thumb{
+    display:none;
+    background-color: rgb(46, 46, 46);
+    border-radius: 10px;
+}
+  
+.Blowup-List::-webkit-scrollbar-track {
+    display:none;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.Blowup-Workout-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 2000px;
+}
+
+.Blowup-Workout-Wrapper-Bright{
+    background: "#aa7d00";
+}
+
+.Blowup-Workout-Wrapper-Dark{
+    background: "#daa000";
+}
+
+.Blowup-Text{
+    font-size: 20px;
+    text-align: center;
+}
+
+.Blowup-Type-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-THR-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Max-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Sets-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Reps-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Weight-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-TimeOn-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-TimeOff-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Blowup-Frequency-Wrapper{
+    padding: 10px;
+    width: 11.11%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

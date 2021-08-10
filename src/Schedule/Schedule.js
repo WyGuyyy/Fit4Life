@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Popout from '../Popout/Popout';
 import ScheduleWeek from './ScheduleWeek';
 import Grading from './Grading';
+import Blowup from '../Blowup/Blowup';
 import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import {getUserFullName} from '../_services/UserService';
@@ -26,7 +27,9 @@ class Schedule extends React.Component{
                 studentClassrooms: "",
                 date: "",
                 classroom: "",
-                classroomTitle: ""
+                classroomTitle: "",
+                blowupDay: "",
+                studentName: ""
             };
         }
 
@@ -68,6 +71,10 @@ class Schedule extends React.Component{
 
             h2.textContent = data.first + " " + data.last;
         }
+
+        this.setState({
+            studentName: h2.textContent
+        });
     }
 
     async resetFilters(){
@@ -312,6 +319,29 @@ class Schedule extends React.Component{
         return day;
     }
 
+    onDayClick(event){
+
+        var id = event.target.id;
+        var day;
+
+        if(this.state.date === undefined || this.state.date === null || this.state.date === ""){
+            return;
+        }
+
+        if(id.includes("Content")){
+            day = event.target.id.split("-")[3];
+        }else{
+            day = event.target.id.split("-")[2];
+        }   
+        
+        var dayContainer = document.getElementsByClassName("Blowup-Container")[0];
+        dayContainer.style.display = "flex";
+
+        this.setState({
+            blowupDay: day
+        });
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -336,6 +366,7 @@ class Schedule extends React.Component{
 
             return(
                 <Fragment>
+                    <Blowup dayOfWeek={this.state.blowupDay} date={aDate} classroom={aClassroom} student={this.state.studentName} oStudent={aStudent} />
                     {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                     <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/> : 
                     <AdminHeader title={"Schedule"} breadCrumbs="Schedule" goBack={false} customClick={this.goBack.bind(this)}/>}
@@ -389,28 +420,28 @@ class Schedule extends React.Component{
 
                                         <div className="Schedule-Grid-Chart">
                                             <div className="Schedule-Grid-Chart-Titles">
-                                                <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Title" history={this.props.history} date={aDate} classroom={aClassroom} student={aStudent} />
                                             </div>
                                             <div className="Schedule-Grid-Chart-Monday">
-                                                <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Monday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent} customClick={this.onDayClick.bind(this)}/>
                                             </div>
                                             <div className="Schedule-Grid-Chart-Tuesday">
-                                                <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Tuesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent} customClick={this.onDayClick.bind(this)}/>
                                             </div>
                                             <div className="Schedule-Grid-Chart-Wednesday">
-                                                <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Wednesday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent} customClick={this.onDayClick.bind(this)}/>
                                             </div>
                                             <div className="Schedule-Grid-Chart-Thursday">
-                                                <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Thursday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent} customClick={this.onDayClick.bind(this)}/>
                                             </div>
                                             <div className="Schedule-Grid-Chart-Friday">
-                                                <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent}/>
+                                                <ScheduleWeek height="100%" dayOfWeek="Friday" history={this.props.history} eventToRemove={this.checkGridTitles.bind(this)} date={aDate} classroom={aClassroom} student={aStudent} customClick={this.onDayClick.bind(this)}/>
                                             </div>
                                         </div>
                                     </div>
 
                                 { 
-                                    localStorage.getItem("userRole") === "STUDENT" ? 
+                                    localStorage.getItem("userRole") === "ADMIN" ? 
                                     <Grading date={this.state.date} classroom={aClassroom}/>
                                     :
                                     ""
