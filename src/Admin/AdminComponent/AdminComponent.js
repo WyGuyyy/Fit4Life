@@ -307,6 +307,13 @@ class AdminComponent extends React.Component{
         });
     }
 
+    goToCategoryManager(eventObj){
+        this.props.history.push({
+            pathname: "/categoryManagerAdmin",
+            state: {goBack: true, classroom: this.state.classroom}
+        });
+    }
+
     /*goToClassroomComponents(eventObj){
 
         if(!(eventObj.event.target.classList[0].includes("Component-List-Item-Student-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Edit-Button-Admin")) && !(eventObj.event.target.classList[0].includes("Component-List-Item-Delete-Button-Admin"))){
@@ -391,6 +398,7 @@ class AdminComponent extends React.Component{
                     <AdminPopout hist={this.props.history}/>
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
+                    <p className="Exercise-Category-Manager-Admin" title="Category Manager" onClick={(e)=>this.goToCategoryManager({event: e})}>Categories</p>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">
                         <ConfirmToast text="Exercise deleted!"/>
                         <div className="exerciseList-Admin" id="exerciseList-Admin">

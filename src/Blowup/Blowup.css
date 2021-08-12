@@ -37,6 +37,19 @@
     align-items: center;
 }
 
+.Blowup-Title-Classroom-Area{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Blowup-Classroom{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 .Blowup-Title-Name-Area{
     width: 100%;
     display: flex;
@@ -69,6 +82,8 @@
     border-radius: 10px;
 }
 
+.Blowup-Table-Wrapper::-webkit-scrollbar-corner { display: none; }
+
 .Blowup-Column-Titles-Area{
     width: 2000px;
     display: flex;
@@ -78,8 +93,6 @@
     background: #aa7d00;
     border-style: solid;
     border-width: 1px;
-    position: sticky;
-    position: -webkit-sticky;
 }
 
 .Blowup-Type{
@@ -157,7 +170,7 @@
 }
 
 .Blowup-Name{
-    margin-top: 10px;
+    margin-top: 0px;
     text-align: center;
 }
 
@@ -293,4 +306,61 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+@media(max-width: 520px){
+    .Blowup-DayOfWeek{
+        font-size: 25px;
+    }
+
+    .Blowup-Date{
+        font-size: 25px;
+    }
+
+    .Blowup-Classroom{
+        font-size: 25px;
+    }
+
+    .Blowup-Name{
+        font-size: 25px;
+    }
+
+    .Blowup-Title-Date-Area{
+        justify-content: flex-start;
+        margin-left: 10px;
+    }
+    
+    .Blowup-Title-Classroom-Area{
+        justify-content: flex-start;
+        margin-left: 10px;
+    }
+
+    .Blowup-Title-Name-Area{
+        justify-content: flex-start;
+        margin-left: 10px;
+    }
+}
+
+@media(max-width: 400px){
+    .Blowup-DayOfWeek{
+        font-size: 20px;
+    }
+
+    .Blowup-Date{
+        font-size: 20px;
+    }
+
+    .Blowup-Classroom{
+        font-size: 20px;
+    }
+
+    .Blowup-Name{
+        font-size: 20px;
+    }
+
+    .Blowup-Exit{
+        right: 10px;
+        top: 10px;
+        font-size: 25px;
+    }
 }

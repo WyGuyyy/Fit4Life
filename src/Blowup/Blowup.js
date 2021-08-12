@@ -32,7 +32,7 @@ class Blowup extends React.Component{
 
     async fillWorkouts(){
         var workouts = [];
-        var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
+        var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.oStudent.user_id);
 
         //await fetch(baseURI + "/api/classroom", {
             await fetch(baseURI + "/api/workout/byuser/" + userID, {  
@@ -124,7 +124,7 @@ class Blowup extends React.Component{
 
                 setsP.classList.add("Blowup-Sets-Content");
                 setsP.classList.add("Blowup-Text");
-                setsP.textContent = workout.sets === -1 ? "" : workout.sets;
+                setsP.textContent = (workout.sets === -1 ? "" : workout.sets + " sets");
 
                 setsDiv.classList.add("Blowup-Sets-Wrapper");
                 setsDiv.appendChild(setsP);
@@ -134,7 +134,7 @@ class Blowup extends React.Component{
 
                 repsP.classList.add("Blowup-Reps-Content");
                 repsP.classList.add("Blowup-Text");
-                repsP.textContent = workout.reps === -1 ? "" : workout.reps;
+                repsP.textContent = (workout.reps === -1 ? "" : workout.reps + " reps");
 
                 repsDiv.classList.add("Blowup-Reps-Wrapper");
                 repsDiv.appendChild(repsP);
@@ -144,7 +144,7 @@ class Blowup extends React.Component{
 
                 weightP.classList.add("Blowup-Weight-Content");
                 weightP.classList.add("Blowup-Text");
-                weightP.textContent = workout.weight === -1 ? "" : workout.weight;
+                weightP.textContent = (workout.weight === -1 ? "" : workout.weight + " lb");
 
                 weightDiv.classList.add("Blowup-Weight-Wrapper");
                 weightDiv.appendChild(weightP);
@@ -325,6 +325,8 @@ class Blowup extends React.Component{
         var aDate = this.props.date;
         var aClassroom = this.props.classroom;
 
+        var classroomTitle = aClassroom.title;
+
         var aStudent = this.props.oStudent;
 
             return(
@@ -337,12 +339,15 @@ class Blowup extends React.Component{
                                     <h1 className="Blowup-DayOfWeek">{this.props.dayOfWeek}</h1>
                                     <h1 className="Blowup-Date">{this.props.date}</h1>
                                 </div>
+                                <div className="Blowup-Title-Classroom-Area">
+                                    <h1 className="Blowup-Classroom">{classroomTitle}</h1>
+                                </div>
                                 <div className="Blowup-Title-Name-Area">
                                     <h1 className="Blowup-Name">{studentName}</h1>
                                 </div>
                             </div>
                             <div className="Blowup-Table-Wrapper">
-                                <div className="Blowup-Column-Titles-Area">
+                            <div className="Blowup-Column-Titles-Area">
                                     <div className="Blowup-Type" >
                                         <p className="Blowup-Type-Content" id="exerciseTitle">{"Exercise"}</p>
                                     </div>
@@ -371,6 +376,7 @@ class Blowup extends React.Component{
                                         <p className="Blowup-Frequency-Content" id="componentTitle">{"Component"}</p>
                                     </div>
                                 </div>
+                                
                                 <div className="Blowup-List">
 
                                 </div>

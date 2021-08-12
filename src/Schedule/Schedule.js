@@ -324,7 +324,8 @@ class Schedule extends React.Component{
         var id = event.target.id;
         var day;
 
-        if(this.state.date === undefined || this.state.date === null || this.state.date === ""){
+        if(this.state.date === undefined || this.state.date === null || this.state.date === "" ||
+           this.state.classroom === undefined || this.state.classroom === null || this.state.classroom === ""){
             return;
         }
 

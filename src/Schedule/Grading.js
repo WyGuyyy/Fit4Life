@@ -70,8 +70,6 @@ class Grading extends React.Component{
                     var cacheIndex = idNum - 1;
                 }
 
-                console.log(totalScore);
-
                 document.getElementById("Grading-Input-6").value = totalScore;
 
                 that.setState({
@@ -152,8 +150,12 @@ class Grading extends React.Component{
         var grade = input.value;
         var date = new Date(this.props.date);
 
-        if(!date || grade === ""){
+        if(!date){
             return;
+        }
+
+        if(grade === ""){
+            grade = 0;
         }
 
         if(isNaN(grade)){
@@ -178,10 +180,24 @@ class Grading extends React.Component{
             body: JSON.stringify({user_id: localStorage.getItem("userID"), classroom_id: classroom.classroom_id, grade_date: date, score: grade})
         }).catch(console.log);
 
-        totalInput.value = grade + parseInt(totalInput.value);
+        totalInput.value = this.calculateTotalGrade();
 
         var cacheIndex = daysToAdd;
 
+    }
+
+    calculateTotalGrade(){
+        var totalGrade = 0;
+
+        for(var count = 1; count <= 5; count++){
+            if(document.getElementById("Grading-Input-" + count).value === ""){
+                continue;
+            }
+
+            totalGrade += parseInt(document.getElementById("Grading-Input-" + count).value);
+        }
+        console.log(totalGrade);
+        return totalGrade;
     }
 
     async saveGradeCache(){

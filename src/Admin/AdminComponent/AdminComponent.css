@@ -180,6 +180,31 @@
     box-shadow: 2px 2px 10px black;
 }
 
+.Exercise-Category-Manager-Admin{
+    height: 50px;
+    width: 75px;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    left: 40px;
+    margin-bottom: 0px;
+    z-index: 2;
+    color: white;
+    border-radius: 20px;
+    font-size: 20px;
+    box-shadow: 2px 2px 10px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+.Exercise-Category-Manager-Admin:hover{
+    color: #ffbb00;
+}
+
 .Fit4Life-SearchbarWrapper-Admin{
     position: absolute;
     bottom: 0;
@@ -325,15 +350,36 @@
         font-size: 20px;
     }
 
+    .Exercise-Category-Manager-Admin{
+        font-size: 15px;
+        left: 10px;
+        bottom: 5px;
+    }
+
 }
 
-@media(max-width: 319px){
-    /*.Goal-List-Item{
-        grid-template-columns: 1fr 1fr 1fr;
-    }*/
+@media(max-width: 420px){
+    .Fit4Life-Searchbar-Admin{
+        width: 150px;
+    }
+    
+    .Fit4Life-SearchButton-Admin{
+        width: 150px;
+    }
 
-  /*  .Goal-Grid-Cell-Progress{
-        display: none;
-    }*/
+    .Exercise-Category-Manager-Admin{
+        font-size: 12px;
+        left: 5px;
+    }
+}
+
+@media(max-width: 370px){
+    .Fit4Life-Searchbar-Admin{
+        width: 120px;
+    }
+    
+    .Fit4Life-SearchButton-Admin{
+        width: 120px;
+    }
 
 }

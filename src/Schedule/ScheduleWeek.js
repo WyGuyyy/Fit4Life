@@ -67,7 +67,6 @@ class ScheduleWeek extends React.Component{
         
         var workouts = [];
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
-
         //await fetch(baseURI + "/api/classroom", {
             await fetch(baseURI + "/api/workout/byuser/" + userID, {  
                 method: "GET",                          
