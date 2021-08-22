@@ -18,7 +18,7 @@ class CategoryManagerAdmin extends React.Component{
             this.state = {
                 canGoBack: true,
                 idMap: [],
-                selectedTrail: []
+                selectedPath: []
             }
         }
 
@@ -76,7 +76,7 @@ class CategoryManagerAdmin extends React.Component{
         categoryWrapper.classList.add("Category-Admin-ListItem-Wrapper");
         categoryText.classList.add("Category-Admin-ListItem");
 
-        categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + idNum;
+        categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + childCount + "-" + idNum;
         categoryText.id = "Category-Admin-ListItem-" + childCount + "-" + idNum;
 
         categoryWrapper.onclick = (e) => this.onSelectCategory(e);
@@ -107,7 +107,7 @@ class CategoryManagerAdmin extends React.Component{
         var childCount = list.children.length;
 
         var aClassroom = this.props.location.state.classroom;
-        var aParent = (idNum === 0 ? "" : {parent: {category_id: ""}});
+        var aParent = (idNum === 0 ? "" : {parent: {category_id: this.state.idMap[this.state.selectedPath[idNum]]}});
 
         var categoryWrapper = document.createElement("div");
         var categoryText = document.createElement("input");
@@ -115,7 +115,7 @@ class CategoryManagerAdmin extends React.Component{
         categoryWrapper.classList.add("Category-Admin-ListItem-Wrapper");
         categoryText.classList.add("Category-Admin-ListItem");
 
-        categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + idNum;
+        categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + childCount + "-" + idNum;
         categoryText.id = "Category-Admin-ListItem-" + childCount + "-" + idNum;
 
         categoryWrapper.onclick = (e) => this.onSelectCategory(e);
@@ -134,27 +134,74 @@ class CategoryManagerAdmin extends React.Component{
         }).catch(console.log);
     }
 
+    onDeleteCategory(event){
+        var idNum = parseInt(event.target.id.split("-")[4]);
+        var list = document.getElementById("Category-Admin-List-" + idNum);
+        
+        while(list.firstChild){
+            list.removeChild(list.firstChild);
+        }
+
+        await fetch(baseURI + "/api/category", {  
+            method: "DELETE",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).catch(console.log);
+
+    }
+
     async onSelectCategory(event){
         var splitArr = event.target.id.split("-");
 
-        var idNum;
-        var categoryID;
+        var itemNum;
+        var listNum;
+        //var categoryID;
 
-        if(splitArr.length === 5){
-            idNum = parseInt(splitArr[4]);
+        if(splitArr.length === 6){
+            itemNum = parseInt(splitArr[4]);
+            listNum = parseInt(splitArr[5]);
         }else{
-            idNum = parseInt(splitArr[3]);
+            //idNum = parseInt(splitArr[3]);
+            return;
         }
 
-        /*await fetch(baseURI + "/api/category/" + , {  
+        var selPath = this.state.selectedPath;
+        var newIDMap = this.state.idMap;
+
+        if(selPath.length === (listNum + 1)){
+            if(selPath[listNum] === itemNum){
+                selPath.pop();
+                newIDMap.pop();
+                //remove highlight from category here
+            }
+        }else if(selPath.length < (listNum + 1)){
+            selPath[listNum] = itemNum;
+            //update idMap here
+            //highlight category here
+        }else{
+            if(selPath[listNum] === itemNum){
+                selPath.splice(listNum);
+                newIDMap.splice(listNum);
+            }else{
+                selPath.splice(listNum + 1);
+                selPath[listNum] = itemNum;
+                newIDMap.splice(listNum);
+                //update idMap here
+            }
+        }
+
+        
+        //START HERE NEXT TIME - NEED TO BUILD LOGIC TO ONLY UPDATE IDMAP UNDER THE 
+        //RIGHT CONDITIONS
+        await fetch(baseURI + "/api/category/forCategory/" + , {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({classroom: aClassroom, parent: aParent, title: categoryText.value})
-        }).catch(console.log);*/
+        }).catch(console.log);
         
-        if(document.getElementById("Category-Admin-List-Wrapper-" + (idNum + 1)) === null){
-            this.addListLevel((idNum  + 1), categoryID);
+        if(document.getElementById("Category-Admin-List-Wrapper-" + (listNum + 1)) === null){
+            this.addListLevel((listNum  + 1));
         }
     }
 
@@ -180,7 +227,7 @@ class CategoryManagerAdmin extends React.Component{
 
     }
 
-    addListLevel(listNum, categoryID){
+    addListLevel(listNum){
 
         var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
 
@@ -268,7 +315,7 @@ class CategoryManagerAdmin extends React.Component{
                         </div>
                         <div className="Category-Admin-Button-Wrapper">
                             <button className="Category-Admin-Add-Button" id="Category-Admin-Add-Button-0" onClick={e => this.onAddCategory(e)}>+</button>
-                            <button className="Category-Admin-Subtract-Button" id="Category-Admin-Subtract-Button-0">-</button>
+                            <button className="Category-Admin-Subtract-Button" id="Category-Admin-Subtract-Button-0" onClick={e => this.onDeleteCategory(e)}>-</button>
                         </div>
                     </div>
                     
