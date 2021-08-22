@@ -11,7 +11,8 @@ class Grading extends React.Component{
         this.state = {
             selectedDate: props.date,
             endDate: "",
-            classroom: props.classroom,
+            classroomID: "",
+            studentID: "",
             gradeCache: [-1, -1]
         };
 
@@ -27,9 +28,10 @@ class Grading extends React.Component{
         d.setDate(d.getDate() + 4);
         var newEndDate = d.getFullYear() + "-" + this.formatMonth(d.getMonth() + 1) + "-" + this.formatDay(d.getDate() + 1);
 
-        if(this.state.endDate !== newEndDate && this.props.classroom.classroom_id !== undefined && this.props.date !== "")
+        if((this.state.endDate !== newEndDate || this.state.classroomID !== this.props.classroom.classroom_id) 
+            && this.props.date !== "" && this.props.student.user_id !== "")
         {
-            this.fillGrades(localStorage.getItem("userID"), this.props.classroom.classroom_id, this.props.date, newEndDate);
+            this.fillGrades(this.props.student.user_id, this.props.classroom.classroom_id, this.props.date, newEndDate);
         }
         
     }
@@ -74,6 +76,7 @@ class Grading extends React.Component{
 
                 that.setState({
                     endDate: newEndDate,
+                    classroomID: classroomID, 
                     grades: value
                 });
 
@@ -172,12 +175,13 @@ class Grading extends React.Component{
 
         //NEED TO SOMEHOW ADD GRADE HERE NEXT
         var classroom = this.props.classroom;
-        console.log(localStorage.getItem("userID"));
+        var studentID = this.props.student.user_id;
+
         await fetch(baseURI + "/api/grade", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({user_id: localStorage.getItem("userID"), classroom_id: classroom.classroom_id, grade_date: date, score: grade})
+            body: JSON.stringify({user_id: studentID, classroom_id: classroom.classroom_id, grade_date: date, score: grade})
         }).catch(console.log);
 
         totalInput.value = this.calculateTotalGrade();
@@ -225,11 +229,13 @@ class Grading extends React.Component{
         var daysToAdd = id;
         date.setDate(date.getDate() + daysToAdd);
 
+        var studentID = this.props.student.user_id;
+
         await fetch(baseURI + "/api/grade", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({user_id: localStorage.getItem("userID"), classroom_id: classroom.classroom_id, grade_date: date, score: grade})
+            body: JSON.stringify({user_id: studentID, classroom_id: classroom.classroom_id, grade_date: date, score: grade})
         }).catch(console.log);
 
     }

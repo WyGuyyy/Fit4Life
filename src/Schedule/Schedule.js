@@ -443,7 +443,7 @@ class Schedule extends React.Component{
 
                                 { 
                                     localStorage.getItem("userRole") === "ADMIN" ? 
-                                    <Grading date={this.state.date} classroom={aClassroom}/>
+                                    <Grading date={this.state.date} classroom={aClassroom} student={aStudent}/>
                                     :
                                     ""
                                 }
