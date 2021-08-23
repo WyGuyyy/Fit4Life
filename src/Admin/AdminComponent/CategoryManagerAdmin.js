@@ -18,7 +18,9 @@ class CategoryManagerAdmin extends React.Component{
             this.state = {
                 canGoBack: true,
                 idMap: [],
-                selectedPath: []
+                selectedPath: [],
+                listIds: ["Category-Admin-List-Wrapper-0"],
+                arrowIds: ["Category-Admin-List-Arrow-0"]
             }
         }
 
@@ -53,7 +55,7 @@ class CategoryManagerAdmin extends React.Component{
         ).catch(console.log);
 
         for(var count = 0; count < categories.length; count++){
-            this.loadCategoriesIntoList(0, categories[count].title);
+            this.loadCategoryIntoList(0, categories[count].title);
 
             topLevelCategories.push(categories[count]);
         }
@@ -66,7 +68,7 @@ class CategoryManagerAdmin extends React.Component{
 
     }
 
-    loadCategoriesIntoList(idNum, title){
+    loadCategoryIntoList(idNum, title){
         var list = document.getElementById("Category-Admin-List-" + idNum);
         var childCount = list.children.length;
 
@@ -126,15 +128,31 @@ class CategoryManagerAdmin extends React.Component{
         categoryWrapper.appendChild(categoryText);
         list.appendChild(categoryWrapper);
 
+        var newCategory;
+        var newIDMap = this.state.idMap;
+
         await fetch(baseURI + "/api/category", {  
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")},
             body: JSON.stringify({classroom: {classroom_id: aClassroom.classroom_id}, parent_id: aParent, title: categoryText.value})
-        }).catch(console.log);
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                newCategory = result;
+            }
+        )
+        .catch(console.log);
+
+        newIDMap[idNum].push(newCategory);
+
+        this.setState({
+            idMap: newIDMap
+        });
     }
 
-    onDeleteCategory(event){
+    async onDeleteCategory(event){
         var idNum = parseInt(event.target.id.split("-")[4]);
         var list = document.getElementById("Category-Admin-List-" + idNum);
         
@@ -167,33 +185,63 @@ class CategoryManagerAdmin extends React.Component{
 
         var selPath = this.state.selectedPath;
         var newIDMap = this.state.idMap;
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
+
+        var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
+
+        for(var count = (listNum + 1); count < newListIds.length; count++){
+            var list = document.getElementById(newListIds[count]);
+            var arrow = document.getElementById(newArrowIds[count]);
+            categoryWrapper.removeChild(list);
+            categoryWrapper.removeChild(arrow);
+        }
+
+        newListIds.splice(listNum + 1);
 
         if(selPath.length === (listNum + 1)){
             if(selPath[listNum] === itemNum){
                 selPath.pop();
-                newIDMap.pop();
+
+                if(newIDMap.length > 1){
+                    newIDMap.pop();
+                }
                 //remove highlight from category here
+            }else{
+                selPath[listNum] = itemNum;
+                console.log(selPath);
+                await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
             }
         }else if(selPath.length < (listNum + 1)){
             selPath[listNum] = itemNum;
+            console.log(selPath);
+            await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
             //update idMap here
             //highlight category here
         }else{
             if(selPath[listNum] === itemNum){
                 selPath.splice(listNum);
-                newIDMap.splice(listNum);
+                newIDMap.splice(listNum + 1);
             }else{
                 selPath.splice(listNum + 1);
                 selPath[listNum] = itemNum;
-                newIDMap.splice(listNum);
+                newIDMap.splice(listNum + 1);
+
+                await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
                 //update idMap here
             }
         }
 
+        console.log(newIDMap);
+        console.log(selPath);
+
+        this.setState({
+            selectedPath: selPath
+        });
         
         //START HERE NEXT TIME - NEED TO BUILD LOGIC TO ONLY UPDATE IDMAP UNDER THE 
         //RIGHT CONDITIONS
-        await fetch(baseURI + "/api/category/forCategory/" + , {  
+       /* await fetch(baseURI + "/api/category/forCategory/" + , {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")},
@@ -202,7 +250,7 @@ class CategoryManagerAdmin extends React.Component{
         
         if(document.getElementById("Category-Admin-List-Wrapper-" + (listNum + 1)) === null){
             this.addListLevel((listNum  + 1));
-        }
+        }*/
     }
 
     async onCategoryTitleChange(event){
@@ -227,7 +275,7 @@ class CategoryManagerAdmin extends React.Component{
 
     }
 
-    addListLevel(listNum){
+    async addListLevel(listNum, parentID){
 
         var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
 
@@ -238,9 +286,13 @@ class CategoryManagerAdmin extends React.Component{
         var addButton = document.createElement("button");
         var subtractButton = document.createElement("button");
 
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
+
         arrow.classList.add("fa");
         arrow.classList.add("fa-arrow-down");
         arrow.classList.add("Category-Admin-Arrow");
+        arrow.id = "Category-Admin-List-Arrow-" + listNum;
 
         arrow.style.fontSize = "120px";
 
@@ -249,9 +301,12 @@ class CategoryManagerAdmin extends React.Component{
         buttonWrapper.classList.add("Category-Admin-Button-Wrapper");
         addButton.classList.add("Category-Admin-Add-Button");
         subtractButton.classList.add("Category-Admin-Subtract-Button");
-
+        
         listWrapper.id = "Category-Admin-List-Wrapper-" + listNum;
         list.id = "Category-Admin-List-" + listNum;
+
+        newListIds.push("Category-Admin-List-Wrapper-" + listNum);
+        newArrowIds.push("Category-Admin-List-Arrow-" + listNum);
 
         addButton.id = "Category-Admin-Add-Button-" + listNum;
         subtractButton.id = "Category-Admin-Subtract-Button-" + listNum;
@@ -261,6 +316,8 @@ class CategoryManagerAdmin extends React.Component{
 
         addButton.onclick = (e) => this.onAddCategory(e);
 
+        await this.loadCategoriesForList(listNum, parentID);
+
         buttonWrapper.appendChild(addButton);
         buttonWrapper.appendChild(subtractButton);
 
@@ -269,6 +326,33 @@ class CategoryManagerAdmin extends React.Component{
 
         categoryWrapper.appendChild(arrow);
         categoryWrapper.appendChild(listWrapper);
+
+        this.setState({
+            listIds: newListIds
+        });
+    }
+
+    async loadCategoriesForList(listNum, parentID){
+
+        var classroomID = this.props.location.state.classroom.classroom_id;
+        var categories = [];
+
+        await fetch(baseURI + "/api/category/forCategory/" + classroomID + "/" + parentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categories = result;
+            }
+        ).catch(console.log);
+
+        for(var count = 0; count < categories.length; count++){
+            this.loadCategoryIntoList(listNum, categories[count].title);
+        }
+
     }
 
     closeModal(){
