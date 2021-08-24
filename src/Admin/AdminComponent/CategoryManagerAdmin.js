@@ -71,7 +71,6 @@ class CategoryManagerAdmin extends React.Component{
     loadCategoryIntoList(idNum, title){
         var list = document.getElementById("Category-Admin-List-" + idNum);
         var childCount = list.children.length;
-
         var categoryWrapper = document.createElement("div");
         var categoryText = document.createElement("input");
 
@@ -103,13 +102,62 @@ class CategoryManagerAdmin extends React.Component{
         document.getElementById("modalContainer").style.display = "flex";
     }
 
+    onAddExercises(event){
+        var idMap = this.state.idMap;
+        var selPath = this.state.selectedPath;
+        var idNum = parseInt(event.target.id.split("-")[4]);
+
+        var selectedCategory = idMap[idNum][selPath[idNum]];
+
+        var exercises = [];
+        var categoryExercises = [];
+
+        await fetch(baseURI + "/api/exercise", {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+            }
+        ).catch(console.log);
+
+        //Need to create this endpoint
+        await fetch(baseURI + "/api/exercise/forCategory/" + selectedCategory.category_id, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categoryExercises = result;
+            }
+        ).catch(console.log);
+
+
+    }
+
     async onAddCategory(event){
+
+        var element = event.target;
+
+        if(element.disabled === true){
+            return;
+        }
+
+        element.disabled = true;
+
         var idNum = parseInt(event.target.id.split("-")[4]);
         var list = document.getElementById("Category-Admin-List-" + idNum);
         var childCount = list.children.length;
 
         var aClassroom = this.props.location.state.classroom;
-        var aParent = (idNum === 0 ? "" : {parent: {category_id: this.state.idMap[this.state.selectedPath[idNum]]}});
+        var aParent = (idNum === 0 ? null : {category_id: this.state.idMap[idNum - 1][this.state.selectedPath[idNum - 1]].category_id});
 
         var categoryWrapper = document.createElement("div");
         var categoryText = document.createElement("input");
@@ -135,7 +183,7 @@ class CategoryManagerAdmin extends React.Component{
             method: "POST",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({classroom: {classroom_id: aClassroom.classroom_id}, parent_id: aParent, title: categoryText.value})
+            body: JSON.stringify({classroom: {classroom_id: aClassroom.classroom_id}, parent: aParent, title: categoryText.value})
         }).then(res => res.text())
         .then(
             (text) => {
@@ -150,38 +198,110 @@ class CategoryManagerAdmin extends React.Component{
         this.setState({
             idMap: newIDMap
         });
+
+        element.disabled = false;
+
     }
 
     async onDeleteCategory(event){
-        var idNum = parseInt(event.target.id.split("-")[4]);
-        var list = document.getElementById("Category-Admin-List-" + idNum);
-        
-        while(list.firstChild){
-            list.removeChild(list.firstChild);
+
+        var element = event.target;
+
+        if(element.disabled === true){
+            return;
         }
 
-        await fetch(baseURI + "/api/category", {  
+        element.disabled = true;
+
+        var idNum = parseInt(event.target.id.split("-")[4]);
+
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
+        var selPath = this.state.selectedPath;
+        var newIDMap = this.state.idMap;
+
+        if(idNum >= selPath.length){
+            element.disabled = false;
+            return;
+        }
+
+        var list = document.getElementById("Category-Admin-List-" + idNum);
+        var wrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
+
+        for(var count = (idNum + 1); count < newListIds.length; count++){
+            var aList = document.getElementById(newListIds[count]);
+            var arrow = document.getElementById(newArrowIds[count]);
+            wrapper.removeChild(aList);
+            wrapper.removeChild(arrow);
+        }
+
+        newListIds.splice(idNum + 1);
+        newArrowIds.splice(idNum + 1);
+
+        var selectedItemNum = selPath[idNum];
+        var selectedItem = document.getElementById("Category-Admin-ListItem-Wrapper-" + selectedItemNum + "-" + idNum);
+        list.removeChild(selectedItem);
+
+        for(var count = selectedItemNum; count < list.children.length; count++){
+            var item = list.children[count];
+            item.id = "Category-Admin-ListItem-Wrapper-" + (count) + "-" + idNum;
+        }
+        console.log(list.children);
+        var categoryID = newIDMap[idNum][selPath[idNum]].category_id;
+        newIDMap.splice(idNum + 1);
+        newIDMap[idNum].splice(selPath[idNum], 1);
+
+        selPath.splice(idNum);
+
+        await fetch(baseURI + "/api/category/" + categoryID, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
+        this.setState({
+            idMap: newIDMap,
+            selectedPath: selPath,
+            listIds: newListIds,
+            arrowsIds: newArrowIds
+        });
+
+        element.disabled = false;
+
     }
 
     async onSelectCategory(event){
+
+        var element = event.target;
+
+        if(element.disabled === true){
+            return;
+        }
+
         var splitArr = event.target.id.split("-");
 
         var itemNum;
         var listNum;
+        var currentList;
         //var categoryID;
 
         if(splitArr.length === 6){
+            event.target.disabled = true;
             itemNum = parseInt(splitArr[4]);
             listNum = parseInt(splitArr[5]);
+            currentList = document.getElementById("Category-Admin-List-" + listNum);
         }else{
             //idNum = parseInt(splitArr[3]);
+            element.disabled = false;
             return;
         }
+
+        for(var count = 0; count < currentList.children.length; count++){
+            var listItem = currentList.children[count];
+            listItem.style.background = "#7c5b00";
+        }
+
+        var wrapper = document.getElementById(event.target.id);
 
         var selPath = this.state.selectedPath;
         var newIDMap = this.state.idMap;
@@ -198,6 +318,7 @@ class CategoryManagerAdmin extends React.Component{
         }
 
         newListIds.splice(listNum + 1);
+        newArrowIds.splice(listNum + 1);
 
         if(selPath.length === (listNum + 1)){
             if(selPath[listNum] === itemNum){
@@ -206,38 +327,46 @@ class CategoryManagerAdmin extends React.Component{
                 if(newIDMap.length > 1){
                     newIDMap.pop();
                 }
-                //remove highlight from category here
+
+                wrapper.style.background = "#7c5b00";
+                
             }else{
                 selPath[listNum] = itemNum;
                 console.log(selPath);
                 await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
+
+                wrapper.style.background = "#aa7d00";
             }
         }else if(selPath.length < (listNum + 1)){
             selPath[listNum] = itemNum;
             console.log(selPath);
             await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
-            //update idMap here
-            //highlight category here
+
+            wrapper.style.background = "#aa7d00";
         }else{
             if(selPath[listNum] === itemNum){
                 selPath.splice(listNum);
                 newIDMap.splice(listNum + 1);
+
+                wrapper.style.background = "#7c5b00";
             }else{
                 selPath.splice(listNum + 1);
                 selPath[listNum] = itemNum;
                 newIDMap.splice(listNum + 1);
 
                 await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
-                //update idMap here
+           
+                wrapper.style.background = "#aa7d00";
             }
         }
 
-        console.log(newIDMap);
-        console.log(selPath);
-
         this.setState({
-            selectedPath: selPath
+            selectedPath: selPath,
+            listIds: newListIds,
+            arrowIds: newArrowIds
         });
+
+        element.disabled = false;
         
         //START HERE NEXT TIME - NEED TO BUILD LOGIC TO ONLY UPDATE IDMAP UNDER THE 
         //RIGHT CONDITIONS
@@ -265,12 +394,12 @@ class CategoryManagerAdmin extends React.Component{
 
         var aCategory = idMap[levelNum][itemNum];
         aCategory.title = text;
-
+        console.log(aCategory);
         await fetch(baseURI + "/api/category", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-            body: JSON.stringify({category_id: aCategory.category_id, classroom: {classroom_id: aCategory.classroom.classroom_id}, parent_id: aCategory.parent_id, title: aCategory.title})
+            body: JSON.stringify({category_id: aCategory.category_id, classroom: {classroom_id: aCategory.classroom.classroom_id}, parent: aCategory.parent, title: aCategory.title})
         }).catch(console.log);
 
     }
@@ -285,9 +414,14 @@ class CategoryManagerAdmin extends React.Component{
         var buttonWrapper = document.createElement("div");
         var addButton = document.createElement("button");
         var subtractButton = document.createElement("button");
+        var exerciseButton = document.createElement("button");
+        var exerciseButtonIcon = document.createElement("i");
 
         var newListIds = this.state.listIds;
         var newArrowIds = this.state.arrowIds;
+        var newIDMap = this.state.idMap;
+
+        newIDMap[listNum] = [];
 
         arrow.classList.add("fa");
         arrow.classList.add("fa-arrow-down");
@@ -301,6 +435,9 @@ class CategoryManagerAdmin extends React.Component{
         buttonWrapper.classList.add("Category-Admin-Button-Wrapper");
         addButton.classList.add("Category-Admin-Add-Button");
         subtractButton.classList.add("Category-Admin-Subtract-Button");
+        exerciseButton.classList.add("Category-Admin-Exercise-Button");
+        exerciseButtonIcon.classList.add("fa");
+        exerciseButtonIcon.classList.add("fa-child");
         
         listWrapper.id = "Category-Admin-List-Wrapper-" + listNum;
         list.id = "Category-Admin-List-" + listNum;
@@ -310,14 +447,17 @@ class CategoryManagerAdmin extends React.Component{
 
         addButton.id = "Category-Admin-Add-Button-" + listNum;
         subtractButton.id = "Category-Admin-Subtract-Button-" + listNum;
+        exerciseButton.id = "Category-Admin-Exercise-Button-" + listNum;
 
         addButton.textContent = "+";
         subtractButton.textContent = "-";
+        exerciseButton.appendChild(exerciseButtonIcon);
 
         addButton.onclick = (e) => this.onAddCategory(e);
+        subtractButton.onclick = (e) => this.onDeleteCategory(e);
+        exerciseButton.onclick = (e) => this.onAddExercises(e);
 
-        await this.loadCategoriesForList(listNum, parentID);
-
+        buttonWrapper.appendChild(exerciseButton);
         buttonWrapper.appendChild(addButton);
         buttonWrapper.appendChild(subtractButton);
 
@@ -327,8 +467,12 @@ class CategoryManagerAdmin extends React.Component{
         categoryWrapper.appendChild(arrow);
         categoryWrapper.appendChild(listWrapper);
 
+        await this.loadCategoriesForList(listNum, parentID);
+
         this.setState({
-            listIds: newListIds
+            listIds: newListIds,
+            arrowsIds: newArrowIds,
+            idMap: newIDMap
         });
     }
 
@@ -336,6 +480,7 @@ class CategoryManagerAdmin extends React.Component{
 
         var classroomID = this.props.location.state.classroom.classroom_id;
         var categories = [];
+        var newIDMap = this.state.idMap;
 
         await fetch(baseURI + "/api/category/forCategory/" + classroomID + "/" + parentID, {  
             method: "GET",                          
@@ -351,6 +496,7 @@ class CategoryManagerAdmin extends React.Component{
 
         for(var count = 0; count < categories.length; count++){
             this.loadCategoryIntoList(listNum, categories[count].title);
+            newIDMap[listNum].push(categories[count]);
         }
 
     }
@@ -398,6 +544,7 @@ class CategoryManagerAdmin extends React.Component{
 
                         </div>
                         <div className="Category-Admin-Button-Wrapper">
+                            <button className="Category-Admin-Exercise-Button" id="Category-Admin-Exercise-Button-0" onClick={e => this.onAddExercises(e)}><i class="fa fa-child" /></button>
                             <button className="Category-Admin-Add-Button" id="Category-Admin-Add-Button-0" onClick={e => this.onAddCategory(e)}>+</button>
                             <button className="Category-Admin-Subtract-Button" id="Category-Admin-Subtract-Button-0" onClick={e => this.onDeleteCategory(e)}>-</button>
                         </div>

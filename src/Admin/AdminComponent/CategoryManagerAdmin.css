@@ -86,6 +86,26 @@
     background: rgb(255, 56, 56);
 }
 
+.Category-Admin-Exercise-Button{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    margin-right: 10px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    background: rgb(141, 108, 0);
+    transition-duration: 0.5s;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Category-Admin-Exercise-Button:hover{
+    background: rgb(180, 138, 0);
+}
+
 .Category-Admin-List-Wrapper{
     width: 80%;
     height: 200px;
