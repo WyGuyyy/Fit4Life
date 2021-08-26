@@ -162,12 +162,18 @@ class CategoryManagerAdmin extends React.Component{
         var exerciseList = document.getElementsByClassName("Category-Admin-Exercise-Popout-List")[0];
         var totalExerciseMap = [];
         var filteredExerciseMap = [];
+        var totalSel = 0;
+
+        while(exerciseList.firstChild){
+            exerciseList.removeChild(exerciseList.lastChild);
+        }
 
         for(var count = 0; count < exercises.length; count++){
             var partOfCategory = false;
 
             for(var categoryCount = 0; categoryCount < categoryExercises.length; categoryCount++){
                 if(categoryExercises[categoryCount].exercise_id === exercises[count].exercise_id){
+                    totalSel++;
                     partOfCategory = true;
                     break;
                 }
@@ -179,7 +185,7 @@ class CategoryManagerAdmin extends React.Component{
             exerciseDiv.classList.add("Category-Admin-Exercise-Row");
 
             if(partOfCategory){
-                exerciseDiv.style.background = "rgb(238, 238, 238)";
+                exerciseDiv.style.background = "rgb(255, 255, 255)";
             }
 
             exerciseDiv.id = "Category-Admin-Exercise-Row-" + count;
@@ -198,14 +204,17 @@ class CategoryManagerAdmin extends React.Component{
         }
 
         var exercisePopoutWrapper = document.getElementsByClassName("Category-Admin-Exercise-Popout-Wrapper")[0];
-        exercisePopoutWrapper.style.transform = "translateX(-600px)";
+        exercisePopoutWrapper.style.transform = "translateX(300px)";
 
         var exercisePopoutCover = document.getElementsByClassName("Category-Admin-Exercise-Popout-Cover")[0];
         exercisePopoutCover.style.display = "flex";
 
         this.setState({
             totalExercises: totalExerciseMap,
-            filteredExercies: filteredExerciseMap
+            filteredExercies: filteredExerciseMap,
+            totalSelected: totalSel,
+            categoryForExercises: selectedCategory,
+            exercisesForCategory: categoryExercises
         });
     }
 
@@ -314,7 +323,7 @@ class CategoryManagerAdmin extends React.Component{
             var item = list.children[count];
             item.id = "Category-Admin-ListItem-Wrapper-" + (count) + "-" + idNum;
         }
-        console.log(list.children);
+
         var categoryID = newIDMap[idNum][selPath[idNum]].category_id;
         newIDMap.splice(idNum + 1);
         newIDMap[idNum].splice(selPath[idNum], 1);
@@ -462,7 +471,7 @@ class CategoryManagerAdmin extends React.Component{
 
         var aCategory = idMap[levelNum][itemNum];
         aCategory.title = text;
-        console.log(aCategory);
+
         await fetch(baseURI + "/api/category", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json",
@@ -596,10 +605,10 @@ class CategoryManagerAdmin extends React.Component{
         }
     }
 
-    async categoryHasChildren(classroomID, categoryID){
+    async categoryHasChildren(categoryID){
         var count = 0;
 
-        await fetch(baseURI + "/api/category/forCategory/" + classroomID + "/" + categoryID, {  
+        await fetch(baseURI + "/api/category/numChild/" + categoryID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -619,31 +628,116 @@ class CategoryManagerAdmin extends React.Component{
 
     }
 
-    onExerciseClick(event){
+    async onExerciseClick(event){
         var idNum = event.target.id.split("-")[4];
         var filteredList = this.state.filteredExercies;
+        var totalList = this.state.totalExercises;
         var selected = filteredList[idNum].selected;
-        var colorValue = (selected === 1 ? "rgb(255, 255, 255)" : "black");
+        var colorValue = (selected === 1 ? "black" : "rgb(255, 255, 255)");
         var exerciseWrapper = document.getElementById("Category-Admin-Exercise-Row-" + idNum);
+        var idMap = this.state.idMap;
+        var selPath = this.state.selectedPath;
+        var totalSel = this.state.totalSelected;
         exerciseWrapper.style.background = colorValue;
+
+        var exerciseID = filteredList[idNum].exercise.exercise_id;
+        var categoryID = this.state.categoryForExercises.category_id;
 
         if(selected === 1){
             filteredList[idNum].selected = 0;
-            //Delete cat_ex entry here
+            
+            await fetch(baseURI + "/api/category/removeCatExEntry/" + categoryID + "/" + exerciseID, {  
+                method: "DELETE",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            }).catch(console.log);
+
+            totalSel--;
+
         }else{
             filteredList[idNum].selected = 1;
-            //Add cat_ex entry here
+
+            await fetch(baseURI + "/api/category/createCatExEntry/" + categoryID + "/" + exerciseID, {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            }).catch(console.log);
+            
+            totalSel++;
+
         }
 
-        //Updadte totalList accordingly
+        for(var count = 0; count < totalList.length; count++){
+            if(totalList[count].exercise.exercise_id === filteredList[idNum].exercise.exercise_id){
+                totalList[count].selected = filteredList[idNum].selected;
+                break;
+            }
+        }
+
+        this.setState({
+            filteredExercies: filteredList,
+            totalExercises: totalList,
+            totalSelected: totalSel
+        });
 
     }
 
     onFilterChange(event){
 
+        var exercises = this.state.totalExercises;
+        var newFilteredExercies = [];
+
+        var filterInput = document.getElementsByClassName("Category-Admin-Exercise-Search")[0];
+        var filter = filterInput.value;
+
+        var exerciseList = document.getElementsByClassName("Category-Admin-Exercise-Popout-List")[0];
+        var idCount = 0;
+
+        while(exerciseList.firstChild){
+            exerciseList.removeChild(exerciseList.lastChild);
+        }
+
+        for(var count = 0; count < exercises.length; count++){
+            
+            if(exercises[count].exercise.title.toUpperCase().includes(filter.toUpperCase())){
+                
+                var exerciseDiv = document.createElement("div");
+                var exerciseH2 = document.createElement("h2");
+
+                exerciseDiv.classList.add("Category-Admin-Exercise-Row");
+
+                if(exercises[count].selected === 1){
+                    exerciseDiv.style.background = "rgb(255, 255, 255)";
+                }
+
+                exerciseDiv.id = "Category-Admin-Exercise-Row-" + idCount;
+                exerciseDiv.onclick = (e) => this.onExerciseClick(e);
+
+                exerciseH2.classList.add("Category-Admin-Exercise-Item");
+                exerciseH2.id = "Category-Admin-Exercise-Item-" + idCount;
+                exerciseH2.textContent = exercises[count].exercise.title;
+
+                exerciseDiv.appendChild(exerciseH2);
+            
+                exerciseList.appendChild(exerciseDiv);
+
+                newFilteredExercies.push(exercises[count]);
+
+                idCount++;
+
+            }
+
+        }
+
+        this.setState({
+            filteredExercies: newFilteredExercies,
+        });
+
     }
 
     onCloseExercisePopout(event){
+
+        var selPath = this.state.selectedPath;
 
         var exercisePopoutCover = document.getElementsByClassName("Category-Admin-Exercise-Popout-Cover")[0];
         exercisePopoutCover.style.display = "none";
@@ -651,6 +745,12 @@ class CategoryManagerAdmin extends React.Component{
         var exercisePopoutWrapper = document.getElementsByClassName("Category-Admin-Exercise-Popout-Wrapper")[0];
         exercisePopoutWrapper.style.transform = "translateX(-300px)";
 
+        var categoryText = document.getElementById("Category-Admin-ListItem-" + selPath[selPath.length - 1] + "-" + (selPath.length - 1));
+        categoryText.classList = "";
+
+        categoryText.classList.add((this.state.totalSelected === 0 ? "Category-Admin-ListItem" : "Category-Admin-ListItem-E"));
+
+        document.getElementsByClassName("Category-Admin-Exercise-Search")[0].value = "";
     }
 
     closeModal(){
@@ -682,7 +782,7 @@ class CategoryManagerAdmin extends React.Component{
                 <ConfirmModal text="Delete exercise?" yesText="Yes" noText="No" onYes={e => {this.deleteExercise(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <LoadingSpinner />
                 <AdminPopout hist={this.props.history}/>
-                <ConfirmToast text="Exercise saved!"/>
+                <ConfirmToast text="Exercise created!"/>
 
                 <div className="Category-Admin-Exercise-Popout-Cover"></div>
 
@@ -699,6 +799,7 @@ class CategoryManagerAdmin extends React.Component{
                     </div>
 
                 </div>
+
 
                 <div className="Category-Admin-Wrapper">
                     <div className="Category-Admin-Classroom-Wrapper">

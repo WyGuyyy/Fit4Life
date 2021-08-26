@@ -282,6 +282,13 @@ class Component extends React.Component{
         }
     }
 
+    onGoToCategoryView(event){
+        this.props.history.push({
+            pathname: "/categoryView",
+            state: {goBack: true, classroom: this.state.classroom}
+        });
+    }
+
     goBack(){ //This isnt working, start here next time
         if(this.state.canGoBack){
             this.props.history.goBack();
@@ -304,6 +311,7 @@ class Component extends React.Component{
                 <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <LoadingSpinner />
+                <button className="Fit4Life-CategoryView" onClick={e => this.onGoToCategoryView(e)}><i className="fa fa-folder"/></button>
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>
                     <AdminPopout hist={this.props.history}/>
@@ -312,8 +320,10 @@ class Component extends React.Component{
                         
                     </div>
                     <div className="Fit4Life-SearchbarWrapper">
-                        <input className="Fit4Life-Searchbar"/>
-                        <button className="Fit4Life-SearchButton" onClick={e => this.searchExercises(e)}>Search</button>
+                        <div className="Fit4Life-SearchElements-Wrapper">
+                            <input className="Fit4Life-Searchbar"/>
+                            <button className="Fit4Life-SearchButton" onClick={e => this.searchExercises(e)}>Search</button>
+                        </div>
                     </div>
                 </div>
             </Fragment>

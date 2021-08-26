@@ -60,6 +60,15 @@
     align-items: center;
 }
 
+.Fit4Life-SearchElements-Wrapper{
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .Fit4Life-Searchbar{
     width: 200px;
     height: 30px;
@@ -79,6 +88,25 @@
     background: #dfb84c;
 }
 
+.Fit4Life-CategoryView{
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    border: none;
+    background: #ac8e3b;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.Fit4Life-CategoryView:hover{
+    background: #dfb84c;
+}
+
 @media(max-width: 700px){
     .Component-Tile-Wrapper{
         height: 250px;
@@ -89,10 +117,34 @@
     .Component-Tile-Wrapper{
         height: 200px;
     }
+
+    .Fit4Life-CategoryView{
+        right: 25px;
+    }
+}
+
+@media(max-width: 460px){
+    .Fit4Life-SearchbarWrapper{
+        align-items: flex-start;
+    }
+
+    .Fit4Life-SearchElements-Wrapper{
+        height: 100%;
+        background: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+    }
 }
 
 @media(max-width: 375px){
     .Component-Tile-Wrapper{
         height: 150px;
+    }
+
+    .Fit4Life-CategoryView{
+        right: 20px;
     }
 }

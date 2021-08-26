@@ -35,6 +35,7 @@ import { AiFillPropertySafety, AiTwotoneQuestionCircle } from 'react-icons/ai';
 import { FaCheck } from 'react-icons/fa';
 import {baseURI} from './_services/APIService';
 import CategoryManagerAdmin from './Admin/AdminComponent/CategoryManagerAdmin';
+import CategoryView from './Component/CategoryView';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -88,6 +89,7 @@ function App() {
         <PrivateRoute exact path="/personalEdit" component={PersonalInfoEdit}/>
         <PrivateRoute exact path="/invite" component={Invite} />
         <PrivateRoute exact path="/authenticate" component={Authenticate}/>
+        <PrivateRoute exact path="/categoryView" component={CategoryView}/>
         <PrivateAdminRoute exact path="/admin" component={AdminHome} />
         <PrivateAdminRoute exact path="/classroomCreateAdmin" component={ClassroomCreateAdmin} />
         <PrivateAdminRoute exact path="/classroomEditAdmin" component={ClassroomEditAdmin} />

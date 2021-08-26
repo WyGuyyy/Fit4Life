@@ -1,5 +1,10 @@
+body{
+     /* need to monitor and make sure this doesnt interfere with styling on other pages*/
+}
+
 .Category-Admin-Container{
-    
+    height: 100%;
+    width: 100%;
 }
 
 .Category-Admin-Wrapper{
@@ -31,11 +36,11 @@
 
 .Category-Admin-Exercise-Popout-Wrapper{
     width: 300px;
-    height: 80%;
-    top: 40%;
-    right: -600px;
+    height: 70%;
+    top: 20%;
+    left: -310px;
     background: black;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -222,7 +227,7 @@
 
 .Category-Admin-List-Wrapper{
     width: 80%;
-    height: 200px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
