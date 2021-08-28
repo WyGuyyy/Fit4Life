@@ -36,6 +36,7 @@ import { FaCheck } from 'react-icons/fa';
 import {baseURI} from './_services/APIService';
 import CategoryManagerAdmin from './Admin/AdminComponent/CategoryManagerAdmin';
 import CategoryView from './Component/CategoryView';
+import ScheduleManagerAdmin from './Admin/AdminComponent/ScheduleManagerAdmin';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -100,6 +101,7 @@ function App() {
         <PrivateAdminRoute exact path="/studentInviteAdmin" component={StudentInviteAdmin} />
         <PrivateAdminRoute exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
         <PrivateAdminRoute exact path="/categoryManagerAdmin" component={CategoryManagerAdmin} />
+        <PrivateAdminRoute exact path="/scheduleManagerAdmin" component={ScheduleManagerAdmin} />
       </Switch>
     </Router>
   );

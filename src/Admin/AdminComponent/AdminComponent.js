@@ -69,13 +69,16 @@ class AdminComponent extends React.Component{
             //var listStudentButton = document.createElement("button");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var listActivateButton = document.createElement("button");
             var iconEdit = document.createElement("i");
             var iconDelete = document.createElement("i");
+            var iconActivate = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
+            var cell5 = document.createElement("div");
 
             iconEdit.classList.add("fa");
             iconEdit.classList.add("fa-pencil");
@@ -84,6 +87,10 @@ class AdminComponent extends React.Component{
             iconDelete.classList.add("fa");
             iconDelete.classList.add("fa-trash");
             iconDelete.id = "iconDelete-" + count;
+
+            iconActivate.classList.add("fa");
+            iconActivate.classList.add(exercises[count].activated === "A" ? "fa-check" : "fa-times");
+            iconActivate.id = "iconActivate-" + count;
 
             listItem.classList.add("Exercise-List-Item-Admin");
             listItem.id = "exerciseListItem-" + count + "-Admin";
@@ -99,6 +106,8 @@ class AdminComponent extends React.Component{
             cell3.classList.add("Exercise-Grid-Cell-Edit-Admin");
             cell4.classList.add("Exercise-Grid-Cell-Admin");
             cell4.classList.add("Exercise-Grid-Cell-Delete-Admin");
+            cell5.classList.add("Exercise-Grid-Cell-Admin");
+            cell5.classList.add("Exercise-Grid-Cell-Activate-Admin");
 
             listItemTitle.classList.add("Exercise-List-Item-Title-Admin");
             listItemTitle.textContent = exercises[count].title;
@@ -124,15 +133,23 @@ class AdminComponent extends React.Component{
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
+            listActivateButton.classList.add("Exercise-List-Item-Activate-Button-Admin");
+            listActivateButton.id = "exerciseListItemActivate-" + count + "-Admin";
+            listActivateButton.onclick = (e) => this.changeExerciseActivation(e);
+            listActivateButton.appendChild(iconActivate);
+            listActivateButton.title = "Activate " + listItemTitle.textContent;
+
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
             cell3.appendChild(listEditButton);
             cell4.appendChild(listDeleteButton);
+            cell5.appendChild(listActivateButton);
 
             listItem.appendChild(cell1);
             //listItem.appendChild(cell2);
             listItem.appendChild(cell3);
             listItem.appendChild(cell4);
+            listItem.appendChild(cell5);
 
             listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
 
@@ -192,13 +209,16 @@ class AdminComponent extends React.Component{
             //var listStudentButton = document.createElement("button");
             var listEditButton = document.createElement("button");
             var listDeleteButton = document.createElement("button");
+            var listActivateButton = document.createElement("button");
             var iconEdit = document.createElement("i");
             var iconDelete = document.createElement("i");
+            var iconActivate = document.createElement("i");
 
             var cell1 = document.createElement("div");
             //var cell2 = document.createElement("div");
             var cell3 = document.createElement("div");
             var cell4 = document.createElement("div");
+            var cell5 = document.createElement("div");
 
             iconEdit.classList.add("fa");
             iconEdit.classList.add("fa-pencil");
@@ -207,6 +227,10 @@ class AdminComponent extends React.Component{
             iconDelete.classList.add("fa");
             iconDelete.classList.add("fa-trash");
             iconDelete.id = "iconDelete-" + count;
+
+            iconActivate.classList.add("fa");
+            iconActivate.classList.add(exercises[count].activated === "A" ? "fa-check" : "fa-times");
+            iconActivate.id = "iconActivate-" + count;
 
             listItem.classList.add("Exercise-List-Item-Admin");
             listItem.id = "exerciseListItem-" + count + "-Admin";
@@ -222,6 +246,8 @@ class AdminComponent extends React.Component{
             cell3.classList.add("Exercise-Grid-Cell-Edit-Admin");
             cell4.classList.add("Exercise-Grid-Cell-Admin");
             cell4.classList.add("Exercise-Grid-Cell-Delete-Admin");
+            cell5.classList.add("Exercise-Grid-Cell-Admin");
+            cell5.classList.add("Exercise-Grid-Cell-Activate-Admin");
 
             listItemTitle.classList.add("Exercise-List-Item-Title-Admin");
             listItemTitle.textContent = exercises[count].title;
@@ -247,20 +273,32 @@ class AdminComponent extends React.Component{
             listDeleteButton.appendChild(iconDelete);
             listDeleteButton.title = "Delete " + listItemTitle.textContent;
 
+            listActivateButton.classList.add("Exercise-List-Item-Activate-Button-Admin");
+            listActivateButton.id = "exerciseListItemActivate-" + count + "-Admin";
+            listActivateButton.onclick = (e) => this.changeExerciseActivation(e);
+            listActivateButton.appendChild(iconActivate);
+            listActivateButton.title = "Activate " + listItemTitle.textContent;
+
             cell1.appendChild(listItemTitle);
             //cell2.appendChild(listStudentButton);
             cell3.appendChild(listEditButton);
             cell4.appendChild(listDeleteButton);
+            cell5.appendChild(listActivateButton);
 
             listItem.appendChild(cell1);
             //listItem.appendChild(cell2);
             listItem.appendChild(cell3);
             listItem.appendChild(cell4);
+            listItem.appendChild(cell5);
 
             listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
 
             list.appendChild(listItem);
         }
+
+        this.setState({
+            componentExercises: exercises
+        });
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
@@ -307,9 +345,48 @@ class AdminComponent extends React.Component{
         });
     }
 
+    async changeExerciseActivation(event){
+        var idNum = event.target.id.split("-")[1];
+        var exercises = this.state.componentExercises;
+
+        var exercise = exercises[idNum];
+
+        if(exercise.activated === "A"){
+            exercise.activated = "D"
+        }else{
+            exercise.activated = "A"
+        }
+
+        await fetch(baseURI + "/api/exercise", {  
+            method: "PUT",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+            body: JSON.stringify(exercise) //Need to add in other fields here, back end and front end
+        }).catch(console.log);
+
+        var icon = document.getElementById("iconActivate-" + idNum);
+        icon.classList = "";
+        icon.classList.add("fa");
+        icon.classList.add(exercise.activated === "A" ? "fa-check" : "fa-times");
+
+        exercises[idNum] = exercise;
+
+        this.setState({
+            componentExercises: exercises
+        });
+
+    }
+
     goToCategoryManager(eventObj){
         this.props.history.push({
             pathname: "/categoryManagerAdmin",
+            state: {goBack: true, classroom: this.state.classroom}
+        });
+    }
+
+    goToScheduleManager(event){
+        this.props.history.push({
+            pathname: "/scheduleManagerAdmin",
             state: {goBack: true, classroom: this.state.classroom}
         });
     }
@@ -398,6 +475,7 @@ class AdminComponent extends React.Component{
                     <AdminPopout hist={this.props.history}/>
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
+                    <button className="Exercise-Schedule-Manager-Admin" title="Schedule Manager" onClick={e => this.goToScheduleManager(e)}><i className="fa fa-calendar"/></button>
                     <button className="Exercise-Category-Manager-Admin" title="Category Manager" onClick={e => this.goToCategoryManager(e)}><i className="fa fa-folder test"/></button>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">
                         <ConfirmToast text="Exercise deleted!"/>

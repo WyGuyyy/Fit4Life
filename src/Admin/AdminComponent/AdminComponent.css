@@ -72,7 +72,7 @@
     min-height: 100px;
     background: #c08d00;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
     justify-items: center;
     align-content: center;
@@ -84,7 +84,7 @@
     min-height: 100px;
     background: #bb911f;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
     justify-items: center;
     align-content: center;
@@ -162,7 +162,22 @@
     height: 50px;
 }
 
+
 .Exercise-List-Item-Delete-Button-Admin:hover{
+    background: #ffbb00;
+}
+
+.Exercise-List-Item-Activate-Button-Admin{
+    background: #ac7e00;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 50px;
+    height: 50px;
+}
+
+.Exercise-List-Item-Activate-Button-Admin:hover{
     background: #ffbb00;
 }
 
@@ -182,20 +197,39 @@
 
 .Exercise-Category-Manager-Admin{
     position: absolute;
-    bottom: 30px;
+    bottom: 10px;
     left: 40px;
     border: none;
     background: #ac8e3b;
     z-index: 5;
     transition-duration: 0.5s;
     cursor: pointer;
-    height: 60px;
+    height: 40px;
     width: 60px;
     font-size: 20px;
     border-radius: 10px;
 }
 
 .Exercise-Category-Manager-Admin:hover{
+    background: #dfb84c;
+}
+
+.Exercise-Schedule-Manager-Admin{
+    position: absolute;
+    bottom: 70px;
+    left: 40px;
+    border: none;
+    background: #ac8e3b;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 40px;
+    width: 60px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.Exercise-Schedule-Manager-Admin:hover{
     background: #dfb84c;
 }
 
@@ -237,10 +271,10 @@
         min-height: 100px;
         background: #c08d00;
         display: grid;
-        grid-template-areas: 1fr 1fr;
+        grid-template-areas: 1fr 1fr 1fr;
         grid-template-areas: 
-        'title edit'
-        'title delete';
+        'title edit activate'
+        'title delete activate';
         justify-content: center;
         justify-items: center;
         align-content: center;
@@ -248,7 +282,7 @@
     }
 
     .Exercise-Grid-Cell-Admin{
-        width: 47vw;
+        width: 30vw;
     }
 
     .Exercise-List-Item-Title-Admin{
@@ -273,6 +307,15 @@
     }
     
     .Exercise-List-Item-Delete-Button-Admin{
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
+    }
+
+    .Exercise-List-Item-Activate-Button-Admin{
         font-size: 20px;
         transition-duration: .5s;
         border: none;
@@ -308,8 +351,12 @@
         grid-area: delete;
         height: 50px;
     }
-    
 
+    .Exercise-Grid-Cell-Activate-Admin{
+        grid-area: activate;
+        height: 50px;
+    }
+    
 }
 
 @media(max-width: 630px){
@@ -336,6 +383,12 @@
         box-shadow: 2px 2px 10px black;
     }
 
+    .Exercise-List-Item-Activate-Button-Admin{
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+
     .Exercise-Create-Button-Admin{
         height: 35px;
         width: 60px;
@@ -345,6 +398,11 @@
     }
 
     .Exercise-Category-Manager-Admin{
+        font-size: 15px;
+        left: 10px;
+    }
+
+    .Exercise-Schedule-Manager-Admin{
         font-size: 15px;
         left: 10px;
     }
