@@ -311,7 +311,7 @@ class Component extends React.Component{
                 <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <LoadingSpinner />
-                <button className="Fit4Life-CategoryView" onClick={e => this.onGoToCategoryView(e)}><i className="fa fa-folder"/></button>
+                <button className="Fit4Life-CategoryView" onClick={e => this.onGoToCategoryView(e)}><i className="fa fa-folder test"/></button>
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>
                     <AdminPopout hist={this.props.history}/>

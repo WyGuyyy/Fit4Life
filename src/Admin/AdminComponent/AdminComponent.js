@@ -398,7 +398,7 @@ class AdminComponent extends React.Component{
                     <AdminPopout hist={this.props.history}/>
                     <FaPen color='purple' size='10rem' style={{zIndex:"6", height: "20px", width: "20px"}}/>
                     <button className="Exercise-Create-Button-Admin" title="Create Exercise" onClick={(e)=>this.goToExerciseCreate({event: e})}>+</button>
-                    <p className="Exercise-Category-Manager-Admin" title="Category Manager" onClick={(e)=>this.goToCategoryManager({event: e})}>Categories</p>
+                    <button className="Exercise-Category-Manager-Admin" title="Category Manager" onClick={e => this.goToCategoryManager(e)}><i className="fa fa-folder test"/></button>
                     <div className="exerciseWrapper-Admin" id="exerciseWrapper-Admin">
                         <ConfirmToast text="Exercise deleted!"/>
                         <div className="exerciseList-Admin" id="exerciseList-Admin">
@@ -422,3 +422,4 @@ export default AdminComponent;
 
 //"react-router-dom": "^6.0.0-alpha.1",
 //<div className="exerciseFiller-Admin"></div>
+//                    <p className="Exercise-Category-Manager-Admin" title="Category Manager" onClick={(e)=>this.goToCategoryManager({event: e})}>Categories</p>

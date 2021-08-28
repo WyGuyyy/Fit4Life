@@ -93,7 +93,7 @@ class CategoryView extends React.Component{
     }
 
     async fetchCategoryChildren(category){
-        if(!this.categoryHasChildren(category.category_id)){
+        if(!(await this.categoryHasChildren(category.category_id))){
             await this.fetchCategoryExercises(category);
             return;
         }
@@ -101,10 +101,11 @@ class CategoryView extends React.Component{
         var newIdMap = this.state.idMap;
         var selPath = this.state.selectedPath;
 
-        var idMapLevel = newIdMap.length - 1;
+        var idMapLevel = newIdMap.length;
 
         for(var count = 0; count < idMapLevel; count++){
-            if(newIdMap[idMapLevel][count].category_id === category.category_id){
+            //console.log(newIdMap[idMapLevel][count].category_id);
+            if(newIdMap[idMapLevel - 1][count].category_id === category.category_id){
                 selPath.push(count);
                 break;
             }
@@ -141,9 +142,9 @@ class CategoryView extends React.Component{
     }
 
     async fetchCategoryExercises(category){
-
         var exercises = [];
         var exerciseBlobs = [];
+        var newIdMap = this.state.idMap;
 
         var categoryID = category.category_id;
         var classroomID = this.state.classroom.classroom_id;
@@ -174,9 +175,12 @@ class CategoryView extends React.Component{
             }
         ).catch(console.log);
 
+        newIdMap.push([]);
+
         this.setState({
             categoryExercises: exercises,
             categoryBlobs: exerciseBlobs,
+            idMap: newIdMap,
             leafFolder: true
         });
 
@@ -262,7 +266,6 @@ class CategoryView extends React.Component{
                 aTile = ReactDom.render(this.renderCategoryRow(categories.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow)), aFlexRow);
                 //ReactDOM.render(aTile, aFlexRow);
             }
-            console.log(aFlexRow);
             componentWrapper.appendChild(aFlexRow);
         }
         
@@ -280,7 +283,6 @@ class CategoryView extends React.Component{
 
     /*** Render Exercise Tiles Section ***/
     async renderTiles(){
-
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var exercises = this.state.categoryExercises;
@@ -502,31 +504,32 @@ class CategoryView extends React.Component{
         }
     }
 
-    async goBack(){ //This isnt working, start here next time
+    goBack(){ //This isnt working, start here next time
 
         var newIdMap = this.state.idMap;
-        var selPath = this.state.selectedPath
+        var selPath = this.state.selectedPath;
 
         if(newIdMap.length <= 1){
+
             if(this.state.canGoBack){
                 this.props.history.goBack();
             }
+
         }else if(selPath.length === 0){
             newIdMap.pop();
 
             this.setState({
                 idMap: newIdMap,
-                currentTitle: this.state.classroom.title
+                currentTitle: this.state.classroom.title,
+                categoryExercises: [],
+                categoryBlobs: []
             });
         }else{
 
-            //Start here next time - for some reason array length is messed up
-            //in idMap
-            var idMapIndex = newIdMap.length - 1; //(this.state.leafFolder ? newIdMap.length - 1 : newIdMap.length - 2);
-            var category = newIdMap[idMapIndex][selPath[idMapIndex - 1]];
-            console.log(newIdMap.length);
-            console.log( newIdMap);
-            console.log( selPath[idMapIndex - 1]);
+            var idMapIndex = (selPath.length - 1); //(this.state.leafFolder ? newIdMap.length - 1 : newIdMap.length - 2);
+            var selPathIndex = (selPath[selPath.length - 1]);
+            var category = newIdMap[idMapIndex][selPathIndex];
+            
             newIdMap.pop();
             selPath.pop();
 
