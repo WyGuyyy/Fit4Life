@@ -17,6 +17,7 @@ class ScheduleManagerAdmin extends React.Component{
         if(RedirectService.checkItemForUndefined(props.location.state)){
             this.state = {
                 canGoBack: true,
+                classroom: props.classroom,
                 idMap: [],
                 selectedPath: [],
                 listIds: ["Category-Admin-List-Wrapper-0"],
@@ -35,7 +36,81 @@ class ScheduleManagerAdmin extends React.Component{
         
     }
 
-    loadExercisesForDateRange(startDate, endDate){
+    async loadExercisesForDateRange(startDate, endDate){
+
+        var exercises;
+        var exercisesForRange;
+
+        var classroomID = this.state.classroom.classroom_id;
+
+        await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+            }
+        ).catch(console.log);
+
+        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercisesForRange = result;
+            }
+        ).catch(console.log);
+
+        console.log(exercises);
+        console.log(exercisesForRange);
+        //Call api here to get exercises for the date range
+        //Selected exercises will appear in the top box
+        //All exercises will appear in a list below (white highlighted items are selected ones)
+    }
+
+    async loadCategoriesForDateRange(startDate, endDate){
+
+        var categories;
+        var categoriesForRange;
+
+        var classroomID = this.state.classroom.classroom_id;
+
+        await fetch(baseURI + "/api/category/forClassroom/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categories = result;
+            }
+        ).catch(console.log);
+
+        await fetch(baseURI + "/api/category/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categoriesForRange = result;
+            }
+        ).catch(console.log);
+
+        console.log(categories);
+        console.log(categoriesForRange);
         //Call api here to get exercises for the date range
         //Selected exercises will appear in the top box
         //All exercises will appear in a list below (white highlighted items are selected ones)
@@ -73,7 +148,11 @@ class ScheduleManagerAdmin extends React.Component{
 
             if(endDate >= startDate){
 
-                this.loadExercisesForDateRange(startDate, endDate);
+                if(this.state.view === "C"){
+                    this.loadCategoriesForDateRange(startDate, endDate);
+                }else{
+                    this.loadExercisesForDateRange(startDate, endDate);
+                }
 
             }else{
                 this.displayMessage("End Date must be greater than or equal to the Start Date!");
