@@ -17,31 +17,46 @@ class ScheduleManagerAdmin extends React.Component{
         if(RedirectService.checkItemForUndefined(props.location.state)){
             this.state = {
                 canGoBack: true,
-                classroom: props.classroom,
+                classroom: props.location.state.classroom,
                 idMap: [],
                 selectedPath: [],
                 listIds: ["Category-Admin-List-Wrapper-0"],
                 arrowIds: ["Category-Admin-List-Arrow-0"],
-                view: "E"
+                view: "E",
+                allExercises: [],
+                scheduledExercises: [],
+                allCategories: [],
+                scheduledCategories: []
             }
         }
 
     }
     
     async componentDidMount(){ 
-        
+        await this.loadExercisesAndCategoriesForClassroom();
+    }
+
+    componentDidUpdate(){
+        var view = this.state.view;
+
+        if(view === "E"){
+            this.buildExerciseView();
+        }else{
+            this.buildCategoryView();
+        }
+
     }
 
     componentWillUnmount(){
         
     }
 
-    async loadExercisesForDateRange(startDate, endDate){
+    async loadExercisesAndCategoriesForClassroom(){
 
         var exercises;
-        var exercisesForRange;
+        var categories;
 
-        var classroomID = this.state.classroom.classroom_id;
+        var classroomID = this.props.location.state.classroom.classroom_id;
 
         await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
             method: "GET",                          
@@ -56,33 +71,6 @@ class ScheduleManagerAdmin extends React.Component{
             }
         ).catch(console.log);
 
-        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exercisesForRange = result;
-            }
-        ).catch(console.log);
-
-        console.log(exercises);
-        console.log(exercisesForRange);
-        //Call api here to get exercises for the date range
-        //Selected exercises will appear in the top box
-        //All exercises will appear in a list below (white highlighted items are selected ones)
-    }
-
-    async loadCategoriesForDateRange(startDate, endDate){
-
-        var categories;
-        var categoriesForRange;
-
-        var classroomID = this.state.classroom.classroom_id;
-
         await fetch(baseURI + "/api/category/forClassroom/" + classroomID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
@@ -93,6 +81,32 @@ class ScheduleManagerAdmin extends React.Component{
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 categories = result;
+            }
+        ).catch(console.log);
+
+        this.setState({
+            allExercises: exercises,
+            allCategories: categories
+        });
+    }
+
+    async loadExercisesAndCategoriesForDateRange(startDate, endDate){
+
+        var categoriesForRange;
+        var exercisesForRange;
+
+        var classroomID = this.state.classroom.classroom_id;
+
+        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercisesForRange = result;
             }
         ).catch(console.log);
 
@@ -109,11 +123,113 @@ class ScheduleManagerAdmin extends React.Component{
             }
         ).catch(console.log);
 
-        console.log(categories);
-        console.log(categoriesForRange);
-        //Call api here to get exercises for the date range
-        //Selected exercises will appear in the top box
-        //All exercises will appear in a list below (white highlighted items are selected ones)
+        if(exercisesForRange.length === undefined){
+            exercisesForRange = [];
+        }
+
+        if(categoriesForRange.length === undefined){
+            categoriesForRange = [];
+        }
+
+        this.setState({
+            scheduledExercises: exercisesForRange,
+            scheduledCategories: categoriesForRange
+        });
+
+    }
+
+    buildExerciseView(){
+        var allExercises = this.state.allExercises;
+        var scheduledExercises = this.state.scheduledExercises;
+
+        var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
+        var allList = document.getElementsByClassName("Scheduler-Admin-AllList")[0];
+
+        while(selectedList.firstChild){
+            selectedList.removeChild(selectedList.firstChild);
+        }
+
+        while(allList.firstChild){
+            allList.removeChild(allList.firstChild);
+        }
+
+        for(var count = 0; count < allExercises.length; count++){
+
+            var allListItem = document.createElement("div");
+            var allListItemText = document.createElement("h2");
+
+            allListItem.classList.add("Scheduler-Admin-AllList-Item");
+            allListItem.id = "Scheduler-Admin-AllList-Item-" + count;
+            allListItem.onclick = (e) => this.onExerciseClick(e);
+
+            allListItemText.classList.add("Scheduler-Admin-AllList-ItemText");
+            allListItemText.id = "Scheduler-Admin-AllList-ItemText-" + count;
+            allListItemText.textContent = allExercises[count].title;
+
+            allListItem.classList.add((count % 2 === 0 ? "Even" : "Odd"));
+
+            for(var selCount = 0; selCount < scheduledExercises.length; selCount++){
+                if(allExercises[count].exercise_id === scheduledExercises[selCount].exercise_id){
+                    allListItem.classList.add("Selected");
+                    break;
+                }
+            }
+
+            allListItem.appendChild(allListItemText);
+            allList.appendChild(allListItem);
+
+        }
+
+        for(var count = 0; count < scheduledExercises.length; count++){
+            var selListItem = document.createElement("div");
+            var selListItemText = document.createElement("h2");
+
+            selListItem.classList.add("Scheduler-Admin-List-Item");
+            selListItem.id = "Scheduler-Admin-List-Item-" + count;
+
+            selListItemText.classList.add("Scheduler-Admin-List-ItemText");
+            selListItemText.id = "Scheduler-Admin-List-ItemText-" + count;
+            selListItemText.textContent = scheduledExercises[count].title;
+
+            selListItem.classList.add((count % 2 === 0 ? "Even" : "Odd"));
+
+            selListItem.appendChild(selListItemText);
+            selectedList.appendChild(selListItem);
+        }
+
+    }
+
+    onExerciseClick(event){
+        var idNum = parseInt(event.target.id.split("-")[4]);
+        console.log(event.target.id);
+        var newScheduledExercises = this.state.scheduledExercises;
+        var exercises = this.state.allExercises;
+        var selectedExercise = exercises[idNum];
+
+        var selectedIndex = -1;
+
+        for(var count = 0 ; count < newScheduledExercises.length; count++){
+            if(newScheduledExercises[count].exercise_id === selectedExercise.exercise_id){
+                selectedIndex = count;
+                break;
+            }
+        }
+
+        if(selectedIndex === -1){
+            event.target.classList.add("Selected");
+            console.log(this.state.scheduledExercises); //NEED TO START HERE NEXT TIME - FOR SOME REASON COMING UP AS AN OBJECT
+            newScheduledExercises.push(selectedExercise);
+        }else{
+            event.target.classlist = "";
+            event.target.classList.add("Scheduler-Admin-AllList-Item");
+            event.target.classList.add((idNum % 2 === 0 ? "Even" : "Odd"));
+            
+            newScheduledExercises.splice(selectedIndex, 1);
+        }
+
+        this.setState({
+            scheduledExercises: newScheduledExercises
+        });
     }
 
     onChangeView(event){
@@ -147,12 +263,15 @@ class ScheduleManagerAdmin extends React.Component{
             var endDate = new Date(endUTCDate.getTime() + (endUTCDate.getTimezoneOffset() * 60000));
 
             if(endDate >= startDate){
+                
 
-                if(this.state.view === "C"){
-                    this.loadCategoriesForDateRange(startDate, endDate);
+                this.loadExercisesAndCategoriesForDateRange(startDate, endDate);
+
+                /*if(this.state.view === "C"){
+                    this.loadCategoriesForDateRange(this.formatDateForRange(startDate), this.formatDateForRange(endDate));
                 }else{
-                    this.loadExercisesForDateRange(startDate, endDate);
-                }
+                    this.loadExercisesForDateRange(this.formatDateForRange(startDate), this.formatDateForRange(endDate));
+                }*/
 
             }else{
                 this.displayMessage("End Date must be greater than or equal to the Start Date!");
@@ -160,6 +279,49 @@ class ScheduleManagerAdmin extends React.Component{
             }
 
         }
+    }
+
+    async onSave(event){
+
+        var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
+        var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
+
+        var startDateVal = startDateInput.value;
+        var endDateVal = endDateInput.value;
+
+        var classroomID = this.state.classroom.classroom_id;
+
+        if(startDateVal !== "" && endDateVal !== ""){
+
+            var startUTCDate = new Date(startDateVal);
+            var endUTCDate = new Date(endDateVal);
+
+            var startDate = new Date(startUTCDate.getTime() + (startUTCDate.getTimezoneOffset() * 60000));
+            var endDate = new Date(endUTCDate.getTime() + (endUTCDate.getTimezoneOffset() * 60000));
+
+            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+                method: "POST",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                body: JSON.stringify(this.state.scheduledExercises) //Need to add in other fields here, back end and front end
+            }).catch(console.log);
+
+        }        
+
+    }
+
+    formatDateForRange(d){
+        var d = new Date(d);
+
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth();
+        var year = d.getFullYear();
+
+        date = (date < 10 ? "0" + date : date);
+        month = (month < 10 ? "0" + month : month);
+
+        var formattedDate = year + "-" + month + "-" + date;
+        return formattedDate;
     }
 
     closeModal(){
@@ -227,7 +389,7 @@ class ScheduleManagerAdmin extends React.Component{
                     </div>
 
                     <div className="Scheduler-Admin-Save-Button-Wrapper">
-                        <button className="Scheduler-Admin-Save-Button">Save</button>
+                        <button className="Scheduler-Admin-Save-Button" onClick={e => this.onSave(e)}>Save</button>
                     </div>
 
                     { this.state.view === "C" ?
@@ -254,7 +416,11 @@ class ScheduleManagerAdmin extends React.Component{
 
                         </div>
                         :
-                        "" 
+                        <div className="Scheduler-Admin-AllList-Wrapper" id="Scheduler-Admin-AllList-Wrapper">
+                            <div className="Scheduler-Admin-AllList" id="Scheduler-Admin-AllList">
+
+                            </div>
+                    </div>
                     }
 
                 </div>
