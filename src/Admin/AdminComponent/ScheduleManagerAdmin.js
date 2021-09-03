@@ -26,7 +26,9 @@ class ScheduleManagerAdmin extends React.Component{
                 allExercises: [],
                 scheduledExercises: [],
                 allCategories: [],
-                scheduledCategories: []
+                scheduledCategories: [],
+                startDate: "",
+                endDate: ""
             }
         }
 
@@ -55,6 +57,8 @@ class ScheduleManagerAdmin extends React.Component{
 
         var exercises;
         var categories;
+        var newIDMap = [];
+        var topLevelCategories = [];
 
         var classroomID = this.props.location.state.classroom.classroom_id;
 
@@ -84,7 +88,27 @@ class ScheduleManagerAdmin extends React.Component{
             }
         ).catch(console.log);
 
+        await fetch(baseURI + "/api/category/topLevel/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categories = result;
+            }
+        ).catch(console.log);
+
+        for(var count = 0; count < categories.length; count++){
+            topLevelCategories.push(categories[count]);
+        }
+
+        newIDMap.push(topLevelCategories);
+
         this.setState({
+            idMap: newIDMap,
             allExercises: exercises,
             allCategories: categories
         });
@@ -139,8 +163,12 @@ class ScheduleManagerAdmin extends React.Component{
     }
 
     buildExerciseView(){
-        var allExercises = this.state.allExercises;
-        var scheduledExercises = this.state.scheduledExercises;
+
+        var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
+        var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
+
+        var startDateVal = startDateInput.value;
+        var endDateVal = endDateInput.value;
 
         var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
         var allList = document.getElementsByClassName("Scheduler-Admin-AllList")[0];
@@ -152,6 +180,13 @@ class ScheduleManagerAdmin extends React.Component{
         while(allList.firstChild){
             allList.removeChild(allList.firstChild);
         }
+
+        if(startDateVal === "" || endDateVal === ""){
+            return;
+        }
+
+        var allExercises = this.state.allExercises;
+        var scheduledExercises = this.state.scheduledExercises;
 
         for(var count = 0; count < allExercises.length; count++){
 
@@ -199,9 +234,340 @@ class ScheduleManagerAdmin extends React.Component{
 
     }
 
+    async buildCategoryView(){
+        var idMap = this.state.idMap;
+        var topLevel = idMap[0];
+
+        var topLevelList = document.getElementById("Category-Admin-List-0");
+
+        while(topLevelList.firstChild){
+            topLevelList.removeChild(topLevelList.firstChild);
+        }
+
+        for(var count = 0; count < topLevel.length; count++){
+            await this.loadCategoryIntoList(0, topLevel[count].title, topLevel[count].category_id);
+        }
+    }
+
+    /*async loadTopLevelCategories(){
+
+        var classroomID = this.props.location.state.classroom.classroom_id;
+        var categories = [];
+        var newIDMap = [];
+        var topLevelCategories = [];
+
+        await fetch(baseURI + "/api/category/topLevel/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categories = result;
+            }
+        ).catch(console.log);
+
+        for(var count = 0; count < categories.length; count++){
+            await this.loadCategoryIntoList(0, categories[count].title, categories[count].category_id);
+
+            topLevelCategories.push(categories[count]);
+        }
+
+        newIDMap.push(topLevelCategories);
+
+        this.setState({
+            idMap: newIDMap
+        });
+
+    }*/
+
+    async loadCategoryIntoList(idNum, title, categoryID){
+
+        var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
+        var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
+
+        var startDateVal = startDateInput.value;
+        var endDateVal = endDateInput.value;
+
+        if(startDateVal === "" || endDateVal === ""){
+            return;
+        }
+
+        var list = document.getElementById("Category-Admin-List-" + idNum);
+        var childCount = list.children.length;
+        var categoryWrapper = document.createElement("div");
+        var categoryText = document.createElement("input");
+
+        var idMap = this.state.idMap;
+
+        categoryText.classList.add("Category-Admin-ListItem");
+
+        //categoryText.classList.add("Category-Admin-ListItem");
+
+        categoryWrapper.classList.add("Category-Admin-ListItem-Wrapper");
+
+        categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + childCount + "-" + idNum;
+        categoryText.id = "Category-Admin-ListItem-" + childCount + "-" + idNum;
+
+        categoryWrapper.onclick = (e) => this.onSelectCategory(e);
+
+        categoryText.value = title;
+        categoryText.readOnly = true;
+
+        categoryWrapper.appendChild(categoryText);
+        list.appendChild(categoryWrapper);
+    }
+
+    clearExercises(){
+        var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
+        var allList = document.getElementsByClassName("Scheduler-Admin-AllList")[0];
+
+        while(selectedList.firstChild){
+            selectedList.removeChild(selectedList.firstChild);
+        }
+
+        while(allList.firstChild){
+            allList.removeChild(allList.firstChild);
+        }
+    }
+
+    clearCategories(){
+        var list = document.getElementsByClassName("Category-Admin-List-Wrapper")[0];
+
+        while(list.firstChild){
+            list.removeChild(list.firstChild);
+        }
+    }
+
+    async onSelectCategory(event){
+
+        var element = event.target;
+
+        if(element.disabled === true){
+            return;
+        }
+
+        var splitArr = event.target.id.split("-");
+
+        var itemNum;
+        var listNum;
+        var currentList;
+        //var categoryID;
+
+        if(splitArr.length === 6){
+            event.target.disabled = true;
+            itemNum = parseInt(splitArr[4]);
+            listNum = parseInt(splitArr[5]);
+            currentList = document.getElementById("Category-Admin-List-" + listNum);
+        }else{
+            //idNum = parseInt(splitArr[3]);
+            element.disabled = false;
+            return;
+        }
+
+        for(var count = 0; count < currentList.children.length; count++){
+            var listItem = currentList.children[count];
+            listItem.style.background = "#7c5b00";
+        }
+
+        var wrapper = document.getElementById(event.target.id);
+
+        var selPath = this.state.selectedPath;
+        var newIDMap = this.state.idMap;
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
+
+        var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
+
+        for(var count = (listNum + 1); count < newListIds.length; count++){
+            var list = document.getElementById(newListIds[count]);
+            var arrow = document.getElementById(newArrowIds[count]);
+            categoryWrapper.removeChild(list);
+            categoryWrapper.removeChild(arrow);
+        }
+
+        newListIds.splice(listNum + 1);
+        newArrowIds.splice(listNum + 1);
+
+        if(selPath.length === (listNum + 1)){
+            if(selPath[listNum] === itemNum){
+                selPath.pop();
+
+                if(newIDMap.length > 1){
+                    newIDMap.pop();
+                }
+
+                wrapper.style.background = "#7c5b00";
+                
+            }else{
+                selPath[listNum] = itemNum;
+
+                await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
+
+                wrapper.style.background = "#aa7d00";
+            }
+        }else if(selPath.length < (listNum + 1)){
+            selPath[listNum] = itemNum;
+
+            await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
+
+            wrapper.style.background = "#aa7d00";
+        }else{
+            if(selPath[listNum] === itemNum){
+                selPath.splice(listNum);
+                newIDMap.splice(listNum + 1);
+
+                wrapper.style.background = "#7c5b00";
+            }else{
+                selPath.splice(listNum + 1);
+                selPath[listNum] = itemNum;
+                newIDMap.splice(listNum + 1);
+
+                await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
+           
+                wrapper.style.background = "#aa7d00";
+            }
+        }
+
+        this.setState({
+            selectedPath: selPath,
+            listIds: newListIds,
+            arrowIds: newArrowIds
+        });
+
+        element.disabled = false;
+
+    }
+
+    async addListLevel(listNum, parentID){
+
+        if(!(await this.categoryHasChildren(parentID))){
+            return;
+        }
+
+        var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
+
+        var arrow = document.createElement("i");
+        var listWrapper = document.createElement("div");
+        var list = document.createElement("div");
+        var buttonWrapper = document.createElement("div");
+        var addButton = document.createElement("button");
+        /*var subtractButton = document.createElement("button");
+        var exerciseButton = document.createElement("button");
+        var exerciseButtonIcon = document.createElement("i");*/
+
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
+        var newIDMap = this.state.idMap;
+
+        newIDMap[listNum] = [];
+
+        arrow.classList.add("fa");
+        arrow.classList.add("fa-arrow-down");
+        arrow.classList.add("Category-Admin-Arrow");
+        arrow.id = "Category-Admin-List-Arrow-" + listNum;
+
+        arrow.style.fontSize = "120px";
+
+        listWrapper.classList.add("Category-Admin-List-Wrapper");
+        list.classList.add("Category-Admin-List");
+        buttonWrapper.classList.add("Category-Admin-Button-Wrapper");
+        addButton.classList.add("Category-Admin-Add-Button");
+        /*subtractButton.classList.add("Category-Admin-Subtract-Button");
+        exerciseButton.classList.add("Category-Admin-Exercise-Button");
+        exerciseButtonIcon.classList.add("fa");
+        exerciseButtonIcon.classList.add("fa-child");*/
+        
+        listWrapper.id = "Category-Admin-List-Wrapper-" + listNum;
+        list.id = "Category-Admin-List-" + listNum;
+
+        newListIds.push("Category-Admin-List-Wrapper-" + listNum);
+        newArrowIds.push("Category-Admin-List-Arrow-" + listNum);
+
+        addButton.id = "Category-Admin-Add-Button-" + listNum;
+        /*subtractButton.id = "Category-Admin-Subtract-Button-" + listNum;
+        exerciseButton.id = "Category-Admin-Exercise-Button-" + listNum;
+        exerciseButtonIcon.id = "Category-Admin-Exercise-Icon-" + listNum;*/
+
+        addButton.textContent = "+";
+        /*subtractButton.textContent = "-";
+        exerciseButton.appendChild(exerciseButtonIcon);*/
+
+        addButton.onclick = (e) => this.onAddCategory(e);
+        /*subtractButton.onclick = (e) => this.onDeleteCategory(e);
+        exerciseButton.onclick = (e) => this.onAddExercises(e);*/
+
+        //buttonWrapper.appendChild(exerciseButton);
+        buttonWrapper.appendChild(addButton);
+        //buttonWrapper.appendChild(subtractButton);
+
+        listWrapper.appendChild(list);
+        listWrapper.appendChild(buttonWrapper);
+
+        categoryWrapper.appendChild(arrow);
+        categoryWrapper.appendChild(listWrapper);
+
+        await this.loadCategoriesForList(listNum, parentID);
+
+        this.setState({
+            listIds: newListIds,
+            arrowsIds: newArrowIds,
+            idMap: newIDMap
+        });
+    }
+
+    async loadCategoriesForList(listNum, parentID){
+
+        var classroomID = this.props.location.state.classroom.classroom_id;
+        var categories = [];
+        var newIDMap = this.state.idMap;
+
+        await fetch(baseURI + "/api/category/forCategory/" + classroomID + "/" + parentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categories = result;
+            }
+        ).catch(console.log);
+
+        for(var count = 0; count < categories.length; count++){
+            await this.loadCategoryIntoList(listNum, categories[count].title, categories[count].category_id);
+            newIDMap[listNum].push(categories[count]);
+        }
+
+    }
+
+    async categoryHasChildren(categoryID){
+        var count = 0;
+
+        await fetch(baseURI + "/api/category/numChild/" + categoryID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                count = parseInt(result);
+            }
+        ).catch(console.log);
+
+        if(count > 0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     onExerciseClick(event){
         var idNum = parseInt(event.target.id.split("-")[4]);
-        console.log(event.target.id);
         var newScheduledExercises = this.state.scheduledExercises;
         var exercises = this.state.allExercises;
         var selectedExercise = exercises[idNum];
@@ -217,7 +583,6 @@ class ScheduleManagerAdmin extends React.Component{
 
         if(selectedIndex === -1){
             event.target.classList.add("Selected");
-            console.log(this.state.scheduledExercises); //NEED TO START HERE NEXT TIME - FOR SOME REASON COMING UP AS AN OBJECT
             newScheduledExercises.push(selectedExercise);
         }else{
             event.target.classlist = "";
@@ -232,14 +597,16 @@ class ScheduleManagerAdmin extends React.Component{
         });
     }
 
-    onChangeView(event){
+    async onChangeView(event){
         var checked = event.target.checked;
         var newView = "";
 
         if(checked){
             newView = "C";
+            this.clearExercises();
         }else{
             newView = "E";
+            this.clearCategories();
         }
 
         this.setState({
@@ -279,6 +646,11 @@ class ScheduleManagerAdmin extends React.Component{
             }
 
         }
+
+        this.setState({
+            startDate: startDateInput.value,
+            endDate: endDateInput.value
+        });
     }
 
     async onSave(event){
@@ -299,12 +671,28 @@ class ScheduleManagerAdmin extends React.Component{
             var startDate = new Date(startUTCDate.getTime() + (startUTCDate.getTimezoneOffset() * 60000));
             var endDate = new Date(endUTCDate.getTime() + (endUTCDate.getTimezoneOffset() * 60000));
 
-            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
-                method: "POST",                          
-                headers: {"Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify(this.state.scheduledExercises) //Need to add in other fields here, back end and front end
-            }).catch(console.log);
+            startDate = this.formatDateForRange(startDate);
+            endDate = this.formatDateForRange(endDate);
+
+            if(this.state.view === "E"){
+
+                await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+                    method: "POST",                          
+                    headers: {"Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                    body: JSON.stringify(this.state.scheduledExercises) //Need to add in other fields here, back end and front end
+                }).catch(console.log);
+
+            }else{
+
+                await fetch(baseURI + "/api/category/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
+                    method: "POST",                          
+                    headers: {"Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("auth_token")},
+                    body: JSON.stringify(this.state.scheduledCategories) //Need to add in other fields here, back end and front end
+                }).catch(console.log);
+
+            }
 
         }        
 
@@ -408,9 +796,7 @@ class ScheduleManagerAdmin extends React.Component{
 
                                 </div>
                                 <div className="Category-Admin-Button-Wrapper">
-                                    <button className="Category-Admin-Exercise-Button" id="Category-Admin-Exercise-Button-0" onClick={e => this.onAddExercises(e)}><i class="fa fa-child" id="Category-Admin-Exercise-Icon-0"/></button>
                                     <button className="Category-Admin-Add-Button" id="Category-Admin-Add-Button-0" onClick={e => this.onAddCategory(e)}>+</button>
-                                    <button className="Category-Admin-Subtract-Button" id="Category-Admin-Subtract-Button-0" onClick={e => this.onDeleteCategory(e)}>-</button>
                                 </div>
                             </div>
 
@@ -447,3 +833,6 @@ export default ScheduleManagerAdmin;
                             /*
                             
                             */
+
+/*<button className="Category-Admin-Exercise-Button" id="Category-Admin-Exercise-Button-0" onClick={e => this.onAddExercises(e)}><i class="fa fa-child" id="Category-Admin-Exercise-Icon-0"/></button>
+<button className="Category-Admin-Subtract-Button" id="Category-Admin-Subtract-Button-0" onClick={e => this.onDeleteCategory(e)}>-</button>*/
