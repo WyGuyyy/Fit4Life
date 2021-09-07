@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import './ScheduleManagerAdmin.css';
+import './CategoryManagerAdmin.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout'
 import ConfirmModal from '../../Confirm/ConfirmModal';
@@ -33,6 +34,8 @@ class ScheduleManagerAdmin extends React.Component{
         }
 
     }
+
+    //START HERE TOMORROW - FIGURE OUT WHY EXTRA CATEGORIES BEING ADDED AT TOP LEVEL AFTER SELECTION
     
     async componentDidMount(){ 
         await this.loadExercisesAndCategoriesForClassroom();
@@ -443,10 +446,6 @@ class ScheduleManagerAdmin extends React.Component{
 
     async addListLevel(listNum, parentID){
 
-        if(!(await this.categoryHasChildren(parentID))){
-            return;
-        }
-
         var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
 
         var arrow = document.createElement("i");
@@ -509,6 +508,12 @@ class ScheduleManagerAdmin extends React.Component{
         categoryWrapper.appendChild(arrow);
         categoryWrapper.appendChild(listWrapper);
 
+        if(await this.categoryHasExercise(parentID)){
+            buttonWrapper.removeChild(addButton);
+            this.renderExerciseList(parentID, listNum);
+            return;
+        }
+
         await this.loadCategoriesForList(listNum, parentID);
 
         this.setState({
@@ -543,6 +548,67 @@ class ScheduleManagerAdmin extends React.Component{
 
     }
 
+    async renderExerciseList(categoryID, idNum){
+
+        var categoryExercises = [];
+
+        var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
+        var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
+    
+        var startDateVal = startDateInput.value;
+        var endDateVal = endDateInput.value;
+    
+        if(startDateVal === "" || endDateVal === ""){
+            return;
+        }
+
+        //Need to create this endpoint
+        await fetch(baseURI + "/api/exercise/forCategory/" + categoryID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                categoryExercises = result;
+            }
+        ).catch(console.log);
+        
+        var list = document.getElementById("Category-Admin-List-" + idNum);
+
+        for(var count = 0; count < categoryExercises.length; count++){
+            var exercise = categoryExercises[count];
+    
+            var childCount = list.children.length;
+            var categoryWrapper = document.createElement("div");
+            var categoryText = document.createElement("input");
+    
+            var idMap = this.state.idMap;
+    
+            categoryText.classList.add("Category-Admin-ListItemExerciseText");
+    
+            //categoryText.classList.add("Category-Admin-ListItem");
+    
+            categoryWrapper.classList.add("Category-Admin-ListItem-Wrapper");
+    
+            categoryWrapper.id="Category-Admin-ListItem-Wrapper-" + childCount + "-" + idNum;
+            categoryText.id = "Category-Admin-ListItem-" + childCount + "-" + idNum;
+    
+            //categoryWrapper.onclick = (e) => this.onSelectCategory(e);
+    
+            categoryText.value = exercise.title;
+            categoryText.readOnly = true;
+    
+            categoryWrapper.appendChild(categoryText);
+            list.appendChild(categoryWrapper);
+
+
+        }
+
+    }
+
     async categoryHasChildren(categoryID){
         var count = 0;
 
@@ -564,6 +630,28 @@ class ScheduleManagerAdmin extends React.Component{
             return false;
         }
 
+    }
+
+    async categoryHasExercise(categoryID){
+        var count = 0;
+
+        await fetch(baseURI + "/api/category/numEx/" + categoryID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                count = parseInt(result);
+            }
+        ).catch(console.log);
+
+        if(count > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     onExerciseClick(event){

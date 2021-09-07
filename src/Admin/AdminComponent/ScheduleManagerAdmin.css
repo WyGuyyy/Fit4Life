@@ -279,3 +279,19 @@ input:checked + .slider:before {
 .Scheduler-Admin-List-ItemText{
     margin-left: 10px;
 }
+
+.Category-Admin-ListItemExerciseText{
+    cursor: pointer;
+    width: 160px;
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    background: #7c5b00;
+    border: none;
+    style: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    outline: none;
+    color: rgb(255, 255, 255);
+}
