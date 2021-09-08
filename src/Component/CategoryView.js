@@ -37,7 +37,9 @@ class CategoryView extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
-            this.fetchTopLevelCategories();
+            if(!this.categoriesScheduled()){
+                this.fetchTopLevelCategories();
+            }
             //this.renderTiles();
         }
     }
@@ -496,6 +498,10 @@ class CategoryView extends React.Component{
             return false;
         }
 
+    }
+
+    categoriesScheduled(){
+        
     }
 
     onGoToAllView(event){

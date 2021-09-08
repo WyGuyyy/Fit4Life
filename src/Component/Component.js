@@ -32,7 +32,11 @@ class Component extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
-            this.renderTiles();
+            if(this.exercisesScheduled()){
+                //render scheduled exercsies here
+            }else{
+                this.renderTiles();
+            }
         }
     }
 
@@ -130,6 +134,11 @@ class Component extends React.Component{
     }
 
     async searchExercises(event){
+
+        if(this.exercisesScheduled()){
+            //Search on scheduled exercises here
+            return;
+        }
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
@@ -280,6 +289,10 @@ class Component extends React.Component{
         }else{
             return 2;
         }
+    }
+
+    exercisesScheduled(){
+
     }
 
     onGoToCategoryView(event){

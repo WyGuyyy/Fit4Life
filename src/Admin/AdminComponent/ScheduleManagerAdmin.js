@@ -22,7 +22,7 @@ class ScheduleManagerAdmin extends React.Component{
                 idMap: [],
                 selectedPath: [],
                 listIds: ["Category-Admin-List-Wrapper-0"],
-                arrowIds: ["Category-Admin-List-Arrow-0"],
+                arrowIds: [],
                 view: "E",
                 allExercises: [],
                 scheduledExercises: [],
@@ -176,6 +176,8 @@ class ScheduleManagerAdmin extends React.Component{
         var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
         var allList = document.getElementsByClassName("Scheduler-Admin-AllList")[0];
 
+        console.log(selectedList);
+
         while(selectedList.firstChild){
             selectedList.removeChild(selectedList.firstChild);
         }
@@ -239,17 +241,71 @@ class ScheduleManagerAdmin extends React.Component{
 
     async buildCategoryView(){
         var idMap = this.state.idMap;
+        var selPath = this.state.selectedPath;
         var topLevel = idMap[0];
+        var selectedCategories = this.state.scheduledCategories;
 
         var topLevelList = document.getElementById("Category-Admin-List-0");
 
         while(topLevelList.firstChild){
-            topLevelList.removeChild(topLevelList.firstChild);
+            topLevelList.removeChild(topLevelList.lastChild);
         }
 
         for(var count = 0; count < topLevel.length; count++){
-            await this.loadCategoryIntoList(0, topLevel[count].title, topLevel[count].category_id);
+            this.loadCategoryIntoList(0, topLevel[count].title, topLevel[count].category_id);
         }
+
+        if(selPath.length > 0){
+            document.getElementById("Category-Admin-ListItem-Wrapper-" + selPath[0] + "-" + 0).style.background = "#aa7d00";
+        }
+
+        var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
+
+        while(selectedList.firstChild){
+            selectedList.removeChild(selectedList.lastChild);
+        }
+
+        for(var count = 0; count < selectedCategories.length; count++){
+            var selListItem = document.createElement("div");
+            var titleWrapper = document.createElement("div");
+            var buttonWrapper = document.createElement("div");
+            var selListItemText = document.createElement("h2");
+            var selListItemRemove = document.createElement("button");
+            var iconDelete = document.createElement("i");
+
+            selListItem.classList.add("Scheduler-Admin-List-Item");
+            selListItem.id = "Scheduler-Admin-List-Item-" + count;
+
+            titleWrapper.classList.add("Scheduler-Admin-List-TitleWrapper");
+            titleWrapper.id = "Scheduler-Admin-List-TitleWrapper-" + count;
+
+            buttonWrapper.classList.add("Scheduler-Admin-List-ButtonWrapper");
+            buttonWrapper.id = "Scheduler-Admin-List-ButtonWrapper-" + count;
+
+            selListItemText.classList.add("Scheduler-Admin-List-ItemText");
+            selListItemText.id = "Scheduler-Admin-List-ItemText-" + count;
+            selListItemText.textContent = selectedCategories[count].title;
+
+            selListItemRemove.classList.add("Scheduler-Admin-List-ItemRemove");
+            selListItemRemove.id = "Scheduler-Admin-List-ItemRemove-" + count;
+            selListItemRemove.onclick = (e) => this.onCategoryRemove(e);
+
+            iconDelete.classList.add("fa");
+            iconDelete.classList.add("fa-trash");
+            iconDelete.id = "Scheduler-Admin-List-IconDelete-" + count;
+
+            selListItemRemove.appendChild(iconDelete);
+
+            titleWrapper.appendChild(selListItemText);
+            buttonWrapper.appendChild(selListItemRemove);
+
+            selListItem.classList.add((count % 2 === 0 ? "Even" : "Odd"));
+
+            selListItem.appendChild(titleWrapper);
+            selListItem.appendChild(buttonWrapper);
+            selectedList.appendChild(selListItem);
+        }
+
     }
 
     /*async loadTopLevelCategories(){
@@ -286,7 +342,7 @@ class ScheduleManagerAdmin extends React.Component{
 
     }*/
 
-    async loadCategoryIntoList(idNum, title, categoryID){
+     loadCategoryIntoList(idNum, title, categoryID){
 
         var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
         var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
@@ -304,6 +360,7 @@ class ScheduleManagerAdmin extends React.Component{
         var categoryText = document.createElement("input");
 
         var idMap = this.state.idMap;
+        var selPath = this.state.selectedPath;
 
         categoryText.classList.add("Category-Admin-ListItem");
 
@@ -337,11 +394,27 @@ class ScheduleManagerAdmin extends React.Component{
     }
 
     clearCategories(){
-        var list = document.getElementsByClassName("Category-Admin-List-Wrapper")[0];
-
-        while(list.firstChild){
-            list.removeChild(list.firstChild);
+        //var list = document.getElementsByClassName("Category-Admin-List-Wrapper")[0];
+        //var listCount = document.getElementsByClassName("Category-Admin-List-Wrapper").length;
+        var listIds = this.state.listIds;
+        var arrowIds = this.state.arrowIds;
+        var wrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
+        console.log(listIds);
+        console.log(arrowIds);
+        for(var count = 0; count < listIds.length; count++){
+            var aList = document.getElementById(listIds[count]);
+            wrapper.removeChild(aList);
         }
+
+        for(var count = 0; count < arrowIds.length; count++){
+            var arrow = document.getElementById(arrowIds[count]);
+            wrapper.removeChild(arrow);
+        }
+
+        /*while(list.firstChild){
+            list.removeChild(list.lastChild);
+        }*/
+        
     }
 
     async onSelectCategory(event){
@@ -405,6 +478,7 @@ class ScheduleManagerAdmin extends React.Component{
                 wrapper.style.background = "#7c5b00";
                 
             }else{
+
                 selPath[listNum] = itemNum;
 
                 await this.addListLevel((listNum + 1), newIDMap[listNum][selPath[listNum]].category_id);
@@ -456,7 +530,7 @@ class ScheduleManagerAdmin extends React.Component{
         /*var subtractButton = document.createElement("button");
         var exerciseButton = document.createElement("button");
         var exerciseButtonIcon = document.createElement("i");*/
-
+        console.log(list);
         var newListIds = this.state.listIds;
         var newArrowIds = this.state.arrowIds;
         var newIDMap = this.state.idMap;
@@ -510,7 +584,7 @@ class ScheduleManagerAdmin extends React.Component{
 
         if(await this.categoryHasExercise(parentID)){
             buttonWrapper.removeChild(addButton);
-            this.renderExerciseList(parentID, listNum);
+            await this.renderExerciseList(parentID, listNum);
             return;
         }
 
@@ -542,7 +616,7 @@ class ScheduleManagerAdmin extends React.Component{
         ).catch(console.log);
 
         for(var count = 0; count < categories.length; count++){
-            await this.loadCategoryIntoList(listNum, categories[count].title, categories[count].category_id);
+            this.loadCategoryIntoList(listNum, categories[count].title, categories[count].category_id);
             newIDMap[listNum].push(categories[count]);
         }
 
@@ -692,9 +766,11 @@ class ScheduleManagerAdmin extends React.Component{
         if(checked){
             newView = "C";
             this.clearExercises();
+            console.log(newView);
         }else{
             newView = "E";
             this.clearCategories();
+            console.log(newView);
         }
 
         this.setState({
@@ -718,7 +794,9 @@ class ScheduleManagerAdmin extends React.Component{
             var endDate = new Date(endUTCDate.getTime() + (endUTCDate.getTimezoneOffset() * 60000));
 
             if(endDate >= startDate){
-                
+            
+                startDate = this.formatDateForRange(startDate);
+                endDate = this.formatDateForRange(endDate);
 
                 this.loadExercisesAndCategoriesForDateRange(startDate, endDate);
 
@@ -786,11 +864,47 @@ class ScheduleManagerAdmin extends React.Component{
 
     }
 
+    onAddCategory(event){
+
+        var selPath = this.state.selectedPath;
+        var idNum = parseInt(event.target.id.split("-")[4]);
+        var newSelectedCategories = this.state.scheduledCategories;
+
+        if(selPath.length < (idNum + 1)){
+            return;
+        }
+
+        var category = this.state.idMap[idNum][selPath[idNum]];
+
+        for(var count = 0; count < newSelectedCategories.length; count++){
+            if(newSelectedCategories[count].category_id === category.category_id){
+                return;
+            }
+        }
+
+        newSelectedCategories.push(category);
+
+        this.setState({
+            scheduledCategories: newSelectedCategories
+        });
+
+    }
+
+    onCategoryRemove(event){
+        var idNum = event.target.id.split("-")[4];
+        var newSelectedCategories = this.state.scheduledCategories;
+        newSelectedCategories.splice(idNum, 1);
+
+        this.setState({
+            scheduledCategories: newSelectedCategories
+        });
+    }
+
     formatDateForRange(d){
         var d = new Date(d);
 
         var date = d.getUTCDate();
-        var month = d.getUTCMonth();
+        var month = d.getUTCMonth() + 1;
         var year = d.getFullYear();
 
         date = (date < 10 ? "0" + date : date);
@@ -821,6 +935,7 @@ class ScheduleManagerAdmin extends React.Component{
     render(){
 
         var classroom = this.props.location.state.classroom.title;
+        console.log(this.state.view);
 
         return(
 

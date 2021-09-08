@@ -295,3 +295,34 @@ input:checked + .slider:before {
     outline: none;
     color: rgb(255, 255, 255);
 }
+
+.Scheduler-Admin-List-ItemRemove{
+    font-size: 20px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 40px;
+    height: 40px;
+    background: #8b6a05;
+    margin-right: 20px;
+}
+
+.Scheduler-Admin-List-ItemRemove:hover{
+    background: #e4aa0a;
+}
+
+.Scheduler-Admin-List-TitleWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+}
+
+.Scheduler-Admin-List-ButtonWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 25%;
+}
