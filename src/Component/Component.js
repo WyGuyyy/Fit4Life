@@ -31,13 +31,16 @@ class Component extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        if(RedirectService.checkItemForUndefined(this.props.location.state)){
+        
+        this.renderTiles();
+
+        /*if(RedirectService.checkItemForUndefined(this.props.location.state)){
             if(this.exercisesScheduled()){
-                //render scheduled exercsies here
+                this.renderScheduledTiles();
             }else{
                 this.renderTiles();
             }
-        }
+        }*/
     }
 
     componentDidUpdate(){
@@ -69,7 +72,104 @@ class Component extends React.Component{
 
         var classCompID;
 
-        await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
+        if(await this.exercisesScheduled()){
+            var date = new Date();
+            date = this.formatDateForRange(date);
+    
+            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+        }else{
+            await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+        }
+
+        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exerciseBlobs = result;
+            }
+        ).catch(console.log);
+
+        var tempNumOfTiles = 40;
+        var numRows;
+
+        //var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
+
+        /*var componentWrapper = document.getElementById("componentWrapper");*/
+        componentWrapper.innerHTML = '';
+
+        var aTile;
+        var aFlexRow;
+        var countOuter;
+        var countInner;
+
+        var tilesPerRow = this.calculateRowCount();
+        numRows = Math.ceil(exercises.length/tilesPerRow);
+
+        for(countOuter = 0; countOuter < numRows; countOuter++){
+            
+            aFlexRow = document.createElement('div');
+            aFlexRow.className = "Component-Tile-Wrapper";
+
+            for(countInner = 0; countInner < tilesPerRow; countInner++){
+
+                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow), exerciseBlobs), aFlexRow);
+                //ReactDOM.render(aTile, aFlexRow);
+            }
+
+            componentWrapper.appendChild(aFlexRow);
+        }
+
+        this.setState({
+            componentExercises: exercises
+        });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
+    }
+
+    async renderScheduledTiles(){
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
+        var exercises = [];
+        var exerciseBlobs = [];
+        var count = 0;
+        var componentWrapper = document.getElementById("componentWrapper");
+
+        var classroomID = this.state.classroom.classroom_id;
+        //var componentID = this.state.component.component_id;
+        var date = new Date();
+        date = this.formatDateForRange(date);
+
+        var classCompID;
+
+        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -135,10 +235,10 @@ class Component extends React.Component{
 
     async searchExercises(event){
 
-        if(this.exercisesScheduled()){
-            //Search on scheduled exercises here
+        /*if(this.exercisesScheduled()){
+            this.searchScheduledExercises();
             return;
-        }
+        }*/
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
@@ -153,18 +253,36 @@ class Component extends React.Component{
 
         var classCompID;
 
-        await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exercises = result;
-            }
-        ).catch(console.log);
+        if(await this.exercisesScheduled()){
+            var date = new Date();
+            date = this.formatDateForRange(date);
+    
+            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+        }else{
+            await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    exercises = result;
+                }
+            ).catch(console.log);
+        }
 
         await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
             method: "GET",                          
@@ -291,8 +409,50 @@ class Component extends React.Component{
         }
     }
 
-    exercisesScheduled(){
+    async exercisesScheduled(){ //Something wrong with sched_ex table
 
+        var exercises = [];
+
+        var date = new Date();
+        date = this.formatDateForRange(date);
+
+        var classroomID = this.state.classroom.classroom_id;
+    
+        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                         "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+                console.log(date);
+            }
+        ).catch(console.log);
+
+        if(exercises.length === undefined || 
+           exercises.length === null || 
+           exercises.length === 0){
+            return false;
+        }
+
+        return true;
+    }
+
+    formatDateForRange(d){
+        var d = new Date(d);
+
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth() + 1;
+        var year = d.getFullYear();
+
+        date = (date < 10 ? "0" + date : date);
+        month = (month < 10 ? "0" + month : month);
+
+        var formattedDate = year + "-" + month + "-" + date;
+        return formattedDate;
     }
 
     onGoToCategoryView(event){

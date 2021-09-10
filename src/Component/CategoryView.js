@@ -37,10 +37,12 @@ class CategoryView extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
-            if(!this.categoriesScheduled()){
+            
+            this.fetchTopLevelCategories();
+
+            /*if(!this.categoriesScheduled()){
                 this.fetchTopLevelCategories();
-            }
-            //this.renderTiles();
+            }*/
         }
     }
 
@@ -73,18 +75,37 @@ class CategoryView extends React.Component{
 
         var classroomID = this.state.classroom.classroom_id;
 
-        await fetch(baseURI + "/api/category/topLevel/" + classroomID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                topLevelCategories = result;
-            }
-        ).catch(console.log);
+        if(await this.categoriesScheduled()){
+
+            var date = new Date();
+            date = this.formatDateForRange(date);
+
+            await fetch(baseURI + "/api/category/forDateRange/" + classroomID + "/" + date + "/" + date, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    topLevelCategories = result;
+                }
+            ).catch(console.log);
+        }else{
+            await fetch(baseURI + "/api/category/topLevel/" + classroomID, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    topLevelCategories = result;
+                }
+            ).catch(console.log);
+        }
 
         newIdMap.push(topLevelCategories);
 
@@ -500,8 +521,49 @@ class CategoryView extends React.Component{
 
     }
 
-    categoriesScheduled(){
+    async categoriesScheduled(){
         
+        var topLevelCategories = [];
+
+        var date = new Date();
+        date = this.formatDateForRange(date);
+
+        var classroomID = this.state.classroom.classroom_id;
+
+        await fetch(baseURI + "/api/category/forDateRange/" + classroomID + "/" + date + "/" + date, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                topLevelCategories = result;
+            }
+        ).catch(console.log);
+
+        if(topLevelCategories.length === undefined || 
+            topLevelCategories.length === null || 
+            topLevelCategories.length === 0){
+             return false;
+         }
+ 
+         return true;
+    }
+
+    formatDateForRange(d){
+        var d = new Date(d);
+
+        var date = d.getUTCDate();
+        var month = d.getUTCMonth() + 1;
+        var year = d.getFullYear();
+
+        date = (date < 10 ? "0" + date : date);
+        month = (month < 10 ? "0" + month : month);
+
+        var formattedDate = year + "-" + month + "-" + date;
+        return formattedDate;
     }
 
     onGoToAllView(event){

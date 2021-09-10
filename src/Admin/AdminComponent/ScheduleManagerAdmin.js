@@ -19,10 +19,10 @@ class ScheduleManagerAdmin extends React.Component{
             this.state = {
                 canGoBack: true,
                 classroom: props.location.state.classroom,
-                idMap: [],
+                idMap: [[]],
                 selectedPath: [],
                 listIds: ["Category-Admin-List-Wrapper-0"],
-                arrowIds: [],
+                arrowIds: ["Category-Admin-List-Arrow-0"],
                 view: "E",
                 allExercises: [],
                 scheduledExercises: [],
@@ -41,13 +41,13 @@ class ScheduleManagerAdmin extends React.Component{
         await this.loadExercisesAndCategoriesForClassroom();
     }
 
-    componentDidUpdate(){
+    async componentDidUpdate(){
         var view = this.state.view;
 
         if(view === "E"){
-            this.buildExerciseView();
+             this.buildExerciseView();
         }else{
-            this.buildCategoryView();
+             this.buildCategoryView();
         }
 
     }
@@ -65,7 +65,7 @@ class ScheduleManagerAdmin extends React.Component{
 
         var classroomID = this.props.location.state.classroom.classroom_id;
 
-        await fetch(baseURI + "/api/exercise/byclassroom/" + classroomID, {  
+        await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -166,7 +166,7 @@ class ScheduleManagerAdmin extends React.Component{
     }
 
     buildExerciseView(){
-
+        
         var startDateInput = document.getElementsByClassName("Scheduler-Admin-Start-Date")[0];
         var endDateInput = document.getElementsByClassName("Scheduler-Admin-End-Date")[0];
 
@@ -185,7 +185,7 @@ class ScheduleManagerAdmin extends React.Component{
         while(allList.firstChild){
             allList.removeChild(allList.firstChild);
         }
-
+        
         if(startDateVal === "" || endDateVal === ""){
             return;
         }
@@ -219,7 +219,7 @@ class ScheduleManagerAdmin extends React.Component{
             allList.appendChild(allListItem);
 
         }
-
+        
         for(var count = 0; count < scheduledExercises.length; count++){
             var selListItem = document.createElement("div");
             var selListItemText = document.createElement("h2");
@@ -239,7 +239,7 @@ class ScheduleManagerAdmin extends React.Component{
 
     }
 
-    async buildCategoryView(){
+    buildCategoryView(){
         var idMap = this.state.idMap;
         var selPath = this.state.selectedPath;
         var topLevel = idMap[0];
@@ -254,7 +254,8 @@ class ScheduleManagerAdmin extends React.Component{
         for(var count = 0; count < topLevel.length; count++){
             this.loadCategoryIntoList(0, topLevel[count].title, topLevel[count].category_id);
         }
-
+        console.log(selPath);
+        console.log(idMap);
         if(selPath.length > 0){
             document.getElementById("Category-Admin-ListItem-Wrapper-" + selPath[0] + "-" + 0).style.background = "#aa7d00";
         }
@@ -396,20 +397,35 @@ class ScheduleManagerAdmin extends React.Component{
     clearCategories(){
         //var list = document.getElementsByClassName("Category-Admin-List-Wrapper")[0];
         //var listCount = document.getElementsByClassName("Category-Admin-List-Wrapper").length;
-        var listIds = this.state.listIds;
-        var arrowIds = this.state.arrowIds;
+        var newListIds = this.state.listIds;
+        var newArrowIds = this.state.arrowIds;
         var wrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
-        console.log(listIds);
-        console.log(arrowIds);
-        for(var count = 0; count < listIds.length; count++){
-            var aList = document.getElementById(listIds[count]);
+
+        for(var count = 1; count < newListIds.length; count++){
+            var aList = document.getElementById(newListIds[count]);
             wrapper.removeChild(aList);
         }
 
-        for(var count = 0; count < arrowIds.length; count++){
-            var arrow = document.getElementById(arrowIds[count]);
-            wrapper.removeChild(arrow);
+        newListIds.splice(1);
+
+        for(var count = 1; count < newArrowIds.length; count++){
+            var arrow = document.getElementById(newArrowIds[count]);
+
+            if(!(arrow === null)){
+                wrapper.removeChild(arrow);
+            }
         }
+
+        newArrowIds.splice(1);
+
+        var topLevel = this.state.idMap[0];
+
+        this.setState({
+            listIds: newListIds,
+            arrowIds: newArrowIds,
+            idMap: [topLevel],
+            selectedPath: []
+        });
 
         /*while(list.firstChild){
             list.removeChild(list.lastChild);
@@ -507,7 +523,7 @@ class ScheduleManagerAdmin extends React.Component{
                 wrapper.style.background = "#aa7d00";
             }
         }
-
+        console.log(newArrowIds);
         this.setState({
             selectedPath: selPath,
             listIds: newListIds,
@@ -678,7 +694,6 @@ class ScheduleManagerAdmin extends React.Component{
             categoryWrapper.appendChild(categoryText);
             list.appendChild(categoryWrapper);
 
-
         }
 
     }
@@ -759,18 +774,16 @@ class ScheduleManagerAdmin extends React.Component{
         });
     }
 
-    async onChangeView(event){
+    onChangeView(event){
         var checked = event.target.checked;
         var newView = "";
 
         if(checked){
             newView = "C";
             this.clearExercises();
-            console.log(newView);
         }else{
             newView = "E";
             this.clearCategories();
-            console.log(newView);
         }
 
         this.setState({
@@ -841,7 +854,7 @@ class ScheduleManagerAdmin extends React.Component{
             endDate = this.formatDateForRange(endDate);
 
             if(this.state.view === "E"){
-
+                console.log("hhhhh");
                 await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
                     method: "POST",                          
                     headers: {"Content-Type": "application/json",
@@ -935,7 +948,6 @@ class ScheduleManagerAdmin extends React.Component{
     render(){
 
         var classroom = this.props.location.state.classroom.title;
-        console.log(this.state.view);
 
         return(
 
