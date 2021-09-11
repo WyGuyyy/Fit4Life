@@ -1,0 +1,321 @@
+/*body{
+    overflow-y: hidden;
+}*/
+
+.groupContainer-Admin{
+    width: 100%;
+    height: 100%;
+    background: #6b4e00;
+    overflow-y: hidden;
+}
+
+.groupWrapper-Admin{
+    position: absolute;
+    top: 100px;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    /*height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: hidden;
+}
+
+.groupList-Admin::-webkit-scrollbar {
+    width: 15px;
+    background-color: #F5F5F5;
+    visibility: hidden;
+  } 
+
+.groupList-Admin::-webkit-scrollbar-thumb{
+    background-color: black;
+}
+  
+.groupList-Admin::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.groupList-Admin{
+    width: 100%;
+    height: 100%;
+    background: #6b4e00;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.groupFiller-Admin{
+    width: 100%;
+    min-height: 100px;
+    background: black;
+}
+
+.Group-List-Item-Admin{
+    width:100%;
+    min-height: 100px;
+    background: #c08d00;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.Group-List-Item-Admin{
+    width:100%;
+    min-height: 100px;
+    background: #bb911f;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.Group-Grid-Cell-Admin{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Group-List-Item-Title-Admin{
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    transition-duration: .5s;
+}
+
+.Group-List-Item-Title-Admin:hover{
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.Group-List-Item-Delete-Button-Admin{
+    background:#ac7e00;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 50px;
+    height: 50px;
+}
+
+.Group-List-Item-Delete-Button-Admin:hover{
+    background: #ffbb00;
+}
+
+.Group-Create-Button-Admin{
+    height: 50px;
+    width: 75px;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 2;
+    background:#ffbb00;
+    border-radius: 20px;
+    font-size: 25px;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Fit4Life-SearchbarWrapper-Admin{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Fit4Life-Searchbar-Admin{
+    width: 200px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.Fit4Life-SearchButton-Admin{
+    width: 200px;
+    height: 30px;
+    border: none;
+    border-radius: 15px;
+    background: #ac8e3b;
+    transition-duration: 0.5s;
+}
+
+.Fit4Life-SearchButton-Admin:hover{
+    background: #dfb84c;
+}
+
+.Group-CreateName-Modal-Cover{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.Group-CreateName-Modal{
+    width: 300px;
+    height: 150px;
+    background: #bb911f;
+    box-shadow: 2px 2px 10px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}   
+
+.Group-CreateName-Label{
+    
+}
+
+.Group-CreateName-Input{
+    margin-top: 10px;
+    height: 30px;
+    border: none;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px black;
+}
+
+.Group-CreateName-ButtonWrapper{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.Group-CreateName-CreateButton{
+    margin-right: 20px;
+    border: none;
+    border-radius: 15px;
+    background: #e6b224;
+    box-shadow: 2px 2px 10px black;
+    transition-duration: 0.5s;
+}
+
+.Group-CreateName-CreateButton:hover{
+    background: #ffd358;
+}
+
+.Group-CreateName-CancelButton{
+    border: none;
+    border-radius: 15px;
+    background: #e6b224;
+    box-shadow: 2px 2px 10px black;
+    transition-duration: 0.5s;
+}
+
+.Group-CreateName-CancelButton:hover{
+    background: #ffd358;
+}
+
+@media(max-width: 1024px){
+
+    .Group-List-Item-Admin{
+        width:100%;
+        min-height: 100px;
+        background: #c08d00;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 
+        'title preview edit'
+        'title student delete';
+        justify-content: center;
+        justify-items: center;
+        align-content: center;
+        align-items: center;
+    }
+
+    .Group-Grid-Cell-Admin{
+        width: 30vw;
+    }
+
+    .Group-List-Item-Title-Admin{
+        font-size: 20px;
+    }
+
+    .Group-List-Item-Delete-Button-Admin{
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
+    }
+
+    .Group-Create-Button-Admin{
+        height: 35px;
+        width: 60px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+    .Group-Grid-Cell-Title-Admin{
+        grid-area: title;
+        height: 50px;
+    }
+
+    .Group-Grid-Cell-Delete-Admin{
+        grid-area: delete;
+        height: 50px;
+    }
+    
+
+}
+
+@media(max-width: 630px){
+    .Group-List-Item-Title-Admin{
+        font-size: 13px;
+    }
+    
+    .Group-List-Item-Delete-Button-Admin{
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+
+    .Group-Create-Button-Admin{
+        height: 35px;
+        width: 60px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+
+}
+
+@media(max-width: 319px){
+    /*.Goal-List-Item{
+        grid-template-columns: 1fr 1fr 1fr;
+    }*/
+
+  /*  .Goal-Grid-Cell-Progress{
+        display: none;
+    }*/
+
+}

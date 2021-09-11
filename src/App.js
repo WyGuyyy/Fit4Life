@@ -37,6 +37,8 @@ import {baseURI} from './_services/APIService';
 import CategoryManagerAdmin from './Admin/AdminComponent/CategoryManagerAdmin';
 import CategoryView from './Component/CategoryView';
 import ScheduleManagerAdmin from './Admin/AdminComponent/ScheduleManagerAdmin';
+import ShareHome from './Admin/AdminShare/ShareHome';
+import Group from './Admin/AdminShare/Group';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -102,6 +104,8 @@ function App() {
         <PrivateAdminRoute exact path="/studentDetailAdmin" component={StudentDetailAdmin} />
         <PrivateAdminRoute exact path="/categoryManagerAdmin" component={CategoryManagerAdmin} />
         <PrivateAdminRoute exact path="/scheduleManagerAdmin" component={ScheduleManagerAdmin} />
+        <PrivateAdminRoute exact path="/share" component={ShareHome} />
+        <PrivateAdminRoute exact path="/group" component={Group} />
       </Switch>
     </Router>
   );

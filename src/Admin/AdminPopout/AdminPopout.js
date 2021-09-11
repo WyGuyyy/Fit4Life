@@ -47,6 +47,9 @@ class AdminPopout extends React.Component{
                     <Link to={{pathname: "/personal", state: {goBack: false}}} className="inviteLink-Admin">
                         <button className="popoutButton-Admin">Personal Info</button>
                     </Link>
+                    <Link to={{pathname: "/share", state: {goBack: true}}} className="inviteLink">
+                        <button className="popoutButton">Share</button>
+                    </Link>
                     <Link to={{pathname: "/changePassword", state: {goBack: true}}} className="inviteLink">
                         <button className="popoutButton">Change Password</button>
                     </Link>
