@@ -14,7 +14,8 @@ class ShareHome extends React.Component{
 
         this.state = {
             canGoBack: false,
-            ownerGroups: []
+            ownerGroups: [],
+            sharedGroups: []
         }
 
     }
@@ -34,6 +35,8 @@ class ShareHome extends React.Component{
     async getGroups(){
         var ownerID = localStorage.getItem("userID");
         var groups = [];
+        var test = [];
+        var sharedGroups = [];
 
         await fetch(baseURI + "/api/group/forOwner/" + ownerID, {  
             method: "GET",                          
@@ -45,11 +48,35 @@ class ShareHome extends React.Component{
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 groups = result;
+                test = result;
+                console.log(result);
             }
         ).catch(console.log);
 
+        await fetch(baseURI + "/api/group/forTeacher/" + ownerID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                sharedGroups = result;
+            }
+        ).catch(console.log);
+
+        if(groups.length === undefined){
+            groups = [];
+        }
+
+        if(sharedGroups.length === undefined){
+            sharedGroups = [];
+        }
+
         this.setState({
-            ownerGroups: groups
+            ownerGroups: groups,
+            sharedGroups: sharedGroups
         });
     }
 
@@ -58,13 +85,16 @@ class ShareHome extends React.Component{
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var groups = this.state.ownerGroups;
+        var sharedGroups = this.state.sharedGroups;
+        var count = 0;
+
         var list = document.getElementById("groupList-Admin");
 
         while (list.firstChild) {
             list.removeChild(list.lastChild);
         }
 
-        for(var count = 0; count < groups.length; count++){
+        for(count = 0; count < groups.length; count++){
 
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
@@ -86,7 +116,7 @@ class ShareHome extends React.Component{
             cell2.classList.add("Group-Grid-Cell-Admin");
             cell2.classList.add("Group-Grid-Cell-Delete-Admin");
 
-            listItemTitle.classList.add("Group-List-Item-Title-Admin");
+            listItemTitle.classList.add("Group-List-Item-Owned-Title-Admin");
             listItemTitle.textContent = groups[count].title;
             listItemTitle.id = "groupListItemTitle-" + count + "-Admin";
             listItemTitle.title = groups[count].title;
@@ -110,6 +140,37 @@ class ShareHome extends React.Component{
 
         }
 
+        groups.push.apply(groups, sharedGroups);
+
+        for(count = count; count < groups.length; count++){
+
+            var listItem = document.createElement("div");
+            var listItemTitle = document.createElement("h2");
+
+            var cell1 = document.createElement("div");
+
+            listItem.classList.add("Group-List-Item-Admin");
+            listItem.id = "groupListItem-" + count + "-Admin";
+
+            cell1.classList.add("Group-Grid-Cell-Admin");
+            cell1.classList.add("Group-Grid-Cell-Title-Admin");
+
+            listItemTitle.classList.add("Group-List-Item-Title-Admin");
+            listItemTitle.textContent = groups[count].title;
+            listItemTitle.id = "groupListItemTitle-" + count + "-Admin";
+            listItemTitle.title = groups[count].title;
+            listItemTitle.onclick = (e) => this.goToGroup({event: e, id: listItem.id});
+
+            cell1.appendChild(listItemTitle);
+
+            listItem.appendChild(cell1);
+
+            listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
+
+            list.appendChild(listItem);
+
+        }
+
         document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
@@ -123,6 +184,7 @@ class ShareHome extends React.Component{
         var ownerID = localStorage.getItem("userID");
 
         var groups = [];
+        var sharedGroups = [];
 
         while (list.firstChild) {
             list.removeChild(list.lastChild);
@@ -141,6 +203,19 @@ class ShareHome extends React.Component{
                 }
             ).catch(console.log);
 
+            await fetch(baseURI + "/api/group/forTeacher/" + ownerID, {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    sharedGroups = result;
+                }
+            ).catch(console.log);
+
             for(var count = 0; count < groups.length; count++){
                 if(!groups[count].title.toLowerCase().includes(searchText.toLowerCase())){
                     groups.splice(count, 1);
@@ -148,8 +223,24 @@ class ShareHome extends React.Component{
                 }
             }
 
+            for(var count = 0; count < sharedGroups.length; count++){
+                if(!sharedGroups[count].title.toLowerCase().includes(searchText.toLowerCase())){
+                    sharedGroups.splice(count, 1);
+                    count = count - 1;
+                }
+            }
+
+        if(groups.length === undefined){
+            groups = [];
+        }
+
+        if(sharedGroups.length === undefined){
+            sharedGroups = [];
+        }
+
         this.setState({
-            ownerGroups: groups
+            ownerGroups: groups,
+            sharedGroups: sharedGroups
         });
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "none";
@@ -207,6 +298,10 @@ class ShareHome extends React.Component{
 
         this.closeGroupNameModel(null);
 
+        if(groups.length === undefined){
+            groups = [];
+        }
+
         this.setState({
             ownerGroups: groups
         });
@@ -259,6 +354,10 @@ class ShareHome extends React.Component{
                 newGroups = result;
             }
         ).catch(console.log);
+
+        if(newGroups.length === undefined){
+            newGroups = [];
+        }
 
         this.setState({
             ownerGroups: newGroups

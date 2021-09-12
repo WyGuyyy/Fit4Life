@@ -89,6 +89,24 @@
     align-items: center;
 }
 
+.Group-List-Item-Owned-Title-Admin{
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    transition-duration: .5s;
+    color: rgb(9, 255, 0);
+    cursor: pointer;
+}
+
+.Group-List-Item-Owned-Title-Admin:hover{
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .Group-List-Item-Title-Admin{
     font-size: 30px;
     width: 100%;

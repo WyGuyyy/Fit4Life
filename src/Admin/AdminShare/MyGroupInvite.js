@@ -72,6 +72,11 @@ class MyGroupInvite extends React.Component{
         var invites = this.state.groupInvites;
 
         while(list.firstChild){
+
+            if(list.firstChild === list.lastChild){
+                break;
+            }
+
             list.removeChild(list.lastChild);
         }
 
@@ -100,7 +105,7 @@ class MyGroupInvite extends React.Component{
             iconDecline.classList.add("fa-remove");
             iconDecline.id = "iconDecline-" + count;
 
-            listItem.classList.add("Invite-List-Item");
+            listItem.classList.add("MyGroupInvite-List-Item");
             listItem.id = "myGroupInviteListItem-" + count;
             //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
             //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
@@ -117,7 +122,7 @@ class MyGroupInvite extends React.Component{
             listItemTitle.classList.add("MyGroupInvite-List-Item-Title");
             listItemTitle.textContent = groupTitle;
             listItemTitle.id = "myGroupInviteListItemTitle-" + count;
-            listItemTitle.title = "Classroom" + count
+            listItemTitle.title = "Group" + count
 
             listItemOwner.classList.add("MyGroupInvite-List-Item-Teacher");
             listItemOwner.textContent = "Professor " + ownerLastName;
@@ -149,7 +154,6 @@ class MyGroupInvite extends React.Component{
             listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
 
             list.appendChild(listItem);
-
         }
 
     }
@@ -217,41 +221,58 @@ class MyGroupInvite extends React.Component{
     async declineInvite(eventObj){
         //var idNum = eventObj.event.target.id.split("-")[1];
 
-        var count = 0;
+       // var count = 0;
 
-        var inviteList = document.getElementById("myGroupInviteList");
-        var listChildren = inviteList.childNodes;
+        /*var inviteList = document.getElementById("myGroupInviteList");
+        var listChildren = inviteList.childNodes;*/
 
-        await fetch(baseURI + "/api/invite/" + this.state.focusedInvite.invite_id, {  
+        var invites = [];
+
+        await fetch(baseURI + "/api/groupInvite/" + this.state.focusedInvite.group_invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
-        for(count = 0; count < listChildren.length; count++){
+        await fetch(baseURI + "/api/groupInvite/forTeacher/" + localStorage.getItem("userID"), {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                invites = result;
+            }
+        ).catch(console.log);
+
+        /*for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("myGroupInviteListItem-" + this.state.focusedInviteItemID) === 0){
                 inviteList.removeChild(listChildren[count]); 
                 break;
             }
         }
 
-        this.recolorRows(inviteList);
+        this.recolorRows(inviteList);*/
 
         this.confirmBackendTransaction("Invite declined!");
 
         this.setState({
             focusedInvite: "",
-            focusedInviteItemID: ""
+            focusedInviteItemID: "",
+            groupInvites: invites
         });
     }
 
     async acceptInvite(eventObj){
         //var idNum = eventObj.event.target.id.split("-")[1];
 
-        var count = 0;
+        //var count = 0;
 
-        var inviteList = document.getElementById("myGroupInviteList");
-        var listChildren = inviteList.childNodes;
+        /*var inviteList = document.getElementById("myGroupInviteList");
+        var listChildren = inviteList.childNodes;*/
+        var invites = [];
 
         await fetch(baseURI + "/api/groupInvite/accept/" + localStorage.getItem("userID") + "/" + this.state.focusedInvite.group.group_id, {  
             method: "POST",                          
@@ -259,26 +280,41 @@ class MyGroupInvite extends React.Component{
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
-        await fetch(baseURI + "/api/groupInvite/" + this.state.focusedInvite.invite_id, {  
+        await fetch(baseURI + "/api/groupInvite/" + this.state.focusedInvite.group_invite_id, {  
             method: "DELETE",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
+        
 
-        for(count = 0; count < listChildren.length; count++){
+        await fetch(baseURI + "/api/groupInvite/forTeacher/" + localStorage.getItem("userID"), {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                invites = result;
+            }
+        ).catch(console.log);
+
+        /*for(count = 0; count < listChildren.length; count++){
             if(listChildren[count].id.localeCompare("myGroupInviteListItem-" + this.state.focusedInviteItemID) === 0){
                 inviteList.removeChild(listChildren[count]); 
                 break;
             }
-        }
+        }*/
 
-        this.recolorRows(inviteList);
+        //this.recolorRows(inviteList);
 
         this.confirmBackendTransaction("Invite accepted!");
 
         this.setState({
             focusedInvite: "",
-            focusedInviteItemID: ""
+            focusedInviteItemID: "",
+            groupInvites: invites
         });
     }
 
@@ -340,7 +376,7 @@ class MyGroupInvite extends React.Component{
                 <ConfirmModal text="Decline invite?" yesText="Yes" noText="No" id="modalContainerDecline" onYes={e => {this.declineInvite({event: e}); this.closeDeclineModal(); this.confirmBackendTransaction("Invite declined!");}}/>
                 <div className="inviteContainer">
                     <ConfirmToast text=""/>
-                    <AdminPopout hist={this.props.location.state.hist}/>
+                    <AdminPopout hist={this.props.history}/>
                     <div className="myGroupInviteWrapper" id="myGroupInviteWrapper">
                         <div className="myGroupInviteList" id="myGroupInviteList">
                             <div className="myGroupInviteFiller"></div>
