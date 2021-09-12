@@ -97,7 +97,7 @@ class Header extends React.Component{
                             <p className="backArrowBackground">
                                 <i className="arrow up" onClick={this.props.customClick}/>
                             </p>
-                            <h1 className="pageTitle" title={this.props.breadCrumbs}>{this.state.title}</h1>
+                            <h1 className="pageTitle" title={this.props.breadCrumbs}>{this.props.title}</h1>
                         </div>
                         <div className="MMS-Title-Container">
                             <Link to={"/"} className="titleLink">

@@ -17,7 +17,7 @@ class Header extends React.Component{
             menuPop: false,
             canGoBack: (props.goBack == undefined ? false : true)
         };
-
+        
         this.goBack = this.goBack.bind(this);
     }
     
@@ -100,7 +100,7 @@ class Header extends React.Component{
                             <p className="backArrowBackground-Admin">
                                 <i className="arrow-Admin up-Admin" onClick={this.props.customClick}/>
                             </p>
-                            <h1 className="pageTitle-Admin" title={this.props.breadCrumbs}>{this.state.title}</h1>
+                            <h1 className="pageTitle-Admin" title={this.props.breadCrumbs}>{this.props.title}</h1>
                         </div>
                         <div className="MMS-Title-Container-Admin">
                             <Link to="/admin" className="titleLink-Admin">

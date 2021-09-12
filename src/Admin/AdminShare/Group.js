@@ -35,6 +35,9 @@ class Group extends React.Component{
     async getMembersAndSetGroup(){
         var groupId = this.props.location.state.group.group_id;
         var members = [];
+        var group = "";
+
+        var that = this;
 
         await fetch(baseURI + "/api/group/getMembers/" + groupId, {  
             method: "GET",                          
@@ -49,12 +52,27 @@ class Group extends React.Component{
             }
         ).catch(console.log);
 
+        await fetch(baseURI + "/api/group/" + groupId, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        })
+        .then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                group = result;
+            }
+        ).catch(console.log);
+
         this.setState({
-            groupMembers: members
+            groupMembers: members,
+            selectedGroup: group
         });
     }
 
     renderMembers(){
+
         var members = this.state.groupMembers;
         var list = document.getElementById("memberList-Admin");
 
@@ -63,6 +81,10 @@ class Group extends React.Component{
         }
 
         for(var count = 0; count < members.length; count++){
+
+            if(members[count].user_id === parseInt(localStorage.getItem("userID"))){
+                continue;
+            }
 
             var listItem = document.createElement("div");
             var listItemTitleName = document.createElement("h2");
@@ -198,8 +220,6 @@ class Group extends React.Component{
             title: newTitle
         };
 
-        console.log(newGroup);
-
         await fetch(baseURI + "/api/group", {  
             method: "PUT",                          
             headers: {"Content-Type": "application/json",
@@ -225,8 +245,14 @@ class Group extends React.Component{
             });
     }
 
-    goToGroupTeacherAddScreen(event){
+    goToGroupInvite(event){
 
+        var aGroup = this.state.selectedGroup;
+
+        this.props.history.push({
+            pathname: "/groupInvite",
+            state: {goBack: true, group: aGroup}
+        });
     }
 
     async removeMember(event){
@@ -268,11 +294,11 @@ class Group extends React.Component{
     showModal(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
-        var aGroup = this.state.ownerGroups[idNum];
+        var aMember = this.state.groupMembers[idNum];
 
         this.setState({
-            focusedGroup: aGroup,
-            focusedGroupItemID: idNum
+            focusedMember: aMember,
+            focusedMemberItemID: idNum
         });
 
         document.getElementById("modalContainer").style.display = "flex";
@@ -296,12 +322,14 @@ class Group extends React.Component{
     }
     
     render(){
+        
+        var title = this.state.selectedGroup === undefined ? "Group" : this.state.selectedGroup.title;
 
         return(
 
             <Fragment>
-                <AdminHeader title={(this.state.selectedGroup === undefined ? "Group" : this.state.selectedGroup.title)} breadCrumbs={(this.state.selectedGroup === undefined ? "Group" : this.state.selectedGroup.title)} goBack={true} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Delete group?" yesText="Yes" noText="No" onYes={e => {this.removeMember(e); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <AdminHeader title={title} breadCrumbs={title} goBack={true} customClick={this.goBack.bind(this)}/>
+                <ConfirmModal text="Remove member?" yesText="Yes" noText="No" onYes={e => {this.removeMember(e); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <LoadingSpinner/>
                 <div className="Member-CreateName-Modal-Cover">
                     <div className="Member-CreateName-Modal">
@@ -325,8 +353,8 @@ class Group extends React.Component{
                         <button className="Member-MemberData-Button" onClick={e => this.goToMemberData(e, "A")}>All</button>
                         <input className="Fit4Life-Searchbar-Admin"/>
                         <button className="Fit4Life-SearchButton-Admin" onClick={e => this.searchGroups(e)}>Search</button>
-                        <button className="Member-AddTeacher-Button" onClick={e => this.openGroupNameModel(e)}><i className="fa fa-group" style={{fontSize: "20px"}}/></button>
-                        <button className="Member-EditGroup-Button" onClick={e => this.goToGroupTeacherAddScreen(e)}><i className="fa fa-pencil" style={{fontSize: "20px"}}/></button>
+                        <button className="Member-AddTeacher-Button" onClick={e => this.goToGroupInvite(e)}><i className="fa fa-group" style={{fontSize: "20px"}}/></button>
+                        <button className="Member-EditGroup-Button" onClick={e => this.openGroupNameModel(e)}><i className="fa fa-pencil" style={{fontSize: "20px"}}/></button>
                     </div>
                 </div>
             </Fragment>
