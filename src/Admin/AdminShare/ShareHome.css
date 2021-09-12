@@ -233,6 +233,28 @@
     background: #ffd358;
 }
 
+.Group-CheckInvite-Button{
+    position: absolute;
+    left: 30px;
+    bottom: 35px;
+    background:#bd8b01;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.5s;
+}
+
+.Group-CheckInvite-Button:hover{
+    background: #ffd358;
+}
+
 @media(max-width: 1024px){
 
     .Group-List-Item-Admin{
@@ -284,7 +306,6 @@
         grid-area: delete;
         height: 50px;
     }
-    
 
 }
 
@@ -309,13 +330,10 @@
 
 }
 
-@media(max-width: 319px){
-    /*.Goal-List-Item{
-        grid-template-columns: 1fr 1fr 1fr;
-    }*/
-
-  /*  .Goal-Grid-Cell-Progress{
-        display: none;
-    }*/
-
+@media(max-width: 425px){
+    .Group-CheckInvite-Button{
+        left: 5px;
+        width: 40px;
+        height: 40px;
+    }
 }

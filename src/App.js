@@ -40,6 +40,7 @@ import ScheduleManagerAdmin from './Admin/AdminComponent/ScheduleManagerAdmin';
 import ShareHome from './Admin/AdminShare/ShareHome';
 import Group from './Admin/AdminShare/Group';
 import GroupInvite from './Admin/AdminShare/GroupInvite';
+import MyGroupInvite from './Admin/AdminShare/MyGroupInvite';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -108,6 +109,7 @@ function App() {
         <PrivateAdminRoute exact path="/share" component={ShareHome} />
         <PrivateAdminRoute exact path="/group" component={Group} />
         <PrivateAdminRoute exact path="/groupInvite" component={GroupInvite} />
+        <PrivateAdminRoute exact path="/myGroupInvite" component={MyGroupInvite} />
       </Switch>
     </Router>
   );

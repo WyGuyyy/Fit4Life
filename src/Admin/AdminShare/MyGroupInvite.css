@@ -1,0 +1,248 @@
+.myGroupInviteContainer{
+    width: 100%;
+    height: 100%;
+    background: #6b4e00;
+}
+
+.myGroupInviteWrapper{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+#myGroupInviteWrapper::-webkit-scrollbar {
+    width: 15px;
+    background-color: #F5F5F5;
+    visibility: hidden;
+  } 
+
+#myGroupInviteWrapper::-webkit-scrollbar-thumb{
+    background-color: black;
+}
+  
+#myGroupInviteWrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.myGroupInviteList{
+    width: 100%;
+    height: 100%;
+    background: #6b4e00;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.myGroupInviteFiller{
+    width: 100%;
+    min-height: 100px;
+    background: black;
+}
+
+.MyGroupInvite-List-Item{
+    width:100%;
+    min-height: 100px;
+    background: #c08d00;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.MyGroupInvite-List-Item{
+    width:100%;
+    min-height: 100px;
+    background: #bb911f;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+.MyGroupInvite-Grid-Cell{
+    height: 100%;
+    width: 24vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.MyGroupInvite-List-Item-Title{
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.MyGroupInvite-List-Item-Teacher{
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.MyGroupInvite-List-Item-Accept-Button{
+    background: #ac7e00;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 50px;
+    height: 50px;
+}
+
+.MyGroupInvite-List-Item-Accept-Button:hover{
+    background: #ffbb00;
+}
+
+.MyGroupInvite-List-Item-Decline-Button{
+    background: #ac7e00;
+    font-size: 30px;
+    transition-duration: .5s;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    width: 50px;
+    height: 50px;
+}
+
+.MyGroupInvite-List-Item-Decline-Button:hover{
+    background: #ffbb00;
+}
+
+.MyGroupInvite-Create-Button{
+    height: 50px;
+    width: 75px;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 2;
+    background:#ffbb00;
+    border-radius: 20px;
+    font-size: 25px;
+    box-shadow: 2px 2px 10px black;
+}
+
+@media(max-width: 1023px){
+
+    .MyGroupInvite-List-Item{
+        width:100%;
+        min-height: 100px;
+        background: #c08d00;
+        display: grid;
+        grid-template-areas: 1fr 1fr;
+        grid-template-areas: 
+        'title title accept accept'
+        'teacher teacher decline decline';
+        grid-gap: 0;
+        justify-content: center;
+        justify-items: center;
+        align-content: center;
+        align-items: center;
+    }
+
+    .MyGroupInvite-Grid-Cell{
+        width: 47vw;
+    }
+
+    .MyGroupInvite-List-Item-Title{
+        font-size: 20px;
+    }
+    
+    .MyGroupInvite-List-Item-Teacher{
+        font-size: 20px;
+    }
+    
+    .MyGroupInvite-List-Item-Accept-Button{
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .MyGroupInvite-List-Item-Decline-Button{
+        font-size: 20px;
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+        width: 40px;
+        height: 40px;
+    }
+
+    .MyGroupInvite-Grid-Cell-Title{
+        grid-area: title;
+    }
+
+    .MyGroupInvite-Grid-Cell-Teacher{
+        grid-area: teacher;
+    }
+
+    .MyGroupInvite-Grid-Cell-Accept{
+        grid-area: accept;
+        height: 50px;
+    }
+
+    .MyGroupInvite-Grid-Cell-Decline{
+        grid-area: decline;
+        height: 50px;
+    }
+
+}
+
+@media(max-width: 630px){
+    .MyGroupInvite-List-Item-Title{
+        font-size: 13px;
+    }
+    
+    .MyGroupInvite-List-Item-Teacher{
+        font-size: 13px;
+    }
+    
+    .MyGroupInvite-List-Item-Accept-Button{
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+    
+    .MyGroupInvite-List-Item-Decline-Button{
+        transition-duration: .5s;
+        border: none;
+        box-shadow: 2px 2px 10px black;
+    }
+
+}
+
+@media(max-width: 319px){
+   /* .Invite-List-Item{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .Invite-Grid-Cell-Progress{
+        display: none;
+    }*/
+
+}

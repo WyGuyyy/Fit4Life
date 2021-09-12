@@ -5,6 +5,7 @@ import AdminPopout from '../AdminPopout/AdminPopout'
 import ConfirmCreate from '../../Confirm/ConfirmCreate';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {baseURI} from '../../_services/APIService';
@@ -39,6 +40,8 @@ class GroupInvite extends React.Component{
 
     async fillTeachers(queryString){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var list = document.getElementById("groupInviteList-Admin");
         var count = 0;
 
@@ -49,6 +52,11 @@ class GroupInvite extends React.Component{
         } 
 
         for(count = 0; count < matchedTeachers.length; count++){
+
+            if(matchedTeachers[count].user_id === parseInt(localStorage.getItem("userID"))){
+                continue;
+            }
+
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
             //var listStudentButton = document.createElement("button");
@@ -132,6 +140,8 @@ class GroupInvite extends React.Component{
             list.appendChild(listItem);
 
         }
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -264,7 +274,7 @@ class GroupInvite extends React.Component{
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
 
-        var tempButton = document.getElementById("groupInviteListItemInvite-" + this.state.focusedStudentItemID + "-Admin");
+        var tempButton = document.getElementById("groupInviteListItemInvite-" + this.state.focusedTeacherItemID + "-Admin");
         tempButton.classList.remove("Group-Invite-List-Item-Invite-Button-Admin");
         tempButton.classList.add("Disabled");
         tempButton.disabled = true;
@@ -319,11 +329,11 @@ class GroupInvite extends React.Component{
     showModal(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
-        var aStudent = this.state.filteredStudents[idNum];
+        var aTeacher = this.state.filteredTeachers[idNum];
 
         this.setState({
-            focusedStudent: aStudent,
-            focusedStudentItemID: idNum
+            focusedTeacher: aTeacher,
+            focusedTeacherItemID: idNum
         });
 
         document.getElementById("modalContainer").style.display = "flex";
@@ -380,6 +390,7 @@ class GroupInvite extends React.Component{
                 <AdminHeader title={"Invite Teachers"} breadCrumbs={"Invite Teachers to " + group} goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmCreate confirm={e => {this.closeDetailModal()}} text={""} btnText={"Ok"}/>
                 <ConfirmModal text="Invite teacher?" yesText="Yes" noText="No" onYes={e => {this.inviteTeacher(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <LoadingSpinner/>
                 <div className="groupInviteContainer-Admin">
                     <AdminPopout hist={this.props.history}/>
                     <div className="groupInviteWrapper-Admin" id="groupInviteWrapper-Admin">

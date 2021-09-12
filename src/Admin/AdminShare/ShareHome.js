@@ -54,6 +54,9 @@ class ShareHome extends React.Component{
     }
 
     renderGroups(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var groups = this.state.ownerGroups;
         var list = document.getElementById("groupList-Admin");
 
@@ -106,6 +109,8 @@ class ShareHome extends React.Component{
             list.appendChild(listItem);
 
         }
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     async searchGroups(){
@@ -218,6 +223,13 @@ class ShareHome extends React.Component{
             });
     }
 
+    goToMyGroupInvites(){
+        this.props.history.push({
+            pathname: "/myGroupInvite",
+            state: {goBack: true}
+        });
+    }
+
     async deleteGroup(event){
 
         var count = 0;
@@ -314,6 +326,7 @@ class ShareHome extends React.Component{
                     <div className="Fit4Life-SearchbarWrapper-Admin">
                         <input className="Fit4Life-Searchbar-Admin"/>
                         <button className="Fit4Life-SearchButton-Admin" onClick={e => this.searchGroups(e)}>Search</button>
+                        <button className="Group-CheckInvite-Button" onClick={e => this.goToMyGroupInvites(e)}><i className="fa fa-envelope" style={{fontSize: "25px"}}/></button>
                     </div>
                 </div>
             </Fragment>
