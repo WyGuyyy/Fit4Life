@@ -240,7 +240,7 @@ class Group extends React.Component{
             var aMember = this.state.groupMembers[idNum];
 
             this.props.history.push({
-                pathname: "/member",
+                pathname: "/groupMember",
                 state: {goalID: eventObj.id, goBack: true, member: aMember}
             });
     }
