@@ -1,0 +1,262 @@
+.groupMemberClassroomContainer{
+    display: grid;
+    grid-template-areas: 
+    'header'
+    'buttons';
+}
+
+.groupMemberClassroomWrapper{
+    position: absolute;
+    top: 100px;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    grid-area: buttons;
+    overflow: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    padding: 50px;
+}
+
+.groupMemberClassroomWrapper::-webkit-scrollbar {
+    width: 15px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  } 
+
+  .groupMemberClassroomWrapper::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+  
+.groupMemberClassroomWrapper::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+.GroupMemberClassroom-Tile-Wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 50px;
+}
+
+.Fit4Life-SearchbarWrapper{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Fit4Life-SearchElements-Wrapper{
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Fit4Life-Searchbar{
+    width: 200px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.Fit4Life-SearchButton{
+    width: 200px;
+    height: 30px;
+    border: none;
+    border-radius: 15px;
+    background: #ac8e3b;
+    transition-duration: 0.5s;
+}
+
+.Fit4Life-SearchButton:hover{
+    background: #dfb84c;
+}
+
+.Fit4Life-CategoryView{
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    border: none;
+    background: #ac8e3b;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 60px;
+    width: 60px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.Fit4Life-CategoryView:hover{
+    background: #dfb84c;
+}
+
+.GroupMemberClassroom-AddExerciseCopy-Button{
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    border: none;
+    background: #ac8e3b;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 60px;
+    width: 60px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.GroupMemberClassroom-AddExerciseCopy-Button:hover{
+    background: #dfb84c;
+}
+
+.GroupMemberClassroom-ToClassroom-Cover{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.GroupMemberClassroom-ToClassroom-Wrapper{
+    width: 300px;
+    height: 200px;
+    background: #bb911f;
+    box-shadow: 2px 2px 10px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.GroupMemberClassroom-ToClassroom-TopWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.GroupMemberClassroom-ToClassroom-BottomWrapper{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.GroupMemberClassroom-ToClassroom-Label{
+    
+}
+
+.GroupMemberClassroom-ToClassroom-Select{
+    margin-top: 10px;
+    width: 250px;
+    height: 30px;
+    border: none;
+    box-shadow: 2px 2px 10px black;
+    border-radius: 10px;
+}
+
+.GroupMemberClassroom-ToClassroom-OkButton{
+    margin-right: 20px;
+    border: none;
+    background: #d1ac47;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 10px black;
+}
+
+.GroupMemberClassroom-ToClassroom-OkButton:hover{
+    background: #ffd257;
+}
+
+.GroupMemberClassroom-ToClassroom-CancelButton{
+    border: none;
+    background: #d1ac47;
+    z-index: 5;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 10px black;
+}
+
+.GroupMemberClassroom-ToClassroom-CancelButton:hover{
+    background: #ffd257;
+}
+
+@media(max-width: 700px){
+    .GroupMemberClassroom-Tile-Wrapper{
+        height: 250px;
+    }
+}
+
+@media(max-width: 490px){
+    .GroupMemberClassroom-Tile-Wrapper{
+        height: 200px;
+    }
+
+    .Fit4Life-CategoryView{
+        right: 25px;
+    }
+}
+
+@media(max-width: 460px){
+    .Fit4Life-SearchbarWrapper{
+        align-items: flex-start;
+    }
+
+    .Fit4Life-SearchElements-Wrapper{
+        height: 100%;
+        background: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .GroupMemberClassroom-AddExerciseCopy-Button{
+        right: 20px;
+    }
+}
+
+@media(max-width: 375px){
+    .GroupMemberClassroom-Tile-Wrapper{
+        height: 150px;
+    }
+
+    .Fit4Life-CategoryView{
+        right: 20px;
+    }
+}

@@ -42,6 +42,7 @@ import Group from './Admin/AdminShare/Group';
 import GroupInvite from './Admin/AdminShare/GroupInvite';
 import MyGroupInvite from './Admin/AdminShare/MyGroupInvite';
 import GroupMember from './Admin/AdminShare/GroupMember';
+import GroupMemberClassroom from './Admin/AdminShare/GroupMemberClassroom';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
@@ -112,6 +113,7 @@ function App() {
         <PrivateAdminRoute exact path="/groupInvite" component={GroupInvite} />
         <PrivateAdminRoute exact path="/myGroupInvite" component={MyGroupInvite} />
         <PrivateAdminRoute exact path="/groupMember" component={GroupMember} />
+        <PrivateAdminRoute exact path="/groupMemberClassroom" component={GroupMemberClassroom} />
       </Switch>
     </Router>
   );

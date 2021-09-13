@@ -22,12 +22,16 @@ class GroupMember extends React.Component{
 
     }
     
-    componentDidMount(){ 
-        this.getClassrooms();
+    async componentDidMount(){
+        await this.getClassrooms();
     }
 
-    componentWillUnmount(){
+    componentDidUpdate(){
         this.fillClassrooms();
+    }
+
+    async componentWillUnmount(){
+        
     }
 
     async getClassrooms(){
@@ -54,7 +58,7 @@ class GroupMember extends React.Component{
 
     }
 
-    async fillClassrooms(){
+    fillClassrooms(){
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
@@ -63,6 +67,10 @@ class GroupMember extends React.Component{
 
         var classrooms = this.state.teacherClassrooms;
 
+        while(list.firstChild){
+            list.removeChild(list.lastChild);
+        }
+        
         for(count = 0; count < classrooms.length; count++){
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
@@ -77,7 +85,7 @@ class GroupMember extends React.Component{
             iconCopy.classList.add("fa-copy");
             iconCopy.id = "iconCopy-" + count;
 
-            listItem.classList.add("Classroom-List-Item-Admin");
+            listItem.classList.add("GroupMember-List-Item-Admin");
             listItem.id = "groupMemberListItem-" + count + "-Admin";
             //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
             //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
@@ -92,12 +100,12 @@ class GroupMember extends React.Component{
             listItemTitle.textContent = classrooms[count].title;
             listItemTitle.id = "groupMemberListItemTitle-" + count + "-Admin";
             listItemTitle.title = classrooms[count].title;
-            listItemTitle.onclick = (e) => this.goToClassroomExercises({event: e, id: listItem.id});
+            listItemTitle.onclick = (e) => this.goToGroupMemberClassroomExercises({event: e, id: listItem.id});
 
             listCopyButton.classList.add("GroupMember-List-Item-Copy-Button-Admin");
             listCopyButton.id = "groupMemberListItemStudents-" + count + "-Admin";
             listCopyButton.title = "Copy";
-            listCopyButton.onclick = (e) => this.copyClassroom({event: e, id: listCopyButton.id});
+            listCopyButton.onclick = (e) => this.showModal({event: e, id: listCopyButton.id});
             listCopyButton.appendChild(iconCopy);
 
             cell1.appendChild(listItemTitle);
@@ -130,7 +138,9 @@ class GroupMember extends React.Component{
             list.removeChild(list.lastChild);
         }
 
-        await fetch(baseURI + "/api/classroom/forteacher/" + localStorage.getItem("userID"), {  
+        var member = this.state.member;
+
+        await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
                           "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -208,6 +218,22 @@ class GroupMember extends React.Component{
 
     }
 
+    async copyClassroom(event){
+
+        var idNum = this.state.focusedClassroomItemID;
+        var aClassroom = this.state.focusedClassroom;
+
+        var classroomID = aClassroom.classroom_id;
+        var teacherID = localStorage.getItem("userID");
+
+        await fetch(baseURI + "/api/classroom/copy/" + classroomID + "/" + teacherID, {  
+            method: "POST",                          
+            headers: {"Content-Type": "application/json",
+                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).catch(console.log);
+
+    }
+
     changeListItemBackground(id){
         document.getElementById(id).style.background = "#bb911f";
     }
@@ -230,28 +256,16 @@ class GroupMember extends React.Component{
         }
     }
 
-    goToClassroomExercises(eventObj){
+    goToGroupMemberClassroomExercises(eventObj){
 
             var idNum = eventObj.event.target.id.split("-")[1];
             var aClassroom = this.state.teacherClassrooms[idNum];
 
             this.props.history.push({
-                pathname: "/classroomAdmin",
-                state: {goalID: eventObj.id, goBack: true, classroom: aClassroom}
+                pathname: "/groupMemberClassroom",
+                state: {goBack: true, classroom: aClassroom}
             });
     }
-
-    goToClassroomStudents(eventObj){
-
-        var idNum = eventObj.event.target.id.split("-")[1];
-
-        this.props.history.push({
-            pathname: "/studentAdmin",
-            state: {goBack: true, classID: this.state.teacherClassrooms[idNum].classroom_id, classroom: this.state.teacherClassrooms[idNum]}
-        });
-
-    }
-
 
     showModal(eventObj){
 
@@ -289,7 +303,7 @@ class GroupMember extends React.Component{
 
             <Fragment>
                 <AdminHeader title="Classrooms" breadCrumbs="Classrooms" goBack={false} customClick={this.goBack.bind(this)}/>
-                <ConfirmModal text="Copy classroom?" yesText="Yes" noText="No" onYes={e => {this.deleteClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
+                <ConfirmModal text="Copy classroom?" yesText="Yes" noText="No" onYes={e => {this.copyClassroom(); this.closeModal(); this.confirmBackendTransaction();}}/>
                 <LoadingSpinner/>
                 <div className="homeContainer">
                     <AdminPopout hist={this.props.history}/>

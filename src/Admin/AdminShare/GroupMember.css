@@ -81,10 +81,14 @@
 }
 
 .GroupMember-Grid-Cell-Admin{
-    width: 19vw;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
@@ -105,7 +109,7 @@
     cursor: pointer;
 }
 
-.GroupMember-List-Item-Student-Admin{
+.GroupMember-List-Item-Copy-Admin{
     font-size: 30px;
     width: 100%;
     text-align: center;
