@@ -136,7 +136,7 @@ class Group extends React.Component{
             listItem.appendChild(cell2);
             listItem.appendChild(cell3);
 
-            listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
+            listItem.style.background = (list.children.length % 2 === 0 ? "#997000" : "#c08d00" );
 
             list.appendChild(listItem);
 
@@ -241,8 +241,17 @@ class Group extends React.Component{
 
             this.props.history.push({
                 pathname: "/groupMember",
-                state: {goalID: eventObj.id, goBack: true, member: aMember}
+                state: {goalID: eventObj.id, goBack: true, member: aMember, flag: "M"}
             });
+    }
+
+    goToAllMemberData(event){
+        var members = this.state.groupMembers;
+
+        this.props.history.push({
+            pathname: "/groupMember",
+            state: {goBack: true, members: members, flag: "A"}
+        });
     }
 
     goToGroupInvite(event){
@@ -342,7 +351,7 @@ class Group extends React.Component{
                     </div>
                 </div>
                 <div className="homeContainer">
-                    <AdminPopout hist={this.props.location.state.hist}/>
+                    <AdminPopout hist={this.props.history}/>
                     <div className="memberWrapper-Admin" id="memberWrapper-Admin">
                         <ConfirmToast text="Member removed!"/>
                         <div className="memberList-Admin" id="memberList-Admin">
@@ -350,7 +359,7 @@ class Group extends React.Component{
                         </div>
                     </div>
                     <div className="Fit4Life-SearchbarWrapper-Admin">
-                        <button className="Member-MemberData-Button" onClick={e => this.goToMemberData(e, "A")}>All</button>
+                        <button className="Member-MemberData-Button" onClick={e => this.goToAllMemberData(e)}>All</button>
                         <input className="Fit4Life-Searchbar-Admin"/>
                         <button className="Fit4Life-SearchButton-Admin" onClick={e => this.searchGroups(e)}>Search</button>
                         <button className="Member-AddTeacher-Button" onClick={e => this.goToGroupInvite(e)}><i className="fa fa-group" style={{fontSize: "20px"}}/></button>

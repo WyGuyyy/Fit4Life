@@ -7,14 +7,16 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {baseURI} from '../../_services/APIService';
+import Group from './Group';
 
 class GroupMember extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            canGoBack: false,
-            member: props.location.state.member,
+            canGoBack: true,
+            flag: props.location.state.flag,
+            //member: props.location.state.member,
             teacherClassrooms: "",
             focusedClassroom: "",
             focusedClassroomItemID: ""
@@ -23,7 +25,11 @@ class GroupMember extends React.Component{
     }
     
     async componentDidMount(){
-        await this.getClassrooms();
+        if(this.state.flag === "A"){
+            await this.getGroupClassrooms();
+        }else{
+            await this.getClassrooms();
+        }
     }
 
     componentDidUpdate(){
@@ -37,7 +43,7 @@ class GroupMember extends React.Component{
     async getClassrooms(){
 
         var classrooms = [];
-        var member = this.state.member;
+        var member = this.props.location.state.member;
 
         await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
                 method: "GET",                          
@@ -55,6 +61,40 @@ class GroupMember extends React.Component{
             this.setState({
                 teacherClassrooms: classrooms
             });
+
+    }
+
+    async getGroupClassrooms(){
+
+        var classrooms = [];
+        var groupMembers = this.props.location.state.members;
+
+        for(var count = 0; count < groupMembers.length; count++){
+
+            var member = groupMembers[count];
+
+            if(member.user_id === parseInt(localStorage.getItem("userID"))){
+                continue;
+            }
+
+            await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : {};
+                        classrooms.push.apply(classrooms, result);
+                    }
+                ).catch(console.log);
+
+        }
+
+        this.setState({
+            teacherClassrooms: classrooms
+        });
 
     }
 
@@ -138,20 +178,50 @@ class GroupMember extends React.Component{
             list.removeChild(list.lastChild);
         }
 
-        var member = this.state.member;
+        if(this.state.flag === "A"){
 
-        await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    classrooms = result;
+            var groupMembers = this.props.location.state.members;
+
+            for(var count = 0; count < groupMembers.length; count++)
+            {
+                var member = groupMembers[count];
+
+                if(member.user_id === parseInt(localStorage.getItem("userID"))){
+                    continue;
                 }
-            ).catch(console.log);
+
+                await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : {};
+                        classrooms.push.apply(classrooms, result);
+                    }
+                ).catch(console.log);
+            }
+
+        }else{
+
+            var member = this.props.location.state.member;
+
+            await fetch(baseURI + "/api/classroom/forteacher/" + member.user_id, {  
+                    method: "GET",                          
+                    headers: {"Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+                })
+                .then(res => res.text())
+                .then(
+                    (text) => {
+                        var result = text.length ? JSON.parse(text) : {};
+                        classrooms = result;
+                    }
+                ).catch(console.log);
+
+        }
 
             for(var count = 0; count < classrooms.length; count++){
                 if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){

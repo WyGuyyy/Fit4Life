@@ -35,9 +35,8 @@ class ShareHome extends React.Component{
     async getGroups(){
         var ownerID = localStorage.getItem("userID");
         var groups = [];
-        var test = [];
         var sharedGroups = [];
-
+        
         await fetch(baseURI + "/api/group/forOwner/" + ownerID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
@@ -48,8 +47,6 @@ class ShareHome extends React.Component{
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 groups = result;
-                test = result;
-                console.log(result);
             }
         ).catch(console.log);
 
@@ -86,6 +83,7 @@ class ShareHome extends React.Component{
 
         var groups = this.state.ownerGroups;
         var sharedGroups = this.state.sharedGroups;
+        var compositeArray = [];
         var count = 0;
 
         var list = document.getElementById("groupList-Admin");
@@ -140,9 +138,10 @@ class ShareHome extends React.Component{
 
         }
 
-        groups.push.apply(groups, sharedGroups);
+        compositeArray = groups.slice();
+        compositeArray.push.apply(compositeArray, sharedGroups);
 
-        for(count = count; count < groups.length; count++){
+        for(count = count; count < compositeArray.length; count++){
 
             var listItem = document.createElement("div");
             var listItemTitle = document.createElement("h2");
@@ -156,9 +155,9 @@ class ShareHome extends React.Component{
             cell1.classList.add("Group-Grid-Cell-Title-Admin");
 
             listItemTitle.classList.add("Group-List-Item-Title-Admin");
-            listItemTitle.textContent = groups[count].title;
+            listItemTitle.textContent = compositeArray[count].title;
             listItemTitle.id = "groupListItemTitle-" + count + "-Admin";
-            listItemTitle.title = groups[count].title;
+            listItemTitle.title = compositeArray[count].title;
             listItemTitle.onclick = (e) => this.goToGroup({event: e, id: listItem.id});
 
             cell1.appendChild(listItemTitle);
@@ -198,8 +197,7 @@ class ShareHome extends React.Component{
             .then(res => res.text())
             .then(
                 (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    groups = result;
+                    groups = text.length ? JSON.parse(text) : {};
                 }
             ).catch(console.log);
 
