@@ -62,6 +62,8 @@ class GroupMemberClassroom extends React.Component{
 
     async getExercisesAndTeachersClassrooms(){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var exercises = [];
         var exerciseBlobs = [];
         var teachersClassrooms = [];
@@ -112,6 +114,8 @@ class GroupMemberClassroom extends React.Component{
             componentBlobs: exerciseBlobs,
             teacherClassrooms: teachersClassrooms
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     renderTiles(){
@@ -284,6 +288,8 @@ class GroupMemberClassroom extends React.Component{
 
     async copyExercises(event){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var selectedExercises = this.state.selectedExercises;
         var teacherClassrooms = this.state.teacherClassrooms;
 
@@ -314,6 +320,8 @@ class GroupMemberClassroom extends React.Component{
 
         this.closeToClassroom(null);
         this.confirmBackendTransaction();
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     formatDateForRange(d){

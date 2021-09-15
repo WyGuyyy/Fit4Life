@@ -33,6 +33,9 @@ class ShareHome extends React.Component{
     }
 
     async getGroups(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var ownerID = localStorage.getItem("userID");
         var groups = [];
         var sharedGroups = [];
@@ -75,6 +78,8 @@ class ShareHome extends React.Component{
             ownerGroups: groups,
             sharedGroups: sharedGroups
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     renderGroups(){
@@ -266,6 +271,8 @@ class ShareHome extends React.Component{
 
     async createGroup(eventObj){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var ownerID = localStorage.getItem("userID");
         var groups = [];
 
@@ -303,16 +310,25 @@ class ShareHome extends React.Component{
         this.setState({
             ownerGroups: groups
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     goToGroup(eventObj){
 
-            var idNum = eventObj.event.target.id.split("-")[1];
-            var aGroup = this.state.ownerGroups[idNum];
+            var idNum = parseInt(eventObj.event.target.id.split("-")[1]);
+            var compositeArray = [];
+            var groups = this.state.ownerGroups;
+            var sharedgroups = this.state.sharedGroups;
+
+            compositeArray = groups.slice();
+            compositeArray.push.apply(compositeArray, sharedgroups);
+
+            var aGroup = compositeArray[idNum];
 
             this.props.history.push({
                 pathname: "/group",
-                state: {goalID: eventObj.id, goBack: true, group: aGroup}
+                state: {goalID: eventObj.id, goBack: true, group: aGroup, isOwner: (idNum >= groups.length ? false : true)}
             });
     }
 

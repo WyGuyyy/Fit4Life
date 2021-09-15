@@ -33,6 +33,8 @@ class Group extends React.Component{
     }
 
     async getMembersAndSetGroup(){
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+        
         var groupId = this.props.location.state.group.group_id;
         var members = [];
         var group = "";
@@ -69,12 +71,17 @@ class Group extends React.Component{
             groupMembers: members,
             selectedGroup: group
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     renderMembers(){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var members = this.state.groupMembers;
         var list = document.getElementById("memberList-Admin");
+        var isOwner = this.props.location.state.isOwner;
 
         while (list.firstChild) {
             list.removeChild(list.lastChild);
@@ -89,6 +96,7 @@ class Group extends React.Component{
             var listItem = document.createElement("div");
             var listItemTitleName = document.createElement("h2");
             var listItemTitleEmail = document.createElement("h2");
+            
             var listDeleteButton = document.createElement("button");
             var iconDelete = document.createElement("i");
 
@@ -130,17 +138,23 @@ class Group extends React.Component{
 
             cell1.appendChild(listItemTitleName);
             cell2.appendChild(listItemTitleEmail);
-            cell3.appendChild(listDeleteButton);
 
             listItem.appendChild(cell1);
             listItem.appendChild(cell2);
-            listItem.appendChild(cell3);
+
+            if(isOwner){
+                cell3.appendChild(listDeleteButton);
+                listItem.appendChild(cell3);
+            }
 
             listItem.style.background = (list.children.length % 2 === 0 ? "#997000" : "#c08d00" );
 
             list.appendChild(listItem);
 
         }
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     async searchMembers(){
@@ -362,8 +376,14 @@ class Group extends React.Component{
                         <button className="Member-MemberData-Button" onClick={e => this.goToAllMemberData(e)}>All</button>
                         <input className="Fit4Life-Searchbar-Admin"/>
                         <button className="Fit4Life-SearchButton-Admin" onClick={e => this.searchGroups(e)}>Search</button>
-                        <button className="Member-AddTeacher-Button" onClick={e => this.goToGroupInvite(e)}><i className="fa fa-group" style={{fontSize: "20px"}}/></button>
-                        <button className="Member-EditGroup-Button" onClick={e => this.openGroupNameModel(e)}><i className="fa fa-pencil" style={{fontSize: "20px"}}/></button>
+                        {this.props.location.state.isOwner ?
+                        <div>
+                            <button className="Member-AddTeacher-Button" onClick={e => this.goToGroupInvite(e)}><i className="fa fa-group" style={{fontSize: "20px"}}/></button>
+                            <button className="Member-EditGroup-Button" onClick={e => this.openGroupNameModel(e)}><i className="fa fa-pencil" style={{fontSize: "20px"}}/></button>
+                        </div>
+                        :
+                        ""
+                    }
                     </div>
                 </div>
             </Fragment>

@@ -156,7 +156,7 @@ class ExerciseEditAdmin extends React.Component{
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
-                body: JSON.stringify({exercise_id: exerciseID, title: aTitle.trim(), classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
+                body: JSON.stringify({exercise_id: exerciseID, title: aTitle.trim(), activated: "A", classroom: {classroom_id: classroomID}}) //Need to add in other fields here, back end and front end
             }).then(res => res.json())
             .then(
                 (text) => {

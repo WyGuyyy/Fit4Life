@@ -5,6 +5,7 @@ import AdminHeader from '../AdminHeader/AdminHeader';
 import AdminPopout from '../AdminPopout/AdminPopout';
 import ConfirmModal from '../../Confirm/ConfirmModal';
 import ConfirmToast from '../../Confirm/ConfirmToast';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import {baseURI} from '../../_services/APIService';
@@ -38,6 +39,8 @@ class MyGroupInvite extends React.Component{
 
     async getInvites(){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var invites = [];
 
         await fetch(baseURI + "/api/groupInvite/forTeacher/" + localStorage.getItem("userID"), {  
@@ -57,11 +60,15 @@ class MyGroupInvite extends React.Component{
             groupInvites: invites
         });
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     //START HERE NEXT TIME - DUPLCIATES INVITE ANYTIME ONE IS ACCEPTED OR DECLINED
     //ADDED POSSIBLE FIX BEFORE LEAVING - REMOVED ALL ITEMS FROM LSIT BEOFRE FILLING
     async fillInvites(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var list = document.getElementById("myGroupInviteList");
         var count = 0;
@@ -155,6 +162,8 @@ class MyGroupInvite extends React.Component{
 
             list.appendChild(listItem);
         }
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -374,6 +383,7 @@ class MyGroupInvite extends React.Component{
                 <AdminHeader title="Group Invites" breadCrumbs="Group Invites" goBack={false} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Accept invite?" yesText="Yes" noText="No" id="modalContainerAccept" onYes={e => {this.acceptInvite({event: e}); this.closeAcceptModal(); this.confirmBackendTransaction("Invite accepted!");}}/>
                 <ConfirmModal text="Decline invite?" yesText="Yes" noText="No" id="modalContainerDecline" onYes={e => {this.declineInvite({event: e}); this.closeDeclineModal(); this.confirmBackendTransaction("Invite declined!");}}/>
+                <LoadingSpinner/>
                 <div className="inviteContainer">
                     <ConfirmToast text=""/>
                     <AdminPopout hist={this.props.history}/>

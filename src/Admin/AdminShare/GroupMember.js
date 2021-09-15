@@ -42,6 +42,8 @@ class GroupMember extends React.Component{
 
     async getClassrooms(){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var classrooms = [];
         var member = this.props.location.state.member;
 
@@ -62,9 +64,13 @@ class GroupMember extends React.Component{
                 teacherClassrooms: classrooms
             });
 
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     async getGroupClassrooms(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var classrooms = [];
         var groupMembers = this.props.location.state.members;
@@ -95,6 +101,8 @@ class GroupMember extends React.Component{
         this.setState({
             teacherClassrooms: classrooms
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -290,6 +298,8 @@ class GroupMember extends React.Component{
 
     async copyClassroom(event){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var idNum = this.state.focusedClassroomItemID;
         var aClassroom = this.state.focusedClassroom;
 
@@ -301,6 +311,8 @@ class GroupMember extends React.Component{
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
         }).catch(console.log);
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
