@@ -77,7 +77,6 @@ class Blowup extends React.Component{
             var workout = workouts[count];
 
             if(workout.date === formattedDate){
-                console.log(count);
                 var workoutWrapper = document.createElement("div");
                 workoutWrapper.classList.add("Blowup-Workout-Wrapper");
 

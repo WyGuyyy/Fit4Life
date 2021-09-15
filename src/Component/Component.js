@@ -428,7 +428,6 @@ class Component extends React.Component{
             (text) => {
                 var result = text.length ? JSON.parse(text) : {};
                 exercises = result;
-                console.log(date);
             }
         ).catch(console.log);
 

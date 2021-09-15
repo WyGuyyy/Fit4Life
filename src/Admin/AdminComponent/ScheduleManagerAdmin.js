@@ -176,8 +176,6 @@ class ScheduleManagerAdmin extends React.Component{
         var selectedList = document.getElementsByClassName("Scheduler-Admin-List")[0];
         var allList = document.getElementsByClassName("Scheduler-Admin-AllList")[0];
 
-        console.log(selectedList);
-
         while(selectedList.firstChild){
             selectedList.removeChild(selectedList.firstChild);
         }
@@ -254,8 +252,7 @@ class ScheduleManagerAdmin extends React.Component{
         for(var count = 0; count < topLevel.length; count++){
             this.loadCategoryIntoList(0, topLevel[count].title, topLevel[count].category_id);
         }
-        console.log(selPath);
-        console.log(idMap);
+
         if(selPath.length > 0){
             document.getElementById("Category-Admin-ListItem-Wrapper-" + selPath[0] + "-" + 0).style.background = "#aa7d00";
         }
@@ -523,7 +520,7 @@ class ScheduleManagerAdmin extends React.Component{
                 wrapper.style.background = "#aa7d00";
             }
         }
-        console.log(newArrowIds);
+
         this.setState({
             selectedPath: selPath,
             listIds: newListIds,
@@ -546,7 +543,7 @@ class ScheduleManagerAdmin extends React.Component{
         /*var subtractButton = document.createElement("button");
         var exerciseButton = document.createElement("button");
         var exerciseButtonIcon = document.createElement("i");*/
-        console.log(list);
+
         var newListIds = this.state.listIds;
         var newArrowIds = this.state.arrowIds;
         var newIDMap = this.state.idMap;
@@ -854,7 +851,7 @@ class ScheduleManagerAdmin extends React.Component{
             endDate = this.formatDateForRange(endDate);
 
             if(this.state.view === "E"){
-                console.log("hhhhh");
+
                 await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
                     method: "POST",                          
                     headers: {"Content-Type": "application/json",

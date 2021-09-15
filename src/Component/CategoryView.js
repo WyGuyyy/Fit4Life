@@ -127,7 +127,6 @@ class CategoryView extends React.Component{
         var idMapLevel = newIdMap.length;
 
         for(var count = 0; count < idMapLevel; count++){
-            //console.log(newIdMap[idMapLevel][count].category_id);
             if(newIdMap[idMapLevel - 1][count].category_id === category.category_id){
                 selPath.push(count);
                 break;

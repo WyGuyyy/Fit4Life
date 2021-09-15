@@ -82,8 +82,6 @@ class PersonalInfoEdit extends React.Component{
 
         if(DataCheckService.validateFields([newFirstName, newLastName, newDisplayName, newEmail, newWeight, newHeightFeet, newHeightInches, newSquatMax, newDeadliftMax, newBenchMax, newHangCleanMax])){
 
-            console.log(this.state.personalInfoObject.access_type);
-
             await fetch(baseURI + "/api/user", {
                 method: "PUT",                          
                 headers: {"Content-Type": "application/json",

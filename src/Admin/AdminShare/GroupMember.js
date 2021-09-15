@@ -244,56 +244,6 @@ class GroupMember extends React.Component{
     
             document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
-        /*for(count = 0; count < classrooms.length; count++){
-            var listItem = document.createElement("div");
-            var listItemTitle = document.createElement("h2");
-            var listCopyButton = document.createElement("button");
-
-            var iconCopy = document.createElement("i");
-
-            var cell1 = document.createElement("div");
-            var cell2 = document.createElement("div");
-
-            iconCopy.classList.add("fa");
-            iconCopy.classList.add("fa-copy");
-            iconCopy.id = "iconCopy-" + count;
-
-            listItem.classList.add("Classroom-List-Item-Admin");
-            listItem.id = "classroomListItem-" + count + "-Admin";
-            //listItem.onmouseover = this.changeListItemBackground.bind(this, listItem.id);
-            //listItem.onmouseleave = this.returnListItemBackground.bind(this, listItem.id);
-            //listItem.onclick = (e) => this.goToClassroomComponents({event: e, id: listItem.id});
-
-            cell1.classList.add("Classroom-Grid-Cell-Admin");
-            cell1.classList.add("Classroom-Grid-Cell-Title-Admin");
-            cell2.classList.add("Classroom-Grid-Cell-Admin");
-            cell2.classList.add("Classroom-Grid-Cell-Student-Admin");
-
-            listItemTitle.classList.add("Classroom-List-Item-Title-Admin");
-            listItemTitle.textContent = classrooms[count].title;
-            listItemTitle.id = "classroomListItemTitle-" + count + "-Admin";
-            listItemTitle.title = classrooms[count].title;
-            listItemTitle.onclick = (e) => this.goToClassroomExercises({event: e, id: listItem.id});
-
-            listCopyButton.classList.add("Classroom-List-Item-Student-Button-Admin");
-            listCopyButton.id = "classroomListItemStudents-" + count + "-Admin";
-            listCopyButton.title = "Students";
-            listCopyButton.onclick = (e) => this.goToClassroomStudents({event: e, id: listCopyButton.id});
-            listCopyButton.appendChild(iconCopy);
-            listCopyButton.title = listItemTitle.textContent + " Students"
-
-            cell1.appendChild(listItemTitle);
-            cell2.appendChild(listCopyButton);
-
-            listItem.appendChild(cell1);
-            listItem.appendChild(cell2);
-
-            listItem.style.background = (count % 2 === 0 ? "#997000" : "#c08d00" );
-
-            list.appendChild(listItem);
-
-        }*/
-
     }
 
     async copyClassroom(event){

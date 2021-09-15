@@ -282,7 +282,6 @@ class Exercise extends React.Component{
                 var result = text.length ? JSON.parse(text) : {};
                 userData = result;
         }).catch(console.log);
-        console.log(userData);
 
         switch(exercise){
             case "Back Squats":
