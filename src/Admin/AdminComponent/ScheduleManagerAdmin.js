@@ -859,6 +859,8 @@ class ScheduleManagerAdmin extends React.Component{
                     body: JSON.stringify(this.state.scheduledExercises) //Need to add in other fields here, back end and front end
                 }).catch(console.log);
 
+                this.displayMessage("Exercises scheduled!");
+
             }else{
 
                 await fetch(baseURI + "/api/category/forDateRange/" + classroomID + "/" + startDate + "/" + endDate, {  
@@ -867,6 +869,8 @@ class ScheduleManagerAdmin extends React.Component{
                             "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                     body: JSON.stringify(this.state.scheduledCategories) //Need to add in other fields here, back end and front end
                 }).catch(console.log);
+
+                this.displayMessage("Categories scheduled!");
 
             }
 
