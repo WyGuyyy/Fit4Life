@@ -80,7 +80,7 @@ class ScheduleWeek extends React.Component{
                     workouts = result;
                 }
             ).catch(console.log);
-
+            
             this.setState({
                 userWorkouts: workouts
             });
@@ -99,11 +99,11 @@ class ScheduleWeek extends React.Component{
         var aFlexColumn;
         var workouts = this.state.userWorkouts;
         var count = 0;
-        
+
         if(wrapArrIndex === 0){;
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay([{title: "Title Row"}])}</div>
         }else{
-              
+
             var content = <div className="ScheduleWeek-Content-Wrapper">{this.renderDay(workouts)}</div>
                 
         }
@@ -134,6 +134,7 @@ class ScheduleWeek extends React.Component{
 
                 }else{
                     if(this.matchesFilters(workouts[aCount])){
+                        
                         var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                         elementArr.push(el);
                         matchCount++;
@@ -146,9 +147,10 @@ class ScheduleWeek extends React.Component{
     }
 
     matchesFilters(workout){
+
         var strDate = workout.date.split("T")[0];
         var strDateForDay = this.formatDateForDay();
- 
+
         if(workout.classroom.classroom_id === this.props.classroom.classroom_id && 
             strDate.localeCompare(strDateForDay) === 0){
                 return true;
@@ -177,7 +179,7 @@ class ScheduleWeek extends React.Component{
         }
 
         var strYear = startOfWeek.getFullYear();
-        var strMonth = (startOfWeek.getMonth() <= 9 ? "0" + (startOfWeek.getMonth() + 1) : startOfWeek.getMonth() + 1);
+        var strMonth = (startOfWeek.getMonth() < 9 ? "0" + (startOfWeek.getMonth() + 1) : startOfWeek.getMonth() + 1);
         var strDate = (startOfWeek.getDate() <= 9 ? "0" + startOfWeek.getDate() : startOfWeek.getDate());
 
         currentDate = strYear + "-" + strMonth + "-" + strDate;

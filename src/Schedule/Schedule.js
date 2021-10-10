@@ -230,6 +230,8 @@ class Schedule extends React.Component{
         var dateInput = event.target;
         var date = new Date(dateInput.value);
 
+        console.log(date);
+
         switch(date.getDay()){
             case 0:
                 break;

@@ -54,7 +54,6 @@ class ScheduleWeekContent extends React.Component{
     fillWorkoutContent(index){
 
         var workout = this.state.workout;
-
         var elements = [];
 
         if(index === 0){
