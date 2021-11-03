@@ -63,7 +63,6 @@ class Exercise extends React.Component{
         for(var count = 1; count < options.length; count++){
             options[count].style.background = "white";
             if(options[count].selected){
-                console.log(options[count]);
                 options[count].style.background = "#c2c2c2";
                 noneSelected = false;
             }

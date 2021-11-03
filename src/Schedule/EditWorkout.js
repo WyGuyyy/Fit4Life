@@ -58,16 +58,19 @@ class EditWorkout extends React.Component{
         var noneSelected = true;
 
         for(var count = 1; count < options.length; count++){
+            options[count].style.background = "white";
             if(options[count].selected){
+                options[count].style.background = "#c2c2c2";
                 noneSelected = false;
-                break;
             }
         }
 
         if(noneSelected){
             options[0].selected = true;
+            options[0].style.background = "#c2c2c2";
         }else{
             options[0].selected = false;
+            options[0].style.background = "white";
         }
     }
 
@@ -358,6 +361,7 @@ class EditWorkout extends React.Component{
             var opt = componentOptions[count];
             if(titles.includes(opt.text)){
                 opt.selected = true;
+                opt.style.background = "#c2c2c2";
             }
         }
     }
