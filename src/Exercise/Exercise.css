@@ -314,6 +314,10 @@
     padding: 3px;
 }
 
+option{
+    border-radius: 10px;
+}
+
 option:not(checked) { 
     background-color: #FFF; 
 }

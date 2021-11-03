@@ -411,6 +411,8 @@ class Component extends React.Component{
 
     async exercisesScheduled(){ //Something wrong with sched_ex table
 
+        console.log("hello");
+
         var exercises = [];
 
         var date = new Date();

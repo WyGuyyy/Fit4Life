@@ -314,6 +314,11 @@ class Schedule extends React.Component{
     }
 
     formatDay(day){
+
+        if(day === 32){
+            day = 31;
+        }
+
         if(parseInt(day) <  10){
             day = "0" + day;
         }

@@ -61,16 +61,20 @@ class Exercise extends React.Component{
         var noneSelected = true;
 
         for(var count = 1; count < options.length; count++){
+            options[count].style.background = "white";
             if(options[count].selected){
+                console.log(options[count]);
+                options[count].style.background = "#c2c2c2";
                 noneSelected = false;
-                break;
             }
         }
 
         if(noneSelected){
             options[0].selected = true;
+            options[0].style.background = "#c2c2c2";
         }else{
             options[0].selected = false;
+            options[0].style.background = "white";
         }
     }
 
@@ -216,14 +220,14 @@ class Exercise extends React.Component{
             }).catch(console.log);
             
             //document.getElementById("Exercise-Input-THR").value = "";
-            document.getElementById("Exercise-Input-Weight").value = "";
+            /*document.getElementById("Exercise-Input-Weight").value = "";
             document.getElementsByClassName("Max-Details")[0].value = "";
             document.getElementsByClassName("TimeOn-Details-Minute")[0].value = "";
             document.getElementsByClassName("TimeOn-Details-Second")[0].value = "";
             document.getElementsByClassName("Rest-Details-Minute")[0].value = "";
             document.getElementsByClassName("Rest-Details-Second")[0].value = "";
             document.getElementsByClassName("Sets-Details")[0].value = "";
-            document.getElementsByClassName("Reps-Details")[0].value = "";
+            document.getElementsByClassName("Reps-Details")[0].value = "";*/
             //document.getElementById("Exercise-Input-TimeOn").value = "";
             //document.getElementById("Exercise-Input-Rest").value = "";
             //document.getElementById("Exercise-Input-Sets").value = "";
@@ -312,7 +316,7 @@ class Exercise extends React.Component{
     showError(){
         // Get the snackbar confirmation
         var confirmation = document.getElementById("snackbar");
-        confirmation.innerText = "There are empty fields! Please fill all fields!";
+        confirmation.innerText = "There are empty fields! Please fill all mandatory fields!";
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
     }
