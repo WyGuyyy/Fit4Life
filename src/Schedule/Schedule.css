@@ -522,3 +522,28 @@ body::-webkit-scrollbar-track {
         border-style: solid;
     }
 }
+
+@media print {
+
+    html, body, .Schedule-Week-ScheduleGrade-Container, .scheduleWrapper {
+      height:100% !important; 
+      margin: 0 !important; 
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+
+    .Schedule-Grid-Chart-Monday, .Schedule-Grid-Chart-Tuesday, .Schedule-Grid-Chart-Wednesday, .Schedule-Grid-Chart-Thursday, .Schedule-Grid-Chart-Friday{
+        border-style: solid 1px black;
+        height: 100%;
+    }
+
+    /*.ScheduleWeek-Row-Wrapper{
+        border: solid 1px black;
+    }
+
+    .ScheduleWeek-Row-Content-Wrapper{
+        border: solid 1px black;
+        height: 100%;
+    }*/
+  
+  }
