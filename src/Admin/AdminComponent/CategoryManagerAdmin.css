@@ -283,6 +283,21 @@ body{
     cursor: pointer;
 }
 
+.Category-Admin-ListItemText-Wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-width: 200px;
+    background: #7c5b00;
+    margin-right: 10px;
+    margin-left: 10px;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
 .Category-Admin-ListItem-Wrapper:hover{
     background: #aa7d00;
 }
@@ -296,6 +311,18 @@ body{
     background: #7c5b00;
     border: none;
     style: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    outline: none;
+}
+
+.Category-Admin-ListItemText{
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0;
+    text-align: center;
+    background: #7c5b00;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

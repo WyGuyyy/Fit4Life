@@ -9,6 +9,7 @@ import {RedirectService} from '../../_services/RedirectService';
 import {FaArrowDown} from 'react-icons/fa';
 import {baseURI} from '../../_services/APIService';
 import { parse } from '@fortawesome/fontawesome-svg-core';
+import { isCompositeComponent } from 'react-dom/test-utils';
 
 class CategoryManagerAdmin extends React.Component{
     constructor(props){
@@ -98,6 +99,27 @@ class CategoryManagerAdmin extends React.Component{
         list.appendChild(categoryWrapper);
     }
 
+    async loadExercisesIntoList(idNum, title){
+        var list = document.getElementById("Category-Admin-List-" + idNum);
+        var childCount = list.children.length;
+        var exerciseWrapper = document.createElement("div");
+        var exerciseText = document.createElement("p");
+        
+        exerciseText.classList.add("Category-Admin-ListItemText");
+
+        //categoryText.classList.add("Category-Admin-ListItem");
+
+        exerciseWrapper.classList.add("Category-Admin-ListItemText-Wrapper");
+
+        exerciseWrapper.id="Category-Admin-ListItem-Wrapper-" + childCount + "-" + idNum;
+        exerciseText.id = "Category-Admin-ListItem-" + childCount + "-" + idNum;
+
+        exerciseText.textContent = title;
+
+        exerciseWrapper.appendChild(exerciseText);
+        list.appendChild(exerciseWrapper);
+    }
+
     showModal(eventObj){
 
         var idNum = eventObj.event.target.id.split("-")[1];
@@ -121,6 +143,7 @@ class CategoryManagerAdmin extends React.Component{
 
         if((idNum + 1) > selPath.length){
             this.displayMessage("Must select a category!");
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
             return;
         }
 
@@ -128,13 +151,16 @@ class CategoryManagerAdmin extends React.Component{
 
         if(await this.categoryHasChildren(selectedCategory.category_id)){
             this.displayMessage("Cannot add exercises to category that has sub-categories!");
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
             return;
         }
 
         var exercises = [];
         var categoryExercises = [];
 
-        await fetch(baseURI + "/api/exercise", {  
+        var aClassroom = this.props.location.state.classroom;
+
+        await fetch(baseURI + "/api/exercise/byclassroom/" + aClassroom.classroom_id, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
                       "Authorization": "Bearer " + localStorage.getItem("auth_token")}
@@ -238,6 +264,12 @@ class CategoryManagerAdmin extends React.Component{
 
         var aClassroom = this.props.location.state.classroom;
         var aParent = (idNum === 0 ? null : {category_id: this.state.idMap[idNum - 1][this.state.selectedPath[idNum - 1]].category_id});
+
+        console.log(aParent);
+        if(aParent !== null && await this.categoryHasExercise(aParent.category_id)){
+            this.displayMessage("Cannot add sub-folder to folder already containing exercises!");
+            return;
+        }
 
         var categoryWrapper = document.createElement("div");
         var categoryText = document.createElement("input");
@@ -487,9 +519,9 @@ class CategoryManagerAdmin extends React.Component{
 
     async addListLevel(listNum, parentID){
 
-        if(await this.categoryHasExercise(parentID)){
+        /*if(await this.categoryHasExercise(parentID)){
             return;
-        }
+        }*/
 
         var categoryWrapper = document.getElementsByClassName("Category-Admin-Wrapper")[0];
 
@@ -548,12 +580,21 @@ class CategoryManagerAdmin extends React.Component{
         buttonWrapper.appendChild(subtractButton);
 
         listWrapper.appendChild(list);
-        listWrapper.appendChild(buttonWrapper);
+
+        var hasExercises = await this.categoryHasExercise(parentID);
+
+        if(!hasExercises){
+            listWrapper.appendChild(buttonWrapper);
+        }
 
         categoryWrapper.appendChild(arrow);
         categoryWrapper.appendChild(listWrapper);
 
-        await this.loadCategoriesForList(listNum, parentID);
+        if(!hasExercises){
+            await this.loadCategoriesForList(listNum, parentID);
+        }else{
+            await this.loadExercisesForList(listNum, parentID);
+        }
 
         this.setState({
             listIds: newListIds,
@@ -583,6 +624,29 @@ class CategoryManagerAdmin extends React.Component{
         for(var count = 0; count < categories.length; count++){
             await this.loadCategoryIntoList(listNum, categories[count].title, categories[count].category_id);
             newIDMap[listNum].push(categories[count]);
+        }
+
+    }
+
+    async loadExercisesForList(listNum, parentID){
+
+        var exercises = [];
+        var newIDMap = this.state.idMap;
+
+        await fetch(baseURI + "/api/exercise/forCategory/" + parentID, {  
+            method: "GET",                          
+            headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+        }).then(res => res.text())
+        .then(
+            (text) => {
+                var result = text.length ? JSON.parse(text) : {};
+                exercises = result;
+            }
+        ).catch(console.log);
+
+        for(var count = 0; count < exercises.length; count++){
+            await this.loadExercisesIntoList(listNum, exercises[count].title, exercises[count].exercise_id);
         }
 
     }
@@ -742,6 +806,16 @@ class CategoryManagerAdmin extends React.Component{
     onCloseExercisePopout(event){
 
         var selPath = this.state.selectedPath;
+        var listIds = this.state.listIds;
+        var idNum = listIds[listIds.length - 1].split("-")[4];
+        var aList = document.getElementById("Category-Admin-List-" + idNum)[0];
+        var aListWrapper = document.getElementsByClassName(listIds[listIds.length - 1])[0]; //Need to start here next time, working on dynamically adding and removing button wrapper and exercises to and from bottom level list after action in exercise add menu
+
+
+
+        for(var count = 0; count < aList.children.length; count++){
+
+        }
 
         var exercisePopoutCover = document.getElementsByClassName("Category-Admin-Exercise-Popout-Cover")[0];
         exercisePopoutCover.style.display = "none";
