@@ -113,6 +113,8 @@ class CategoryManagerAdmin extends React.Component{
 
     async onAddExercises(event){
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var idMap = this.state.idMap;
         var selPath = this.state.selectedPath;
         var idNum = parseInt(event.target.id.split("-")[4]);
@@ -216,6 +218,8 @@ class CategoryManagerAdmin extends React.Component{
             categoryForExercises: selectedCategory,
             exercisesForCategory: categoryExercises
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     async onAddCategory(event){

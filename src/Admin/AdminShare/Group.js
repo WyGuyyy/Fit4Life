@@ -89,9 +89,9 @@ class Group extends React.Component{
 
         for(var count = 0; count < members.length; count++){
 
-            if(members[count].user_id === parseInt(localStorage.getItem("userID"))){
+            /*if(members[count].user_id === parseInt(localStorage.getItem("userID"))){
                 continue;
-            }
+            }*/
 
             var listItem = document.createElement("div");
             var listItemTitleName = document.createElement("h2");
@@ -142,7 +142,7 @@ class Group extends React.Component{
             listItem.appendChild(cell1);
             listItem.appendChild(cell2);
 
-            if(isOwner){
+            if(isOwner && members[count].user_id !== parseInt(localStorage.getItem("userID"))){
                 cell3.appendChild(listDeleteButton);
                 listItem.appendChild(cell3);
             }

@@ -124,7 +124,7 @@ class Schedule extends React.Component{
         var classSelect = document.getElementById("Workout-Classroom-Select");
 
         for(classroom in classrooms){
-            classSelect.options[classSelect.options.length] = new Option(classrooms[classroom].title, classroom);
+            classSelect.options[classSelect.options.length] = new Option(classrooms[classroom].title, classrooms[classroom].classroom_id);
         }
 
         if(localStorage.getItem("workoutClassroom") === undefined || localStorage.getItem("workoutClassroom") === null){
@@ -230,9 +230,9 @@ class Schedule extends React.Component{
         var dateInput = event.target;
         var date = new Date(dateInput.value);
 
-        console.log(date);
+        //console.log(date);
 
-        switch(date.getDay()){
+        /*switch(date.getDay()){
             case 0:
                 break;
             case 1:
@@ -256,13 +256,13 @@ class Schedule extends React.Component{
             default:
                 break;
 
-        }
+        }*/
+        //console.log(date.getDate());
+        //var year = date.getFullYear();
+        //var month = this.formatMonth(date.getMonth() + 1);
+        //var day = this.formatDay(date.getDate() + 1);
 
-        var year = date.getFullYear();
-        var month = this.formatMonth(date.getMonth() + 1);
-        var day = this.formatDay(date.getDate() + 1);
-
-        dateInput.value = year + "-" + month + "-" + day;
+        //dateInput.value = year + "-" + month + "-" + day;
 
         /*var startDate = dateInput.value;
         var d = new Date(startDate);
@@ -279,14 +279,16 @@ class Schedule extends React.Component{
     }
 
     classChange(event){
-
         var classSelect = document.getElementById("Workout-Classroom-Select");
         var classText = classSelect.options[classSelect.selectedIndex].text;
+        var classId = classSelect.options[classSelect.selectedIndex].value;
+
         var aClassroom;
         var count = 0;
 
         for(count = 0; count < this.state.studentClassrooms.length; count++){
-            if(this.state.studentClassrooms[count].title.localeCompare(classText) === 0){
+            if(this.state.studentClassrooms[count].title.localeCompare(classText) === 0 && 
+               this.state.studentClassrooms[count].classroom_id === parseInt(classId)){ //Issue is here, adding wrong classroom because of 2 similar class names
                 aClassroom = this.state.studentClassrooms[count];
                 break;
             }
@@ -386,7 +388,7 @@ class Schedule extends React.Component{
                             
                             <div className="Schedule-Week-Filter-Wrapper">
                                 <div className="Schedule-Week-Selection-Wrapper">
-                                    <h2 className="Workout-Input-Label">Week Of: </h2><input className="workoutInput" id="Workout-Input-Date" type="date" min="0" max="999" onChange={e => this.dateChange(e)}/>
+                                    <h2 className="Workout-Input-Label">Date: </h2><input className="workoutInput" id="Workout-Input-Date" type="date" min="0" max="999" onChange={e => this.dateChange(e)}/>
                                 </div>
                                 <div className="Schedule-Week-Classroom-Wrapper">
                                     <h2 className="Workout-Select-Classroom-Label">Classroom: </h2><select className="Workout-Classroom-Select" id="Workout-Classroom-Select" onChange={e => this.classChange(e)}></select>

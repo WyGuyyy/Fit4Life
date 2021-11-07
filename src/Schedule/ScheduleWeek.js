@@ -80,7 +80,7 @@ class ScheduleWeek extends React.Component{
                     workouts = result;
                 }
             ).catch(console.log);
-            
+
             this.setState({
                 userWorkouts: workouts
             });
@@ -167,15 +167,20 @@ class ScheduleWeek extends React.Component{
         var currentDate;
 
         if(dayOfWeek.localeCompare("Monday") === 0){
-            startOfWeek = startOfWeek;
+            var daysToSubtract = startOfWeek.getDay() - 1;
+            startOfWeek.setDate(startOfWeek.getDate() - daysToSubtract);
         }else if(dayOfWeek.localeCompare("Tuesday") === 0){
-            startOfWeek.setDate(startOfWeek.getDate() + 1);
+            var daysToSubtract = startOfWeek.getDay() - 2;
+            startOfWeek.setDate(startOfWeek.getDate() - daysToSubtract);
         }else if(dayOfWeek.localeCompare("Wednesday") === 0){
-            startOfWeek.setDate(startOfWeek.getDate() + 2);
+            var daysToSubtract = startOfWeek.getDay() - 3;
+            startOfWeek.setDate(startOfWeek.getDate() - daysToSubtract);
         }else if(dayOfWeek.localeCompare("Thursday") === 0){
-            startOfWeek.setDate(startOfWeek.getDate() + 3);
+            var daysToSubtract = startOfWeek.getDay() - 4;
+            startOfWeek.setDate(startOfWeek.getDate() - daysToSubtract);
         }else if(dayOfWeek.localeCompare("Friday") === 0){
-            startOfWeek.setDate(startOfWeek.getDate() + 4);
+            var daysToSubtract = startOfWeek.getDay() - 5;
+            startOfWeek.setDate(startOfWeek.getDate() - daysToSubtract);
         }
 
         var strYear = startOfWeek.getFullYear();
