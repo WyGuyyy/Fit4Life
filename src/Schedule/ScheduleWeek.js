@@ -4,6 +4,7 @@ import './ScheduleWeek.css';
 import Header from '../Header/Header';
 import Popout from '../Popout/Popout'
 import ScheduleWeekContent from './ScheduleWeekContent';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete, MdStayCurrentPortrait } from 'react-icons/md';
@@ -64,7 +65,7 @@ class ScheduleWeek extends React.Component{
     }
 
     async fillWorkouts(){
-        
+
         var workouts = [];
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
         //await fetch(baseURI + "/api/classroom", {

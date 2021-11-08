@@ -198,7 +198,6 @@ class CategoryManagerAdmin extends React.Component{
 
         for(var count = 0; count < exercises.length; count++){
             var partOfCategory = false;
-
             for(var categoryCount = 0; categoryCount < categoryExercises.length; categoryCount++){
                 if(categoryExercises[categoryCount].exercise_id === exercises[count].exercise_id){
                     totalSel++;
@@ -476,7 +475,10 @@ class CategoryManagerAdmin extends React.Component{
         this.setState({
             selectedPath: selPath,
             listIds: newListIds,
-            arrowIds: newArrowIds
+            arrowIds: newArrowIds,
+            totalExercises: [],
+            totalSelected: 0,
+            filteredExercies: []
         });
 
         element.disabled = false;
@@ -807,14 +809,25 @@ class CategoryManagerAdmin extends React.Component{
 
         var selPath = this.state.selectedPath;
         var listIds = this.state.listIds;
+        var selectedExercises = this.state.totalExercises;
         var idNum = listIds[listIds.length - 1].split("-")[4];
-        var aList = document.getElementById("Category-Admin-List-" + idNum)[0];
-        var aListWrapper = document.getElementsByClassName(listIds[listIds.length - 1])[0]; //Need to start here next time, working on dynamically adding and removing button wrapper and exercises to and from bottom level list after action in exercise add menu
+        var aList = document.getElementById("Category-Admin-List-" + idNum);
+        var aListWrapper = document.getElementById(listIds[listIds.length - 1]); //Need to start here next time, working on dynamically adding and removing button wrapper and exercises to and from bottom level list after action in exercise add menu
+        var buttonWrapper = aListWrapper.querySelector(".Category-Admin-Button-Wrapper")
+
+        if(buttonWrapper){
+            aListWrapper.removeChild(buttonWrapper);
+        }
+
+        while(aList.firstChild){
+            aList.removeChild(aList.firstChild);
+        }
 
 
-
-        for(var count = 0; count < aList.children.length; count++){
-
+        for(var count = 0; count < selectedExercises.length; count++){
+            if(selectedExercises[count].selected === 1){
+                this.loadExercisesIntoList(idNum, selectedExercises[count].exercise.title);
+            }
         }
 
         var exercisePopoutCover = document.getElementsByClassName("Category-Admin-Exercise-Popout-Cover")[0];

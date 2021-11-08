@@ -69,6 +69,8 @@ class CategoryView extends React.Component{
     }
 
     async fetchTopLevelCategories(){
+        
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var topLevelCategories = [];
         var newIdMap = this.state.idMap;
@@ -113,11 +115,17 @@ class CategoryView extends React.Component{
             idMap: newIdMap
         });
 
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+
     }
 
     async fetchCategoryChildren(category){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         if(!(await this.categoryHasChildren(category.category_id))){
             await this.fetchCategoryExercises(category);
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
             return;
         }
 
@@ -160,6 +168,8 @@ class CategoryView extends React.Component{
             categoryExercises: [],
             categoryBlobs: []
         });
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -357,7 +367,7 @@ class CategoryView extends React.Component{
         return <ExerciseTile exercise={currExercise.title} image={aImage} tileClickEvent={e=>this.goToExercise(e, currExercise)} />
     }
 
-    async searchExercises(event){
+    async searchItems(event){
 
         document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
@@ -639,8 +649,8 @@ class CategoryView extends React.Component{
                     </div>
                     <div className="Fit4Life-Category-SearchbarWrapper">
                         <div className="Fit4Life-Category-SearchElements-Wrapper">
-                            <input className="Fit4Life-Category-Searchbar"/>
-                            <button className="Fit4Life-Category-SearchButton" onClick={e => this.searchExercises(e)}>Search</button>
+                            <input className="Fit4Life-Category-Searchbar" disabled="true"/>
+                            <button className="Fit4Life-Category-SearchButton" onClick={e => this.searchItems(e)} disabled="true">Search</button>
                         </div>
                     </div>
                 </div>

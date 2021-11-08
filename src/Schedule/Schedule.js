@@ -121,6 +121,14 @@ class Schedule extends React.Component{
             return;
         }
 
+        if(localStorage.getItem("userRole") === "ADMIN"){
+            for(var count = 0; count < classrooms.length; count++){
+                if(!(classrooms[count].teacher.user_id === parseInt(localStorage.getItem("userID")))){
+                    classrooms.splice(count, 1);
+                }
+            }
+        }
+
         var classSelect = document.getElementById("Workout-Classroom-Select");
 
         for(classroom in classrooms){

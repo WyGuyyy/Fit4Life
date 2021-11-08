@@ -36,14 +36,25 @@ class StudentInviteAdmin extends React.Component{
 
     async fillStudents(queryString){
 
+        document.getElementById("Student-Invite-Search-Button").disabled = true;
+
         var list = document.getElementById("studentInviteList-Admin");
         var count = 0;
 
         var matchStudents;
 
-        for(count = 1; count < list.childNodes.length;){
+        /*for(count = 1; count < list.childNodes.length;){
             list.removeChild(list.childNodes[count]);
+        }*/
+
+        while(list.firstChild){
+            list.removeChild(list.firstChild);
         }
+
+        var filler = document.createElement("div");
+        filler.classList.add("studentInviteFiller-Admin");
+
+        list.appendChild(filler);
 
         if(queryString.localeCompare("ALL") === 0){
             await fetch(baseURI + "/api/user/student", {  
@@ -164,6 +175,8 @@ class StudentInviteAdmin extends React.Component{
             filteredStudents: matchStudents
         });
 
+        document.getElementById("Student-Invite-Search-Button").disabled = false;
+
     }
 
     async isClassMember(student){
@@ -236,12 +249,12 @@ class StudentInviteAdmin extends React.Component{
         }
     }
 
-    searchStudent(eventObj){
+    async searchStudent(eventObj){
 
         var queryString = document.getElementById("Student-Invite-Search-Box").value;
         queryString = (queryString.localeCompare("") === 0 ? "ALL" : queryString);
 
-        this.fillStudents(queryString);
+        await this.fillStudents(queryString);
     }
 
     async inviteStudent(eventObj){
