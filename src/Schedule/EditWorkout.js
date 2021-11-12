@@ -12,6 +12,7 @@ import ScrollPicker from '../ScrollPicker/ScrollPicker';
 import { FaWordpress, FaWpbeginner } from 'react-icons/fa';
 import {baseURI} from '../_services/APIService';
 import { MdSystemUpdate } from 'react-icons/md';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 var currWorkout = "";
 
@@ -52,7 +53,7 @@ class EditWorkout extends React.Component{
         
     }
 
-    componentSelect(event){
+    /*componentSelect(event){
         var compSelect = document.getElementById("editWorkoutSelectComponent");
         var options = compSelect.options;
         var noneSelected = true;
@@ -72,7 +73,7 @@ class EditWorkout extends React.Component{
             options[0].selected = false;
             options[0].style.background = "white";
         }
-    }
+    }*/
 
     async getUpdatedWorkout(){
 
@@ -206,12 +207,14 @@ class EditWorkout extends React.Component{
     }*/
 
     async fillFields(){
+        
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         await this.getUpdatedWorkout();
 
         var aWorkout = "";
 
-        var componentSelect = document.getElementById("editWorkoutSelectComponent");
+        //var componentSelect = document.getElementById("editWorkoutSelectComponent");
         var thr = document.getElementById("editWorkoutSelectTHR");
         var timeOnMinutes = document.getElementsByClassName("TimeOn-Details-Minute")[0];
         var timeOnSeconds = document.getElementsByClassName("TimeOn-Details-Second")[0];
@@ -235,7 +238,7 @@ class EditWorkout extends React.Component{
 
             }).catch(console.log);
 
-            this.activateSelectedComponents(componentSelect, this.props.location.state.workout.components);
+            this.activateSelectedComponents(this.props.location.state.workout.components);
             this.activateSelectedTHR(thr, this.props.location.state.workout.target_heart_rate);
 
             timeOnMinutes.value = (aWorkout.time_on_minute === -1 ? "" : aWorkout.time_on_minute);
@@ -247,6 +250,9 @@ class EditWorkout extends React.Component{
             weight.value = (aWorkout.weight === -1 ? "" : aWorkout.weight);
             max.value = (aWorkout.max === -1 ? "" : aWorkout.max);
             date.value = aWorkout.date;//.split("T")[0];
+    
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+            
     }
 
     async submitWorkout(event){
@@ -258,17 +264,43 @@ class EditWorkout extends React.Component{
         var aTHR = document.getElementById("editWorkoutSelectTHR");
         aTHR = aTHR.options[aTHR.selectedIndex].textContent;
 
-        var componentOptions = document.getElementById("editWorkoutSelectComponent").options;
+        //var componentOptions = document.getElementById("editWorkoutSelectComponent").options;
+        
+        var cardioCheckbox = document.getElementById("editWorkoutCardiovascular");
+        var muscularStrengthCheckbox = document.getElementById("editWorkoutMuscularStrength");
+        var muscularEnduranceCheckbox = document.getElementById("editWorkoutMuscularEndurance");
+        var flexibilityCheckbox = document.getElementById("editWorkoutFlexibility");
+        
         var count = 0;
         var componentsArr = [];
 
-        for(count = 0; count < componentOptions.length; count++){
+        if(cardioCheckbox.checked){
+            componentsArr.push({component_id: 2, title: cardioCheckbox.value});
+        }
+
+        if(muscularStrengthCheckbox.checked){
+            componentsArr.push({component_id: 3, title: muscularStrengthCheckbox.value});
+        }
+
+        if(muscularEnduranceCheckbox.checked){
+            componentsArr.push({component_id: 4, title: muscularEnduranceCheckbox.value});
+        }
+
+        if(flexibilityCheckbox.checked){
+            componentsArr.push({component_id: 5, title: flexibilityCheckbox.value});
+        }
+
+        if(componentsArr.length === 0){
+            componentsArr.push({component_id: 1, title: "None"});
+        }
+
+        /*for(count = 0; count < componentOptions.length; count++){
             var opt = componentOptions[count];
 
             if(opt.selected){
                 componentsArr.push({component_id: count + 1, title: opt.text});
             }
-        }
+        }*/
 
         var aWeight = document.getElementById("EditWorkout-Input-Weight").value;
         var max = document.getElementsByClassName("Max-Details")[0].value;
@@ -347,23 +379,44 @@ class EditWorkout extends React.Component{
 
     }
 
-    activateSelectedComponents(compSelect, components){
+    activateSelectedComponents(components){
 
-        var componentOptions = compSelect.options;
+        //var componentOptions = compSelect.options;
         var titles = [];
         var count = 0;
+
+        var cardioCheckbox = document.getElementById("editWorkoutCardiovascular");
+        var muscularStrengthCheckbox = document.getElementById("editWorkoutMuscularStrength");
+        var muscularEnduranceCheckbox = document.getElementById("editWorkoutMuscularEndurance");
+        var flexibilityCheckbox = document.getElementById("editWorkoutFlexibility");
 
         for(var titleCount = 0; titleCount < components.length; titleCount++){
             titles.push(components[titleCount].title);
         }
 
-        for(count = 0; count < 5; count++){
+        if(titles.includes("Cardiovascular Endurance")){
+            cardioCheckbox.checked = true;
+        }
+
+        if(titles.includes("Muscular Strength")){
+            muscularStrengthCheckbox.checked = true;
+        }
+
+        if(titles.includes("Muscular Endurance")){
+            muscularEnduranceCheckbox.checked = true;
+        }
+
+        if(titles.includes("Flexibility")){
+            flexibilityCheckbox.checked = true;
+        }
+
+        /*for(count = 0; count < 5; count++){
             var opt = componentOptions[count];
             if(titles.includes(opt.text)){
                 opt.selected = true;
                 opt.style.background = "#c2c2c2";
             }
-        }
+        }*/
     }
 
     activateSelectedTHR(thrSelect, thr){
@@ -543,10 +596,21 @@ class EditWorkout extends React.Component{
         var reps = this.state.workout.reps;
         reps = (reps === -1 ? 0 : reps);*/
 
+        /*
+        <select className="editWorkoutSelect" id="editWorkoutSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
+                                        <option value="None">None</option>
+                                        <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
+                                        <option value="Muscular Strength">Muscular Strength</option>
+                                        <option value="Muscular Endurance">Muscular Endurance</option>
+                                        <option value="Flexibility">Flexibility</option>
+                                    </select>
+        */
+
         return(
             <Fragment>
                 <Header title={"Edit Workout"} breadCrumbs={"Edit workout for " + classroom + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
                 <ConfirmModal text="Save workout?" yesText="Yes" noText="No" onYes={e => {this.submitWorkout(); this.closeModal();}}/>
+                <LoadingSpinner />
                 <div className="editWorkoutContainer">
                     <Popout hist={this.props.history}/>
                     <div className="editWorkoutWrapper">
@@ -561,13 +625,24 @@ class EditWorkout extends React.Component{
                                 </div>
                                 <div className="EditWorkout-Details-Row" id="EditWorkout-Details-Row-Component">
                                     <label className="editWorkoutLabel">Components: </label> 
-                                    <select className="editWorkoutSelect" id="editWorkoutSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
-                                        <option value="None">None</option>
-                                        <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
-                                        <option value="Muscular Strength">Muscular Strength</option>
-                                        <option value="Muscular Endurance">Muscular Endurance</option>
-                                        <option value="Flexibility">Flexibility</option>
-                                    </select>
+                                    <div className="editWorkoutSelectWrapper" id="editWorkoutSelectComponentWrapper">
+                                        <div className="editWorkoutCheckboxWrapper">
+                                            <input type="checkbox" className="editWorkoutCheckbox" id="editWorkoutCardiovascular" name="cardiovascular" value="Cardiovascular Endurance"/>
+                                            <label for="editWorkoutCardiovascular" className="editWorkoutComponentLabel">Cardiovascular Endurance</label>
+                                        </div>
+                                        <div className="editWorkoutCheckboxWrapper">
+                                            <input type="checkbox" className="editWorkoutCheckbox" id="editWorkoutMuscularStrength" name="muscular" value="Muscular"/>
+                                            <label for="editWorkoutMuscular" className="editWorkoutComponentLabel">Muscular Strength</label>
+                                        </div>
+                                        <div className="editWorkoutCheckboxWrapper">
+                                            <input type="checkbox" className="editWorkoutCheckbox" id="editWorkoutMuscularEndurance" name="muscularEndurance" value="Muscular Endurance"/>
+                                            <label for="editWorkoutMuscularEndurance" className="editWorkoutComponentLabel">Muscular Endurance</label>
+                                        </div>
+                                        <div className="editWorkoutCheckboxWrapper">
+                                            <input type="checkbox" className="editWorkoutCheckbox" id="editWorkoutFlexibility" name="flexibility" value="Flexibility"/>
+                                            <label for="editWorkoutFlexibility" className="editWorkoutComponentLabel">Flexibility</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="EditWorkout-Details-Row" id="EditWorkout-Details-Row-THR">
                                     <label className="editWorkoutLabel">Target Heart Rate: </label> 

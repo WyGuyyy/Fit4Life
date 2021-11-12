@@ -55,7 +55,7 @@ class Exercise extends React.Component{
         
     }
 
-    componentSelect(event){
+    /*componentSelect(event){
         var compSelect = document.getElementById("exerciseSelectComponent");
         var options = compSelect.options;
         var noneSelected = true;
@@ -75,7 +75,7 @@ class Exercise extends React.Component{
             options[0].selected = false;
             options[0].style.background = "white";
         }
-    }
+    }*/
 
     /*updateTimeOn = (time) => { //start here and change time on and off to correct sc and min
         var newResults = this.state.results;
@@ -157,17 +157,43 @@ class Exercise extends React.Component{
         var aTHR = document.getElementById("exerciseSelectTHR");
         aTHR = aTHR.options[aTHR.selectedIndex].textContent;
 
-        var componentOptions = document.getElementById("exerciseSelectComponent").options;
+        //var componentOptions = document.getElementById("exerciseSelectComponent").options;
+        
+        var cardioCheckbox = document.getElementById("exerciseCardiovascular");
+        var muscularStrengthCheckbox = document.getElementById("exerciseMuscularStrength");
+        var muscularEnduranceCheckbox = document.getElementById("exerciseMuscularEndurance");
+        var flexibilityCheckbox = document.getElementById("exerciseFlexibility");
+
         var count = 0;
         var componentsArr = [];
 
-        for(count = 0; count < componentOptions.length; count++){
+        if(cardioCheckbox.checked){
+            componentsArr.push({component_id: 2, title: cardioCheckbox.value});
+        }
+
+        if(muscularStrengthCheckbox.checked){
+            componentsArr.push({component_id: 3, title: muscularStrengthCheckbox.value});
+        }
+
+        if(muscularEnduranceCheckbox.checked){
+            componentsArr.push({component_id: 4, title: muscularEnduranceCheckbox.value});
+        }
+
+        if(flexibilityCheckbox.checked){
+            componentsArr.push({component_id: 5, title: flexibilityCheckbox.value});
+        }
+
+        if(componentsArr.length === 0){
+            componentsArr.push({component_id: 1, title: "None"});
+        }
+
+        /*for(count = 0; count < componentOptions.length; count++){
             var opt = componentOptions[count];
 
             if(opt.selected){
                 componentsArr.push({component_id: count + 1, title: opt.text});
             }
-        }
+        }*/
 
         var aWeight = document.getElementById("Exercise-Input-Weight").value;
         var max = document.getElementsByClassName("Max-Details")[0].value;
@@ -304,6 +330,13 @@ class Exercise extends React.Component{
         }
     }
 
+    onSelectChange(event){
+
+        var compSelect = document.getElementById("exerciseSelectTHR");
+        
+
+    }
+
     showModal(event){
         document.getElementById("modalContainer").style.display = "flex";
     }
@@ -379,6 +412,16 @@ class Exercise extends React.Component{
             repsArr.push(count);
         }*/
 
+        /*
+        <select className="exerciseSelect" id="exerciseSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
+                                        <option value="None" selected={true}>None</option>
+                                        <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
+                                        <option value="Muscular Strength">Muscular Strength</option>
+                                        <option value="Muscular Endurance">Muscular Endurance</option>
+                                        <option value="Flexibility">Flexibility</option>
+                                    </select>
+        */
+
         return(
             <Fragment>
                 <Header title={"Workout"} breadCrumbs={"Create workout for " + classroom + ">" + exercise} goBack={true} customClick={this.goBack.bind(this)}/>
@@ -397,13 +440,24 @@ class Exercise extends React.Component{
                                 </div>
                                 <div className="Exercise-Details-Row" id="Exercise-Details-Row-Component">
                                     <label className="exerciseLabel">Components: </label> 
-                                    <select className="exerciseSelect" id="exerciseSelectComponent" multiple={true} onChange={e => this.componentSelect(e)}>
-                                        <option value="None" selected={true}>None</option>
-                                        <option value="Cardiovascular Endurance">Cardiovascular Endurance</option>
-                                        <option value="Muscular Strength">Muscular Strength</option>
-                                        <option value="Muscular Endurance">Muscular Endurance</option>
-                                        <option value="Flexibility">Flexibility</option>
-                                    </select>
+                                    <div className="exerciseSelectWrapper" id="exerciseSelectComponentWrapper">
+                                        <div className="exerciseCheckboxWrapper">
+                                            <input type="checkbox" className="exerciseCheckbox" id="exerciseCardiovascular" name="cardiovascular" value="Cardiovascular Endurance"/>
+                                            <label for="exerciseCardiovascular" className="exerciseComponentLabel">Cardiovascular Endurance</label>
+                                        </div>
+                                        <div className="exerciseCheckboxWrapper">
+                                            <input type="checkbox" className="exerciseCheckbox" id="exerciseMuscularStrength" name="muscular" value="Muscular"/>
+                                            <label for="exerciseMuscular" className="exerciseComponentLabel">Muscular Strength</label>
+                                        </div>
+                                        <div className="exerciseCheckboxWrapper">
+                                            <input type="checkbox" className="exerciseCheckbox" id="exerciseMuscularEndurance" name="muscularEndurance" value="Muscular Endurance"/>
+                                            <label for="exerciseMuscularEndurance" className="exerciseComponentLabel">Muscular Endurance</label>
+                                        </div>
+                                        <div className="exerciseCheckboxWrapper">
+                                            <input type="checkbox" className="exerciseCheckbox" id="exerciseFlexibility" name="flexibility" value="Flexibility"/>
+                                            <label for="exerciseFlexibility" className="exerciseComponentLabel">Flexibility</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="Exercise-Details-Row" id="Exercise-Details-Row-THR">
                                     <label className="exerciseLabel">Target Heart Rate: </label> 
