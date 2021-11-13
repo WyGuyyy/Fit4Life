@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class ShareHome extends React.Component{
     constructor(props){
@@ -22,6 +23,7 @@ class ShareHome extends React.Component{
     
     async componentDidMount(){ 
         await this.getGroups();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

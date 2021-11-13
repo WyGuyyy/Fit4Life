@@ -13,6 +13,7 @@ import { FaWordpress, FaWpbeginner } from 'react-icons/fa';
 import {baseURI} from '../_services/APIService';
 import { MdSystemUpdate } from 'react-icons/md';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import {authService} from '../_services/AuthenticationService';
 
 var currWorkout = "";
 
@@ -42,6 +43,7 @@ class EditWorkout extends React.Component{
         //var workout = this.getUpdatedWorkout();
 
         this.fillFields();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

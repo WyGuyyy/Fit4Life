@@ -9,6 +9,7 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class MyGroupInvite extends React.Component{
     constructor(props){
@@ -26,6 +27,7 @@ class MyGroupInvite extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     async componentDidMount(){ 
         await this.getInvites();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

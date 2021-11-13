@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {RedirectService} from '../../_services/RedirectService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class AdminStudent extends React.Component{
     constructor(props){
@@ -30,6 +31,8 @@ class AdminStudent extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillStudents();
         }
+
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

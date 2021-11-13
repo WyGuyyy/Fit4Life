@@ -10,6 +10,7 @@ import {FaArrowDown} from 'react-icons/fa';
 import {baseURI} from '../../_services/APIService';
 import { parse } from '@fortawesome/fontawesome-svg-core';
 import { isCompositeComponent } from 'react-dom/test-utils';
+import {authService} from '../../_services/AuthenticationService';
 
 class CategoryManagerAdmin extends React.Component{
     constructor(props){
@@ -32,7 +33,7 @@ class CategoryManagerAdmin extends React.Component{
     }
 
     componentWillUnmount(){
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     async loadTopLevelCategories(){
@@ -815,8 +816,42 @@ class CategoryManagerAdmin extends React.Component{
         var aListWrapper = document.getElementById(listIds[listIds.length - 1]); //Need to start here next time, working on dynamically adding and removing button wrapper and exercises to and from bottom level list after action in exercise add menu
         var buttonWrapper = aListWrapper.querySelector(".Category-Admin-Button-Wrapper")
 
-        if(buttonWrapper){
+        if(buttonWrapper && this.state.totalSelected > 0){
             aListWrapper.removeChild(buttonWrapper);
+        }else if(!buttonWrapper && this.state.totalSelected === 0){
+
+            var buttonWrapper = document.createElement("div");
+            var addButton = document.createElement("button");
+            var subtractButton = document.createElement("button");
+            var exerciseButton = document.createElement("button");
+            var exerciseButtonIcon = document.createElement("i");
+
+            buttonWrapper.classList.add("Category-Admin-Button-Wrapper");
+            addButton.classList.add("Category-Admin-Add-Button");
+            subtractButton.classList.add("Category-Admin-Subtract-Button");
+            exerciseButton.classList.add("Category-Admin-Exercise-Button");
+            exerciseButtonIcon.classList.add("fa");
+            exerciseButtonIcon.classList.add("fa-child");
+            
+            addButton.id = "Category-Admin-Add-Button-" + idNum;
+            subtractButton.id = "Category-Admin-Subtract-Button-" + idNum;
+            exerciseButton.id = "Category-Admin-Exercise-Button-" + idNum;
+            exerciseButtonIcon.id = "Category-Admin-Exercise-Icon-" + idNum;
+
+            addButton.textContent = "+";
+            subtractButton.textContent = "-";
+            exerciseButton.appendChild(exerciseButtonIcon);
+
+            addButton.onclick = (e) => this.onAddCategory(e);
+            subtractButton.onclick = (e) => this.onDeleteCategory(e);
+            exerciseButton.onclick = (e) => this.onAddExercises(e);
+
+            buttonWrapper.appendChild(exerciseButton);
+            buttonWrapper.appendChild(addButton);
+            buttonWrapper.appendChild(subtractButton);
+
+            aListWrapper.appendChild(buttonWrapper);
+
         }
 
         while(aList.firstChild){

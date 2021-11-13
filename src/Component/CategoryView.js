@@ -12,6 +12,7 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class CategoryView extends React.Component{
     constructor(props){
@@ -39,7 +40,7 @@ class CategoryView extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             
             this.fetchTopLevelCategories();
-
+            authService.checkTokenValidity(this.props.history);
             /*if(!this.categoriesScheduled()){
                 this.fetchTopLevelCategories();
             }*/

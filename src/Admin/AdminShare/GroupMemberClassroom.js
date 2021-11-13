@@ -9,6 +9,7 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class GroupMemberClassroom extends React.Component{
     constructor(props){
@@ -35,6 +36,7 @@ class GroupMemberClassroom extends React.Component{
     async componentDidMount(){ 
         
         await this.getExercisesAndTeachersClassrooms();
+        authService.checkTokenValidity(this.props.history);
 
         /*if(RedirectService.checkItemForUndefined(this.props.location.state)){
             if(this.exercisesScheduled()){

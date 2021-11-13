@@ -17,7 +17,7 @@ class AdminPopout extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

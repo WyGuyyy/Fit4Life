@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {DataCheckService} from '../../_services/DataCheckService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class ClassroomCreateAdmin extends React.Component{
     constructor(props){
@@ -19,7 +20,7 @@ class ClassroomCreateAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

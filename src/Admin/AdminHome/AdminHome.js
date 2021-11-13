@@ -7,6 +7,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class AdminHome extends React.Component{
     constructor(props){
@@ -23,6 +24,7 @@ class AdminHome extends React.Component{
     
     componentDidMount(){ 
         this.fillClassrooms();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import {FaPen, FaRegDotCircle} from 'react-icons/fa';
 import {RedirectService} from '../../_services/RedirectService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
+
 
 class AdminComponent extends React.Component{
     constructor(props){
@@ -31,6 +33,8 @@ class AdminComponent extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillExercises();
         }
+
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

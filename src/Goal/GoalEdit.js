@@ -11,6 +11,7 @@ import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {DataCheckService} from '../_services/DataCheckService';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class GoalEdit extends React.Component{
     constructor(props){
@@ -30,7 +31,7 @@ class GoalEdit extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

@@ -10,6 +10,7 @@ import { AiFillEdit } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class Goal extends React.Component{
     constructor(props){
@@ -29,6 +30,7 @@ class Goal extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillGoals();
         }
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

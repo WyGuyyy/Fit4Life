@@ -15,6 +15,8 @@ import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {getStudentGradesForWeek} from '../_services/GradeService';
 import {baseURI} from '../_services/APIService';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import {authService} from '../_services/AuthenticationService';
 
 class Schedule extends React.Component{
     constructor(props){
@@ -38,7 +40,8 @@ class Schedule extends React.Component{
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
-    componentDidMount(){ 
+    async componentDidMount(){ 
+        
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillClassroomSelect();
         }
@@ -46,6 +49,8 @@ class Schedule extends React.Component{
         this.resetFilters();
         this.setScheduleName();
 
+        authService.checkTokenValidity(this.props.history);
+        
     }
 
     componentDidUpdate(){
@@ -99,6 +104,8 @@ class Schedule extends React.Component{
 
     async fillClassroomSelect(){
 
+        //document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+
         var classrooms = [];
         var classroom;
 
@@ -151,6 +158,8 @@ class Schedule extends React.Component{
         /*this.setState({
             studentClassrooms: classrooms
         }, this.buildWeeks(this, classrooms));*/
+
+        //document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -388,6 +397,7 @@ class Schedule extends React.Component{
                     {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                     <Header title="Schedule" breadCrumbs="Schedule" goBack={true} customClick={this.goBack.bind(this)}/> : 
                     <AdminHeader title={"Schedule"} breadCrumbs="Schedule" goBack={false} customClick={this.goBack.bind(this)}/>}
+                    <LoadingSpinner />
                     <div className="scheduleContainer">
                         {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                          <Popout hist={this.props.history}/> : 

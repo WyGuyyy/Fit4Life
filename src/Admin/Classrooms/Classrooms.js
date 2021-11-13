@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import './Classrooms.css';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import { Link } from 'react-router-dom';
+import {authService} from '../_services/AuthenticationService';
 
 class Classrooms extends React.Component{
     constructor(props){
@@ -16,7 +17,7 @@ class Classrooms extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

@@ -11,6 +11,7 @@ import {DataCheckService} from '../../_services/DataCheckService';
 import ReactDom from 'react-dom';
 import lhs_logo from '../../Assets/lhs_logo.png';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class ExerciseEditAdmin extends React.Component{
     constructor(props){
@@ -34,6 +35,7 @@ class ExerciseEditAdmin extends React.Component{
     
     componentDidMount(){ 
         this.getExerciseImage();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

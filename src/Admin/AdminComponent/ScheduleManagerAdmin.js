@@ -10,6 +10,7 @@ import {RedirectService} from '../../_services/RedirectService';
 import {FaArrowDown} from 'react-icons/fa';
 import {baseURI} from '../../_services/APIService';
 import { parse } from '@fortawesome/fontawesome-svg-core';
+import {authService} from '../../_services/AuthenticationService';
 
 class ScheduleManagerAdmin extends React.Component{
     constructor(props){
@@ -34,11 +35,10 @@ class ScheduleManagerAdmin extends React.Component{
         }
 
     }
-
-    //START HERE TOMORROW - FIGURE OUT WHY EXTRA CATEGORIES BEING ADDED AT TOP LEVEL AFTER SELECTION
     
     async componentDidMount(){ 
         await this.loadExercisesAndCategoriesForClassroom();
+        authService.checkTokenValidity(this.props.history);
     }
 
     async componentDidUpdate(){

@@ -8,6 +8,7 @@ import ConfirmToast from '../../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class StudentInviteAdmin extends React.Component{
     constructor(props){
@@ -27,7 +28,7 @@ class StudentInviteAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

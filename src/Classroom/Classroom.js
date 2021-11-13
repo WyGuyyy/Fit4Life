@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class Classroom extends React.Component{
     constructor(props){
@@ -26,6 +27,8 @@ class Classroom extends React.Component{
         if(RedirectService.checkItemForUndefined(this.props.location.state)){
             this.fillComponents()
         }
+
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

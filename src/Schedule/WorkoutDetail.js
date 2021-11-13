@@ -13,6 +13,8 @@ import { MdDelete } from 'react-icons/md';
 import { FaDove } from 'react-icons/fa';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import {authService} from '../_services/AuthenticationService';
 
 class WorkoutDetail extends React.Component{
     constructor(props){
@@ -30,6 +32,7 @@ class WorkoutDetail extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         this.fillFields();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){
@@ -46,6 +49,8 @@ class WorkoutDetail extends React.Component{
     }
 
     async fillFields(){
+
+        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         var aWorkout = "";
 
@@ -101,6 +106,8 @@ class WorkoutDetail extends React.Component{
             this.setState({
                 workout: aWorkout
             });
+
+            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
     }
 
     getComponentString(compArr){
@@ -174,6 +181,7 @@ class WorkoutDetail extends React.Component{
                      <Header title="Workout Details" breadCrumbs="Workout Details" goBack={true} customClick={this.goBack.bind(this)}/> : 
                      <AdminHeader title={"Workout Details"} breadCrumbs="Workout Details" goBack={false} customClick={this.goBack.bind(this)}/>}
                      <ConfirmModal text="Delete workout?" yesText="Yes" noText="No" onYes={e => {this.deleteWorkout(e); this.closeModal();}}/>
+                     <LoadingSpinner />
                     <div className="Workout-Detail-Container">
                         {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? 
                          <Popout hist={this.props.history}/> : 

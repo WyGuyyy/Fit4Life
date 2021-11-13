@@ -8,6 +8,7 @@ import ConfirmToast from '../Confirm/ConfirmToast';
 import { Link } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class Invite extends React.Component{
     constructor(props){
@@ -25,6 +26,7 @@ class Invite extends React.Component{
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
         this.fillInvites();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

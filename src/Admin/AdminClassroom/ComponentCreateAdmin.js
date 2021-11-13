@@ -8,6 +8,7 @@ import { Link, Redirect } from 'react-router-dom';
 import {RedirectService} from '../../_services/RedirectService';
 import {DataCheckService} from '../../_services/DataCheckService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class ComponentCreateAdmin extends React.Component{
     constructor(props){
@@ -23,7 +24,7 @@ class ComponentCreateAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

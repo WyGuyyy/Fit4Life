@@ -4,7 +4,8 @@ import {baseURI} from './APIService';
 export const authService = {
     authenticate,
     logout,
-    isLoggedIn
+    isLoggedIn,
+    checkTokenValidity
 };
 
 async function authenticate(aUsername, aPassword){
@@ -35,6 +36,34 @@ async function authenticate(aUsername, aPassword){
     return data;
 
 }
+
+async function checkTokenValidity(history){
+    console.log(history);
+    var token = localStorage.getItem('auth_token');
+    var isExpired = false;
+  
+    await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
+          method: "GET",                          
+          headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + token}
+      })
+      .then(res => res.text())
+      .then(
+          (text) => {
+              var result = text.length ? JSON.parse(text) : {};
+              
+              if(result.status === 401){
+                isExpired = true;
+              }
+          }
+      ).catch(console.log);
+  
+      if(isExpired){
+        logout();
+        history.push("/login");
+      }
+  
+  }
 
 function logout(){
 

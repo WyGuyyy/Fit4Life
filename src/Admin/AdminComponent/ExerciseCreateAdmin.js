@@ -9,6 +9,7 @@ import {RedirectService} from '../../_services/RedirectService';
 import Component from '../../Component/Component';
 import {DataCheckService} from '../../_services/DataCheckService';
 import {baseURI} from '../../_services/APIService';
+import {authService} from '../../_services/AuthenticationService';
 
 class ExerciseCreateAdmin extends React.Component{
     constructor(props){
@@ -27,7 +28,7 @@ class ExerciseCreateAdmin extends React.Component{
     }
     
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){

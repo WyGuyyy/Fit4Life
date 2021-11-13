@@ -8,6 +8,7 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {baseURI} from '../../_services/APIService';
 import Group from './Group';
+import {authService} from '../../_services/AuthenticationService';
 
 class GroupMember extends React.Component{
     constructor(props){
@@ -30,6 +31,8 @@ class GroupMember extends React.Component{
         }else{
             await this.getClassrooms();
         }
+
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

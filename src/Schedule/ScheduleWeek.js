@@ -28,8 +28,7 @@ class ScheduleWeek extends React.Component{
             classroom: props.classroom,
             userWorkouts: []
         };
-
-        this.fillWorkouts();
+        
     }
     
     /*checkGrid(){
@@ -52,7 +51,7 @@ class ScheduleWeek extends React.Component{
 
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        
+        this.fillWorkouts();
     }
 
     componentDidUpdate(){
@@ -65,6 +64,10 @@ class ScheduleWeek extends React.Component{
     }
 
     async fillWorkouts(){
+
+        if(document.getElementsByClassName("loaderBackground")[0]){
+            document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+        }
 
         var workouts = [];
         var userID = (localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ? localStorage.getItem("userID") : this.props.student.user_id);
@@ -85,6 +88,10 @@ class ScheduleWeek extends React.Component{
             this.setState({
                 userWorkouts: workouts
             });
+
+            if(document.getElementsByClassName("loaderBackground")[0]){
+                document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+            }
 
             /*this.setState({
                 userWorkouts: workouts

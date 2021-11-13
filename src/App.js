@@ -62,6 +62,7 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 )
 
 const PrivateAdminRoute = ({component: Component, ...rest}) => (
+  
   <Route {...rest} render={(props) => (
     //(localStorage.getItem('logged_in') === true)
       (loggedIn().localeCompare("true") === 0)
@@ -75,6 +76,8 @@ function App() {
   if(localStorage.getItem('logged_in') === undefined || localStorage.getItem('logged_in') === null){ 
       localStorage.setItem('logged_in', "false");
   }
+
+  //checkTokenValidity();
 
   return (
     <Router>
@@ -127,6 +130,34 @@ function loggedIn(){
 
   return localStorage.getItem("logged_in");
 }
+
+/*async function checkTokenValidity(){
+
+  var token = localStorage.getItem('auth_token');
+  var isExpired = false;
+
+  await fetch(baseURI + "/api/user/" + localStorage.getItem("userID"), {  
+        method: "GET",                          
+        headers: {"Content-Type": "application/json",
+                  "Authorization": "Bearer " + token}
+    })
+    .then(res => res.text())
+    .then(
+        (text) => {
+            var result = text.length ? JSON.parse(text) : {};
+            
+            if(result.status === 401){
+              isExpired = true;
+            }
+        }
+    ).catch(console.log);
+
+    if(isExpired){
+      authService.logout();
+      window.location.reload();
+    }
+
+}*/
 
 export default App;
 

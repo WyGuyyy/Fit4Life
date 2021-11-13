@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
+import {authService} from '../_services/AuthenticationService';
 
 class PersonalInfo extends React.Component{
     constructor(props){
@@ -27,7 +28,7 @@ class PersonalInfo extends React.Component{
     
     //Lifecycle method for after Header component has mounted to the DOM
     componentDidMount(){ 
-        
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentDidUpdate(){

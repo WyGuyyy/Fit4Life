@@ -5,6 +5,7 @@ import Popout from './Popout/Popout'
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import {baseURI} from './_services/APIService';
+import {authService} from './_services/AuthenticationService';
 
 class Home extends React.Component{
     constructor(props){
@@ -19,6 +20,7 @@ class Home extends React.Component{
     
     componentDidMount(){ 
         this.fillClassrooms();
+        authService.checkTokenValidity(this.props.history);
     }
 
     componentWillUnmount(){
