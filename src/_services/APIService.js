@@ -1,5 +1,5 @@
 //export const baseURI = "https://api.fit4life.app";
-//export const baseURI = "https://wels-fit4lifebackend.herokuapp.com";
+//export const baseURI = "https://fit4life-api-test.herokuapp.com";
 export const baseURI = "http://localhost:8080";
 
 /*

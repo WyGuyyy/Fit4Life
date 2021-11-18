@@ -355,7 +355,7 @@ class EditWorkout extends React.Component{
                         "Authorization": "Bearer " + localStorage.getItem("auth_token")},
                 body: JSON.stringify(aWorkout)
             }).catch(console.log);
-            
+
             //document.getElementById("Exercise-Input-THR").value = "";
             //document.getElementById("EditWorkout-Input-Weight").value = "";
             //document.getElementById("Exercise-Input-TimeOn").value = "";

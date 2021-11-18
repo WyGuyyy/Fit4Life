@@ -142,7 +142,6 @@ class ScheduleWeek extends React.Component{
 
                 }else{
                     if(this.matchesFilters(workouts[aCount])){
-                        
                         var el = <ScheduleWeekContent workout={workouts[aCount]} index={this.getWeekWrapper(this.state.dayOfWeek)} day={this.state.dayOfWeek} count={matchCount} onWorkoutClick={this.state.onWorkoutClick} history={this.state.history} eventToRemove={this.state.eventToRemove}/>;
                         elementArr.push(el);
                         matchCount++;
