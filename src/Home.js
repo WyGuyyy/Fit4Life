@@ -36,14 +36,11 @@ class Home extends React.Component{
      * Fetch all classrooms for the currently signed in user
      */
     async fillClassrooms(){
-        
-        //document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         this.setState({
             isLoading: true
         });
 
-        //await fetch(baseURI + "/api/classroom", {
             await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
                 method: "GET",                          
                 headers: {"Content-Type": "application/json",
