@@ -3,7 +3,6 @@ import './Home.css';
 import Header from './Header/Header';
 import Popout from './Popout/Popout'
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
-import { Link } from 'react-router-dom';
 import {baseURI} from './_services/APIService';
 import {authService} from './_services/AuthenticationService';
 
@@ -13,117 +12,108 @@ class Home extends React.Component{
 
         this.state = {
             canGoBack: false,
-            studentClassrooms: ""
+            studentClassrooms: [],
+            visibleClassrooms: [],
+            serachText: "",
+            isLoading: false
         }
 
     }
     
+    /**
+     * Check token and fill classroom upon mounting
+     */
     componentDidMount(){ 
-        this.fillClassrooms();
         authService.checkTokenValidity(this.props.history);
+        this.fillClassrooms();
     }
 
     componentWillUnmount(){
         
     }
 
+    /**
+     * Fetch all classrooms for the currently signed in user
+     */
     async fillClassrooms(){
         
-        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
-
-        var classrooms = [];
-        var count = 0;
-        var classroomWrapper = document.getElementById("homeWrapper");
-
-        //await fetch(baseURI + "/api/classroom", {
-            await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    classrooms = result;
-                }
-            ).catch(console.log);
-
-            for(count = 0; count < classrooms.length; count++){
-                var classButton = document.createElement("button");
-                var title = classrooms[count].title;
-
-                classButton.classList.add("homeButton");
-                classButton.id = "Home-Button-" + count;
-                classButton.onclick = e => this.goToComponent(e);
-                classButton.textContent = title;
-
-                classroomWrapper.appendChild(classButton);
-            }
-
-            this.setState({
-                studentClassrooms: classrooms
-            });
-
-            document.getElementsByClassName("loaderBackground")[0].style.display = "none";
-    }
-
-    async searchClassrooms(event){
-
-        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
-
-        var classrooms = [];
-        var count = 0;
-        var classroomWrapper = document.getElementById("homeWrapper");
-        var searchText = document.getElementsByClassName("Fit4Life-Searchbar")[0].value.trim();
-
-        //await fetch(baseURI + "/api/classroom", {
-            await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    classrooms = result;
-                }
-            ).catch(console.log);
-    
-            for(var count = 0; count < classrooms.length; count++){
-                if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){
-                    classrooms.splice(count, 1);
-                    count = count - 1;
-                }
-            }
-
-            classroomWrapper.innerHTML = '';
-
-            for(count = 0; count < classrooms.length; count++){
-                var classButton = document.createElement("button");
-                var title = classrooms[count].title;
-
-                classButton.classList.add("homeButton");
-                classButton.id = "Home-Button-" + count;
-                classButton.onclick = e => this.goToComponent(e);
-                classButton.textContent = title;
-
-                classroomWrapper.appendChild(classButton);
-            }
+        //document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
 
         this.setState({
-            studentClassrooms: classrooms
+            isLoading: true
         });
 
-        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
+        //await fetch(baseURI + "/api/classroom", {
+            await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    this.setState({
+                        studentClassrooms: result,
+                        visibleClassrooms: result
+                    });
+                }
+            ).catch(console.log);
+
+            this.setState({
+                isLoading: false
+            });
     }
 
-    goToComponent(event){
+    /**
+     * Fetch all classrooms for a user based on a search string
+     * @param {*} event the button click event for the search operation
+     */
+    async searchClassrooms(event){
 
-        //var btn = document.getElementById(event.target.id);
-        var idNum = event.target.id.split("-")[2];
-        var aClassroom = this.state.studentClassrooms[idNum];
+        this.setState({
+            isLoading: true
+        });
+
+        var classrooms = [];
+        var searchText = this.state.searchText;
+
+        await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
+                method: "GET",                          
+                headers: {"Content-Type": "application/json",
+                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
+            })
+            .then(res => res.text())
+            .then(
+                (text) => {
+                    var result = text.length ? JSON.parse(text) : {};
+                    classrooms = result;
+                    for(var count = 0; count < classrooms.length; count++){
+                        if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){
+                            classrooms.splice(count, 1);
+                            count = count - 1;
+                        }
+                    }
+                    this.setState({
+                        visibleClassrooms: classrooms
+                    });
+                }
+            ).catch(console.log);
+
+            this.setState({
+                isLoading: false
+            });
+    }
+
+    /**
+     * Open the classroom selected by the user
+     * @param {*} event click event of classroom item
+     */
+    goToComponent(event){
+        var id = parseInt(event.target.value);
+        var aClassroom = this.state.studentClassrooms.find(
+            classroom => classroom.classroom_id === id
+        );
 
         this.props.history.push({
             pathname: "/classroom",
@@ -131,28 +121,39 @@ class Home extends React.Component{
         });
     }
 
-    goBack(){ //This isnt working, start here next time
+    /**
+     * Return to previous component
+     */
+    goBack(){
         if(this.state.canGoBack){
             this.props.history.goBack();
         }
     }
     
+    /**
+     * Render the home page
+     * @returns The Home page component
+     */
     render(){
 
         return(
-
             <Fragment>
                 <Header title="Home" breadCrumbs="Home" goBack={false} customClick={this.goBack.bind(this)}/>
-                <LoadingSpinner />
+                <LoadingSpinner isLoading={this.state.isLoading}/>
                 <div className="homeContainer">
                     <Popout hist={this.props.history}/>
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
-
+                            {
+                                this.state.visibleClassrooms.map((classroom, index) =>
+                                    <button className='homeButton' id={"Home-Button-" + index} 
+                                        key={classroom.classroom_id} value={classroom.classroom_id} onClick={e => this.goToComponent(e)}>{classroom.title}</button>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="Fit4Life-SearchbarWrapper">
-                        <input className="Fit4Life-Searchbar"/>
+                        <input className="Fit4Life-Searchbar" onChange={e => this.setState({searchText: e.target.value})}/>
                         <button className="Fit4Life-SearchButton" onClick={e => this.searchClassrooms(e)}>Search</button>
                     </div>
                 </div>
@@ -163,6 +164,3 @@ class Home extends React.Component{
 }
 
 export default Home;
-
-
-//"react-router-dom": "^6.0.0-alpha.1",

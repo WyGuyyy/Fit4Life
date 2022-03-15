@@ -4,12 +4,15 @@ import './LoadingSpinner.css';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+const SPINNER_DISPLAY_FLEX = "flex";
+const SPINNER_DISPLAY_NONE = "none";
+
 class LoadingSpinner extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-
+            isLoading: props.isLoading
         };
 
     }
@@ -27,7 +30,7 @@ class LoadingSpinner extends React.Component{
     render(){
 
         return(
-            <div className="loaderBackground">
+            <div className="loaderBackground" style={{display: (this.props.isLoading ? SPINNER_DISPLAY_FLEX : SPINNER_DISPLAY_NONE)}}>
                 <div className="loader">
                     
                 </div>
