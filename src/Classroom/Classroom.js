@@ -107,8 +107,7 @@ class Classroom extends React.Component{
                 <Header title={"Components"} breadCrumbs={"Components for " + classroom} goBack={false} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
                 <div className="classroomContainer">
-                    <Popout hist={this.props.history}/>
-                    <AdminPopout hist={this.props.history}/>
+                    
                     <div className="classroomWrapper" id="classroomWrapper">
                         <div className="Classroom-Button-Wrapper">
                             <div className="classroomFiller"></div>

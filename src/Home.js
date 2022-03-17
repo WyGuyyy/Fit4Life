@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import './Home.css';
 import Header from './Header/Header';
-import Popout from './Popout/Popout'
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
 import {authService} from './_services/AuthenticationService';
 import ClassroomService from './_services/ClassroomService';
-// START HERE NEXT TIME, WORK ON REFACTORING COMPONENT HTML/JSX
+
+/**
+ * Home Component (Classroom list) for a user
+ */
 class Home extends React.Component{
 
     constructor(props){
@@ -63,15 +65,8 @@ class Home extends React.Component{
             isLoading: true
         });
 
-        let classrooms = await this.classroomService.GetClassroomsForUser(localStorage.getItem("userID"));
         var searchText = this.state.searchText;
-
-        for(var count = 0; count < classrooms.length; count++){
-            if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){
-                classrooms.splice(count, 1);
-                count = count - 1;
-            }
-        }
+        let classrooms = await this.classroomService.SearchClassroomsForUser(localStorage.getItem("userID"), searchText);
 
         this.setState({
             visibleClassrooms: classrooms,
@@ -115,7 +110,6 @@ class Home extends React.Component{
                 <Header title="Home" breadCrumbs="Home" goBack={false} customClick={this.goBack.bind(this)}/>
                 <LoadingSpinner isLoading={this.state.isLoading}/>
                 <div className="homeContainer">
-                    <Popout hist={this.props.history}/>
                     <div className="homeWrapper" id="homeWrapper">
                         <div className="Home-Button-Wrapper">
                             {

@@ -1,10 +1,9 @@
 import React from 'react';
 import './Header.css';
-import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MMS_Title from './MMS_Title';
-import Hamburger from './Hamburger';
 import lhs_logo from '../Assets/lhs_logo.png';
+import Popout from '../Popout/Popout';
 
 class Header extends React.Component{
     constructor(props){
@@ -89,6 +88,7 @@ class Header extends React.Component{
 
         return(
                 <div className="headerContainer" >
+                    <Popout hist={this.props.history}/>
                     <div className="headerWrapper">
                         <div className="hamburgerContainer">
                             <img src={lhs_logo} className="lhsLogo" height="75px" onClick={this.transformLogo.bind(this)}/>

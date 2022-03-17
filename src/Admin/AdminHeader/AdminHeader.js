@@ -1,10 +1,9 @@
 import React from 'react';
 import './AdminHeader.css';
-import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MMS_Title from './MMS_Title';
-import Hamburger from './Hamburger';
 import lhs_logo from '../../Assets/lhs_logo.png';
+import AdminPopout from '../AdminPopout/AdminPopout';
 
 class Header extends React.Component{
     constructor(props){
@@ -92,6 +91,7 @@ class Header extends React.Component{
 
         return(
                 <div className="headerContainer-Admin" >
+                    <AdminPopout hist={this.props.history}/>
                     <div className="headerWrapper-Admin">
                         <div className="hamburgerContainer-Admin">
                             <img src={lhs_logo} className="lhsLogo-Admin" height="75px" onClick={this.transformLogo.bind(this)}/>
