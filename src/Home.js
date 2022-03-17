@@ -3,10 +3,11 @@ import './Home.css';
 import Header from './Header/Header';
 import Popout from './Popout/Popout'
 import LoadingSpinner from './LoadingSpinner/LoadingSpinner';
-import {baseURI} from './_services/APIService';
 import {authService} from './_services/AuthenticationService';
-
+import ClassroomService from './_services/ClassroomService';
+// START HERE NEXT TIME, WORK ON REFACTORING COMPONENT HTML/JSX
 class Home extends React.Component{
+
     constructor(props){
         super(props);
 
@@ -17,6 +18,8 @@ class Home extends React.Component{
             serachText: "",
             isLoading: false
         }
+
+        this.classroomService = ClassroomService.getInstance();
 
     }
     
@@ -41,25 +44,13 @@ class Home extends React.Component{
             isLoading: true
         });
 
-            await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    this.setState({
-                        studentClassrooms: result,
-                        visibleClassrooms: result
-                    });
-                }
-            ).catch(console.log);
+        let classrooms = await this.classroomService.GetClassroomsForUser(localStorage.getItem("userID"));
 
-            this.setState({
-                isLoading: false
-            });
+        this.setState({
+            studentClassrooms: classrooms,
+            visibleClassrooms: classrooms,
+            isLoading: false
+         });
     }
 
     /**
@@ -72,34 +63,20 @@ class Home extends React.Component{
             isLoading: true
         });
 
-        var classrooms = [];
+        let classrooms = await this.classroomService.GetClassroomsForUser(localStorage.getItem("userID"));
         var searchText = this.state.searchText;
 
-        await fetch(baseURI + "/api/classroom/foruser/" + localStorage.getItem("userID"), {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    classrooms = result;
-                    for(var count = 0; count < classrooms.length; count++){
-                        if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){
-                            classrooms.splice(count, 1);
-                            count = count - 1;
-                        }
-                    }
-                    this.setState({
-                        visibleClassrooms: classrooms
-                    });
-                }
-            ).catch(console.log);
+        for(var count = 0; count < classrooms.length; count++){
+            if(!classrooms[count].title.toLowerCase().includes(searchText.toLowerCase())){
+                classrooms.splice(count, 1);
+                count = count - 1;
+            }
+        }
 
-            this.setState({
-                isLoading: false
-            });
+        this.setState({
+            visibleClassrooms: classrooms,
+            isLoading: false
+        });
     }
 
     /**
