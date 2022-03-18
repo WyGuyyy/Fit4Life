@@ -81,7 +81,7 @@ class Home extends React.Component{
     goToComponent(event){
         var id = parseInt(event.target.value);
         var aClassroom = this.state.studentClassrooms.find(
-            classroom => classroom.classroom_id === id
+            classroom => classroom.classroomID === id
         );
 
         this.props.history.push({
@@ -115,7 +115,7 @@ class Home extends React.Component{
                             {
                                 this.state.visibleClassrooms.map((classroom, index) =>
                                     <button className='homeButton' id={"Home-Button-" + index} 
-                                        key={classroom.classroom_id} value={classroom.classroom_id} onClick={e => this.goToComponent(e)}>{classroom.title}</button>
+                                        key={classroom.classroomID} value={classroom.classroomID} onClick={e => this.goToComponent(e)}>{classroom.title}</button>
                                 )
                             }
                         </div>

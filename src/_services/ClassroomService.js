@@ -1,4 +1,6 @@
+import Classroom from '../Models/Classroom';
 import {baseURI} from './APIService';
+import BuilderService from './BuilderService';
 
 /**
  * Service for interacting with the Classroom API. This Service implements a singleton pattern,
@@ -7,6 +9,10 @@ import {baseURI} from './APIService';
 export default class ClassroomService {
     
     static classroomService = null;
+
+    constructor() {
+        this.builderService = BuilderService.getInstance();
+    }
 
     /**
      * Return the singleton ClassroomService instance
@@ -25,7 +31,7 @@ export default class ClassroomService {
      * @returns list of classrooms belonging to a user
      */
     async GetClassroomsForUser(userID) {
-
+        let result = [];
         return fetch(baseURI + "/api/classroom/foruser/" + userID, {  
             method: "GET",                          
             headers: {"Content-Type": "application/json",
@@ -34,8 +40,10 @@ export default class ClassroomService {
         .then(res => res.text())
         .then(
             (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                return result;
+                result = text.length ? JSON.parse(text) : {};
+                return result.map(classroom => 
+                    this.builderService.BuildClassroom(classroom) 
+                );
             }
         ).catch(console.log);
 
@@ -63,7 +71,9 @@ export default class ClassroomService {
                     .toLowerCase()
                     .includes(searchText.toLowerCase())
                 );
-                return result;
+                return result.map(classroom => 
+                    this.builderService.BuildClassroom(classroom)    
+                );
             }
         ).catch(console.log);
 

@@ -8,10 +8,12 @@ import AdminHeader from '../Admin/AdminHeader/AdminHeader';
 import AdminPopout from '../Admin/AdminPopout/AdminPopout';
 import ConfirmToast from '../Confirm/ConfirmToast';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import { Link } from 'react-router-dom';
 import {RedirectService} from '../_services/RedirectService';
 import {baseURI} from '../_services/APIService';
 import {authService} from '../_services/AuthenticationService';
+import ExerciseService from '../_services/ExerciseService';
+import ExerciseBlobService from '../_services/ExerciseBlobService';
+import BuilderService from '../_services/BuilderService';
 
 class Component extends React.Component{
     constructor(props){
@@ -21,27 +23,24 @@ class Component extends React.Component{
             this.state = {
                 classroom: props.location.state.selectedClassroom,
                 canGoBack: true,
-                componentExercises: "",
-                exImageMap: ""
+                componentExercises: [],
+                exImageMap: "",
+                isLoading: false
             };
         }
+
+        this.exerciseService = ExerciseService.getInstance();
+        this.exerciseBlobService = ExerciseBlobService.getInstance();
+        this.builderService = BuilderService.getInstance();
 
         window.addEventListener("resize", this.triggerRerender.bind(this));
 
     }
     
     //Lifecycle method for after Header component has mounted to the DOM
-    componentDidMount(){ 
-        
+    componentDidMount(){
         this.renderTiles();
         authService.checkTokenValidity(this.props.history);
-        /*if(RedirectService.checkItemForUndefined(this.props.location.state)){
-            if(this.exercisesScheduled()){
-                this.renderScheduledTiles();
-            }else{
-                this.renderTiles();
-            }
-        }*/
     }
 
     componentDidUpdate(){
@@ -61,68 +60,31 @@ class Component extends React.Component{
 
     async renderTiles(){
 
-        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+        this.setState({
+            isLoading: true
+        });
 
         var exercises = [];
         var exerciseBlobs = [];
-        var count = 0;
         var componentWrapper = document.getElementById("componentWrapper");
 
-        var classroomID = this.state.classroom.classroom_id;
-        //var componentID = this.state.component.component_id;
-
-        var classCompID;
+        var classroomID = this.state.classroom.classroomID;
 
         if(await this.exercisesScheduled()){
             var date = new Date();
             date = this.formatDateForRange(date);
     
-            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    exercises = result;
-                }
-            ).catch(console.log);
+            exercises = await this.exerciseService.GetExercisesWithinDateRange(classroomID, date);
         }else{
-            await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    exercises = result;
-                }
-            ).catch(console.log);
+            exercises = await this.exerciseService.GetActivatedExercisesForClassroom(classroomID);
         }
 
-        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exerciseBlobs = result;
-            }
-        ).catch(console.log);
+        exerciseBlobs = await this.exerciseBlobService.GetExerciseBlobsForClass(classroomID);
 
-        var tempNumOfTiles = 40;
-        var numRows;
+        let exerciseImageMap = this.builderService.BuildExerciseImageMap(exercises, exerciseBlobs);
 
-        //var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
+        /*var numRows;
 
-        /*var componentWrapper = document.getElementById("componentWrapper");*/
         componentWrapper.innerHTML = '';
 
         var aTile;
@@ -145,103 +107,22 @@ class Component extends React.Component{
             }
 
             componentWrapper.appendChild(aFlexRow);
-        }
+        }*/
 
         this.setState({
-            componentExercises: exercises
+            componentExercises: exercises,
+            componentBlobs: exerciseBlobs,
+            exerciseImageMap: exerciseImageMap,
+            isLoading: false
         });
-
-        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
-
-    }
-
-    async renderScheduledTiles(){
-        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
-
-        var exercises = [];
-        var exerciseBlobs = [];
-        var count = 0;
-        var componentWrapper = document.getElementById("componentWrapper");
-
-        var classroomID = this.state.classroom.classroom_id;
-        //var componentID = this.state.component.component_id;
-        var date = new Date();
-        date = this.formatDateForRange(date);
-
-        var classCompID;
-
-        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exercises = result;
-            }
-        ).catch(console.log);
-
-        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exerciseBlobs = result;
-            }
-        ).catch(console.log);
-
-        var tempNumOfTiles = 40;
-        var numRows;
-
-        //var tempArr = ["Running", "Rowing", "Marathon", "Laps", "Swims", "Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps","Running", "Rowing", "Marathon", "Laps"]
-
-        /*var componentWrapper = document.getElementById("componentWrapper");*/
-        componentWrapper.innerHTML = '';
-
-        var aTile;
-        var aFlexRow;
-        var countOuter;
-        var countInner;
-
-        var tilesPerRow = this.calculateRowCount();
-        numRows = Math.ceil(exercises.length/tilesPerRow);
-
-        for(countOuter = 0; countOuter < numRows; countOuter++){
-            
-            aFlexRow = document.createElement('div');
-            aFlexRow.className = "Component-Tile-Wrapper";
-
-            for(countInner = 0; countInner < tilesPerRow; countInner++){
-
-                aTile = ReactDom.render(this.renderTileRow(exercises.slice(countOuter*tilesPerRow, countOuter*tilesPerRow + tilesPerRow), exerciseBlobs), aFlexRow);
-                //ReactDOM.render(aTile, aFlexRow);
-            }
-
-            componentWrapper.appendChild(aFlexRow);
-        }
-
-        this.setState({
-            componentExercises: exercises
-        });
-
-        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
     async searchExercises(event){
 
-        /*if(this.exercisesScheduled()){
-            this.searchScheduledExercises();
-            return;
-        }*/
-
-        document.getElementsByClassName("loaderBackground")[0].style.display = "flex";
+        this.setState({
+            isLoading: true
+        });
 
         var exercises = [];
         var exerciseBlobs = [];
@@ -258,45 +139,12 @@ class Component extends React.Component{
             var date = new Date();
             date = this.formatDateForRange(date);
     
-            await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                          "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    exercises = result;
-                }
-            ).catch(console.log);
+            exercises = await this.exerciseService.GetExercisesWithinDateRange(classroomID, date);
         }else{
-            await fetch(baseURI + "/api/exercise/byclassroom/activated/" + classroomID, {  
-                method: "GET",                          
-                headers: {"Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-                    var result = text.length ? JSON.parse(text) : {};
-                    exercises = result;
-                }
-            ).catch(console.log);
+            exercises = await this.exerciseService.GetActivatedExercisesForClassroom(classroomID);
         }
 
-        await fetch(baseURI + "/api/exercise_blob/foraclass/" + classroomID, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                      "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exerciseBlobs = result;
-            }
-        ).catch(console.log);
+        exerciseBlobs = await this.exerciseBlobService.GetExerciseBlobsForClass(classroomID);
 
         var tempNumOfTiles = 40;
         var numRows;
@@ -336,10 +184,9 @@ class Component extends React.Component{
         }
 
         this.setState({
-            componentExercises: exercises
+            componentExercises: exercises,
+            isLoading: false
         });
-
-        document.getElementsByClassName("loaderBackground")[0].style.display = "none";
 
     }
 
@@ -360,29 +207,6 @@ class Component extends React.Component{
         var confirmation = document.getElementById("snackbar");
         confirmation.className = "show";
         setTimeout(function(){ confirmation.className = confirmation.className.replace("show", ""); }, 3000);
-    }
-
-    async getExerciseImage(exerciseID){
-
-        var exerciseBlob;
-        var buffer;
-
-        await fetch(baseURI + "/api/exercise_blob/" + exerciseID  , { 
-            method: "GET"                         
-            })
-            .then(res => res.text())
-            .then(
-                (text) => {
-
-                    var result = text.length ? JSON.parse(text) : {};
-                    exerciseBlob = result;
-          
-                }
-            )
-        .catch(console.log);
-
-        buffer = "data:" + exerciseBlob.contentType + ";base64," + exerciseBlob.data;
-        return buffer;
     }
 
     renderTileRow(exercises, blobs){
@@ -410,9 +234,7 @@ class Component extends React.Component{
         }
     }
 
-    async exercisesScheduled(){ //Something wrong with sched_ex table
-
-        console.log("hello");
+    async exercisesScheduled(){
 
         var exercises = [];
 
@@ -421,18 +243,7 @@ class Component extends React.Component{
 
         var classroomID = this.state.classroom.classroom_id;
     
-        await fetch(baseURI + "/api/exercise/forDateRange/" + classroomID + "/" + date + "/" + date, {  
-            method: "GET",                          
-            headers: {"Content-Type": "application/json",
-                         "Authorization": "Bearer " + localStorage.getItem("auth_token")}
-        })
-        .then(res => res.text())
-        .then(
-            (text) => {
-                var result = text.length ? JSON.parse(text) : {};
-                exercises = result;
-            }
-        ).catch(console.log);
+        exercises = await this.exerciseService.GetExercisesWithinDateRange(classroomID, date);
 
         if(exercises.length === undefined || 
            exercises.length === null || 
@@ -485,7 +296,7 @@ class Component extends React.Component{
                 {localStorage.getItem("userRole").localeCompare("STUDENT") === 0 ?
                 <Header title={"Exercises"} breadCrumbs={"Exercises for " + classroom} goBack={true} customClick={this.goBack.bind(this)}/> :
                 <AdminHeader title="Preview" breadCrumbs={"Preview for class " + classroom} goBack={true} customClick={this.goBack.bind(this)}/>}
-                <LoadingSpinner />
+                <LoadingSpinner isLoading={this.state.isLoading}/>
                 <button className="Fit4Life-CategoryView" onClick={e => this.onGoToCategoryView(e)}><i className="fa fa-folder test"/></button>
                 <div className="componentContainer">
                     <Popout hist={this.props.history}/>
